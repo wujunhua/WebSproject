@@ -3,7 +3,7 @@
 
 ZenHub (backlog) link: https://app.zenhub.com/workspaces/sproject-5c91685fd76ef51f6b0fe2ba/boards?repos=176605552
 
-#Domain Words Dictionary
+# Domain Words Dictionary
 
 **User** - An instructor or admin. A person who manipulates data in the system. Does not have scores.
 

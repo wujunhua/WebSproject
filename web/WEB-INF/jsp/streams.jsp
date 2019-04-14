@@ -1,11 +1,9 @@
-
-<jsp:include page="head-tag.jsp"/>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>
 
 <%
+  
   
   //initialize driver class
   try {    
@@ -17,66 +15,37 @@
   String dbUser = "Student_Performance";
   String dbPasswd = "Student_Performance";
   String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
+
   //connect
   Connection conn = null;
   try {
     conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-   
+    //out.println(" Connection status: " + conn + "<P>");
   } catch(Exception e) {
     out.println("Connection failed: " + e.toString() + "<P>");      
   }
+
   String sql;
   int numRowsAffected;
   Statement stmt = conn.createStatement();
   ResultSet rs;
+  String stream_name = request.getParameter("streamName");
   
-  // insert
-  /*try {
-    
-    sql = "insert into users values ('chris@syntelinc.com', 'password', 'N')";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) inserted. <BR>");
-  
-  } catch (SQLException e) {
-    
-    out.println("Error encountered during row insertion for employee: " + e.toString() + "<BR>");
-  
-  }*/
-  
-  
-  // select
-  sql = "select user_id, isadmin from users";
+  sql = "select stream_name from stream";
   rs = stmt.executeQuery(sql);
   
   ArrayList usersList = new ArrayList();
   request.setAttribute("usersList", usersList);
   
-  ArrayList isadminList = new ArrayList();
-  request.setAttribute("isadminList", isadminList);
-  
- 
-  
   while (rs.next()) {
-        usersList.add(rs.getString("user_id"));
-        isadminList.add(rs.getString("isadmin"));
+        usersList.add(rs.getString("stream_name"));
         //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
         } // End while 
-  
-   
- 
-  // delete
-  /* try {
-    sql = "delete from users";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) deleted. <BR>");
-  } catch (SQLException e) {
-    out.println("Error encountered during deletion of employee: " + e.toString() + "<BR>");
-  
-  }  
-  out.println("<P>"); */
-  
+
+
   rs.close();
   stmt.close();
+
   //commit
   conn.commit();
   
@@ -85,15 +54,18 @@
   
 %>  
 
+
+<jsp:include page="head-tag.jsp"/>
+
 <body class="bg-light">
 
-  <jsp:include page="nav.jsp"/>
+<jsp:include page="nav.jsp"/>
   <div class="container-fluid">
     <div class="container mt-2 pt-4 pb-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="background: transparent;">
           <li class="breadcrumb-item"><a href="#">Admin</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Users</li>
+          <li class="breadcrumb-item active" aria-current="page">Streams</li>
         </ol>
       </nav>
     </div>
@@ -104,10 +76,10 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="admin.htm">Users</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
+          <a class="nav-link active" href="streams.htm">Streams</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="courses.htm">Courses</a>
@@ -124,33 +96,18 @@
 
       <div class="row py-3">
         <div class="col-lg-12">
-            <form action="create-user.htm">
+          <form action="create-stream.htm">
           <div class="form">
             <div class="form-row">
-              <div class="col-2">
-                <button class="btn btn-small btn-success no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert User</button>
+              <div class="col-lg-2">
+                <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Stream</small></button>
               </div>
-              <div class="col-3">
-                <input type="email" class="form-control" id="username" name="username"  placeholder="Email" required>
-              </div>
-              <div class="col-3">
-                <input type="password" class="form-control" id="password" name="password"  placeholder="Password" required>
-              </div>
-              <div class="col-4">
-                <div class="form-group pt-lg-2 pl-lg-2">
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="customRadio" name="example" value="Y" >
-                    <label class="custom-control-label" for="customRadio"><small>Admin</small></label>
-                  </div>
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="N" checked>
-                    <label class="custom-control-label" for="customRadio2"><small>Instructor</small></label>
-                  </div> 
-                </div>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" id ="streamName" name="streamName" placeholder="Stream Name" required>
               </div>
             </div>
           </div>
-            </form>
+        </form>
         </div>
       </div>
 
@@ -158,24 +115,20 @@
         <thead>
           <tr>
             <th scope="col" style="width: 10%;">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">Admin</th>
+            <th scope="col">Stream</th>
           </tr>
         </thead>
         <tbody>
-            <c:set var="count" value="1"/>
-         <c:forEach items="${usersList}" var="user">
-           <tr value="${user}">
-               <th scope="row">${count}</th>
-               <td>
-                   <a href="manage-user.htm?id=${user}">${user}</a>
-               </td>
-               <td>
-               ${isadminList.get(count-1)}
-               </td>
-           </tr>
-           <c:set var="count" value="${count + 1}"/>
-       </c:forEach>
+        <c:set var ="count" value="1"/>
+        <c:forEach items ="${usersList}" var="user">
+            <tr value ="${user}">
+                <th scope = "row"> ${count}</th>
+                <td>
+                    <a href="manage-stream.htm?id=${user}">${user}</a>
+                </td>
+            </tr>
+        <c:set var="count" value = "${count+1}"/>    
+        </c:forEach>
         </tbody>
       </table>
     </div>

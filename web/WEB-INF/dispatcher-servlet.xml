@@ -28,10 +28,40 @@
                 <prop key="index.htm">indexController</prop>
                 -->
                 <prop key="login.htm">loginController</prop>
-                <prop key="admin.htm">adminController</prop>
+                
                 <prop key="instructor.htm">instructorController</prop>
                 <prop key="email.htm">emailController</prop>
                 <prop key="createclass.htm">createClassController</prop>
+                
+                <!--all admin pages should use the adminController-->
+                <prop key="admin.htm">adminController</prop>
+                <prop key="test.htm">adminController</prop>
+                
+                <prop key="courses.htm">adminController</prop>
+                <prop key="streams.htm">adminController</prop>
+                <prop key="modules.htm">adminController</prop>
+                
+                <prop key="manage-user.htm">adminController</prop>
+                <prop key="create-user.htm">adminController</prop>
+                <prop key="delete-user.htm">adminController</prop>
+                <prop key="update-user.htm">adminController</prop>
+                
+                <prop key="manage-stream.htm">adminController</prop>
+                <prop key="create-stream.htm">adminController</prop>
+                <prop key="delete-stream.htm">adminController</prop>
+                <prop key="update-stream.htm">adminController</prop>
+              
+                <prop key="manage-course.htm">adminController</prop>
+                <prop key="create-courses.htm">adminController</prop>
+                <prop key="delete-courses.htm">adminController</prop>
+                <prop key="update-courses.htm">adminController</prop> 
+                
+                <prop key="manage-module.htm">adminController</prop>
+                <prop key="createModule.htm">adminController</prop>
+                <prop key="deleteModule.htm">adminController</prop>
+                <prop key="updateModule.htm">adminController</prop>
+                
+                <prop key="download.htm">downloadTemplateController</prop>
             </props>
         </property>
     </bean>
@@ -71,6 +101,10 @@
     <bean name="createClassController"
           class="Controller.UploadAuthentication"
           p:formView="CreateClass"
+    />
+    
+    <bean name="downloadTemplateController"
+        class="Controller.DownloadTemplateController"
     />
 
 </beans>

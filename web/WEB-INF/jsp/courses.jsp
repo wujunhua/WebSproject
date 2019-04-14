@@ -1,4 +1,3 @@
-
 <jsp:include page="head-tag.jsp"/>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -45,24 +44,37 @@
   
   
   // select
-  sql = "select user_id, isadmin from users";
+  sql = "select c.course_name as course, m.module_name as module from courses c, modules m where c.module_id = m.module_id ";
   rs = stmt.executeQuery(sql);
   
-  ArrayList usersList = new ArrayList();
-  request.setAttribute("usersList", usersList);
+  ArrayList courseList = new ArrayList();
+  request.setAttribute("courseList", courseList);
   
-  ArrayList isadminList = new ArrayList();
-  request.setAttribute("isadminList", isadminList);
+  ArrayList modList = new ArrayList();
+  request.setAttribute("modList", modList);
   
  
   
   while (rs.next()) {
-        usersList.add(rs.getString("user_id"));
-        isadminList.add(rs.getString("isadmin"));
+        courseList.add(rs.getString("course"));
+        modList.add(rs.getString("module"));
         //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
         } // End while 
   
-   
+  
+  sql = "select module_name from modules";
+  rs = stmt.executeQuery(sql);
+  
+  ArrayList fullmodList = new ArrayList();
+  request.setAttribute("fullmodList", fullmodList);
+  
+ 
+  
+  while (rs.next()) {
+        fullmodList.add(rs.getString("module_name"));
+        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        } // End while 
+   //out.println(courseList.get(0));
  
   // delete
   /* try {
@@ -93,7 +105,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="background: transparent;">
           <li class="breadcrumb-item"><a href="#">Admin</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Users</li>
+          <li class="breadcrumb-item active" aria-current="page">Courses</li>
         </ol>
       </nav>
     </div>
@@ -104,13 +116,13 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="admin.htm">Users</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="streams.htm">Streams</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="courses.htm">Courses</a>
+          <a class="nav-link active" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="modules.htm">Modules</a>
@@ -124,33 +136,27 @@
 
       <div class="row py-3">
         <div class="col-lg-12">
-            <form action="create-user.htm">
-          <div class="form">
-            <div class="form-row">
-              <div class="col-2">
-                <button class="btn btn-small btn-success no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert User</button>
-              </div>
-              <div class="col-3">
-                <input type="email" class="form-control" id="username" name="username"  placeholder="Email" required>
-              </div>
-              <div class="col-3">
-                <input type="password" class="form-control" id="password" name="password"  placeholder="Password" required>
-              </div>
-              <div class="col-4">
-                <div class="form-group pt-lg-2 pl-lg-2">
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="customRadio" name="example" value="Y" >
-                    <label class="custom-control-label" for="customRadio"><small>Admin</small></label>
-                  </div>
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="N" checked>
-                    <label class="custom-control-label" for="customRadio2"><small>Instructor</small></label>
-                  </div> 
+          <form action="create-courses.htm">
+            <div class="form">
+              <div class="form-row">
+                <div class="col-lg-2">
+                  <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Course</small></button>
+                </div>
+                <div class="col-lg-5">
+                  <input type="text" name="coursename" class="form-control" placeholder="Course Name" required>
+                </div>
+                <div class="form-group col-md-5">
+                  <select class="custom-select" name= "modulename" id="modulename">
+                    <c:forEach items="${fullmodList}" var="modder">
+                        <option value="${modder}">
+                            ${modder}
+                        </option>
+                    </c:forEach>
+                    </select>
                 </div>
               </div>
             </div>
-          </div>
-            </form>
+          </form>
         </div>
       </div>
 
@@ -158,20 +164,20 @@
         <thead>
           <tr>
             <th scope="col" style="width: 10%;">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">Admin</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Module Name</th>
           </tr>
         </thead>
         <tbody>
-            <c:set var="count" value="1"/>
-         <c:forEach items="${usersList}" var="user">
-           <tr value="${user}">
+          <c:set var="count" value="1"/>
+         <c:forEach items="${courseList}" var="course">
+           <tr value="${course}">
                <th scope="row">${count}</th>
                <td>
-                   <a href="manage-user.htm?id=${user}">${user}</a>
+                   <a href="manage-course.htm?id=${course}">${course}</a>
                </td>
                <td>
-               ${isadminList.get(count-1)}
+               ${modList.get(count-1)}
                </td>
            </tr>
            <c:set var="count" value="${count + 1}"/>

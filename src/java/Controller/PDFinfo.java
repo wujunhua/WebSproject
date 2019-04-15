@@ -112,7 +112,7 @@ public class PDFinfo {
         SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
         String str = njdbc.queryForObject(SQL, namedParams, String.class);
 
-		return str;
+		return String.format("%.2f", Float.parseFloat(str));
 	}
 	
     /**
@@ -126,7 +126,7 @@ public class PDFinfo {
         SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
         String str = njdbc.queryForObject(SQL, namedParams, String.class);
 
-		return str;
+		return String.format("%.2f", Float.parseFloat(str));
 	}
 	
     /**
@@ -140,7 +140,7 @@ public class PDFinfo {
        SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
        String str = njdbc.queryForObject(SQL, namedParams, String.class);
 
-		return str;
+		return String.format("%.2f", Float.parseFloat(str));
 	}
 	
     /**
@@ -154,7 +154,7 @@ public class PDFinfo {
             SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
 			String str = njdbc.queryForObject(SQL, namedParams, String.class);
 
-		return str;
+		return String.format("%.2f", Float.parseFloat(str));
 	}
 	
     /**

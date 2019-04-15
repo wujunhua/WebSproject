@@ -1,7 +1,7 @@
 # sProject
 **Purpose**: To create performence reports for employees undergoing S training sessions. Data is input via excel, output via PDF.
 
-ZenHub (backlog) link: https://app.zenhub.com/workspaces/sproject-5c91685fd76ef51f6b0fe2ba/boards?repos=176605552
+Backlog (VSTS / Azure DevOps): https://dev.azure.com/kabollinger/WebSProject
 
 # Domain Words Dictionary
 

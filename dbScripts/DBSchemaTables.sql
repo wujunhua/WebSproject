@@ -65,6 +65,7 @@ CREATE TABLE Student_Performance.Employees (
   name VARCHAR2(100) NULL,
   email VARCHAR2(100) NULL,
   class_id VARCHAR2(30) NOT NULL,
+  manager_id VARCHAR2(100) NULL,
   PRIMARY KEY (employee_id)
 ,
   CONSTRAINT fk_Students_Class1

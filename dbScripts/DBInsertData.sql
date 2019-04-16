@@ -32,15 +32,15 @@ Insert INTO Class VALUES ('SCRUMone', 'SCRUM12345', 'IN6@syntelinc.com',TO_DATE(
 Insert INTO Class VALUES ('FSDFour', 'FSD123', 'kateb.larping@gmail.com', TO_DATE('06/06/2015', 'mm/dd/yyyy'), TO_DATE('07/06/2015', 'mm/dd/yyyy'));
 Insert INTO Class VALUES ('FSDFive', 'FSD123', 'IN5@syntelinc.com', TO_DATE('06/06/2014', 'mm/dd/yyyy'), TO_DATE('07/06/2014', 'mm/dd/yyyy'));
 
-Insert INTO Employees VALUES('kbTestFSD', 'Kate Test', 'kateb.larping@gmail.com', 'FSDFour');
-Insert INTO Employees VALUES('taTestFSD', 'Tony Test', 'adpennella@gmail.com', 'FSDFour');
-Insert INTO Employees VALUES('JFSDTest3', 'Stefon Univorse', 'test1@syn.com', 'FSDFour');
-Insert INTO Employees VALUES('stu1FSD', 'JFSD One', 'test2@syn.com', 'FSDThree');
-Insert INTO Employees VALUES('stu1SCRUM', 'Scrum One', 'katherine.bollinger03@gmail.com', 'SCRUMone');
-Insert INTO Employees VALUES('stu4FSD', 'Another Name', 'test4@syn.com', 'FSDFour');
-Insert INTO Employees VALUES('stu5FSD', 'Test Name', 'test5@syn.com', 'FSDFour');
-Insert INTO Employees VALUES('stu6FSD', 'Julie Lastname', 'test@syn.com', 'FSDOne');
-Insert INTO Employees VALUES('stu7FSD', 'First Last', 'earth@syn.com', 'FSDFour');
+Insert INTO Employees VALUES('kbTestFSD', 'Kate Test', 'kateb.larping@gmail.com', 'FSDFour', 'adpennella@gmail.com');
+Insert INTO Employees VALUES('taTestFSD', 'Tony Test', 'adpennella@gmail.com', 'FSDFour', 'kateb.larping@gmail.com');
+Insert INTO Employees VALUES('JFSDTest3', 'Stefon Univorse', 'test1@syn.com', 'FSDFour', null);
+Insert INTO Employees VALUES('stu1FSD', 'JFSD One', 'test2@syn.com', 'FSDThree', null);
+Insert INTO Employees VALUES('stu1SCRUM', 'Scrum One', 'katherine.bollinger03@gmail.com', 'SCRUMone', null);
+Insert INTO Employees VALUES('stu4FSD', 'Another Name', 'test4@syn.com', 'FSDFour', null);
+Insert INTO Employees VALUES('stu5FSD', 'Test Name', 'test5@syn.com', 'FSDFour', null);
+Insert INTO Employees VALUES('stu6FSD', 'Julie Lastname', 'test@syn.com', 'FSDOne', null);
+Insert INTO Employees VALUES('stu7FSD', 'First Last', 'earth@syn.com', 'FSDFour', null);
 
 Insert INTO Modules VALUES(1, 'JFSD PD 1', 'PD01', 'FSD123');
 Insert INTO Modules VALUES(2, 'JFSD Found 2', 'FOUND01', 'FSD123');

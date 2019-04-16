@@ -29,19 +29,6 @@ public class DownloadTemplateController implements Controller {
         return (streamID + fileTag + ext);
     }
     
-    private String buildFullPath(String streamID) {
-        // DANGER: THIS NEEDS TO CHANGE DEPENDING ON THE MACHINE / SERVER
-        String directoryPath = "C:/Users/syntel/Downloads/WebSproject-master/WebSproject-master/";
-
-        StringBuilder pathBuilder = new StringBuilder(directoryPath); // file starts with stream ID
-        
-        String filename = createFilename(streamID);
-        pathBuilder.append(filename);
-    
-        return pathBuilder.toString();
-    }
-   
-    
     @Override
     public ModelAndView handleRequest(HttpServletRequest request,
                                      HttpServletResponse response) throws IOException {
@@ -58,10 +45,7 @@ public class DownloadTemplateController implements Controller {
         // get all module names that belong to this stream
         ArrayList<String> moduleNames = moduleDAO.getModuleNamesForStreamID(streamID);
         
-
-        String filename = createFilename(streamID);
-        
-        //DEV: trying to store locally
+        String filename = createFilename(streamID); // append a tag and extension
         response.setContentType("APPLICATION/OCTET-STREAM");
         response.setHeader("Content-Disposition", "attachment; filename=\""
                         + filename + "\"");
@@ -69,12 +53,9 @@ public class DownloadTemplateController implements Controller {
         ServletOutputStream responseOutStream = response.getOutputStream();
         ExcelWriter excelWriter = new ExcelWriter(responseOutStream);
         
-        excelWriter.createExcelTemplateFile(streamID, moduleNames);
+        excelWriter.createExcelTemplateFile(moduleNames);
         responseOutStream.close();
         
-        // TODO: validate that the stream exists
-        
-
-        return new ModelAndView("Login");
+        return new ModelAndView(); // doesn't actually go to a view, just downloads the file
     }
 }

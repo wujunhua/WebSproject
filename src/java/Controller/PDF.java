@@ -17,6 +17,7 @@ import rst.pdfbox.layout.text.Alignment;
 import rst.pdfbox.layout.text.BaseFont;
 import rst.pdfbox.layout.elements.ImageElement;
 
+
 public class PDF {
     
     private static DataSource dataSource;
@@ -111,7 +112,7 @@ public class PDF {
 		
         Document document = new Document(40, 50, 20, 60);
         float linspace = 4;
-        float sectionBreak = 6.5f;
+        float sectionBreak = 7;
         
         ImageElement img = new ImageElement(imagePath);
         document.add(img, new VerticalLayoutHint(Alignment.Left, 0, 0,
@@ -172,23 +173,35 @@ public class PDF {
         }
         pd.addMarkup(domains.get(domains.size() - 2), 11, font);  
         document.add(pd);
-        
+         
         document.add(new VerticalSpacer(sectionBreak));
         
         Paragraph p2 = new Paragraph();
-        p2.addMarkup("__*Performence Report*__\nThis is where we would put the bargraph if we had it", 12, font);
+        p2.addMarkup("{color:#0066a1}__*Performence Report*__\nTODO: bargraph and grade-letter map. Also dynamic categories.", 12, font);
         document.add(new VerticalSpacer(linspace));
         document.add(p2);
         document.add(new VerticalSpacer(350));
         
-        String gradeNumbers = "Overall Grade: "+avgGrade+"  |  "
-                + "Foundation Grade: "+fGrade+"  |  "
+        
+        Paragraph overall = new Paragraph();
+        overall.addMarkup("Overall Grade: " + avgGrade, 12, font);
+        overall.setAlignment(Alignment.Center);
+        document.add(overall);
+        
+        String gradeNumbers = "Foundation Grade: "+fGrade+"  |  "
                 + "Specialization Grade: "+sGrade+"  |  "
-                + "Process/Domain Grade: "+dGrade+"   ";
+                + "Process/Domain Grade: "+dGrade;
         Paragraph grades = new Paragraph();
         grades.addMarkup(gradeNumbers, 12, font);
         document.add(grades);
         document.add(new VerticalSpacer(linspace));
+        
+        Paragraph quote = new Paragraph();
+        quote.addMarkup("{color:#000000}_*\"Learning is the lifelong process of transforming information and experience into knowledge, skills, behaviours and attitudes\"*_\n", 10, font);
+        quote.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", 10, font);
+        document.add(new VerticalSpacer(5*linspace));
+        document.add(quote);
+        //document.add(new VerticalSpacer(linspace));
         
         final OutputStream outputStream = new FileOutputStream(
 		filePath + empid + ".pdf");

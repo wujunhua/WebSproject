@@ -87,6 +87,9 @@
         <li class="nav-item">
           <a class="nav-link" href="modules.htm">Modules</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -103,7 +106,7 @@
                 <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Stream</small></button>
               </div>
               <div class="col-lg-10">
-                <input type="text" class="form-control" id ="streamName" name="streamName" placeholder="Stream Name" required>
+               <input type="text" class="form-control" id ="streamName" name="streamName" placeholder="Stream Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,50}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 50 characters." required>
               </div>
             </div>
           </div>

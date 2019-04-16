@@ -127,6 +127,9 @@
         <li class="nav-item">
           <a class="nav-link" href="modules.htm">Modules</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -143,7 +146,7 @@
                   <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Course</small></button>
                 </div>
                 <div class="col-lg-5">
-                  <input type="text" name="coursename" class="form-control" placeholder="Course Name" required>
+                  <input type="text" name="coursename" class="form-control" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required>
                 </div>
                 <div class="form-group col-md-5">
                   <select class="custom-select" name= "modulename" id="modulename">

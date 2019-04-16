@@ -40,6 +40,8 @@
                 <prop key="courses.htm">adminController</prop>
                 <prop key="streams.htm">adminController</prop>
                 <prop key="modules.htm">adminController</prop>
+                <prop key="category.htm">adminController</prop>
+
                 
                 <prop key="manage-user.htm">adminController</prop>
                 <prop key="create-user.htm">adminController</prop>
@@ -60,6 +62,11 @@
                 <prop key="createModule.htm">adminController</prop>
                 <prop key="deleteModule.htm">adminController</prop>
                 <prop key="updateModule.htm">adminController</prop>
+                
+                <prop key="manage-category.htm">adminController</prop>
+                <prop key="create-category.htm">adminController</prop>
+                <prop key="delete-category.htm">adminController</prop>
+                <prop key="update-category.htm">adminController</prop> 
                 
                 <prop key="download.htm">downloadTemplateController</prop>
             </props>

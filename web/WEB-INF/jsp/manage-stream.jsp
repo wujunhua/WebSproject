@@ -1,3 +1,8 @@
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Array"%>
 <jsp:include page="head-tag.jsp"/>
 
 <body class="bg-light">
@@ -56,7 +61,7 @@
               <label for="new_stream_name" class="col-sm-3 col-form-label">Stream</label>
               <div class="col-sm-9">
                   <input type ="hidden" name="stream_name" id="stream_name" value='${param.id}'/>
-                <input type="text" class="form-control" id="new_stream_name" name ="new_stream_name" value="${param.id}" required>
+                <input type="text" class="form-control" id="new_stream_name" name ="new_stream_name" value=${param.id} pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 than 20 characters." required>
               </div>
             </div>
 

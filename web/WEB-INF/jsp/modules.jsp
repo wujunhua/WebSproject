@@ -72,16 +72,26 @@
         //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
         } // End while 
   
+  sql = "select Category_Name from Category";
+  rs = stmt.executeQuery(sql);
+  
+  ArrayList allCategoryName = new ArrayList();
+  request.setAttribute("allCategoryName",allCategoryName);
+  
+ while (rs.next()) {
+        allCategoryName.add(rs.getString("Category_Name"));
+        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        } // End while 
   
   // select
-  sql = "select category from modules";
+  sql = "select c.category_NAME, m.Category_Id from category c, modules m where m.category_id = c.category_id";
   rs = stmt.executeQuery(sql);
   
   ArrayList catagoryName = new ArrayList();
   request.setAttribute("catagoryName",catagoryName);
   
  while (rs.next()) {
-        catagoryName.add(rs.getString("Category"));
+        catagoryName.add(rs.getString("Category_Name"));
         //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
         } // End while 
   
@@ -147,6 +157,9 @@
         <li class="nav-item">
           <a class="nav-link active" href="modules.htm">Modules</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -163,10 +176,16 @@
                   <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Module</small></button>
               </div>
               <div class="col-4">
-                <input type="text" class="form-control" id="modName" name="modName" placeholder="Module Name" required>
+                <input type="text" class="form-control" id="modName" name="modName" placeholder="Module Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 2 and 45 characters." required>
               </div>
               <div class="col-3">
-                <input type="text" class="form-control" placeholder="category" name="modCategory" id="modCategory" required>
+                <select id="inputState" class="form-control" required="" name ="modCategory">
+                        <c:forEach items="${allCategoryName}" var="catNam">
+                            <option value="${catNam}">
+                                ${catNam}
+                            </option>
+                        </c:forEach>
+                    </select>
               </div>
                 <div class="col-3">
                     <select id="inputState" class="form-control" required="" name ="streamName">

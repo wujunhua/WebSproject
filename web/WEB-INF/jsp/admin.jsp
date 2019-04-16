@@ -115,6 +115,9 @@
         <li class="nav-item">
           <a class="nav-link" href="modules.htm">Modules</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -128,13 +131,13 @@
           <div class="form">
             <div class="form-row">
               <div class="col-2">
-                <button class="btn btn-small btn-success no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert User</button>
+                <button onclick ="checkDomain()" class="btn btn-small btn-success no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert User</button>
               </div>
-              <div class="col-3">
-                <input type="email" class="form-control" id="username" name="username"  placeholder="Email" required>
+              <div class="col-6">
+                <input type="email" class="form-control" id="username" name="username"  placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
               </div>
-              <div class="col-3">
-                <input type="password" class="form-control" id="password" name="password"  placeholder="Password" required>
+              <div >
+                <input type="hidden" class="form-control" id="password" name="password"  value="syntel123" >
               </div>
               <div class="col-4">
                 <div class="form-group pt-lg-2 pl-lg-2">

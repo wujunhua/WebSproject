@@ -28,9 +28,9 @@ Insert INTO Class VALUES ('DBone', 'DB343', 'IN4@syntelinc.com',TO_DATE('06/06/2
 Insert INTO Class VALUES ('DBtwo', 'DB343', 'IN3@syntelinc.com',TO_DATE('06/06/2017', 'mm/dd/yyyy'), TO_DATE('07/06/2017', 'mm/dd/yyyy'));
 Insert INTO Class VALUES ('BDone', 'BD456', 'IN5@syntelinc.com',TO_DATE('06/06/2018', 'mm/dd/yyyy'), TO_DATE('07/06/2018', 'mm/dd/yyyy'));
 Insert INTO Class VALUES ('BDtwo', 'BD456', 'IN6@syntelinc.com',TO_DATE('06/06/1994', 'mm/dd/yyyy'), TO_DATE('07/06/2017', 'mm/dd/yyyy'));
-Insert INTO Class VALUES ('SCRUMone', 'SCRUM12345', 'IN6@syntelinc.com',TO_DATE('2018', 'mm/dd/yyyy'), TO_DATE('07/06/2018', 'mm/dd/yyyy'));
+Insert INTO Class VALUES ('SCRUMone', 'SCRUM12345', 'IN6@syntelinc.com',TO_DATE('06/06/2018', 'mm/dd/yyyy'), TO_DATE('07/06/2018', 'mm/dd/yyyy'));
 Insert INTO Class VALUES ('FSDFour', 'FSD123', 'kateb.larping@gmail.com', TO_DATE('06/06/2015', 'mm/dd/yyyy'), TO_DATE('07/06/2015', 'mm/dd/yyyy'));
-Insert INTO Class VALUES ('FSDFive', 'FSD123', 'IN5', TO_DATE('06/06/2014', 'mm/dd/yyyy'), TO_DATE('07/06/2014', 'mm/dd/yyyy'));
+Insert INTO Class VALUES ('FSDFive', 'FSD123', 'IN5@syntelinc.com', TO_DATE('06/06/2014', 'mm/dd/yyyy'), TO_DATE('07/06/2014', 'mm/dd/yyyy'));
 
 Insert INTO Employees VALUES('kbTestFSD', 'Kate Test', 'kateb.larping@gmail.com', 'FSDFour');
 Insert INTO Employees VALUES('taTestFSD', 'Tony Test', 'adpennella@gmail.com', 'FSDFour');

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,6 +20,7 @@ public class ExcelWriter {
     private final String fileExtension;
     private final String fileTag; // appended to the stream name to complete the file name
     private final String scoreTag; // appended to each module name to communicate that's the score column
+    private OutputStream outputStream;
     private ArrayList<String> columnTitles;
     
     /*
@@ -27,8 +29,10 @@ public class ExcelWriter {
                                 it's relative to the project's root directory
                                 (Ex.) "./downloadable/"
      */
-    public ExcelWriter(String relativePath) {
-        this.relativePath = relativePath;
+    public ExcelWriter(OutputStream outputStream) {
+        this.outputStream = outputStream;
+        
+        this.relativePath = "NO_PATH_SET";
         fileExtension = ".xlsx";
         fileTag = "-Template";
         // trailing whitespace since it's appended to the module name and a # is appended to it
@@ -64,9 +68,9 @@ public class ExcelWriter {
         }
         
         try {
-            FileOutputStream out = createFileOutputStream(streamName);
-            workbook.write(out);
-            out.close();
+//            FileOutputStream out = createFileOutputStream(streamName);
+            workbook.write(outputStream);
+//            out.close(); // don't need to close, it's closed in DownloadTempController
             System.out.println("Template spreadsheet was written successfully");
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,12 +119,12 @@ public class ExcelWriter {
     }
     
     public static void main(String[] args) {
-        
-        ExcelWriter excelWriter = new ExcelWriter("./downloadable/");
-        ArrayList<String> staticModuleNames = new ArrayList<>(2);
-        staticModuleNames.add("web tech");
-        staticModuleNames.add("bootstrap");
-        
-        excelWriter.createExcelTemplateFile("DB343", staticModuleNames);
+//        
+//        ExcelWriter excelWriter = new ExcelWriter("./downloadable/");
+//        ArrayList<String> staticModuleNames = new ArrayList<>(2);
+//        staticModuleNames.add("web tech");
+//        staticModuleNames.add("bootstrap");
+//        
+//        excelWriter.createExcelTemplateFile("DB343", staticModuleNames);
     }
 }

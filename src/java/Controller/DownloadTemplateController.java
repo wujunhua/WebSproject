@@ -1,14 +1,15 @@
 package Controller;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,75 +50,31 @@ public class DownloadTemplateController implements Controller {
         WebApplicationContext appContext = 
                 WebApplicationContextUtils.getRequiredWebApplicationContext(templateContext);
 
-        // the stream ID used to retrieve its template file
+        // extract the stream ID from the link that made this request
         String streamID = request.getParameter("streamID");
+        
         ModuleServiceDAO moduleDAO = (ModuleServiceDAO) appContext.getBean("moduleDAO");
         
+        // get all module names that belong to this stream
         ArrayList<String> moduleNames = moduleDAO.getModuleNamesForStreamID(streamID);
         
-        String directoryPath = "C:/Users/syntel/Downloads/WebSproject-master/WebSproject-master/";
-        String fullPath = buildFullPath(streamID);
+
         String filename = createFilename(streamID);
         
-        // TODO: validate that the stream exists
-        
-        // generate a file (regardless so we don't have to check a 'last modified' value
-        ExcelWriter excelWriter = new ExcelWriter(directoryPath);
-        excelWriter.createExcelTemplateFile(streamID, moduleNames);
-        
-        
-        
-        
-        
-        
-                
-        PrintWriter out = response.getWriter(); // produces outstream to the network response
-        
-        // NOTE: relative path doesn't work here, this is machine specific
-        // we could try a resources folder set in web.xml
-
-
+        //DEV: trying to store locally
         response.setContentType("APPLICATION/OCTET-STREAM");
         response.setHeader("Content-Disposition", "attachment; filename=\""
                         + filename + "\"");
-
-        FileInputStream fileInputStream = new FileInputStream(fullPath);
-
-        int i;
-        while ((i = fileInputStream.read()) != -1) {
-                out.write(i);
-        }
-        fileInputStream.close();
-        out.close();
         
+        ServletOutputStream responseOutStream = response.getOutputStream();
+        ExcelWriter excelWriter = new ExcelWriter(responseOutStream);
         
-        // return to the Login page to test redirecting to a view works
-        //        return new ModelAndView("Login","user",null);
+        excelWriter.createExcelTemplateFile(streamID, moduleNames);
+        responseOutStream.close();
+        
+        // TODO: validate that the stream exists
+        
+
         return new ModelAndView("Login");
     }
-    // some code from: https://www.guru99.com/jsp-file-upload-download.html
-    
-//    @Override
-//    public ModelAndView handleRequest(HttpServletRequest request,
-//                                     HttpServletResponse response) {
-//        
-//        ServletContext templateContext = request.getServletContext();
-//        WebApplicationContext appContext = 
-//                WebApplicationContextUtils.getRequiredWebApplicationContext(templateContext);
-//  
-//        // get module names for a specific stream
-//        ModuleServiceDAO moduleDAO = (ModuleServiceDAO) appContext.getBean("moduleDAO");
-//        ArrayList<String> moduleNames = moduleDAO.getModuleNamesForStreamID("FSD123");
-//
-//        // get all streams
-//        StreamServiceDAO streamDAO = (StreamServiceDAO) appContext.getBean("streamDAO");
-//        ArrayList<Stream> allStreams = streamDAO.getAllStreams();
-//        
-//        // send information to DownloadTemplate view
-//        ModelAndView modelAndView = new ModelAndView("DownloadTemplate");
-//        modelAndView.addObject("moduleNames", moduleNames); // module names
-//        modelAndView.addObject("allStreams", allStreams);
-//        
-//        return modelAndView;
-//    }
 }

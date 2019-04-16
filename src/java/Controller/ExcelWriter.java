@@ -82,14 +82,14 @@ public class ExcelWriter {
     
     private ArrayList<String> createScoreTitles(ArrayList<String> moduleNames) {
         
-        final int numberOfTestTakes = 4; // 3 retakes, but this makes it one-indexed
+        final int retakeLimit = 4; // 3 retakes, this makes it one-indexed
         ArrayList<String> scoreTitles = new ArrayList<>();
         
         // go through each module name
         for(String moduleName: moduleNames) {
             
             // append score tag and test take number to each column title
-            for(int i = 1; i < numberOfTestTakes; i++) {
+            for(int i = 1; i < retakeLimit; i++) {
                 String columnTitle = (moduleName + scoreTag + i); // [module name] Score [#]
                 scoreTitles.add(columnTitle);
             }

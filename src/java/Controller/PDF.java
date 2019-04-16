@@ -114,8 +114,7 @@ public class PDF {
         float linspace = 4;
         float sectionBreak = 7;
         
-        ImageElement img = new ImageElement(imagePath);
-        document.add(img, new VerticalLayoutHint(Alignment.Left, 0, 0,
+        document.add(new ImageElement(imagePath), new VerticalLayoutHint(Alignment.Left, 0, 0,
 		0, 0, true));
         document.add(new VerticalSpacer(40));
                         

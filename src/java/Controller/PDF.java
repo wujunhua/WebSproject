@@ -22,20 +22,18 @@ public class PDF {
     private static DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
 
-	private BaseFont font;
+	private final static BaseFont font = BaseFont.Helvetica;
 	private PDPage page = new PDPage();
     private PDFinfo pdfinfo;
 
 	private String filePath = "C:/Users/syntel/Music/"; //use getfilepath in the email logic?
-    private final String imagePath = "C:\\trainingkb\\WebSproject\\web\\resources\\img\\logo-from-site.jpg"; //path to AS logo
+    private final static String imagePath = "C:\\trainingkb\\WebSproject\\web\\resources\\img\\logo-from-site.jpg"; //path to AS logo
+
     //java.io.File.separator
-    public PDF(){this.font = BaseFont.Times;
-}
+    public PDF(){}
     
 	public PDF(DataSource dataSource) throws ClassNotFoundException {
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        this.font = BaseFont.Times;
-        //super();
         System.out.println("Constructor Called");
         PDF.dataSource=dataSource;
         njdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -111,69 +109,68 @@ public class PDF {
         sGrade=info.getAverageScoresBySpecializationEmployeeID(empid);
         dGrade=info.getAverageScoresByProcessDomainEmployeeID(empid);
 		
-        Document document = new Document(40, 50, 40, 60);
+        Document document = new Document(40, 50, 20, 60);
         float linspace = 4;
         float sectionBreak = 6.5f;
         
         ImageElement img = new ImageElement(imagePath);
-        //ImageElement img = new ImageElement("..\\..\\..\\web\\resources\\img\\logo-fake.png");
-        	document.add(img, new VerticalLayoutHint(Alignment.Left, 0, 0,
+        document.add(img, new VerticalLayoutHint(Alignment.Left, 0, 0,
 		0, 0, true));
+        document.add(new VerticalSpacer(40));
                         
         Paragraph title = new Paragraph();
-        title.addMarkup("*PERFORMICA REPORT*", 20, font);
+        title.addMarkup("{color:#0066a1}__***PERFORMICA REPORT***__", 20, font);
        	document.add(title, VerticalLayoutHint.CENTER);
         document.add(new VerticalSpacer(5));
    
         Paragraph emp = new Paragraph();
-        emp.addMarkup( "*NAME*: " + name + "            " +
-                "*EMPLOYEE ID*: " + empid, 14, font);
+        emp.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "            " +
+                "{color:#0066a1}*EMPLOYEE ID*{color:#000000}: " + empid, 14, font);
         emp.setAlignment(Alignment.Center);
         document.add(emp);
         
         document.add(new VerticalSpacer(6.5f));
         
-        System.out.println("stream is " + stream.size());
         Paragraph strm = new Paragraph();
-        strm.addMarkup("*INDUCTION*: " + stream.get(0) + " - " + stream.get(1), 14, font);
+        strm.addMarkup("{color:#0066a1}*INDUCTION*{color:#000000}: " + stream.get(0) + " - " + stream.get(1), 14, font);
         strm.setAlignment(Alignment.Center);
         document.add(strm);
 		
         document.add(new VerticalSpacer(15.5f));
         
         Paragraph p1 = new Paragraph();
-        p1.addMarkup("__*Training Modules Completed*__", 12, font);
+        p1.addMarkup("{color:#0066a1}__*Training Modules Completed*__", 12, font);
         document.add(p1);
         document.add(new VerticalSpacer(linspace));
         
         Paragraph found = new Paragraph();
-        found.addMarkup("*Foundations*:  ", 12, font);
+        found.addMarkup("{color:#0066a1}*Foundations*{color:#000000}:  ", 11, font);
         for(int i = 0; i < foundations.size() - 2; i+=2){
             
-            found.addMarkup(foundations.get(i) + ",  ", 12, font);
+            found.addMarkup(foundations.get(i) + ",  ", 11, font);
         }
         
-        found.addMarkup(foundations.get(foundations.size() - 2), 12, font);
+        found.addMarkup(foundations.get(foundations.size() - 2), 11, font);
         document.add(found);
         document.add(new VerticalSpacer(linspace));
 
         Paragraph spec = new Paragraph();
-        spec.addMarkup("*Specializations*: ", 12, font);
+        spec.addMarkup("{color:#0066a1}*Specializations*{color:#000000}: ", 11, font);
         for(int i = 0; i < specializations.size() - 2; i+=2){
             
-            spec.addMarkup(specializations.get(i) + ",  ", 12, font);
+            spec.addMarkup(specializations.get(i) + ",  ", 11, font);
         }
         
-        spec.addMarkup(specializations.get(specializations.size() - 2), 12, font);  
+        spec.addMarkup(specializations.get(specializations.size() - 2), 11, font);  
         document.add(spec);
         document.add(new VerticalSpacer(linspace));
         
         Paragraph pd = new Paragraph();
-        pd.addMarkup("*Process / Domain*: ", 12, font);
+        pd.addMarkup("{color:#0066a1}*Process / Domain*{color:#000000}: ", 11, font);
         for(int i = 0; i < domains.size() - 2; i+=2){
-            pd.addMarkup(domains.get(i) + ",  ", 12, font);
+            pd.addMarkup(domains.get(i) + ",  ", 11, font);
         }
-        pd.addMarkup(domains.get(domains.size() - 2), 12, font);  
+        pd.addMarkup(domains.get(domains.size() - 2), 11, font);  
         document.add(pd);
         
         document.add(new VerticalSpacer(sectionBreak));

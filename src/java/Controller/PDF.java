@@ -15,6 +15,7 @@ import rst.pdfbox.layout.elements.VerticalSpacer;
 import rst.pdfbox.layout.elements.render.VerticalLayoutHint;
 import rst.pdfbox.layout.text.Alignment;
 import rst.pdfbox.layout.text.BaseFont;
+import rst.pdfbox.layout.elements.ImageElement;
 
 public class PDF {
     
@@ -25,8 +26,9 @@ public class PDF {
 	private PDPage page = new PDPage();
     private PDFinfo pdfinfo;
 
-	private String filePath = "C:/Users/syntel/Music/";//Path to save the pdf
-    
+	private String filePath = "C:/Users/syntel/Music/"; //use getfilepath in the email logic?
+    private final String imagePath = "C:\\trainingkb\\WebSproject\\web\\resources\\img\\logo-from-site.jpg"; //path to AS logo
+    //java.io.File.separator
     public PDF(){this.font = BaseFont.Times;
 }
     
@@ -113,6 +115,11 @@ public class PDF {
         float linspace = 4;
         float sectionBreak = 6.5f;
         
+        ImageElement img = new ImageElement(imagePath);
+        //ImageElement img = new ImageElement("..\\..\\..\\web\\resources\\img\\logo-fake.png");
+        	document.add(img, new VerticalLayoutHint(Alignment.Left, 0, 0,
+		0, 0, true));
+                        
         Paragraph title = new Paragraph();
         title.addMarkup("*PERFORMICA REPORT*", 20, font);
        	document.add(title, VerticalLayoutHint.CENTER);

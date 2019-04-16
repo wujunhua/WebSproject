@@ -1,5 +1,4 @@
 package Controller;
-//You will need apache pdfbox, apache fontbox, apache commonsloggings, jdbc JARs
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;

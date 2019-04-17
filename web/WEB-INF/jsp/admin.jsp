@@ -195,28 +195,7 @@
   <!-- Bootstrap.js -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-<!--  <script src="<c:url value="/resources/js/emailValidate.js" />"></script>-->
-  <script>
-     function checkDomain() {
-        var x = document.getElementById("username").value;
-        x = x.toLowerCase();
-        x = x.split('@'); 
-        x = x[1];
-        if(x === "syntelinc.com")
-        {
-            return true;
-        }
-        else if(x === "atos.net")
-        {
-            return true;
-        }
-        else
-        {
-            alert("Not a valid atos or syntel email");
-            event.preventDefault();
-        }
-    
-    } 
-  </script>    
+  <script src="<c:url value="/resources/js/emailValidate.js" />"></script>
+
 </body>
 </html>

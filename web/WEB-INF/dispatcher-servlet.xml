@@ -10,11 +10,14 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
+        <!--static files-->
+
+    <mvc:resources mapping="/resources/**" location="/resources/" />	
+    <mvc:resources location="/img/" mapping="/img/**" />	    
+    
+    
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
     
-    <mvc:resources mapping="/resources/**" location="resources/"></mvc:resources>
-    <mvc:resources location="/img/" mapping="/img/**" />
-    <mvc:resources mapping="/js/**" location="/js/" />
 
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but

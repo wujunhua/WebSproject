@@ -1,20 +1,25 @@
 function checkDomain() {
   var x = document.getElementById("username");
-   x  = x.split('@'); 
+   x = x.toLowerCase();
+   x = x.split('@'); 
    x = x[1];
-  if(x == "syntelinc.com")
+  if(x === "syntelinc.com")
     {
-	return true;
+        alert("You are syntel");
+        return true;
     }
-    else if(x == "atos.net")
+    else if(x === "atos.net")
     {
-	return true;
+        alert("you are atos");
+        return true;
     }
     else
     {
         alert("Not a valid syntel or atos email");
-        return;
+        return false;
     }
+    
+    
 }
 
 

@@ -102,14 +102,14 @@ public class PDF {
         name=info.getEmployeeName(empid);
         stream=info.getStreamIDName(empid);
         avgGrade=info.getAverageScore(empid);
-        System.out.println(avgGrade);
-        foundations.addAll(info.getModScoreByFoundation(empid));
-        specializations.addAll(info.getModScoreBySpecialization(empid));
-        domains.addAll(info.getModScoreByProcessDomain(empid));
+        foundations.addAll(info.getModuleScoresByCategory(empid, "FOUND01"));
+        specializations.addAll(info.getModuleScoresByCategory(empid, "SPEC01"));
+        domains.addAll(info.getModuleScoresByCategory(empid, "PD01"));
         fGrade=info.getAverageScoreByCategory(empid, "FOUND01");
         sGrade=info.getAverageScoreByCategory(empid, "SPEC01");
         dGrade=info.getAverageScoreByCategory(empid, "PD01");
 		
+        //create PDF
         Document document = new Document(40, 50, 20, 60);
         float linspace = 4;
         float sectionBreak = 7;

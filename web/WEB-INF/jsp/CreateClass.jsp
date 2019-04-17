@@ -1,3 +1,6 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
+
 <%@page import="POJO.Stream"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
@@ -5,8 +8,7 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.DriverManager"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
+
 
 <!--database access-->
 <%
@@ -146,7 +148,7 @@
             <div class="container pb-5 pt-4">
                 <div class="row mx-1">
                     <div class="col-8 px-3 py-3">
-                        <s:form commandName="excel">
+                        <s:form commandName="excel" enctype="multipart/form-data" method="POST">
                             <Table class="table">
                                 <tr class="my-2">
                                     

@@ -104,11 +104,21 @@ public class PDFinfo {
     /**
     * Get overall average score of an employee
     * @param empID - the employee id of the employee
-     * @param category
     * @return a string representation of the average score
     * @throws java.lang.Exception
     */
-	public String getAverageScores(String empID, String category) throws Exception{
+	public String getAverageScore(String empID) throws Exception{
+       return getAverageScoreByCategory(empID, "");
+    }
+    
+    /**
+    * Get average score of an employee by category
+    * @param empID - the employee id of the employee
+    * @param category - desired category
+    * @return a string representation of the average score
+    * @throws java.lang.Exception
+    */
+	public String getAverageScoreByCategory(String empID, String category) throws Exception{
         SqlParameterSource namedParams;
         String SQL = "SELECT AVG(s.scores) "
                 + "FROM employees_take_modules s INNER JOIN modules m ON m.module_id = s.module_ID "
@@ -121,48 +131,6 @@ public class PDFinfo {
         }
         
         String str = njdbc.queryForObject(SQL, namedParams, String.class);
-
-		return String.format("%.2f", Float.parseFloat(str));
-	}
-	
-    /**
-    * Get average foundation score of an employee
-    * @param empID - the employee id of the employee
-    * @return a string representation of the average score
-    * @throws java.lang.Exception
-    */
-	public String getAverageScoresByFoundationEmployeeID(String empID) throws Exception{
-        String SQL = "select avg(e.scores) from Employees_take_Modules e, Modules m where m.category_id='Foundation' and m.module_id=e.module_id and e.employee_id= :id";
-        SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
-        String str = njdbc.queryForObject(SQL, namedParams, String.class);
-
-		return String.format("%.2f", Float.parseFloat(str));
-	}
-	
-    /**
-    * Get average spec score of an employee
-    * @param empID - the employee id of the employee
-    * @return a string representation of the average score
-    * @throws java.lang.Exception
-    */
-	public String getAverageScoresBySpecializationEmployeeID(String empID) throws Exception{
-       String SQL = "select avg(e.scores) from Employees_take_Modules e, Modules m where m.category_id='Specialization' and m.module_id=e.module_id and e.employee_id= :id";
-       SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
-       String str = njdbc.queryForObject(SQL, namedParams, String.class);
-
-		return String.format("%.2f", Float.parseFloat(str));
-	}
-	
-    /**
-    * Get average process/domain score of an employee
-    * @param empID - the employee id of the employee
-    * @return a string representation of the average score
-    * @throws java.lang.Exception
-    */
-	public String getAverageScoresByProcessDomainEmployeeID(String empID) throws Exception{
-            String SQL = "select avg(e.scores) from Employees_take_Modules e, Modules m where m.category_id='ProcessDomain' and m.module_id=e.module_id and e.employee_id=:id";
-            SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
-			String str = njdbc.queryForObject(SQL, namedParams, String.class);
 
 		return String.format("%.2f", Float.parseFloat(str));
 	}

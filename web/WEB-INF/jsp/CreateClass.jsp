@@ -160,7 +160,7 @@
                                             <select id="selectedStream" name="streamName" class="form-control">
                                                 <c:forEach items="${allStreams}" var="stream">
                                                     <option value="${stream.ID}"> 
-                                                        ${stream.name}
+                                                        ${stream.name} (${stream.ID})
                                                     </option>
                                                 </c:forEach>
                                             </select>      

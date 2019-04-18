@@ -1,6 +1,5 @@
 package Controller;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -87,9 +86,6 @@ public class SendEmail {
             tr.send(message);
 
             System.out.println("message sent!");
-            File file = new File(filename);
-            if(file.delete())
-                System.out.println("PDF Deleted.");
 
         }
         catch (MessagingException mex)

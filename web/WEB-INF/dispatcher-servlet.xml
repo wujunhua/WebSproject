@@ -106,7 +106,8 @@
     <bean name="downloadTemplateController"
         class="Controller.DownloadTemplateController"
     />
-    <bean id = "multipartResolver"
-      class = "org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    <bean id = "multipartResolver" 
+          class ="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    
 
 </beans>

@@ -27,9 +27,9 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
-                <!--
+                
                 <prop key="index.htm">indexController</prop>
-                -->
+                
                 <prop key="login.htm">loginController</prop>
                 
                 <prop key="instructor.htm">instructorController</prop>
@@ -72,6 +72,8 @@
                 <prop key="update-category.htm">adminController</prop> 
                 
                 <prop key="download.htm">downloadTemplateController</prop>
+              
+                <prop key="reset-password.htm">resetController</prop>
             </props>
         </property>
     </bean>
@@ -84,11 +86,11 @@
     <!--
     The index controller.
     -->
-    <!--
-          <bean name="indexController"
+    
+     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
-    -->
+    
     
     <bean name="loginController"
           class="Controller.Authentication"
@@ -116,5 +118,10 @@
     <bean name="downloadTemplateController"
         class="Controller.DownloadTemplateController"
     />
+  
+   <bean name="resetController"
+          class="Controller.ResetPass"
+          p:formView="reset-password"
+       />
 
 </beans>

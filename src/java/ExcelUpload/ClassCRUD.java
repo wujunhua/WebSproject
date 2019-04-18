@@ -1,17 +1,23 @@
 package ExcelUpload;
-import java.sql.Connection;
-import java.sql.DriverManager;
+
+import java.text.*;
+
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+
 
 public class ClassCRUD {
 
-	public void insertClass(Statement st, String class_id, String stream_id, String user_id){
-		try {
+	public void insertClass(Statement st, String class_id, String stream_id, String user_id, String startDate, String endDate) throws SQLException, ParseException{
+		
+               
+            try {
 			System.out.println("Inserting a class...");
-			int rows = st.executeUpdate("INSERT INTO Student_Performance.Class VALUES ('" + class_id + "','" + stream_id + "','" + user_id  + "')");
+                        
+			int rows = st.executeUpdate("INSERT INTO Student_Performance.Class VALUES ('" + class_id + "','" + stream_id + "','" + user_id  + "',TO_DATE('"+startDate+"', 'YYYY-MM-DD'),TO_DATE('"+endDate+"','YYYY-MM-DD'))");
 			System.out.println(rows + " class added...");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Exception " + e.getMessage());
 		}
 	}
@@ -22,7 +28,7 @@ public class ClassCRUD {
 			ResultSet rs = st.executeQuery("SELECT class_id, stream_id, user_id FROM Student_Performance.Class WHERE class_id = '" + class_id + "'");
 			while(rs.next())
 				System.out.println("Result: " + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Exception " + e.getMessage());
 		}
 	}
@@ -32,7 +38,7 @@ public class ClassCRUD {
 			System.out.println("Update class.");
 			int rows = st.executeUpdate("UPDATE Student_Performance.Class SET stream_id ='" + stream_id + "', user_id='" + user_id + "'WHERE class_id ='" + class_id + "'");
 			System.out.println(rows + " class updated");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Exception " + e.getMessage());
 		}
 	}
@@ -42,30 +48,10 @@ public class ClassCRUD {
 			System.out.println("Delete class.");
 			int rows = st.executeUpdate("DELETE FROM Student_Performance.Class WHERE class_id = '" + class_id + "'");
 			System.out.println(rows + " class deleted");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Exception " + e.getMessage());
 		}
 	}
 
-	public static void main(String[] args) {
-		ClassCRUD cc = new ClassCRUD();
-		try {
-			String class_id = "JV128";
-			String stream_id = "DB343";
-			String user_id = "AD2";
-			Class.forName("oracle.jdbc.OracleDriver");
-			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "Student_Performance", "Student_Performance");
-			Statement st = con.createStatement();
-			//cc.insertClass(st, class_id, stream_id, user_id);
-			//cc.readClass(st, class_id);
-			//cc.updateClass(st, class_id, stream_id, user_id);
-			//cc.deleteClass(st, class_id);
-			st.close();
-			con.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+	
 }

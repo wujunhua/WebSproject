@@ -149,9 +149,7 @@
                         <s:form commandName="excel">
                             <Table class="table">
                                 <tr class="my-2">
-                                    
-                                
-                                    
+                                   
                                     <td> Stream:</td> <!-- stream dropdown -->
                                     <td>
                                         
@@ -167,29 +165,36 @@
                                 </tr>
                                 <tr class="my-2">
                                     <td> Location:</td>
-                                    <td><input type="text" name="location" placeholder="HOU" class="form-control" pattern="[a-zA-Z][a-zA-Z]{2,100}" title="Location can only contain letters and be atleast 3 characters." required/></td>
+                                    <td><input type="text" name="location" class="form-control"/></td>
                                 </tr>
                                 <tr>
                                     <td>Site</td>
-                                    <td> <div class="col-4">
-                                            <div class="form-check form-check-inline">
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="onsite" name="site" value="Onsite" checked>
-                                                    <label class="custom-control-label" for="onsite"><small>Onsite</small></label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="offshore" name="site" value="Offshore" >
-                                                    <label class="custom-control-label" for="offshore"><small>Offshore</small></label>
-                                                </div> 
-                                            </div>
-                                        </div>
+                                    <td><select name="site" class="form-control">
+                                        <option value="">Select</option>
+                                        <option  id="offSite" value="CHI">CHI</option>
+                                        <option  id="onSite" value="OPA">OPA</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>Instructor Email:</td>
+                                    <td><input type="email" name="insEmail" class="form-control"/></td>
+                                </tr>
+                                <tr>
+                                 <tr>
+                                    <td>Start Date:</td>
+                                    <td><input type="date" name="startDate" class="form-control"/></td>
+                                </tr>
+                                 <tr>
+                                    <td>End Date:</td>
+                                    <td><input type="date" name="endDate" class="form-control"/></td>
+                                </tr>
+                                <tr>
+                                <tr>   
                                     <td>Upload Excel</td>
                                     <td>  
-                                            <input type="file" name="file" style="" required/>
-                                            <label class="custom-file-input" >Choose file...</label>
+                                            <input type="file" name="file" style=""/>
+                                            <label class="custom-file-input">Choose file...</label>
                                     </td>
                                     <td></td>
                                 </tr>

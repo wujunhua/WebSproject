@@ -37,8 +37,24 @@
   ArrayList categoryList = new ArrayList();
   request.setAttribute("categoryList", categoryList);
   
+  ArrayList cleanedCategoryList = new ArrayList();
+  request.setAttribute("cleanedCategoryList", cleanedCategoryList);
+  
+  String cleanedString;
+  
   while (rs.next()) {
         categoryList.add(rs.getString("category_name"));
+        
+        cleanedString = rs.getString("category_name");
+        cleanedString = cleanedString.trim();
+        //replacing + with %2B
+        cleanedString = cleanedString.replaceAll("\\+", "%2B");
+        //replacing spaces with %20
+        cleanedString = cleanedString.replaceAll("\\s", "+");
+        //replacing # with %23
+        cleanedString = cleanedString.replaceAll("\\#", "%23");
+        
+        cleanedCategoryList.add(cleanedString);  
         } // End while 
 
 
@@ -64,7 +80,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="background: transparent;">
           <li class="breadcrumb-item"><a href="#">Admin</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Streams</li>
+          <li class="breadcrumb-item active" aria-current="page">Category</li>
         </ol>
       </nav>
     </div>
@@ -75,19 +91,19 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="streams.htm">Streams</a>
-        </li>
+        </li>  
         <li class="nav-item">
-          <a class="nav-link" href="courses.htm">Courses</a>
+          <a class="nav-link active" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="category.htm">Category</a>
+          <a class="nav-link" href="courses.htm">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -126,7 +142,7 @@
             <tr value ="${cat}">
                 <th scope = "row"> ${count}</th>
                 <td>
-                    <a href="manage-category.htm?id=${cat}">${cat}</a>
+                    <a href="manage-category.htm?id=${cleanedCategoryList.get(count-1)}">${cat}</a>
                 </td>
             </tr>
         <c:set var="count" value = "${count+1}"/>    

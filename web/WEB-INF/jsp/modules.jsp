@@ -37,9 +37,21 @@
   ArrayList moduleList = new ArrayList();
   request.setAttribute("moduleList", moduleList);
   
+  ArrayList cleanedModuleList = new ArrayList();
+  request.setAttribute("cleanedModuleList", cleanedModuleList);
+  String cleanedString;
   while (rs.next()) {
         moduleList.add(rs.getString("module_name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        cleanedString = rs.getString("module_name");
+        cleanedString = cleanedString.trim();
+        //replacing + with %2B
+        cleanedString = cleanedString.replaceAll("\\+", "%2B");
+        //replacing spaces with %20
+        cleanedString = cleanedString.replaceAll("\\s", "+");
+        //replacing # with %23
+        cleanedString = cleanedString.replaceAll("\\#", "%23");
+        
+        cleanedModuleList.add(cleanedString);  
         } // End while 
   
 
@@ -100,12 +112,24 @@
   rs = stmt.executeQuery(sql);
   ArrayList streamNameList = new ArrayList();
   request.setAttribute("streamNameList", streamNameList);
-  //ArrayList junk = new ArrayList();
-  //request.setAttribute("junk", junk);
   
+  ArrayList cleanedStreamNameList = new ArrayList();
+  request.setAttribute("cleanedStreamNameList", cleanedStreamNameList);
+  
+  String cleanedString2;
   while (rs.next()) {
         streamNameList.add(rs.getString("stream_name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        
+        cleanedString2 = rs.getString("stream_name");
+        cleanedString2 = cleanedString2.trim();
+        //replacing + with %2B
+        cleanedString2 = cleanedString2.replaceAll("\\+", "%2B");
+        //replacing spaces with %20
+        cleanedString2 = cleanedString2.replaceAll("\\s", "+");
+        //replacing # with %23
+        cleanedString2 = cleanedString2.replaceAll("\\#", "%23");
+        
+        cleanedStreamNameList.add(cleanedString2);  
         } // End while 
   
 
@@ -146,19 +170,19 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="streams.htm">Streams</a>
-        </li>
+        </li>  
         <li class="nav-item">
-          <a class="nav-link" href="courses.htm">Courses</a>
+          <a class="nav-link" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="category.htm">Category</a>
+          <a class="nav-link" href="courses.htm">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -215,7 +239,7 @@
             <c:set var="count" value="1"/>
             <c:forEach items="${moduleList}" var="module">
             <tr value="${module}">
-                <th scope="row"><a href="manage-module.htm?id=${moduleIdList.get(count-1)}&name=${catagoryName.get(count-1)}&stream=${streamNameList.get(count-1)}&okay=${module}">${moduleIdList.get(count-1)}</a></th>
+                <th scope="row"><a href="manage-module.htm?id=${moduleIdList.get(count-1)}&name=${catagoryName.get(count-1)}&stream=${cleanedStreamNameList.get(count-1)}&okay=${cleanedModuleList.get(count-1)}">${moduleIdList.get(count-1)}</a></th>
                 <td>
                    ${module}
                 </td>

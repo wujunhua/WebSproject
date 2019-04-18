@@ -16,10 +16,10 @@ public class PDFViewerController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // go to "Home" of respective operating system ("This PC" for Windows and "Macintosh HD" for Mac)
         
-        String osHome = System.getProperty("user.home");
+        //String osHome = System.getProperty("user.home");
 	
         // File.separator -> Uses appropriate slash (backslash, forward-slash) for respective operating system
-        String filePath = osHome + File.separator + "Downloads" + File.separator;
+        //String filePath = osHome + File.separator + "Downloads" + File.separator;
                 
         /* Name of PDF goes here. We can get file name and save it in public string when it is generated in the other class and this 
         * string below will get the file name from the other class and find it, to bypass "handleRequest" 
@@ -29,7 +29,7 @@ public class PDFViewerController implements Controller {
         // System.out.println("******* " + filenameFromUrl);
         String pdfFileName = "test.pdf"; // static for now
 	
-	File pdfFile = new File(filePath + pdfFileName); 
+	File pdfFile = new File(pdfFileName); 
 	
 	response.setContentType("application/pdf"); // Tells the browser "This is a pdf application"
 	response.addHeader("Content-Disposition","inline;filename=" + pdfFile); // Tells the browser "Open this PDF application in the browser. Do not download it"

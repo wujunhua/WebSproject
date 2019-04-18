@@ -21,7 +21,7 @@ public class PDFinfo {
     public PDFinfo(Connection conn){
         this.c1 = conn;
     }
-	
+    
     public PDFinfo() {
     }
     
@@ -48,7 +48,7 @@ public class PDFinfo {
     public DataSource getDataSource() {
         return dataSource;
     }
-	 
+     
     /**
     * Get employee ID of all employees
     * @return ArrayList of all employee IDs
@@ -64,9 +64,9 @@ public class PDFinfo {
         return list;
     } 
     
-	/**
+    /**
     * Get employee name for a given Employee ID
-	* @param empID - the employee id of the employee
+    * @param empID - the employee id of the employee
     * @return employee name
     * @throws java.lang.Exception
     */
@@ -77,35 +77,36 @@ public class PDFinfo {
         String str = njdbc.queryForObject(SQL, namedParams, String.class);
         return str;
     }
-	
-	/**
+    
+    /**
     * Get stream ID and name of streams employee has undertaken
     * @param empID - the employee id of the employee
     * @return a list of strings, formatted as [id1, name1, id2, name2, ...]
     * @throws java.lang.Exception
     */
     public ArrayList<String> getStreamIDName(String empID) throws Exception{
-		ArrayList<String> list = new ArrayList();
+        ArrayList<String> list = new ArrayList();
         Statement s1 = c1.createStatement();
      
-		ResultSet r1=s1.executeQuery("select s.stream_id, s.stream_name from Stream s, Class c, Employees e where s.stream_id=c.stream_id and c.class_id=e.class_id and e.employee_id='"+empID+"'");
-		while(r1.next()){
-			list.add(r1.getString(1));
-			list.add(r1.getString(2));
-		}
+        ResultSet r1=s1.executeQuery("select s.stream_id, s.stream_name from Stream s, Class c, Employees e where s.stream_id=c.stream_id and c.class_id=e.class_id and e.employee_id='"+empID+"'");
+        while(r1.next()){
+            list.add(r1.getString(1));
+            list.add(r1.getString(2));
+        }
               
-		r1.close();
+        r1.close();
         s1.close();
 
         return list;
-	}
-	
+    }
+    
     /**
     * Get overall average score of an employee
     * @param empID - the employee id of the employee
     * @return a string representation of the average score
     * @throws java.lang.Exception
     */
+
 	public String getAverageScore(String empID) throws Exception{
        return getAverageScoreByCategory(empID, "");
     }
@@ -133,8 +134,8 @@ public class PDFinfo {
 
 		return String.format("%.2f", Float.parseFloat(str));
 	}
-	
-    /**
+
+  /**
     * Get list of module scores of an employee for a given category
     * @param empID - the employee id of the employee
     * @param category - the desired category
@@ -156,5 +157,4 @@ public class PDFinfo {
 		
 		return list;
 	}
-    
 }

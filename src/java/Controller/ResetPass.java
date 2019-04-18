@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 public class ResetPass extends SimpleFormController {
-    
+        
     public ResetPass(){
         setCommandClass(POJO.ResetPassForm.class);
         setCommandName("forgotPass");
@@ -126,11 +126,14 @@ public class ResetPass extends SimpleFormController {
             System.out.println("Password Changed");
             
         }catch(Exception e){
+            String errorMessage = "That email address is not in our system";
             System.out.println("********EXCEPTION IN RESETPASS.JAVA**********");
             System.out.println("Invalid Email");
             System.out.println(e);
-            return new ModelAndView("reset-password");
-        }        
-        return new ModelAndView("index"); // causes redirect to login page
+            return new ModelAndView("reset-password", "errorMessage", errorMessage);
+        }
+        String confirmMessage = "Your password has been reset, check your email";
+        // causes redirect to login page
+        return new ModelAndView("reset-password", "confirmMessage", confirmMessage); 
     }
 }

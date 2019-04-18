@@ -27,6 +27,11 @@
         <title>Reset Password</title>
     </head>
     <body class="animated fadeIn">
+        
+        <!--these messages only display if they receive a value from ResetPass.java controller-->
+        <h1>${confirmMessage}</h1>
+        <h1>${errorMessage}</h1>
+        
         <div class="container-fluid h-100">
 		<div class="row justify-content-center align-items-center h-100">
 			<div class="col col-sm-6 col-md-6 col-lg-4 col-xl-6 card mx-2 py-5 animated fadeIn shadow-lg rounded-0">

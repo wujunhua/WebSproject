@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class ClassCRUD {
 
 	public void insertClass(Statement st, String class_id, String stream_id, String user_id, String startDate, String endDate) throws SQLException, ParseException{
-		System.out.println(stream_id+" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		
                
             try {
 			System.out.println("Inserting a class...");

@@ -26,13 +26,12 @@ public class UploadAuthentication extends SimpleFormController{
 
     @Override
     protected ModelAndView onSubmit(Object command) throws Exception {
-        System.out.println("did it");
-        System.out.println(command);
+        
         ExcelUploadObject excel =(ExcelUploadObject)command;
-        System.out.println(excel.getLocation());
+        
         MultipartFile multiFile = excel.getFile();
         File file = convert(multiFile);
-        Runner.ExcelUpload(file, excel.getLocation(),excel.getSite(), excel.getStreamName());
+        Runner.ExcelUpload(file, excel.getLocation(),excel.getSite(), excel.getStreamName(), excel.getInsEmail(),excel.getStartDate(), excel.getEndDate());
         
         // bring in all streams
         

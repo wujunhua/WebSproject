@@ -151,9 +151,7 @@
                         <s:form commandName="excel" enctype="multipart/form-data" method="POST">
                             <Table class="table">
                                 <tr class="my-2">
-                                    
-                                
-                                    
+                                   
                                     <td> Stream:</td> <!-- stream dropdown -->
                                     <td>
                                         
@@ -181,6 +179,20 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>Instructor Email:</td>
+                                    <td><input type="email" name="insEmail" class="form-control"/></td>
+                                </tr>
+                                <tr>
+                                 <tr>
+                                    <td>Start Date:</td>
+                                    <td><input type="date" name="startDate" class="form-control"/></td>
+                                </tr>
+                                 <tr>
+                                    <td>End Date:</td>
+                                    <td><input type="date" name="endDate" class="form-control"/></td>
+                                </tr>
+                                <tr>
+                                <tr>   
                                     <td>Upload Excel</td>
                                     <td>  
                                             <input type="file" name="file" style=""/>

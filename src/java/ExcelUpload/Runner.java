@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.sql.*;
+import java.text.ParseException;
 
 
 
@@ -12,7 +13,7 @@ import java.sql.*;
 
 public class Runner {
     
-    public static ArrayList<Employee> ExcelUpload(File FILE_PATH, String loc, String site, String stream) throws IOException {
+    public static ArrayList<Employee> ExcelUpload(File FILE_PATH, String loc, String site, String stream, String insEmail, String startDate, String endDate) throws IOException, ParseException {
         
         ExcelPuller pul = new ExcelPuller();
         ArrayList<Employee> emps = new ArrayList<>();
@@ -28,7 +29,7 @@ public class Runner {
         	Class.forName("oracle.jdbc.driver.OracleDriver");
         	Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
         	Statement st = con.createStatement();
-        	cCrud.insertClass(st, emps.get(0).getClassID(), "", "");
+        	cCrud.insertClass(st, emps.get(0).getClassID(), stream, insEmail, startDate, endDate);
                 
       
                 //Iterates through the created employees to upload their data

@@ -31,7 +31,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-public class ResetPass extends SimpleFormController{
+public class ResetPass extends SimpleFormController {
     
     public ResetPass(){
         setCommandClass(POJO.ResetPassForm.class);
@@ -129,8 +129,8 @@ public class ResetPass extends SimpleFormController{
             System.out.println("********EXCEPTION IN RESETPASS.JAVA**********");
             System.out.println("Invalid Email");
             System.out.println(e);
-            return new ModelAndView("Login");
+            return new ModelAndView("reset-password");
         }        
-        return new ModelAndView("Login");
+        return new ModelAndView("index"); // causes redirect to login page
     }
 }

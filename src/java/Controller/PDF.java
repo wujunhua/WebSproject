@@ -144,7 +144,19 @@ public class PDF {
         emp.setAlignment(Alignment.Center);
         document.add(emp);
         
-        document.add(new VerticalSpacer(6.5f));
+        //document.add(new VerticalSpacer(6.5f));
+        
+        document.add(new VerticalSpacer(2*sectionBreak));
+        
+        Paragraph p1 = new Paragraph();
+        p1.addMarkup("{color:#0066a1}__*My Trainings*__:", 12, font);
+        document.add(p1);
+        document.add(new VerticalSpacer(linspace));
+        
+        Paragraph pur = new Paragraph();
+        pur.addMarkup("{color:#000000}*Stream*: " + stream.get(0) + " - " + stream.get(1), 12, font);
+        document.add(pur);
+        document.add(new VerticalSpacer(linspace));
         
         /*Paragraph strm = new Paragraph();
         strm.addMarkup("{color:#0066a1}*INDUCTION*{color:#000000}: " + stream.get(0) + " - " + stream.get(1), 14, font);

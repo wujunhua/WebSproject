@@ -22,7 +22,7 @@ try {
   } catch(Exception e) {
     out.println("Connection failed: " + e.toString() + "<P>");      
   }
-  String sql;
+  String sql, sql3;
   int numRowsAffected;
   Statement stmt = conn.createStatement();
   ResultSet rs;    
@@ -37,7 +37,23 @@ try {
         streamName.add(rs.getString("stream_Name"));
         //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
         } // End while 
+  sql = "select Category_Name from Category";
+  rs = stmt.executeQuery(sql);
+  
+  ArrayList allCategoryName = new ArrayList();
+  request.setAttribute("allCategoryName",allCategoryName);
+  
+ while (rs.next()) {
+        allCategoryName.add(rs.getString("Category_Name"));
+        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        } // End while
  
+//check to see if it can be deleted
+String id = request.getParameter("id");
+sql3 = "select c.course_name from courses c, modules m where c.module_id=m.module_id and m.module_id = " + id;
+rs = stmt.executeQuery(sql);
+
+boolean moduleCanBeDeleted = rs.next();
 %>
 
 
@@ -64,16 +80,19 @@ try {
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
+          <a class="nav-link" href="streams.htm">Streams</a>
+        </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
+          <a class="nav-link active" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="modules.htm">Modules</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -89,7 +108,11 @@ try {
             <span style="float: right;">
               <form action="deleteModule.htm">
                   <input type="hidden" name='moduleId' id ="moduleId" value='${param.id}' />
-                  <button class="btn btn-sm btn-danger" type ="submit">
+                   <% if(moduleCanBeDeleted){%>
+                  <button class="btn btn-sm btn-danger" type ="submit" >
+                    <%} else{%>
+                    <button class="btn btn-sm btn-danger" type="submit"title="This module contains courses and cannot be deleted" disabled >
+                    <%}%>
                 <!--a href="" class="btn btn-sm btn-danger"-->
                   <span style="white-space: nowrap;"><i class="fas fa-user-minus"></i> Delete </span>
                 <!--/a-->
@@ -109,7 +132,14 @@ try {
               <div class="form-group row mt-3">
               <label for="new_module" class="col-sm-3 col-form-label">Category</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="cat" name ="cat" placeholder="" value="${param.name}" required>
+                  <select id="inputState" class="form-control" required="" name ="cat">
+                      <option selected hidden value="${param.name}">${param.name}</option>
+                        <c:forEach items="${allCategoryName}" var="catNam">
+                            <option value="${catNam}">
+                                ${catNam}
+                            </option>
+                        </c:forEach>
+                    </select>
               </div>
             </div>
 
@@ -117,6 +147,7 @@ try {
               <label for="new_stream_id" class="col-sm-3 col-form-label">Stream Name</label>
               <div class="col-sm-9">
                   <select id="inputState" class="form-control" required="" name ="streamName" id ="streamName">
+                    <option selected hidden value="${param.stream}">${param.stream}</option>
                       <c:forEach items="${streamName}" var="stream">
                           <option value="${stream}">
                               ${stream}

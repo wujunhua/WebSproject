@@ -35,6 +35,11 @@
                                                <img src="resources/img/logo-fake.png" class="img-fluid pt-3 pb-5">
 					</div>
 				</div>
+                            
+                                <!--these messages only display if they receive a value from ResetPass.java controller-->
+                                <p class="text-center text-success">${confirmMessage}</p>
+                                <p class="text-center text-danger">${errorMessage}</p>
+                            
                                 <s:form commandName="forgotPass" class="px-5 noto">
                                     <div class="input-group mb-3">
 					  <div class="input-group-prepend">

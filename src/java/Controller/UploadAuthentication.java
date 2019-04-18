@@ -29,23 +29,25 @@ public class UploadAuthentication extends SimpleFormController{
         
         ExcelUploadObject excel =(ExcelUploadObject)command;
         
+      
         MultipartFile multiFile = excel.getFile();
         File file = convert(multiFile);
-        Runner.ExcelUpload(file, excel.getLocation(),excel.getSite(), excel.getStreamName(), excel.getInsEmail(),excel.getStartDate(), excel.getEndDate());
-        
+  
+        Runner.ExcelUpload(file, excel.getLocation(), excel.getSite(), excel.getStreamName(), excel.getInsEmail(), excel.getStartDate(), excel.getEndDate());
         // bring in all streams
         
         
         return new ModelAndView("instructor");
     }
-    public File convert(MultipartFile file) throws IOException
-{    
-    File convFile = new File(file.getOriginalFilename());
-    convFile.createNewFile(); 
-    FileOutputStream fos = new FileOutputStream(convFile); 
-    fos.write(file.getBytes());
-    fos.close(); 
-    return convFile;
-}
+    
+    public File convert(MultipartFile file) throws IOException{
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        try (FileOutputStream fos = new FileOutputStream(convFile)) {
+            fos.write(file.getBytes());
+        }
+        return convFile;
+    }
+
       
 }

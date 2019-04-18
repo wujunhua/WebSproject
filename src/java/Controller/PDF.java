@@ -17,6 +17,8 @@ import rst.pdfbox.layout.text.Alignment;
 import rst.pdfbox.layout.text.BaseFont;
 import rst.pdfbox.layout.elements.ImageElement;
 
+//import org.jfree.chart.ChartUtilities;
+
 public class PDF {
     
     private static DataSource dataSource;
@@ -119,8 +121,8 @@ public class PDF {
         //because the "real way" is being diffuclt, cheat by adding a realy tiny empty string that is underlined.
         
         //create PDF
-        float linspace = 6;
-        float sectionBreak = 7.5f;
+        float linspace = 12;
+        float sectionBreak = 18;
         float leftMargin = 40;
         float rightMargin = 40;
         float topMargin = 20;
@@ -134,7 +136,7 @@ public class PDF {
         Paragraph title = new Paragraph();
         title.addMarkup("{color:#0066a1}__***PERFORMICA REPORT***__", 20, font);
        	document.add(title, VerticalLayoutHint.CENTER);
-        document.add(new VerticalSpacer(5));
+        document.add(new VerticalSpacer(sectionBreak));
    
         Paragraph emp = new Paragraph();
         emp.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "            " +
@@ -144,18 +146,22 @@ public class PDF {
         
         document.add(new VerticalSpacer(6.5f));
         
-        Paragraph strm = new Paragraph();
+        /*Paragraph strm = new Paragraph();
         strm.addMarkup("{color:#0066a1}*INDUCTION*{color:#000000}: " + stream.get(0) + " - " + stream.get(1), 14, font);
         strm.setAlignment(Alignment.Center);
         document.add(strm);
+        
 		
         document.add(new VerticalSpacer(15.5f));
         
         Paragraph p1 = new Paragraph();
-        p1.addMarkup("{color:#0066a1}__*Training Modules Completed*__", 12, font);
+        p1.addMarkup("{color:#0066a1}*Training Modules Completed*", 12, font);
         document.add(p1);
         document.add(new VerticalSpacer(linspace));
+        */
         
+        document.add(hRule);
+        document.add(new VerticalSpacer(5));
         Paragraph found = new Paragraph();
         found.addMarkup("{color:#0066a1}*Foundations*{color:#000000}:  ", 11, font);
         for(int i = 0; i < foundations.size() - 2; i+=2){
@@ -187,10 +193,11 @@ public class PDF {
         }
         pd.addMarkup(domains.get(domains.size() - 2), 11, font);  
         document.add(pd);
+        document.add(hRule);
         document.add(new VerticalSpacer(sectionBreak));
         
         Paragraph p2 = new Paragraph();
-        p2.addMarkup("{color:#0066a1}__*Performence Report*__\n\n<<bargraph goes here>>", 12, font);
+        p2.addMarkup("{color:#0066a1}__*My Performence*__\n\n<<bargraph goes here>>", 12, font); //http://www.java2s.com/Code/Java/Chart/JFreeChartHorizontalBarChartDemo2.htm
         document.add(new VerticalSpacer(linspace));
         document.add(p2);
         document.add(new VerticalSpacer(50));
@@ -216,8 +223,7 @@ public class PDF {
         final OutputStream outputStream = new FileOutputStream(
 		filePath + empid + ".pdf");
         document.save(outputStream);
-    
-        //BarChartEx bc = new BarChartEx();
+
 	}	
 }
 

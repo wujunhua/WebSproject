@@ -152,17 +152,17 @@ public class SendEmail {
             //add header image
             messageBodyPart = new MimeBodyPart();
             DataSource fds = new FileDataSource(
-            "C:\\gitclones\\WebSproject\\web\\resources\\img\\header.jpg");
+            "header.jpg");
 
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<image>");
             multipart.addBodyPart(messageBodyPart);
             // Send the complete message parts
            // message.setContent(multipart);
-            
+            System.out.println(System.getProperty("user.dir"));
             messageBodyPart = new MimeBodyPart();
             DataSource fds2 = new FileDataSource(
-            "C:\\gitclones\\WebSproject\\web\\resources\\img\\welcome.jpg");
+            "welcome.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds2));
             messageBodyPart.setHeader("Content-ID", "<congrats>");
             multipart.addBodyPart(messageBodyPart);

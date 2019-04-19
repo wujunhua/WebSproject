@@ -31,8 +31,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-public class ResetPass extends SimpleFormController{
-    
+public class ResetPass extends SimpleFormController {
+        
     public ResetPass(){
         setCommandClass(POJO.ResetPassForm.class);
         setCommandName("forgotPass");
@@ -126,11 +126,24 @@ public class ResetPass extends SimpleFormController{
             System.out.println("Password Changed");
             
         }catch(Exception e){
+            String errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
+                    + "  <strong>Error:</strong> email isn't in our system\n"
+                    + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
+                    + "    <span aria-hidden=\"true\">&times;</span>\n"
+                    + "  </button>\n"
+                    + "</div>";
             System.out.println("********EXCEPTION IN RESETPASS.JAVA**********");
             System.out.println("Invalid Email");
             System.out.println(e);
-            return new ModelAndView("Login");
-        }        
-        return new ModelAndView("Login");
+            return new ModelAndView("reset-password", "errorMessage", errorMessage);
+        }
+        String confirmMessage = "<div class=\"alert alert-success mx-5 alert-dismissible fade show\" role=\"alert\">\n"
+                + "  <strong>Success!</strong> reset email has been sent.\n"
+                + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
+                + "    <span aria-hidden=\"true\">&times;</span>\n"
+                + "  </button>\n"
+                + "</div>";
+        // causes redirect to login page
+        return new ModelAndView("reset-password", "confirmMessage", confirmMessage); 
     }
 }

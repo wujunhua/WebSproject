@@ -1,12 +1,9 @@
-
-<jsp:include page="head-tag.jsp"/>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>
 
 <%
+  
   
   //initialize driver class
   try {    
@@ -18,38 +15,52 @@
   String dbUser = "Student_Performance";
   String dbPasswd = "Student_Performance";
   String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
+
   //connect
   Connection conn = null;
   try {
     conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-   
+    //out.println(" Connection status: " + conn + "<P>");
   } catch(Exception e) {
     out.println("Connection failed: " + e.toString() + "<P>");      
   }
+
   String sql;
   int numRowsAffected;
   Statement stmt = conn.createStatement();
   ResultSet rs;
   
-  // select
-  sql = "select user_id, isadmin from users";
+  
+  sql = "select category_name from category";
   rs = stmt.executeQuery(sql);
   
-  ArrayList usersList = new ArrayList();
-  request.setAttribute("usersList", usersList);
+  ArrayList categoryList = new ArrayList();
+  request.setAttribute("categoryList", categoryList);
   
-  ArrayList isadminList = new ArrayList();
-  request.setAttribute("isadminList", isadminList);
+  ArrayList cleanedCategoryList = new ArrayList();
+  request.setAttribute("cleanedCategoryList", cleanedCategoryList);
   
- 
+  String cleanedString;
   
   while (rs.next()) {
-        usersList.add(rs.getString("user_id"));
-        isadminList.add(rs.getString("isadmin"));
+        categoryList.add(rs.getString("category_name"));
+        
+        cleanedString = rs.getString("category_name");
+        cleanedString = cleanedString.trim();
+        //replacing + with %2B
+        cleanedString = cleanedString.replaceAll("\\+", "%2B");
+        //replacing spaces with %20
+        cleanedString = cleanedString.replaceAll("\\s", "+");
+        //replacing # with %23
+        cleanedString = cleanedString.replaceAll("\\#", "%23");
+        
+        cleanedCategoryList.add(cleanedString);  
         } // End while 
-  
+
+
   rs.close();
   stmt.close();
+
   //commit
   conn.commit();
   
@@ -58,15 +69,18 @@
   
 %>  
 
+
+<jsp:include page="head-tag.jsp"/>
+
 <body class="bg-light">
 
-  <jsp:include page="nav.jsp"/>
+<jsp:include page="nav.jsp"/>
   <div class="container-fluid">
     <div class="container mt-2 pt-4 pb-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="background: transparent;">
           <li class="breadcrumb-item"><a href="#">Admin</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Users</li>
+          <li class="breadcrumb-item active" aria-current="page">Category</li>
         </ol>
       </nav>
     </div>
@@ -80,7 +94,7 @@
           <a class="nav-link" href="streams.htm">Streams</a>
         </li>  
         <li class="nav-item">
-          <a class="nav-link" href="category.htm">Category</a>
+          <a class="nav-link active" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="modules.htm">Modules</a>
@@ -89,9 +103,9 @@
           <a class="nav-link" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="admin.htm">Users</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
-    </ul>
+      </ul>
     </div>
   </div>
 
@@ -100,34 +114,19 @@
 
       <div class="row py-3">
         <div class="col-lg-12">
-            <form action="create-user.htm">
+          <form action="create-category.htm">
           <div class="form">
             <div class="form-row">
-              <div class="col-2">
-                <button class="btn btn-small btn-success no-border" onclick="return checkDomain();" type="submit"><i class="fas fa-plus pr-2"></i>Insert User</button>
+              <div class="col-lg-2">
+                <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Category</small></button>
               </div>
-              <div class="col-6">
-                <input type="email" class="form-control" id="username" onChange="myFunction()" name="username"  placeholder="Email" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required>
+              <div class="col-lg-10">
+               <input type="text" class="form-control" id ="CategoryName" onChange="myFunction()" name="categoryName" placeholder="Category Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 45 characters." required>
               <div><small id="jackson_1" class="text-danger"></small></div>
-              </div>
-              <div >
-                <input type="hidden" class="form-control" id="password" name="password"  value="syntel123" >
-              </div>
-              <div class="col-4">
-                <div class="form-group pt-lg-2 pl-lg-2">
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="customRadio" name="example" value="Y" >
-                    <label class="custom-control-label" for="customRadio"><small>Admin</small></label>
-                  </div>
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="N" checked>
-                    <label class="custom-control-label" for="customRadio2"><small>Instructor</small></label>
-                  </div> 
-                </div>
               </div>
             </div>
           </div>
-            </form>
+        </form>
         </div>
       </div>
 
@@ -135,24 +134,20 @@
         <thead>
           <tr>
             <th scope="col" style="width: 10%;">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">Admin</th>
+            <th scope="col">Category</th>
           </tr>
         </thead>
         <tbody>
-            <c:set var="count" value="1"/>
-         <c:forEach items="${usersList}" var="user">
-           <tr value="${user}">
-               <th scope="row">${count}</th>
-               <td>
-                   <a href="manage-user.htm?id=${user}">${user}</a>
-               </td>
-               <td>
-               ${isadminList.get(count-1)}
-               </td>
-           </tr>
-           <c:set var="count" value="${count + 1}"/>
-       </c:forEach>
+        <c:set var ="count" value="1"/>
+        <c:forEach items ="${categoryList}" var="cat">
+            <tr value ="${cat}">
+                <th scope = "row"> ${count}</th>
+                <td>
+                    <a href="manage-category.htm?id=${cleanedCategoryList.get(count-1)}">${cat}</a>
+                </td>
+            </tr>
+        <c:set var="count" value = "${count+1}"/>    
+        </c:forEach>
         </tbody>
       </table>
     </div>
@@ -160,7 +155,7 @@
   <!-- /Tabs -->
 
   <!-- Optional JavaScript -->
- 
+
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <!-- Popper.js -->
@@ -168,15 +163,13 @@
   <!-- Bootstrap.js -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-  <script src="<c:url value="/resources/js/emailValidate.js" />"></script>
-
 </body>
 </html>
 
 <script>
 function myFunction()
 {
-  var uName = document.getElementById("username").value;
+  var catName = document.getElementById("CategoryName").value;
   
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -185,7 +178,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+uName+"&num=10", true);
+  xhttp.open("GET", "jackson_1.htm?name="+catName+"&num=9", true);
   xhttp.send();
 }
 </script>

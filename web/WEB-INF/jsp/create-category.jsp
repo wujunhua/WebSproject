@@ -32,31 +32,31 @@
   //ResultSet rs;
   LocalDateTime myDate = LocalDateTime.now();
   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddYY:HHMMss");
-  String stream_name = request.getParameter("streamName");
-  String stream_id = (stream_name.toUpperCase().replaceAll("\\s+","").substring(0, 3) + dtf.format(myDate));
+  String category_name = request.getParameter("categoryName");
+  String category_id = (category_name.toUpperCase().replaceAll("\\s+","").substring(0, 3) + dtf.format(myDate));
   //String passWord = request.getParameter("password");
   //String admin = request.getParameter("isadmin");
 
-  String sql2;
-  ResultSet rs;
+   String sql2;
+  ResultSet rs2;
+ // Statement stmt2 = conn.createStatement();  
+ sql2 = "select category_name from category where category_name='" + category_name + "'";
   
-  sql2 = "select stream_name from stream where stream_name='" + stream_name + "'";
+ rs2 = stmt.executeQuery(sql2);
   
-  rs = stmt.executeQuery(sql2);
-    
-  if(rs.next() == false)
-  {
+ if(rs2.next() == false)
+ {
   //insert
    try {
     
-        sql = "insert into stream values ('" + stream_id + "', '" + stream_name + "')";
+        sql = "insert into category values ('" + category_id + "', '" + category_name + "')";
         stmt.executeUpdate(sql);
         //out.println(numRowsAffected + " user(s) inserted. <BR>");
   
         } catch (SQLException e) {
         out.println("Error encountered during insertion for stream: " + e.toString() + "<BR>");
         }
-  }
+ } 
   
   // select
   /*sql = "select user_id from users";
@@ -94,12 +94,8 @@
   //disconnect
   conn.close();
   
-  String site = "streams.htm";
+  String site = "category.htm";
   response.setStatus(response.SC_MOVED_TEMPORARILY);
   response.setHeader("Location", site);
   
 %>  
-
-
-
-

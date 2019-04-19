@@ -116,16 +116,19 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
+          <a class="nav-link" href="streams.htm">Streams</a>
+        </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
+          <a class="nav-link" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -140,10 +143,11 @@
             <div class="form">
               <div class="form-row">
                 <div class="col-lg-2">
-                  <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Course</small></button>
+                  <button class="btn btn-sm btn-primary mt-1 no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Course</small></button>
                 </div>
                 <div class="col-lg-5">
-                  <input type="text" name="coursename" class="form-control" placeholder="Course Name" required>
+                  <input type="text" name="coursename" id="coursename" class="form-control" onChange="myFunction()" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required>
+                <div><small id="jackson_1" class="text-danger"></small></div>
                 </div>
                 <div class="form-group col-md-5">
                   <select class="custom-select" name= "modulename" id="modulename">
@@ -174,7 +178,7 @@
            <tr value="${course}">
                <th scope="row">${count}</th>
                <td>
-                   <a href="manage-course.htm?id=${course}">${course}</a>
+                   <a href="manage-course.htm?id=${courseList.get(count-1)}&module=${modList.get(count-1)}">${course}</a>
                </td>
                <td>
                ${modList.get(count-1)}
@@ -199,3 +203,20 @@
 
 </body>
 </html>
+
+<script>
+function myFunction()
+{
+  var cName = document.getElementById("coursename").value;
+  
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("jackson_1").innerHTML = this.responseText;
+    }
+  };
+  
+  xhttp.open("GET", "jackson_1.htm?name="+cName+"&num=8", true);
+  xhttp.send();
+}
+</script>

@@ -2,8 +2,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>
 
-
- 
 <%
   
   //initialize driver class
@@ -30,21 +28,17 @@
   int numRowsAffected;
   Statement stmt = conn.createStatement();
   ResultSet rs;
-  String stream_name = request.getParameter("stream_id");
+  String category_name = request.getParameter("category_name");
   
-  
-  
+ 
   // delete
   try {
-    sql = "delete from stream where stream_name = '" + stream_name + "'";
+    sql = "delete from category where category_name = '" + category_name + "'";
     numRowsAffected = stmt.executeUpdate(sql);
-    //out.println(numRowsAffected + " stream(s) deleted. <BR>");
   } catch (SQLException e) {
     out.println("Error encountered during deletion of employee: " + e.toString() + "<BR>");
-  } 
-  
+  }  
 
-  out.println("<P>");
   
   //rs.close();
   stmt.close();
@@ -55,11 +49,9 @@
   //disconnect
   conn.close();
   
-  String site = "streams.htm";
+  String site = "category.htm";
   response.setStatus(response.SC_MOVED_TEMPORARILY);
   response.setHeader("Location", site);
 
   
-%>  
-
-
+%>

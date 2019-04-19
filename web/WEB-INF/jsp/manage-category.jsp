@@ -28,12 +28,12 @@ String sql;
 int numRowsAffected;
 Statement stmt = conn.createStatement();
 ResultSet rs;
-String user_id = request.getParameter("id");
+String category_name = request.getParameter("id");
 
-sql = "select  user_id from users where user_id='" + user_id + "'";
+sql = "select m.module_name from modules m, category c where m.category_id = c.category_id and category_name ='" + category_name + "'";
 rs = stmt.executeQuery(sql);
 
-boolean userCantBeUpdated = rs.next();
+boolean categoryCanBeDeleted = rs.next();
 
 %>
 
@@ -45,8 +45,8 @@ boolean userCantBeUpdated = rs.next();
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="background: transparent;">
           <li class="breadcrumb-item"><a href="admin.htm">Admin</a></li>
-          <li class="breadcrumb-item active">Users</li>
-          <li class="breadcrumb-item active" aria-current="page">Manage User</li>
+          <li class="breadcrumb-item active">Category</li>
+          <li class="breadcrumb-item active" aria-current="page">Manage Category</li>
         </ol>
       </nav>
     </div>
@@ -60,7 +60,7 @@ boolean userCantBeUpdated = rs.next();
           <a class="nav-link" href="streams.htm">Streams</a>
         </li>  
         <li class="nav-item">
-          <a class="nav-link" href="category.htm">Category</a>
+          <a class="nav-link active" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="modules.htm">Modules</a>
@@ -69,7 +69,7 @@ boolean userCantBeUpdated = rs.next();
           <a class="nav-link" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="admin.htm">Users</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -77,51 +77,39 @@ boolean userCantBeUpdated = rs.next();
 
   <div class="container-fluid bg-white" style="min-height: 100vh;">
     <div class="container pb-5">
+
       <div class="row justify-content-center">
         <div class="card col-md-6 col-sm-12 col-lg-5 mt-4 py-3 shadow">
           <div class="card-header text-muted noto bg-white">
-            <i class="fas fa-user pr-2"></i> Edit User
+            <i class="fas fa-water pr-2"></i> Manage Category 
             <span style="float: right;">
-              <form action="delete-user.htm">
-                  <div class="col-sm-9">
-                <input type="hidden" class="form-control" id="inputEmail4" name="oldusername" value="${param.id}">
-                </div>
-                <button type="submit" class="btn btn-sm btn-danger">
+              <form action = "delete-category.htm">
+                <input type='hidden' name='category_name' id="category_name" value='${param.id}' />
+                <% if(categoryCanBeDeleted){%>
+                <button class="btn btn-sm btn-danger" type="submit" title="This category contains modules and cannot be deleted" disabled>
+                <%} else{%>
+                <button class="btn btn-sm btn-danger" type="submit">
+                <%}%>
                   <span style="white-space: nowrap;"><i class="fas fa-user-minus"></i> Delete </span>
                 </button>
               </form>
             </span>
           </div>
-          <form action="update-user.htm">
+          <form action ="update-category.htm">
             <div class="form-group row mt-3">
-              <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+              <label for="new_stream_name" class="col-sm-3 col-form-label">Category</label>
               <div class="col-sm-9">
-                <input type="email" class="form-control" id="inputEmail3" onchange="myFunction()" name="newusername" value="${param.id}" required>
-              <div><small id="jackson_1" class="text-danger"></small></div>
-              </div>
-              <div class="col-sm-9">
-                <input type="hidden" class="form-control" id="inputEmail4" name="oldusername" value="${param.id}" required>
+                  <input type ="hidden" name="category_name" id="category_name" value='${param.id}'/>
+                <input type="text" class="form-control" id="new_category_name" onchange="myFunction()" name="new_category_name" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 than 20 characters." required>
+                <div><small id="jackson_1" class="text-danger"></small></div>
               </div>
             </div>
 
-            <div class="form-group row mt-1">
-              <label for="inputEmail3" class="col-sm-4 col-form-label">User Level</label>
-              <div class="col-sm-8 pt-2">
-                  <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" class="custom-control-input" id="customRadio" name="example" value="N" checked>
-                      <label class="custom-control-label noto text-muted" for="customRadio"><small>Instructor</small></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="Y">
-                      <label class="custom-control-label noto text-muted" for="customRadio2"><small>Admin</small></label>
-                    </div> 
-              </div>
-            </div>
             <div class="row justify-content-center mt-1">
               <div class="row pt-3">
                 <div class="col-6">
                     <button class="btn btn-sm ghost" type="submit">
-                      <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i> Update </span>
+                      <span style="white-space: nowrap;"><small><i class="fas fa-user-edit"></i> Update </small></span>
                     </button>
                 </div>
               </div>
@@ -149,8 +137,7 @@ boolean userCantBeUpdated = rs.next();
 <script>
 function myFunction()
 {
-  var oName = document.getElementById("inputEmail4").value;
-  var nName = document.getElementById("inputEmail3").value;
+  var nName = document.getElementById("new_category_name").value;
   
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -159,7 +146,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?oldUn="+oName+"&newUn="+nName+"&num=5", true);
+  xhttp.open("GET", "jackson_1.htm?newCat="+nName+"&num=3", true);
   xhttp.send();
 }
 </script>

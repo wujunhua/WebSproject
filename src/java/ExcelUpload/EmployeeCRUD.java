@@ -7,15 +7,19 @@ package ExcelUpload;
 
 	public class EmployeeCRUD {
 		
-		public void insertEmployee(Statement st, String employee_id, String name, String email, String class_id, String manager_id){
-			try {
+		public boolean insertEmployee(Statement st, String employee_id, String name, String email, String class_id, String manager_id){
+                            
+                            try {
 				System.out.println("Creating new employee. ");
 				int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee_id + "','" + name + "','" + email + "','" + class_id + "','"+manager_id+"')");
 				
                                 System.out.println(rows + " employee added.");
+                                return true;
 			} catch (Exception e) {
 				System.out.println("Exception: " +  e.getMessage());
+                                return false;
 			}
+                        
 		}
 		
 		public void readEmployee(Statement st, String employee_id){
@@ -49,6 +53,18 @@ package ExcelUpload;
 				System.out.println("Exception: " +  e.getMessage());
 			}
 		}
+                
+                public void updateClass(Statement st, String classId, String employeeId){
+                    try {
+                        int rows = st.executeUpdate("UPDATE employees Set class_id = '"+classId+"' where employee_id = '"+employeeId+"'");
+                        System.out.println("Employee Updated");
+                    } catch(Exception e){
+                        System.out.println(e.getMessage());
+                        
+                    }
+                    
+                }
+                
 
 		public static void main(String[] args) {
 			EmployeeCRUD ec = new EmployeeCRUD();

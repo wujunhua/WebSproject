@@ -31,8 +31,8 @@
 		<div class="row justify-content-center align-items-center h-100">
 			<div class="col col-sm-6 col-md-6 col-lg-4 col-xl-6 card mx-2 py-5 animated fadeIn shadow-lg rounded-0">
 				<div class="row justify-content-center">
-					<div class="col-4">
-                                               <img src="resources/img/logo-fake.png" class="img-fluid pt-3 pb-5">
+					<div class="col-7">
+                                               <img src="resources/img/logo.png" class="img-fluid">
 					</div>
 				</div>
                             
@@ -48,11 +48,17 @@
                                         <input type="email" class="form-control-lg form-control" name="email" placeholder="Email" required>
                                     </div>
                                     <div class="form-group text-center pt-2">
-                                        <button class="btn btn-primary rounded-0 px-4" type="submit"><i class="fas fa-user-lock pr-2"></i>Reset</button>
+                                        <a href="login.htm" class="btn btn-secondary rounded-0 px-4 mx-2"><i class="fas fa-arrow-left pr-2"></i>Login</a>
+                                        <button class="btn btn-primary rounded-0 px-4 mx-2" type="submit"><i class="fas fa-user-lock pr-2"></i>Reset</button>
                                     </div>
                                 </s:form>
                         </div>
                 </div>
         </div>
+                                
+                                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
 </html>

@@ -31,36 +31,50 @@ public class Authentication extends SimpleFormController{
 
     @Override
     protected ModelAndView onSubmit(Object command) throws Exception {
-       User user=(User)command;
-       ServletContext context = this.getServletContext();
-       WebApplicationContext ctx;
-       ctx =  WebApplicationContextUtils.getRequiredWebApplicationContext(context);
-       UserServiceDAO usrDAO = (UserServiceDAO)ctx.getBean("user1");
-        //System.out.println(user.getPassword());
+        User user = (User) command;
         
+        ServletContext context = this.getServletContext();
+        WebApplicationContext ctx = 
+            WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+        
+        UserServiceDAO usrDAO = (UserServiceDAO)ctx.getBean("user1");
         System.out.println("User Form: " + user);
         
+        String errorMessage = "NO_ERROR_SET";
         User userMatcher;
         
         try {
             userMatcher = usrDAO.getUser(user.getUserName());
+            System.out.println("user retrieved, about to check if password matches");
             if (userMatcher.getPassword().trim().equals(user.getPassword().trim())) {
+                
                 if (userMatcher.isAdmin()) {
-                return new ModelAndView("admin", "user", user);
+                    return new ModelAndView("admin", "user", user);
                 }
                 else
                     return new ModelAndView("instructor");
             }
             else {
-                return new ModelAndView("Login");
+                System.out.println("password did not match one in the DB");
+                errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
+                        + "  <strong>Error:</strong> password did not match\n"
+                        + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
+                        + "    <span aria-hidden=\"true\">&times;</span>\n"
+                        + "  </button>\n"
+                        + "</div>";
+                return new ModelAndView("Login", "errorMessage", errorMessage);
             }
             
-            
-            //return new ModelAndView("Success","user",user);
-        }catch(Exception e){
-            return new ModelAndView("Login");
-            //System.out.println(e);
-            //System.out.println("Invalid username or password");
+        }catch(Exception e) {
+            System.err.println(e);
+            System.out.println("in exception, the user was not in the DB");
+            errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
+                    + "  <strong>Error:</strong> user was not in the database\n"
+                    + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
+                    + "    <span aria-hidden=\"true\">&times;</span>\n"
+                    + "  </button>\n"
+                    + "</div>";
+            return new ModelAndView("Login", "errorMessage", errorMessage);
         }
     }
       

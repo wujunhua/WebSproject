@@ -107,29 +107,26 @@ public class SendEmail {
 "\n" +
 "  <title>Performica Report</title>\n" +
 "</head>\n" +
-"<body>\n" +
+"<body style='padding-right: 500px;padding-right:500px; font-family:Verdana;'>\n" +
 "  <div class=\"row justify-content-center\">\n" +
-"    <div class=\"col-lg-6 col-md-6 col-sm-12 px-lg-0\" style=\"border: solid #000 1px;\">\n" +
-"      <img src=\"cid:image\" class=\"img-fluid\" style=\"width: 999px; height: 189px;\">\n" +
+"    <div class=\"col-lg-6 col-md-6 col-sm-12\" style=\"border: solid #000 1px;\">\n" +
+"      <img src=\"cid:image\" class=\"img-fluid\" width=\"999\" height=\"180\"\">\n" +
 "      <h1 class=\"px-2\"></h1>\n" +
 "      <div class=\"row\">\n" +
-"        <div class=\"col-6\">\n" +
-"          <p class=\"px-5\"><strong>Congratulations " +  getName(email) + ",</strong></p>\n" +
-"          <p class=\"px-5\">You have successfully completed your technical induction training program. We are happy to share the detailed report of your performance during the training period. <i>We thank you for your participation in our training program and hope you had a good learning experience.</i></p>\n" +
-"          <p class=\"px-5\">Should you need any further information, please do not hesitate to contact us.</p>\n" +
+"        <div class=\"col-12\">\n" +
+"          <p  style=\"padding-left: 25;padding-right: 30;\"><strong>Hi "+ getName(email) +",</strong></p><br>\n" +
+"          You have successfully completed your technical induction training program. We are happy to share the detailed report of your performance during the training period. We thank you for your participation in our training program and hope you had a good learning experience.</p><br>\n" +
+"          Should you need any further information, please do not hesitate to contact us.</p>\n" +
 "\n" +
-"          <p class=\"px-5\"><strong>Wish you the best for your future!</strong></p>\n" +
-"\n" +
-"          <p class=\"px-5\">Thanks and Regards,</p>\n" +
-"          <p class=\"px-5\">Training and Development Team</p>\n" +
+"          <strong>Wish you the best for your future!</strong></p><br>\n" +
+"          Thanks and Regards,</p><br>\n" +
+"          Training and Development Team</p><br>\n" +
 "        </div>\n" +
-"        <div class=\"col-6 text-center\">\n" +
-"          <img src=\"cid:congrats\" width=\"150\"; height=\"150\";>\n" +
-"        </div>\n" +
+"          <img src=\"cid:congrats\" class=\"img-fluid\" height=\"50\"; width= \"999\">\n" +
 "      </div>\n" +
 "      <div class=\"container-fluid\" style=\"background: rgb(0,102,161); overflow: hidden;\">\n" +
 "        <div class=\"row justify-content-center\">\n" +
-"          <div class=\"col-lg-6 col-md-6 col-sm-12 \" style=\"color: #fff;\">\n" +
+"          <div align=\"center\" style=style='font-size:9.0pt; line-height:150%; font-family:\"Verdana\",sans-serif; color:white'>\n" +
 "            For internal circulation only.© 2019\n" +
 "          </div>\n" +
 "        </div>\n" +
@@ -176,6 +173,63 @@ public class SendEmail {
             tr.send(message);
 
             System.out.println("message sent!");
+
+        }
+        catch (MessagingException mex)
+        {
+            System.out.println("Error: unable to send message....");
+            System.out.println(mex.toString());
+            
+        }
+        
+    }
+    
+        public static void sendUserNamePassword(String email, String pswd) {
+    	
+        String host="smtp.gmail.com";
+        final String userName="jmcgregtemp@gmail.com";
+        final String pass="mcgregor1"; 
+        String to=email;
+
+        //imported code
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", userName);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(userName,pass);
+                    }
+                });
+        
+        //imported code
+        try {
+            
+         MimeMessage message = new MimeMessage(session);
+
+         // Set From: header field of the header.
+         message.setFrom(new InternetAddress(userName));
+
+         // Set To: header field of the header.
+         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+         // Set Subject: header field
+         message.setSubject("Atos Syntel Account Created!");
+
+         // Now set the actual message
+         message.setText("Welcome to Atos Syntel!\n\nYour account has been created. Please sign into your account with the details below:\n\nUsername: " + email + "\nPassword: " + pswd 
+                     );
+
+         // Send message
+         Transport.send(message);
+         System.out.print("Message sent!");
+
 
         }
         catch (MessagingException mex)

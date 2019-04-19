@@ -3,7 +3,7 @@
 <%@ page import="java.sql.*" %>
 
 <%
-  
+  session.setAttribute("username", request.getAttribute("username"));
   
   //initialize driver class
   try {    

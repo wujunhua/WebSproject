@@ -7,6 +7,7 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!--database access-->
 <%
@@ -165,42 +166,50 @@
                                 </tr>
                                 <tr class="my-2">
                                     <td> Location:</td>
-                                    <td><input type="text" name="location" class="form-control"/></td>
+                                    <td><input type="text" name="location" class="form-control" pattern="[a-zA-Z][a-zA-Z]{2,50}" title="Location must contain only letters and be atleast 3 characters." required/></td>
                                 </tr>
                                 <tr>
                                     <td>Site</td>
-                                    <td><select name="site" class="form-control">
-                                        <option value="">Select</option>
-                                        <option  id="offSite" value="CHI">CHI</option>
-                                        <option  id="onSite" value="OPA">OPA</option>
-                                        </select>
+                                    <td>
+                                        <div class="col-4">
+                                            <div class="form-group pt-lg-2 pl-lg-2">
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="onSite" name="site" value="Onsite" checked>
+                                                        <label class="custom-control-label" for="onSite"><small>Onsite</small></label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="offSite" name="site" value="Offshore">
+                                                        <label class="custom-control-label" for="offSite"><small>Offshore</small></label>
+                                                </div> 
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Instructor Email:</td>
-                                    <td><input type="email" name="insEmail" class="form-control"/></td>
+                                    <td><input type="email" name="insEmail" id="insEmail" class="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required/></td>
                                 </tr>
                                 <tr>
                                  <tr>
                                     <td>Start Date:</td>
-                                    <td><input type="date" name="startDate" class="form-control"/></td>
+                                    <td><input type="date" name="startDate" id="startDate" class="form-control" required/></td>
                                 </tr>
                                  <tr>
                                     <td>End Date:</td>
-                                    <td><input type="date" name="endDate" class="form-control"/></td>
+                                    <td><input type="date" name="endDate" id="endDate" class="form-control" required/></td>
                                 </tr>
                                 <tr>
                                 <tr>   
                                     <td>Upload Excel</td>
                                     <td>  
-                                            <input type="file" name="file" style=""/>
+                                            <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="file" name="file" runat="server" title="Uploaded file must be an excel" required/>
                                             <label class="custom-file-input">Choose file...</label>
                                     </td>
                                     <td></td>
                                 </tr>
                             </Table>
                             <div class="row justify-content-center">
-                                <input type="submit" value="Submit" class="btn btn-success px-3"/>
+                                <input type="submit" value="Submit" class="btn btn-success px-3" onclick="validate();"/>
                             </div>
                         </s:form>
                     </div><!-- End col 8 -->
@@ -224,6 +233,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <!-- Bootstrap.js -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+         <script src="<c:url value="/resources/js/classValidate.js" />"></script>
     </body>
 </html>
 

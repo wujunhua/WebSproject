@@ -4,6 +4,7 @@
     Author     : syntel
 --%>
 
+<%@page import="Controller.SendEmail"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>
@@ -60,7 +61,7 @@
   
   //disconnect
   conn.close();
-  
+  SendEmail.sendUserNamePassword(user_name, passWord);
 String site = "admin.htm" ;
 response.setStatus(response.SC_MOVED_TEMPORARILY);
 response.setHeader("Location", site);

@@ -143,7 +143,7 @@
             <div class="form">
               <div class="form-row">
                 <div class="col-lg-2">
-                  <button class="btn btn-sm btn-primary mt-1 no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Course</small></button>
+                  <button class="btn btn-sm btn-primary mt-1 no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert Course</button>
                 </div>
                 <div class="col-lg-5">
                   <input type="text" name="coursename" class="form-control" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required>

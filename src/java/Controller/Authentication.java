@@ -49,7 +49,7 @@ public class Authentication extends SimpleFormController{
             if (userMatcher.getPassword().trim().equals(user.getPassword().trim())) {
                 
                 if (userMatcher.isAdmin()) {
-                    return new ModelAndView("admin", "user", user);
+                    return new ModelAndView("streams");
                 }
                 else
                     return new ModelAndView("instructor");

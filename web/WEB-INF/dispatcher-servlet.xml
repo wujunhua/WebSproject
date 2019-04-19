@@ -72,8 +72,9 @@
                 <prop key="update-category.htm">adminController</prop> 
                 
                 <prop key="download.htm">downloadTemplateController</prop>
-              
+                <prop key="pdfviewer.htm">pdfViewerController</prop>              
                 <prop key="reset-password.htm">resetController</prop>
+
             </props>
         </property>
     </bean>
@@ -118,6 +119,13 @@
     <bean name="downloadTemplateController"
         class="Controller.DownloadTemplateController"
     />
+    
+    <bean name="pdfViewerController"
+        class="Controller.PDFViewerController"
+    />
+
+    <bean id = "multipartResolver" 
+          class ="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
   
    <bean name="resetController"
           class="Controller.ResetPass"

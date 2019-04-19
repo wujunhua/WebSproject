@@ -27,20 +27,6 @@
   Statement stmt = conn.createStatement();
   ResultSet rs;
   
-  // insert
-  /*try {
-    
-    sql = "insert into users values ('chris@syntelinc.com', 'password', 'N')";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) inserted. <BR>");
-  
-  } catch (SQLException e) {
-    
-    out.println("Error encountered during row insertion for employee: " + e.toString() + "<BR>");
-  
-  }*/
-  
-  
   // select
   sql = "select c.course_name as course, m.module_name as module from courses c, modules m where c.module_id = m.module_id ";
   rs = stmt.executeQuery(sql);
@@ -69,21 +55,8 @@
  
   
   while (rs.next()) {
-        fullmodList.add(rs.getString("module_name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        fullmodList.add(rs.getString("module_name")); 
         } // End while 
-   //out.println(courseList.get(0));
- 
-  // delete
-  /* try {
-    sql = "delete from users";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) deleted. <BR>");
-  } catch (SQLException e) {
-    out.println("Error encountered during deletion of employee: " + e.toString() + "<BR>");
-  
-  }  
-  out.println("<P>"); */
   
   rs.close();
   stmt.close();
@@ -117,16 +90,19 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
+          <a class="nav-link" href="streams.htm">Streams</a>
+        </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
+          <a class="nav-link" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -162,6 +138,7 @@
               <label for="new_id" class="col-sm-3 col-form-label">Module</label>
               <div class="form-group col-md-5">
                   <select class="custom-select" name= "modulename" id="modulename">
+                      <option selected hidden value="${param.module}">${param.module}</option>
                     <c:forEach items="${fullmodList}" var="modder">
                         <option value="${modder}">
                             ${modder}

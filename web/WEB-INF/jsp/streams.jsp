@@ -30,16 +30,28 @@
   Statement stmt = conn.createStatement();
   ResultSet rs;
   String stream_name = request.getParameter("streamName");
-  
+  String cleanedString;
   sql = "select stream_name from stream";
   rs = stmt.executeQuery(sql);
   
   ArrayList usersList = new ArrayList();
   request.setAttribute("usersList", usersList);
   
+  ArrayList cleanedUsersList = new ArrayList();
+  request.setAttribute("cleanedUsersList", cleanedUsersList);
+  
   while (rs.next()) {
-        usersList.add(rs.getString("stream_name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        cleanedString = rs.getString("stream_name");
+        cleanedString = cleanedString.trim();
+        //replacing + with %2B
+        cleanedString = cleanedString.replaceAll("\\+", "%2B");
+        //replacing spaces with %20
+        cleanedString = cleanedString.replaceAll("\\s", "+");
+        //replacing # with %23
+        cleanedString = cleanedString.replaceAll("\\#", "%23");
+        
+        cleanedUsersList.add(cleanedString); 
+        usersList.add(rs.getString("stream_name")); 
         } // End while 
 
 
@@ -76,16 +88,19 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
+          <a class="nav-link active" href="streams.htm">Streams</a>
+        </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="streams.htm">Streams</a>
+          <a class="nav-link" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -103,7 +118,7 @@
                 <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Stream</small></button>
               </div>
               <div class="col-lg-10">
-                <input type="text" class="form-control" id ="streamName" name="streamName" placeholder="Stream Name" required>
+               <input type="text" class="form-control" id ="streamName" name="streamName" placeholder="Stream Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,50}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 50 characters." required>
               </div>
             </div>
           </div>
@@ -124,7 +139,7 @@
             <tr value ="${user}">
                 <th scope = "row"> ${count}</th>
                 <td>
-                    <a href="manage-stream.htm?id=${user}">${user}</a>
+                    <a href="manage-stream.htm?id=${cleanedUsersList.get(count-1)}">${user}</a>
                 </td>
             </tr>
         <c:set var="count" value = "${count+1}"/>    

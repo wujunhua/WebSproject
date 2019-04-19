@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,7 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 // it doesn't connect to the database, the data to be written is passed in
 public class ExcelWriter {
 
-    private final String scoreTag; // appended to each module name to communicate that's the score column
+    private final String scoreTag; // appended to each module name to communicate that it is a score column
     private OutputStream outputStream;
     private ArrayList<String> columnTitles;
     
@@ -34,7 +36,8 @@ public class ExcelWriter {
         columnTitles = new ArrayList<>(); // all template files start with these columns
         columnTitles.add("Employee ID"); 
         columnTitles.add("Name");
-        columnTitles.add("Email");   
+        columnTitles.add("Email");
+        columnTitles.add("Reporting Manager");
     }
     
     public void createExcelTemplateFile(ArrayList<String> moduleNames) {
@@ -45,6 +48,13 @@ public class ExcelWriter {
         
         XSSFWorkbook workbook = new XSSFWorkbook(); // blank workbook
         XSSFSheet spreadsheet = workbook.createSheet("Performance Reports Template");
+        
+        XSSFFont boldFont = workbook.createFont();
+        boldFont.setBold(true); // column titles are bold
+        
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setFont(boldFont); // bold font is used in this styling
+        
 
         int firstRowIndex = 0; // only writing to the first row
         XSSFRow row = spreadsheet.createRow(firstRowIndex); // title row, indicates the data to be entered
@@ -55,6 +65,7 @@ public class ExcelWriter {
         for(String colTitle: columnTitles) {
                 Cell cell = row.createCell(columnIndex++);
                 cell.setCellValue(colTitle);
+                cell.setCellStyle(style); // apply styling to each cell
         }
         
         try {

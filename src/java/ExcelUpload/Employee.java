@@ -15,25 +15,17 @@ public class Employee {
 		this.employeeName = "N/A";
 		this.employeeEmail = "N/A";
 		this.classID = "N/A";
+                this.managerID = "N/A";
 		
 	}
-
-        public Employee(String employeeID, String employeeName, String employeeEmail, String classID, String managerID) {
-            this.employeeID = employeeID;
-            this.employeeName = employeeName;
-            this.employeeEmail = employeeEmail;
-            this.classID = classID;
-            this.managerID = managerID;
-        }
-
-        public String getManagerID() {
-            return managerID;
-        }
-
-        public void setManagerID(String managerID) {
-            this.managerID = managerID;
-        }
-	
+	public Employee(String employeeID, String employeeName, String employeeEmail, String classID, String managerID) {
+		super();
+		this.employeeID = employeeID;
+		this.employeeName = employeeName;
+		this.employeeEmail = employeeEmail;
+		this.classID = classID;
+                this.managerID = managerID;
+	}
 	
 	public String getEmployeeName() {
 		return employeeName;
@@ -79,10 +71,19 @@ public class Employee {
 		 Module mod = new Module(modName, sco);
 		 this.modScores.add(mod);
 	}
+        
+        public void setManagerID(String managerID){
+            this.managerID = managerID;
+        }
+        
+        public String getManagerID(){            
+            return managerID;
+        }
 	
 	@Override
 	public String toString() {
 		return "Employee [employeeID=" + employeeID + ", employeeName=" + employeeName + ", employeeEmail="
-				+ employeeEmail + ", classID=" + classID + ", modScores=" + modScores + "]";
+				+ employeeEmail + ", classID=" + classID + ", modScores=" + modScores + ", managerID="
+                                + managerID + "]";
 	}	
 }

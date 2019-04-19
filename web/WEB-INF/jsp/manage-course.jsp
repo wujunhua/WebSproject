@@ -27,20 +27,6 @@
   Statement stmt = conn.createStatement();
   ResultSet rs;
   
-  // insert
-  /*try {
-    
-    sql = "insert into users values ('chris@syntelinc.com', 'password', 'N')";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) inserted. <BR>");
-  
-  } catch (SQLException e) {
-    
-    out.println("Error encountered during row insertion for employee: " + e.toString() + "<BR>");
-  
-  }*/
-  
-  
   // select
   sql = "select c.course_name as course, m.module_name as module from courses c, modules m where c.module_id = m.module_id ";
   rs = stmt.executeQuery(sql);
@@ -69,21 +55,8 @@
  
   
   while (rs.next()) {
-        fullmodList.add(rs.getString("module_name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
+        fullmodList.add(rs.getString("module_name")); 
         } // End while 
-   //out.println(courseList.get(0));
- 
-  // delete
-  /* try {
-    sql = "delete from users";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) deleted. <BR>");
-  } catch (SQLException e) {
-    out.println("Error encountered during deletion of employee: " + e.toString() + "<BR>");
-  
-  }  
-  out.println("<P>"); */
   
   rs.close();
   stmt.close();
@@ -117,16 +90,19 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
+          <a class="nav-link" href="streams.htm">Streams</a>
+        </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
+          <a class="nav-link" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
+          <a class="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
@@ -154,7 +130,8 @@
               <label for="new_course_name" class="col-sm-3 col-form-label">Course</label>
               <div class="col-sm-9">
                   <input type="hidden" name="course_name" id="course_name" value='${param.id}' />
-                <input type="text" class="form-control" id="new_course_name" name="new_course_name" value="${param.id}" required>
+                <input type="text" class="form-control" id="new_course_name" onchange="myFunction()" name="new_course_name" value="${param.id}" required>
+                <div><small id="jackson_1" class="text-danger"></small></div>
               </div>
             </div>
 
@@ -162,6 +139,7 @@
               <label for="new_id" class="col-sm-3 col-form-label">Module</label>
               <div class="form-group col-md-5">
                   <select class="custom-select" name= "modulename" id="modulename">
+                      <option selected hidden value="${param.module}">${param.module}</option>
                     <c:forEach items="${fullmodList}" var="modder">
                         <option value="${modder}">
                             ${modder}
@@ -200,3 +178,21 @@
 
 </body>
 </html>
+
+<script>
+function myFunction()
+{
+  var oName = document.getElementById("course_name").value;
+  var nName = document.getElementById("new_course_name").value;
+  
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("jackson_1").innerHTML = this.responseText;
+    }
+  };
+  
+  xhttp.open("GET", "jackson_1.htm?newC="+nName+"&oldC="+oName+"&num=4", true);
+  xhttp.send();
+}
+</script>

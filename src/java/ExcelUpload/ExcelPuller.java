@@ -1,4 +1,4 @@
-package ExcelUpload;
+ package ExcelUpload;
 import java.util.*;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -58,7 +58,7 @@ public class ExcelPuller {
                     
                     int counter;
                     while (iterator.hasNext()) {
-                    	counter = 0;
+                        counter = 0;
                       currentRow = iterator.next(); // goes to the next row
                       cellIterator = currentRow.iterator(); // moves to the first cell in that row
                       
@@ -72,15 +72,23 @@ public class ExcelPuller {
                         	if (counter == 0) {
                         		newEmp.setEmployeeID(currentCell.getStringCellValue());//Gets and sets Emp ID
                         		counter++;
+                                        System.out.println(currentCell.getStringCellValue());
                         	} else if(counter == 1){
                         		newEmp.setEmployeeName(currentCell.getStringCellValue());//Gets and sets Emp Name
                         		counter++;
+                                        System.out.println(currentCell.getStringCellValue());
                         	} else if(counter == 2) {
                         		newEmp.setEmployeeEmail(currentCell.getStringCellValue());//Gets and sets Emp Email
                         		counter++;
-                        	} else if (counter >= 3){
+                                        System.out.println(currentCell.getStringCellValue());
+                        	} else if (counter == 3){
+                        		newEmp.setManagerID(currentCell.getStringCellValue()); //Adds scores to an employee
+                        		counter++;
+                                        System.out.println(currentCell.getStringCellValue());
+                                } else if (counter >= 4){
                         		newEmp.addScore(columns.get(counter), currentCell.getNumericCellValue()); //Adds scores to an employee
                         		counter++;
+                                        System.out.println(currentCell.getNumericCellValue());
                         		
                         	}else {
                         		System.out.println("All data entered");

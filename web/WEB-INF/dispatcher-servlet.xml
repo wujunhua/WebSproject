@@ -15,7 +15,7 @@
     <mvc:resources location="/img/" mapping="/img/**" />
     
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
-  
+
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
@@ -24,9 +24,9 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
-                <!--
+                
                 <prop key="index.htm">indexController</prop>
-                -->
+                
                 <prop key="login.htm">loginController</prop>
                 
                 <prop key="instructor.htm">instructorController</prop>
@@ -45,6 +45,8 @@
                 <prop key="courses.htm">adminController</prop>
                 <prop key="streams.htm">adminController</prop>
                 <prop key="modules.htm">adminController</prop>
+                <prop key="category.htm">adminController</prop>
+
                 
                 <prop key="manage-user.htm">adminController</prop>
                 <prop key="create-user.htm">adminController</prop>
@@ -66,7 +68,15 @@
                 <prop key="deleteModule.htm">adminController</prop>
                 <prop key="updateModule.htm">adminController</prop>
                 
+                <prop key="manage-category.htm">adminController</prop>
+                <prop key="create-category.htm">adminController</prop>
+                <prop key="delete-category.htm">adminController</prop>
+                <prop key="update-category.htm">adminController</prop>
+                 
+                <prop key="jackson_1.htm">adminController</prop>
+                
                 <prop key="download.htm">downloadTemplateController</prop>
+              
                 <prop key="reset-password.htm">resetController</prop>
             </props>
         </property>
@@ -80,20 +90,15 @@
     <!--
     The index controller.
     -->
-    <!--
-          <bean name="indexController"
+    
+     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
-    -->
+    
     
     <bean name="loginController"
           class="Controller.Authentication"
           p:formView="Login"
-       />
-    
-    <bean name="resetController"
-          class="Controller.ResetPass"
-          p:formView="reset-password"
        />
     
     <bean name="adminController"
@@ -121,5 +126,9 @@
     <bean name="empController"
           class="Controller.EmpController">
     </bean>
-
+  
+   <bean name="resetController"
+          class="Controller.ResetPass"
+          p:formView="reset-password"
+    />
 </beans>

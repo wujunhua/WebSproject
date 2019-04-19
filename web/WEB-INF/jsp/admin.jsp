@@ -128,7 +128,7 @@
           <div class="form">
             <div class="form-row">
               <div class="col-2">
-                <button class="btn btn-small btn-success no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert User</button>
+                <button class="btn btn-sm btn-primary no-border mt-1" type="submit"><i class="fas fa-plus pr-2"></i>Insert User</button>
               </div>
               <div class="col-3">
                 <input type="email" class="form-control" id="username" name="username"  placeholder="Email" required>

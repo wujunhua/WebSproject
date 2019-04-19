@@ -36,11 +36,14 @@
 		<div class="row justify-content-center align-items-center h-100">
 			<div class="col col-sm-6 col-md-6 col-lg-4 col-xl-6 card mx-2 py-5 animated fadeIn shadow-lg rounded-0">
 				<div class="row justify-content-center">
-					<div class="col-4">
-                                               <img src="resources/img/logo-fake.png" class="img-fluid pt-3 pb-5">
+					<div class="col-7">
+                                               <img src="resources/img/logo.png" class="img-fluid">
 					</div>
 				</div>
 
+                                <!-- these message only displays if it receives a value from Authentication.java controller -->
+                                <p class="text-center text-danger">${errorMessage}</p>
+                            
 				<!-- Main login form -->
 				<s:form commandName="user" class="px-5 noto" id="login-form">
 					<div class="input-group mb-3">
@@ -61,8 +64,8 @@
                                             <a id="myLink" href="reset-password.htm">Forgot Password?</a>
                                         </small>
 					<div class="form-group text-center pt-2">
-						<button type="submit" href="#" class="btn icon-arrow-right bg-primary text-white rounded-0 px-5">
-							Sign In
+						<button type="submit" href="#" class="btn bg-primary text-white rounded-0 px-5">
+							<i class="fas fa-sign-in-alt pr-2"></i>Sign In
 						</button>
 					</div>
 				</s:form>

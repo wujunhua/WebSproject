@@ -100,7 +100,7 @@
           <div class="form">
             <div class="form-row">
               <div class="col-lg-2">
-                <button class="btn btn-small btn-success no-border" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Stream</small></button>
+                <button class="btn btn-sm btn-primary no-border mt-1" type="submit"><small><i class="fas fa-plus pr-2"></i>Insert Stream</small></button>
               </div>
               <div class="col-lg-10">
                 <input type="text" class="form-control" id ="streamName" name="streamName" placeholder="Stream Name" required>

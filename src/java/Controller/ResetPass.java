@@ -126,13 +126,23 @@ public class ResetPass extends SimpleFormController {
             System.out.println("Password Changed");
             
         }catch(Exception e){
-            String errorMessage = "That email address is not in our system";
+            String errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
+                    + "  <strong>Error:</strong> email isn't in our system\n"
+                    + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
+                    + "    <span aria-hidden=\"true\">&times;</span>\n"
+                    + "  </button>\n"
+                    + "</div>";
             System.out.println("********EXCEPTION IN RESETPASS.JAVA**********");
             System.out.println("Invalid Email");
             System.out.println(e);
             return new ModelAndView("reset-password", "errorMessage", errorMessage);
         }
-        String confirmMessage = "Your password has been reset, check your email";
+        String confirmMessage = "<div class=\"alert alert-success mx-5 alert-dismissible fade show\" role=\"alert\">\n"
+                + "  <strong>Success!</strong> reset email has been sent.\n"
+                + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
+                + "    <span aria-hidden=\"true\">&times;</span>\n"
+                + "  </button>\n"
+                + "</div>";
         // causes redirect to login page
         return new ModelAndView("reset-password", "confirmMessage", confirmMessage); 
     }

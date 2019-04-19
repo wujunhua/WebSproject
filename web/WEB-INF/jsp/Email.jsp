@@ -17,6 +17,7 @@
   String dbUser = "Student_Performance";
   String dbPasswd = "Student_Performance";
   String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
+
   //connect
   Connection conn = null;
   try {
@@ -25,6 +26,7 @@
   } catch(Exception e) {
     out.println("Connection failed: " + e.toString() + "<P>");      
   }
+
   String sql;
   int numRowsAffected;
   Statement stmt = conn.createStatement();
@@ -48,6 +50,7 @@
   
   rs.close();
   stmt.close();
+
   //commit
   conn.commit();
   

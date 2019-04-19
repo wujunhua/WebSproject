@@ -100,7 +100,8 @@ boolean categoryCanBeDeleted = rs.next();
               <label for="new_stream_name" class="col-sm-3 col-form-label">Category</label>
               <div class="col-sm-9">
                   <input type ="hidden" name="category_name" id="category_name" value='${param.id}'/>
-                <input type="text" class="form-control" id="new_category_name" name ="new_category_name" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 than 20 characters." required>
+                <input type="text" class="form-control" id="new_category_name" onchange="myFunction()" name="new_category_name" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 than 20 characters." required>
+                <div><small id="jackson_1" class="text-danger"></small></div>
               </div>
             </div>
 
@@ -132,3 +133,19 @@ boolean categoryCanBeDeleted = rs.next();
 
 </body>
 </html>
+<script>
+function myFunction()
+{
+  var nName = document.getElementById("new_category_name").value;
+  
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("jackson_1").innerHTML = this.responseText;
+    }
+  };
+  
+  xhttp.open("GET", "jackson_1.htm?newCat="+nName+"&num=3", true);
+  xhttp.send();
+}
+</script>

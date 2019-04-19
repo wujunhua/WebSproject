@@ -120,8 +120,8 @@
               <div class="col-lg-2">
                 <button class="btn btn-sm btn-primary mt-1 no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert Category</button>
               </div>
-              <div class="col-lg-10">
-               <input type="text" class="form-control" id ="CategoryName" name="categoryName" placeholder="Category Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 45 characters." required>
+               <input type="text" class="form-control" id ="CategoryName" onChange="myFunction()" name="categoryName" placeholder="Category Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 45 characters." required>
+              <div><small id="jackson_1" class="text-danger"></small></div>
               </div>
             </div>
           </div>
@@ -164,3 +164,21 @@
 
 </body>
 </html>
+
+<script>
+function myFunction()
+{
+  var catName = document.getElementById("CategoryName").value;
+  
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("jackson_1").innerHTML = this.responseText;
+    }
+  };
+  
+  xhttp.open("GET", "jackson_1.htm?name="+catName+"&num=9", true);
+  xhttp.send();
+}
+</script>
+

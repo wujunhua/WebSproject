@@ -106,9 +106,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="email.htm">Email Hub</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="showEmployees.htm">Manage Students</a>
-                    </li>
                 </ul>
             </div>
         </div>

@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/syntel/Downloads/WebSproject-master/WebSproject-master/web/WEB-INF/jsp/manage-module.jsp</file>
-            <file>file:/C:/Users/syntel/Downloads/WebSproject-master/WebSproject-master/web/WEB-INF/jsp/admin.jsp</file>
-            <file>file:/C:/Users/syntel/Downloads/WebSproject-master/WebSproject-master/web/WEB-INF/jsp/manage-course.jsp</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/web/WEB-INF/jsp/showEmployees.jsp</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/web/WEB-INF/jsp/CreateClass.jsp</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/src/java/POJO/EmployeeRowMapper.java</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/src/java/POJO/EmployeeServiceDAO.java</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/src/java/POJO/EmployeeDAO.java</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/src/java/Controller/EmpController.java</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/web/WEB-INF/dispatcher-servlet.xml</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/web/WEB-INF/applicationContext.xml</file>
+            <file>file:/C:/Users/syntel/Desktop/WebSProject%20Folder/WebSproject/src/java/ExcelUpload/Employee.java</file>
         </group>
     </open-files>
 </project-private>

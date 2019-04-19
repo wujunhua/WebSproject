@@ -3,24 +3,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
     <!--static files-->
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:resources location="/img/" mapping="/img/**" />
     
-   <!-- <context:component-scan base-package="Controller" /> -->
-    <mvc:annotation-driven />
-
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+  
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
@@ -38,7 +33,12 @@
                 <prop key="email.htm">emailController</prop>
                 <prop key="createclass.htm">createClassController</prop>
                 
-                <!--all admin pages should use the adminController-->
+                <prop key="showEmployees.htm">empController</prop>
+                <prop key="editEmployees.htm">empController</prop>
+                <prop key="deleteEmployees.htm">empController</prop>
+                <prop key="searchEmployees.htm">empController</prop>
+                
+                <!--all admin pages should use the adminController-->             
                 <prop key="admin.htm">adminController</prop>
                 <prop key="test.htm">adminController</prop>
                 
@@ -117,5 +117,9 @@
     <bean name="downloadTemplateController"
         class="Controller.DownloadTemplateController"
     />
+    
+    <bean name="empController"
+          class="Controller.EmpController">
+    </bean>
 
 </beans>

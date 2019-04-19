@@ -35,11 +35,13 @@ public class Runner {
                 //Iterates through the created employees to upload their data
         	for(Employee x: emps) {
             	
-                    empCrud.insertEmployee(st, x.getEmployeeID(), x.getEmployeeName(), x.getEmployeeEmail(), x.getClassID());
-                    
+                  boolean inserted =  empCrud.insertEmployee(st, x.getEmployeeID(), x.getEmployeeName(), x.getEmployeeEmail(), x.getClassID(), x.getManagerID());
+                    if(inserted == false){
+                        empCrud.updateClass(st, x.getClassID(), x.getEmployeeID());
+                    }
                    
                     for(Module z: x.getModScores()) {
-                        eCrud.insertETM(st, z.getModuleID(), z.getmoduleScore(), x.getEmployeeID()); //Uploads the scores from the list in the employees
+                        eCrud.insertETM(st, z.getModuleID(), z.getmoduleScore(), x.getEmployeeID(), stream); //Uploads the scores from the list in the employees
                     }
         	}
                 con.close();

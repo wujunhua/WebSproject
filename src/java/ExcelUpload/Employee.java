@@ -6,6 +6,7 @@ public class Employee {
 	private String employeeName;
 	private String employeeEmail;
 	private String classID;
+        private String managerID;
 	private ArrayList<Module> modScores = new ArrayList<>();	
 	
 	public Employee() {
@@ -16,13 +17,23 @@ public class Employee {
 		this.classID = "N/A";
 		
 	}
-	public Employee(String employeeID, String employeeName, String employeeEmail, String classID) {
-		super();
-		this.employeeID = employeeID;
-		this.employeeName = employeeName;
-		this.employeeEmail = employeeEmail;
-		this.classID = classID;
-	}
+
+        public Employee(String employeeID, String employeeName, String employeeEmail, String classID, String managerID) {
+            this.employeeID = employeeID;
+            this.employeeName = employeeName;
+            this.employeeEmail = employeeEmail;
+            this.classID = classID;
+            this.managerID = managerID;
+        }
+
+        public String getManagerID() {
+            return managerID;
+        }
+
+        public void setManagerID(String managerID) {
+            this.managerID = managerID;
+        }
+	
 	
 	public String getEmployeeName() {
 		return employeeName;

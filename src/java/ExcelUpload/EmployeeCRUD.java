@@ -7,11 +7,12 @@ package ExcelUpload;
 
 	public class EmployeeCRUD {
 		
-		public void insertEmployee(Statement st, String employee_id, String name, String email, String class_id){
+		public void insertEmployee(Statement st, String employee_id, String name, String email, String class_id, String manager_id){
 			try {
-				System.out.println("Creating new employee.");
-				int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee_id + "','" + name + "','" + email + "','" + class_id + "')");
-				System.out.println(rows + " employee added.");
+				System.out.println("Creating new employee. ");
+				int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee_id + "','" + name + "','" + email + "','" + class_id + "','"+manager_id+"')");
+				
+                                System.out.println(rows + " employee added.");
 			} catch (Exception e) {
 				System.out.println("Exception: " +  e.getMessage());
 			}

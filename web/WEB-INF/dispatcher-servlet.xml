@@ -10,12 +10,15 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
+        <!--static files-->
 
-    <!--static files-->
-    <mvc:resources mapping="/resources/**" location="/resources/" />
-    <mvc:resources location="/img/" mapping="/img/**" />
+    <mvc:resources mapping="/resources/**" location="/resources/" />	
+    <mvc:resources location="/img/" mapping="/img/**" />	    
+    
     
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+    
+
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
@@ -33,12 +36,7 @@
                 <prop key="email.htm">emailController</prop>
                 <prop key="createclass.htm">createClassController</prop>
                 
-                <prop key="showEmployees.htm">empController</prop>
-                <prop key="editEmployees.htm">empController</prop>
-                <prop key="deleteEmployees.htm">empController</prop>
-                <prop key="searchEmployees.htm">empController</prop>
-                
-                <!--all admin pages should use the adminController-->             
+                <!--all admin pages should use the adminController-->
                 <prop key="admin.htm">adminController</prop>
                 <prop key="test.htm">adminController</prop>
                 
@@ -122,10 +120,6 @@
     <bean name="downloadTemplateController"
         class="Controller.DownloadTemplateController"
     />
-    
-    <bean name="empController"
-          class="Controller.EmpController">
-    </bean>
   
    <bean name="resetController"
           class="Controller.ResetPass"

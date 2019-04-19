@@ -28,9 +28,5 @@
     <bean id="moduleDAO" class="Controller.ModuleServiceDAO">
         <property name="dataSource" ref="dataSource" /> <!-- refers to the datasource above -->
     </bean>
-    
-    <bean id="empdb" class="POJO.EmployeeServiceDAO">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
    
 </beans>

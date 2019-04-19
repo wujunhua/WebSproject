@@ -1,4 +1,41 @@
 <jsp:include page="head-tag.jsp"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*" %>
+
+<%
+//initialize driver class
+try {    
+    Class.forName("oracle.jdbc.driver.OracleDriver");
+  } catch (Exception e) {
+    out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
+  }
+
+String dbUser = "Student_Performance";
+String dbPasswd = "Student_Performance";
+String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";   
+
+//connect
+Connection conn = null;
+try {
+    conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
+    //out.println(" Connection status: " + conn + "<P>");
+  } catch(Exception e) {
+    out.println("Connection failed: " + e.toString() + "<P>");      
+  }
+
+String sql;
+int numRowsAffected;
+Statement stmt = conn.createStatement();
+ResultSet rs;
+String user_id = request.getParameter("id");
+
+sql = "select  user_id from users where user_id='" + user_id + "'";
+rs = stmt.executeQuery(sql);
+
+boolean userCantBeUpdated = rs.next();
+
+%>
 
 <body class="bg-light">
 
@@ -20,16 +57,19 @@
     <div class="container">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="admin.htm">Users</a>
+          <a class="nav-link" href="streams.htm">Streams</a>
+        </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="category.htm">Category</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
+          <a class="nav-link" href="modules.htm">Modules</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="courses.htm">Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
+          <a class="nav-link active" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>

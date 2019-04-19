@@ -30,17 +30,11 @@
   String sql;
   //int numRowsAffected;
   Statement stmt = conn.createStatement();
-  //ResultSet rs;
-  //LocalDateTime myDate = LocalDateTime.now();
-  //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddYY:HHMMss");
-  
   
   String course_name_new = request.getParameter("new_course_name");
   String module_name = request.getParameter("modulename");
   String course_name_original = request.getParameter("course_name");
- // String stream_id = (stream_name.toUpperCase().replaceAll("\\s+","").substring(0, 3) + dtf.format(myDate));
-  //String passWord = request.getParameter("password");
-  //String admin = request.getParameter("isadmin");
+ 
 
   
   //insert
@@ -53,34 +47,6 @@
         } catch (SQLException e) {
         out.println("Error encountered during update for stream: " + e.toString() + "<BR>");
         }
-   
-  
-  // select
-  /*sql = "select user_id from users";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList usersList = new ArrayList();
-  request.setAttribute("usersList", usersList);
-  
-  while (rs.next()) {
-        usersList.add(rs.getString("user_id"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
-        } // End while 
-  
-   out.println("<P>");*/
- 
-  // delete
-  /* try {
-    sql = "delete from users";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) deleted. <BR>");
-  } catch (SQLException e) {
-
-    out.println("Error encountered during deletion of employee: " + e.toString() + "<BR>");
-  
-  }  
-
-  out.println("<P>"); */
   
   //rs.close();
   stmt.close();

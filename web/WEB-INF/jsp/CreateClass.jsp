@@ -115,7 +115,7 @@
             <div class="container pb-5 pt-4">
                 <div class="row mx-1">
                     <div class="col-8 px-3 py-3">
-                        <s:form commandName="excel">
+                        <s:form commandName="excel" enctype="multipart/form-data" method="POST">
                             <Table class="table">
                                 <tr class="my-2">
                                    
@@ -134,19 +134,20 @@
                                 </tr>
                                 <tr class="my-2">
                                     <td> Location:</td>
-                                    <td><input type="text" name="location" class="form-control"/></td>
+                                    <td><input type="text" name="location" class="form-control" pattern="[a-zA-Z][a-zA-Z]{2,50}" title="Location must contain only letters and be atleast 3 characters." required/></td>
                                 </tr>
                                 <tr>
+                                    <td>Site</td>
                                     <td>
                                         <div class="col-4">
-                                            <div class="custom-control custom-radio custom-control-inline">
+                                            <div class="form-group pt-lg-2 pl-lg-2">
                                                 <div class="custom-control custom-radio custom-control-inline">
                                                     <input type="radio" class="custom-control-input" id="onSite" name="site" value="Onsite" checked>
-                                                    <label class="custom-control-label" for="onSite"><small>Onsite</small></label>
+                                                        <label class="custom-control-label" for="onSite"><small>Onsite</small></label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
                                                     <input type="radio" class="custom-control-input" id="offSite" name="site" value="Offshore">
-                                                    <label class="custom-control-label" for="offSite"><small>Offshore</small></label>
+                                                        <label class="custom-control-label" for="offSite"><small>Offshore</small></label>
                                                 </div> 
                                             </div>
                                         </div>
@@ -154,29 +155,29 @@
                                 </tr>
                                 <tr>
                                     <td>Instructor Email:</td>
-                                    <td><input type="email" name="insEmail" class="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required/></td>
+                                    <td><input type="email" name="insEmail" id="insEmail" class="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required/></td>
                                 </tr>
                                 <tr>
                                  <tr>
                                     <td>Start Date:</td>
-                                    <td><input type="date" name="startDate" class="form-control" required/></td>
+                                    <td><input type="date" name="startDate" id="startDate" class="form-control" required/></td>
                                 </tr>
                                  <tr>
                                     <td>End Date:</td>
-                                    <td><input type="date" name="endDate" class="form-control" min="startDate.valueAsDate" title="End date needs to be after start date" required/></td>
+                                    <td><input type="date" name="endDate" id="endDate" class="form-control" required/></td>
                                 </tr>
                                 <tr>
                                 <tr>   
                                     <td>Upload Excel</td>
                                     <td>  
-                                            <input type="file" name="file" style="" accept=".xlsx" title="The file needs to be an excel file" required/>
+                                            <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="file" name="file" runat="server" title="Uploaded file must be an excel" required/>
                                             <label class="custom-file-input">Choose file...</label>
                                     </td>
                                     <td></td>
                                 </tr>
                             </Table>
                             <div class="row justify-content-center">
-                                <input type="submit" value="Submit" onclick="return checkDomain();" type="submit" class="btn btn-success px-3"/>
+                                <input type="submit" value="Submit" class="btn btn-success px-3" onclick="validate();"/>
                             </div>
                         </s:form>
                     </div><!-- End col 8 -->
@@ -201,7 +202,7 @@
         <!-- Bootstrap.js -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+         <script src="<c:url value="/resources/js/classValidate.js" />"></script>
     </body>
 </html>
 

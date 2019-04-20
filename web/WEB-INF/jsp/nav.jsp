@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: rgb(0,102,161);">
   <div class="container">
     <a class="navbar-brand" href="#">
-      <i class="fas fa-rocket"></i>
-      <!--<img width="30" height="30" position="inline-block" src="img/rocket-ship.png"/>-->
+      <!--<i class="fas fa-rocket"></i>-->
+      <img height="50px" position="inline-block" src="resources/img/logo_1.png"/>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

@@ -10,14 +10,11 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-        <!--static files-->
-
-    <mvc:resources mapping="/resources/**" location="/resources/" />	
-    <mvc:resources location="/img/" mapping="/img/**" />	    
-    
+    <!--static files-->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources location="/img/" mapping="/img/**" />
     
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
-    
 
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
@@ -36,7 +33,12 @@
                 <prop key="email.htm">emailController</prop>
                 <prop key="createclass.htm">createClassController</prop>
                 
-                <!--all admin pages should use the adminController-->
+                <prop key="showEmployees.htm">empController</prop>
+                <prop key="editEmployees.htm">empController</prop>
+                <prop key="deleteEmployees.htm">empController</prop>
+                <prop key="searchEmployees.htm">empController</prop>
+                
+                <!--all admin pages should use the adminController-->             
                 <prop key="admin.htm">adminController</prop>
                 <prop key="test.htm">adminController</prop>
                 
@@ -44,6 +46,7 @@
                 <prop key="streams.htm">adminController</prop>
                 <prop key="modules.htm">adminController</prop>
                 <prop key="category.htm">adminController</prop>
+                <prop key="ajax.htm">adminController</prop>
 
                 
                 <prop key="manage-user.htm">adminController</prop>
@@ -120,11 +123,16 @@
     <bean name="downloadTemplateController"
         class="Controller.DownloadTemplateController"
     />
+    
+    <bean name="empController"
+          class="Controller.EmpController">
+    </bean>
   
    <bean name="resetController"
           class="Controller.ResetPass"
-          p:formView="reset-password"
-       />
+          p:formView="reset-password"/>
+   
     <bean id = "multipartResolver" 
           class ="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
 </beans>

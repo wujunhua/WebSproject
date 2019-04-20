@@ -10,12 +10,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!--database access-->
-<%          
-   //initialize driver class
-    try {    
-      Class.forName("oracle.jdbc.driver.OracleDriver");
+<%
+    session.setAttribute("username", request.getAttribute("username"));
+    //initialize driver class
+    try {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
     } catch (Exception e) {
-      out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
+        out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
     }
 
     String dbUser = "Student_Performance";
@@ -25,34 +26,33 @@
     //connect
     Connection conn = null;
     try {
-      conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-      //out.println(" Connection status: " + conn + "<P>");
-    } catch(Exception e) {
-      out.println("Connection failed: " + e.toString() + "<P>");      
+        conn = DriverManager.getConnection(dbURL, dbUser, dbPasswd);
+        //out.println(" Connection status: " + conn + "<P>");
+    } catch (Exception e) {
+        out.println("Connection failed: " + e.toString() + "<P>");
     }
-    
+
     String sql = "SELECT * FROM stream";
     Statement stmt = conn.createStatement();
     ResultSet rs = stmt.executeQuery(sql);
-    
+
     ArrayList<String> streamIDs = new ArrayList();
     request.setAttribute("streamIDs", streamIDs);
-        
+
     ArrayList<String> streamNames = new ArrayList();
     request.setAttribute("streamNames", streamNames);
-    
+
     ArrayList<Stream> allStreams = new ArrayList<Stream>();
-    while(rs.next()) {
+    while (rs.next()) {
         allStreams.add(new Stream(rs));
     }
     request.setAttribute("allStreams", allStreams);
-    
+
     // fill in names and IDs, two separate arrays
 //    while(rs.next()) {
 //        streamIDs.add(rs.getString("stream_id"));
 //        streamNames.add(rs.getString("stream_name"));
 //    }
-
     rs.close(); // close resources
     stmt.close();
     conn.commit();
@@ -82,9 +82,9 @@
     </head>
     <body class="bg-light">
         <!-- Navbar -->
-         <jsp:include page="nav.jsp"/>
+        <jsp:include page="nav.jsp"/>
         <!-- End Navbar -->
-        
+
         <div class="container-fluid">
             <div class="container mt-2 pt-4 pb-3">
                 <nav aria-label="breadcrumb">
@@ -95,7 +95,7 @@
                 </nav>
             </div>
         </div>
-        
+
         <!-- Tabs -->
         <div class="container-fluid">
             <div class="container">
@@ -113,99 +113,115 @@
             </div>
         </div>
         <!-- End Tabs -->
-        
+
         <div class="container-fluid bg-white" style="height: 100vh;">
             <div class="container pb-5 pt-4">
                 <div class="row mx-1">
-                    <div class="col-8 px-3 py-3">
+                    <div class="col-sm-8 px-3 py-3"> 
                         <s:form commandName="excel">
-                            <Table class="table">
-                                <tr class="my-2">
-                                   
-                                    <td> Stream:</td> <!-- stream dropdown -->
-                                    <td>
-                                        
-                                            <select id="selectedStream" name="streamName" class="form-control">
-                                                <c:forEach items="${allStreams}" var="stream">
-                                                    <option value="${stream.ID}"> 
-                                                        ${stream.name}
-                                                    </option>
-                                                </c:forEach>
-                                            </select>      
-                                        
-                                    </td>
-                                </tr>
-                                <tr class="my-2">
-                                    <td> Location:</td>
-                                    <td><input type="text" name="location" class="form-control" pattern="[a-zA-Z][a-zA-Z]{2,50}" title="Location must contain only letters and be atleast 3 characters." required/></td>
-                                </tr>
-                                <tr>
-                                    <td>Site</td>
-                                    <td>
-                                        <div class="col-4">
-                                            <div class="form-group pt-lg-2 pl-lg-2">
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="onSite" name="site" value="Onsite" checked>
-                                                        <label class="custom-control-label" for="onSite"><small>Onsite</small></label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="offSite" name="site" value="Offshore">
-                                                        <label class="custom-control-label" for="offSite"><small>Offshore</small></label>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Instructor Email:</td>
-                                    <td><input type="email" name="insEmail" id="insEmail" class="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required/></td>
-                                </tr>
-                                <tr>
-                                 <tr>
-                                    <td>Start Date:</td>
-                                    <td><input type="date" name="startDate" id="startDate" class="form-control" required/></td>
-                                </tr>
-                                 <tr>
-                                    <td>End Date:</td>
-                                    <td><input type="date" name="endDate" id="endDate" class="form-control" required/></td>
-                                </tr>
-                                <tr>
-                                <tr>   
-                                    <td>Upload Excel</td>
-                                    <td>  
-                                            <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="file" name="file" runat="server" title="Uploaded file must be an excel" required/>
-                                            <label class="custom-file-input">Choose file...</label>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </Table>
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                            <label class="my-1 mr-2" for="selectedStream">Stream</label>
+                                </div>
+                                <div class="col-sm-10">
+                            <select id="selectedStream" name="streamName" class="custom-select">
+                                <c:forEach items="${allStreams}" var="stream">
+                                    <option value="${stream.ID}"> 
+                                        ${stream.name}
+                                    </option>
+                                </c:forEach>
+                            </select>    
+                                </div>
+                            </div>
+                       
+                            <div class="form-group row">
+                                <div class="col-sm-2 my-1">
+                               <label class="my-1 mr-2" for="location">Location</label>
+                                </div>
+                                <div class="col-sm-6 my-1">
+                               <input type="text" id="location" name="location" class="form-control" pattern="[a-zA-Z][a-zA-Z]{2,50}" title="Location must contain only letters and be atleast 3 characters." required/>
+                                </div>
+                                <div class="col-sm-4 mt-2 mb-1">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="onSite" name="site" value="Onsite" checked>
+                                        <label class="custom-control-label" for="onSite"><small>Onsite</small></label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="offSite" name="site" value="Offshore">
+                                        <label class="custom-control-label" for="offSite"><small>Offshore</small></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-2 my-1">
+                                    <label class="my-1 mr-2" for="location">Instructor Email</label>
+                                </div>
+                                <div class="col-sm-10 my-1">
+                                    <input type="email" name="insEmail" id="insEmail" class="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required/>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-sm-2 my-1">
+                                    <label class="my-1 mr-2" for="location">Start Date</label>
+                                </div>
+                                <div class="col-sm-4 my-1">
+                                    <input type="date" name="startDate" id="startDate" class="form-control" required/>
+                                </div>
+                                
+                                <div class="col-sm-2 my-1">
+                                    <label class="my-1 mr-2" for="location">End Date</label>
+                                </div>
+                                <div class="col-sm-4 my-1">
+                                    <input type="date" name="endDate" id="endDate" class="form-control" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-2 my-1 pt-2">
+                                    <label for="exampleFormControlFile1">File Select</label>
+                                </div>
+                                <div class="col-sm-10 my-1 btn-light py-2 pl-3">
+                                    <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="file" name="file" runat="server" title="Uploaded file must be an excel" required/>
+                                </div>
+                            </div>
+
                             <div class="row justify-content-center">
-                                <input type="submit" value="Submit" class="btn btn-success px-3" onclick="validate();"/>
+                                <button type="submit" class="btn btn-primary rounded-0 px-3" onclick="validate();"><i class="far fa-file-alt pr-2"></i>Submit</button>
                             </div>
                         </s:form>
                     </div><!-- End col 8 -->
-                    <div class="col-4 mt-4">
-                        Download template<br>
-                        <c:forEach items="${allStreams}" var="stream"> 
-                            <a href="download.htm?streamID=${stream.ID}">${stream.name}</a><br>
-                        </c:forEach>
+                    <div class="col-sm-4 mt-2">
+                        <div class='card'>
+                        <div class='card-header bg-light'>
+                            Template
+                        </div>
+                       
+                            <ul class='list-group'>
+                                <c:forEach items="${allStreams}" var="stream"> 
+                                    <li class='list-group-item'><a href="download.htm?streamID=${stream.ID}">${stream.name}</a></li>
+                                </c:forEach>
+                            </ul>
+                       
+                        </div>
                     </div>
                 </div><!-- End row --> 
             </div><!-- End container --> 
         </div><!-- End fluid container -->
-        
-        
-        
+
+
+
         <!-- Optional JavaScript -->
-  
+
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <!-- Popper.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <!-- Bootstrap.js -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
-         <script src="<c:url value="/resources/js/classValidate.js" />"></script>
+
+        <script src="<c:url value="/resources/js/classValidate.js" />"></script>
     </body>
 </html>
 

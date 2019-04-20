@@ -112,14 +112,12 @@
     <div class="container-fluid bg-white" style="height: 100vh;">
         <div class="container pb-5 pt-3">
             <s:form commandName="email" class="mt-2"> 
-
-            <h5 class="text-muted pb-2">Choose who you want to email:</h5>
             <table class="table table-bordered table-striped table-sm">
                 <thead>
                     <tr>
-                        <th scope="col" style="width: 50%;">Name</th>
+                        <th scope="col" style="width: 40%;">Name</th>
                         <th scope="col" style="width: 40%;">Email</th>
-                        <th scope="col" style="width: 10%;">Send?</th> 
+                        <th scope="col text-center" style="width: 20%;">Send?</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -135,9 +133,9 @@
               <!--</div>-->
                 </tbody>
             </table>
-            <div class="row justify-content-center">
-              <button type="submit" value="Login" class="btn btn-success mx-1"><i class="fas fa-reply pr-2"></i>Send</button>
-              <button type="reset" value="Reset" class="btn-info btn mx-1"><i class="fas fa-sync-alt pr-2"></i>Reset</button>
+            <div class="row justify-content-center my-5">
+              <button type="submit" value="Login" class="btn btn-primary px-3 mx-1 rounded-0"><i class="fas fa-paper-plane pr-2"></i>Send</button>
+              <button type="reset" value="Reset" class="btn-secondary btn mx-1 px-3 rounded-0"><i class="fas fa-sync-alt pr-2"></i>Reset</button>
             </div>
               </s:form>
         </div>

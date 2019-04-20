@@ -5,19 +5,30 @@ import ExcelUpload.Runner;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 
-public class UploadAuthentication extends SimpleFormController{
+public class UploadAuthentication extends SimpleFormController implements Controller{
 
+    @Override
+    public ModelAndView handleRequest(HttpServletRequest request,
+                                HttpServletResponse response){
+               
+        String username = (String) request.getAttribute("username");
+        System.out.println("********* UploadAuthentication: " + username);
+        return new ModelAndView("CreateClass", "username", username);
+    }
+    
     public UploadAuthentication() {
         setCommandClass(ExcelUploadObject.class);
         setCommandName("excel");
     }
-    
     
 
     @Override
@@ -33,7 +44,7 @@ public class UploadAuthentication extends SimpleFormController{
         // bring in all streams
         
         
-        return new ModelAndView("instructor");
+        return new ModelAndView("createclass");
     }
     
     public File convert(MultipartFile file) throws IOException{

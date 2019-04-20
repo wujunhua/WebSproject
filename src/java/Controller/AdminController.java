@@ -25,6 +25,8 @@ public class AdminController implements Controller{
         String servletPath = request.getServletPath();
         String viewName = servletPath.substring(1, (servletPath.length() - lengthOfExt));
         
-        return new ModelAndView(viewName);
+        String username = (String) request.getAttribute("username");
+        System.out.println("********* AdminController: " + username);
+        return new ModelAndView(viewName, "username", username);
     }
 }

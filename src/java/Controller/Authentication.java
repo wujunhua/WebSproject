@@ -8,14 +8,18 @@ package Controller;
 import POJO.User;
 import POJO.UserServiceDAO;
 import java.io.Console;
+import java.io.IOException;
 import static java.lang.System.console;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**
@@ -24,6 +28,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  */
 public class Authentication extends SimpleFormController{
 
+    
     public Authentication() {
         setCommandClass(User.class);
         setCommandName("user");
@@ -52,11 +57,12 @@ public class Authentication extends SimpleFormController{
                     ModelAndView userNameAndStatus = new ModelAndView("streams");
                     userNameAndStatus.addObject("username", userMatcher.getUserName());
                     userNameAndStatus.addObject("isAdmin", "Yes");
+                 
                     return userNameAndStatus;
                 }
                 else
                 {
-                    ModelAndView userNameAndStatus = new ModelAndView("instructor");
+                    ModelAndView userNameAndStatus = new ModelAndView("CreateClass");
                     userNameAndStatus.addObject("username", userMatcher.getUserName());
                     userNameAndStatus.addObject("isAdmin", "No");
                     return userNameAndStatus;

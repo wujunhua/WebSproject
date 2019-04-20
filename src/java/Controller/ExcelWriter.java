@@ -22,6 +22,9 @@ public class ExcelWriter {
     private OutputStream outputStream;
     private ArrayList<String> columnTitles;
     private String[] instructions;
+    private int numStaticColTitles;
+    // for columns that should be wider than their titles text length (name, email, reporting manager)
+    private final int WIDER_WIDTH; 
     
     /*
         constructor
@@ -31,7 +34,7 @@ public class ExcelWriter {
     public ExcelWriter(OutputStream outputStream) {
         this.outputStream = outputStream;
         
-        // trailing whitespace since it's appended to the module name and a # is appended to it
+        // trailing whitespace since it's appended to the module name, and a # is appended to it
         scoreTag = " Score "; 
         
         columnTitles = new ArrayList<>(); // all template files start with these columns
@@ -40,13 +43,19 @@ public class ExcelWriter {
         columnTitles.add("Email");
         columnTitles.add("Reporting Manager");
         
-        // print these in the first rows
+        // the number of titles that don't come from the database
+        numStaticColTitles = columnTitles.size();
+        
+        // printed in the first rows
         instructions = new String[] {
             "Performica Data Entry Template",
             "Please enter employee details and scores across a single row.",
             "Score 1 is the first attempt, score 2 is the first retake, and score 3 is the second retake.",
             "If retakes do not apply to the student, then leave those cells blank."
         };
+        int maxNumCharacters = 35;
+        int widthOfCharacter = 256;
+        WIDER_WIDTH = (maxNumCharacters * widthOfCharacter);
     }
     
     public void createExcelTemplateFile(ArrayList<String> moduleNames) {
@@ -62,9 +71,9 @@ public class ExcelWriter {
         boldFont.setBold(true); // column titles are bold
         
         XSSFCellStyle style = workbook.createCellStyle();
-        style.setFont(boldFont); // bold font is used in this styling
+        style.setFont(boldFont); // cell style uses bold font
         
-        addInstructionsToSpreadsheet(spreadsheet); // place instructions on spreadsheet
+        addInstructionsToSpreadsheet(spreadsheet);
 
         // title row, indicates the data to be entered below
         XSSFRow row = spreadsheet.createRow(getColumnTitleIndex()); 
@@ -77,16 +86,22 @@ public class ExcelWriter {
                 
                 cell.setCellValue(columnTitle);
                 cell.setCellStyle(style); // make each title bold
-                spreadsheet.autoSizeColumn(columnIndex); // expand columns to match text width
+                
+                if(cellShouldBeWider(columnIndex))
+                    spreadsheet.setColumnWidth(columnIndex, WIDER_WIDTH);
+                else
+                    spreadsheet.autoSizeColumn(columnIndex); // expand column to match text width
+                
                 columnIndex++; // move to the next column
         }
         
         try {
-            workbook.write(outputStream); // up to the caller to close
+            workbook.write(outputStream); // up to the caller to close stream
+            workbook.close();
             System.out.println("Template spreadsheet was written successfully");
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("CreateExcelTemplateForStream: there was an issue creating the template file");
+            System.err.println("createExcelTemplateFile: there was an issue creating the template file");
         }  
     }
     
@@ -106,7 +121,8 @@ public class ExcelWriter {
             
             // append score tag and test take number to each column title
             for(int i = 1; i < retakeLimit; i++) {
-                String columnTitle = (moduleName + scoreTag + i); // [module name] Score [#]
+                // [module name] Score [1, 2, 3]
+                String columnTitle = (moduleName + scoreTag + i);
                 scoreTitles.add(columnTitle);
             }
         }
@@ -131,7 +147,16 @@ public class ExcelWriter {
     }
     
     private int getColumnTitleIndex() {
-        // so column titles are an extra row away from the instructions
+        // column titles are an extra row away from the instructions
         return (instructions.length + 1);
+    }
+    
+    private boolean cellShouldBeWider(int columnIndex) {
+        int instructionsColIndex = 0;
+        
+        // any column after the instructions and before the scores should be
+        // wider than its column title's text length
+        return ((instructionsColIndex < columnIndex) && 
+                (columnIndex < numStaticColTitles));
     }
 }

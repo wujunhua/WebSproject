@@ -102,6 +102,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="email.htm">Email Hub</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="showEmployees.htm">Employees</a>
+                </li>
             </ul>
         </div>
     </div>

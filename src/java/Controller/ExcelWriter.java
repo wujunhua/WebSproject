@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,41 +16,33 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 // it doesn't connect to the database, the data to be written is passed in
 public class ExcelWriter {
 
-    private final String relativePath; // where the templates are saved
-    private final String fileExtension;
-    private final String fileTag; // appended to the stream name to complete the file name
     private final String scoreTag; // appended to each module name to communicate that's the score column
+    private OutputStream outputStream;
     private ArrayList<String> columnTitles;
     
     /*
         constructor
-        parameters - @relativePath: where the created files should be stored
-                                it's relative to the project's root directory
-                                (Ex.) "./downloadable/"
-     */
-    public ExcelWriter(String relativePath) {
-        this.relativePath = relativePath;
-        fileExtension = ".xlsx";
-        fileTag = "-Template";
+        parameters - @outputStream: where the excel data should be written to
+                                    always ResponseOutputStream in this application  
+    */
+    public ExcelWriter(OutputStream outputStream) {
+        this.outputStream = outputStream;
+
         // trailing whitespace since it's appended to the module name and a # is appended to it
         scoreTag = " Score "; 
         
-        this.columnTitles = new ArrayList<>();
-        // all template files start with these columns
+        columnTitles = new ArrayList<>(); // all template files start with these columns
         columnTitles.add("Employee ID"); 
         columnTitles.add("Name");
         columnTitles.add("Email");   
     }
     
-    public void createExcelTemplateFile(String streamName, ArrayList<String> moduleNames) {
+    public void createExcelTemplateFile(ArrayList<String> moduleNames) {
 
         ArrayList<String> scoreTitles = createScoreTitles(moduleNames);
-        columnTitles.addAll(scoreTitles);
-        
-        
-        XSSFWorkbook workbook = new XSSFWorkbook(); // blank workbook
+        columnTitles.addAll(scoreTitles); // add dynamic column titles
 
-        // blank spreadsheet
+        XSSFWorkbook workbook = new XSSFWorkbook(); // blank workbook
         XSSFSheet spreadsheet = workbook.createSheet("Performance Reports Template");
 
         int firstRowIndex = 0; // only writing to the first row
@@ -64,9 +57,7 @@ public class ExcelWriter {
         }
         
         try {
-            FileOutputStream out = createFileOutputStream(streamName);
-            workbook.write(out);
-            out.close();
+            workbook.write(outputStream); // up to the caller to close
             System.out.println("Template spreadsheet was written successfully");
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +70,6 @@ public class ExcelWriter {
     *
     *   output - each module name repeated 3 times with "Score [#]" appended to it
     */
-    
     private ArrayList<String> createScoreTitles(ArrayList<String> moduleNames) {
         
         final int retakeLimit = 4; // 3 retakes, this makes it one-indexed
@@ -97,30 +87,5 @@ public class ExcelWriter {
         
         return scoreTitles;
     }
-    
-    private FileOutputStream createFileOutputStream(String filename) throws FileNotFoundException {
-        
-        String fullPathFilename = createFullPathFilename(filename);
-        
-        return new FileOutputStream(new File(fullPathFilename));
-    }
-    
-    private String createFullPathFilename(String filename) {
-        StringBuilder fullPathBuilder = new StringBuilder(relativePath); // directory path
-        fullPathBuilder.append(filename); // followed by the file name
-        fullPathBuilder.append(fileTag); // and the tag "-template"
-        fullPathBuilder.append(fileExtension); // and the extension ".xlsx"
-        
-        return fullPathBuilder.toString();
-    }
-    
-    public static void main(String[] args) {
-        
-        ExcelWriter excelWriter = new ExcelWriter("./downloadable/");
-        ArrayList<String> staticModuleNames = new ArrayList<>(2);
-        staticModuleNames.add("web tech");
-        staticModuleNames.add("bootstrap");
-        
-        excelWriter.createExcelTemplateFile("DB343", staticModuleNames);
-    }
-}
+  
+  

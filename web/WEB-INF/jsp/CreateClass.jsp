@@ -115,7 +115,7 @@
             <div class="container pb-5 pt-4">
                 <div class="row mx-1">
                     <div class="col-8 px-3 py-3">
-                        <s:form commandName="excel">
+                        <s:form commandName="excel" enctype="multipart/form-data" method="POST">
                             <Table class="table">
                                 <tr class="my-2">
                                    

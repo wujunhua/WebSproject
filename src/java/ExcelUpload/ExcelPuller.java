@@ -25,10 +25,10 @@ public class ExcelPuller {
                 String classID = generateClassID(loc, site, stream);            // stores the auto generate class id
             	
                 try {
-
+                    int cols = 0;
                     FileInputStream excelFile = new FileInputStream(FILE_PATH);          //Opens the stream for the excel file
                     workbook = new XSSFWorkbook(excelFile);                              //The actual Excel workbook
-                   Sheet datatypeSheet = workbook.getSheetAt(0);                         //The current sheet of the excel doc (Should only be 1 sheet)
+                    Sheet datatypeSheet = workbook.getSheetAt(0);                         //The current sheet of the excel doc (Should only be 1 sheet)
                     Iterator<Row> iterator = datatypeSheet.iterator();                   //Used to traverse the rows in the excel file
                    
                     Row currentRow = iterator.next();                                    //Grabs the first row
@@ -50,51 +50,69 @@ public class ExcelPuller {
                     		columns.add(currentCell.getStringCellValue());
                     	
                     	}
+                        cols++;
                     }
                     
-                    
+                   
                     // go through every row after the first row
                     // create employee and module classes from these rows
                     
-                    int counter;
+                  
+                    
                     while (iterator.hasNext()) {
-                        counter = 0;
+                      
                       currentRow = iterator.next(); // goes to the next row
                       cellIterator = currentRow.iterator(); // moves to the first cell in that row
                       
-                     
+                      Cell currentCell = null;
                       Employee newEmp = new Employee(); //Initializes an employee instance
-                        while (cellIterator.hasNext()) {                           
-                        	
-                        	Cell currentCell = cellIterator.next();  // empid, name, email, classId, m1Score, m2Score
-             
+                       for(int counter = 0; counter < cols; counter++) {                           
                         	
                         	if (counter == 0) {
+                                        currentCell = cellIterator.next();
+                                       
                         		newEmp.setEmployeeID(currentCell.getStringCellValue());//Gets and sets Emp ID
-                        		counter++;
+                        		
+                                        
                                         System.out.println(currentCell.getStringCellValue());
                         	} else if(counter == 1){
+                                        currentCell = cellIterator.next();
                         		newEmp.setEmployeeName(currentCell.getStringCellValue());//Gets and sets Emp Name
-                        		counter++;
+                        		
+                                        
                                         System.out.println(currentCell.getStringCellValue());
                         	} else if(counter == 2) {
+                                        currentCell = cellIterator.next();
                         		newEmp.setEmployeeEmail(currentCell.getStringCellValue());//Gets and sets Emp Email
-                        		counter++;
+                        		
+                                        
                                         System.out.println(currentCell.getStringCellValue());
                         	} else if (counter == 3){
+                                        currentCell = cellIterator.next();
                         		newEmp.setManagerID(currentCell.getStringCellValue()); //Adds scores to an employee
-                        		counter++;
-                                        System.out.println(currentCell.getStringCellValue());
-                                } else if (counter >= 4){
-                        		newEmp.addScore(columns.get(counter), currentCell.getNumericCellValue()); //Adds scores to an employee
-                        		counter++;
-                                        System.out.println(currentCell.getNumericCellValue());
                         		
-                        	}else {
+                                        
+                                        System.out.println(currentCell.getStringCellValue());
+                                        currentCell = cellIterator.next();
+                                } else if (counter >= 4){
+                                            if(currentCell.getColumnIndex() == counter){
+                                                
+                                                newEmp.addScore(columns.get(counter), currentCell.getNumericCellValue()); //Adds scores to an employee
+                                                
+                                                System.out.println(counter + " " + currentCell.getNumericCellValue());
+                                                
+                                                if(cellIterator.hasNext())
+                                                currentCell = cellIterator.next();
+                                            }
+                                               
+                        		
+                                     
+                        		
+                        	} else {
                         		System.out.println("All data entered");
                         	}
                         	            
-                        	
+                        
                         	
                         	
                         	}

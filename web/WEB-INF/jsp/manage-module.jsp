@@ -111,9 +111,9 @@ boolean moduleCanBeDeleted = rs.next();
               <form action="deleteModule.htm">
                   <input type="hidden" name='moduleId' id ="moduleId" value='${param.id}' />
                    <% if(moduleCanBeDeleted){%>
-                  <button class="btn btn-sm btn-danger" type ="submit" >
+                   <button class="btn btn-sm btn-danger" type ="submit" >
                     <%} else{%>
-                    <button class="btn btn-sm btn-danger" type="submit"title="This module contains courses and cannot be deleted" disabled >
+                    <button class="btn btn-sm btn-danger" type="submit" title="This module contains courses and cannot be deleted" disabled >
                     <%}%>
                 <!--a href="" class="btn btn-sm btn-danger"-->
                   <span style="white-space: nowrap;"><i class="fas fa-user-minus"></i> Delete </span>
@@ -206,7 +206,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?modName="+modName+"&modId="+modId+"&num=1", true);
+  xhttp.open("GET", "jackson_1.htm?modName="+encodeURIComponent(modName)+"&modId="+encodeURIComponent(modId)+"&num=1", true);
   xhttp.send();
 }
 </script>

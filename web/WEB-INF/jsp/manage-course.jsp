@@ -5,7 +5,6 @@
 <%!
     public String updateModules(String stream_name){
     String sql = "select m.module_name from modules m, stream s where m.stream_id = s.stream_id AND s.stream_name LIKE '"+stream_name+"'";
-
  /*
  ResultSet rs = stmt.executeQuery(sql);
   
@@ -135,7 +134,7 @@
 
 <jsp:include page="head-tag.jsp"/>
 
-<body class="bg-light" onload="loadDoc()">
+<body class="bg-light">
 
   <jsp:include page="nav.jsp"/>
   <div class="container-fluid">
@@ -219,12 +218,8 @@
               <div class="form-group col-md-9">
                   <div id="dropdown_stuff">
                   <select class="custom-select" name= "modulename" id="modulename">
-                      <option selected hidden value="${param.module}">${param.module}</option>
-                    <c:forEach items="${fullmodList}" var="modder">
-                        <option value="${modder}">
-                            ${modder}
-                        </option>
-                    </c:forEach>
+                      <option selected hidden value="${param.name2}">${param.name2}</option>
+                    
                   </select></div>
                 </div>
             </div>        
@@ -286,7 +281,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?newC="+nName+"&oldC="+oName+"&num=4", true);
+  xhttp.open("GET", "jackson_1.htm?newC="+encodeURIComponent(nName)+"&oldC="+encodeURIComponent(oName)+"&num=4", true);
   xhttp.send();
 }
 </script>

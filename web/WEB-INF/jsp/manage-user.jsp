@@ -159,7 +159,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?oldUn="+oName+"&newUn="+nName+"&num=5", true);
+  xhttp.open("GET", "jackson_1.htm?oldUn="+encodeURIComponent(oName)+"&newUn="+encodeURIComponent(nName)+"&num=5", true);
   xhttp.send();
 }
 </script>

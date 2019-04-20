@@ -78,9 +78,7 @@
         //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
         }
   String var = (String)request.getAttribute("stream_name");
-
   //out.println(var);
-
   sql = "select m.module_name from modules m, stream s where m.stream_id=s.stream_id AND stream_name LIKE '"+var+"'";
   rs = stmt.executeQuery(sql);
   
@@ -267,7 +265,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+cName+"&num=8", true);
+  xhttp.open("GET", "jackson_1.htm?name="+encodeURIComponent(cName)+"&num=8", true);
   xhttp.send();
 }
 </script>

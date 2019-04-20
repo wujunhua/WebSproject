@@ -230,7 +230,7 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th scope="col" style="width: 10%;">Module ID</th>
+            <th scope="col" style="width: 10%;">#</th>
             <th scope="col">Name</th>
             <th scope="col">Category</th>
             <th scope="col">Stream Name</th>
@@ -240,7 +240,7 @@
             <c:set var="count" value="1"/>
             <c:forEach items="${moduleList}" var="module">
             <tr value="${module}">
-                <th scope="row">${moduleIdList.get(count-1)}</th>
+                <th scope="row">${count}</th>
                 <td>
                     <a href="manage-module.htm?id=${moduleIdList.get(count-1)}&name=${catagoryName.get(count-1)}&stream=${cleanedStreamNameList.get(count-1)}&okay=${cleanedModuleList.get(count-1)}">${module}</a>
                 </td>
@@ -283,7 +283,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+modName+"&num=6", true);
+  xhttp.open("GET", "jackson_1.htm?name="+encodeURIComponent(modName)+"&num=6", true);
   xhttp.send();
 }
 </script>

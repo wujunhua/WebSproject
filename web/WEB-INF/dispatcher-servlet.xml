@@ -130,6 +130,9 @@
   
    <bean name="resetController"
           class="Controller.ResetPass"
-          p:formView="reset-password"
-    />
+          p:formView="reset-password"/>
+   
+    <bean id = "multipartResolver" 
+          class ="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
 </beans>

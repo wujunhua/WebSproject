@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
 import java.sql.Statement;
+import java.util.Calendar;
 import javafx.util.Pair;
 
 import javax.mail.Message;
@@ -95,55 +96,61 @@ public class SendEmail {
 
             
             messageBodyPart = new MimeBodyPart();
-            String htmlText = "<!doctype html>\n" +
-"<html lang=\"en\">\n" +
-"<head>\n" +
-"  <!-- Required meta tags -->\n" +
-"  <meta charset=\"utf-8\">\n" +
-"  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n" +
-"\n" +
-"  <!-- Bootstrap CSS -->\n" +
-"  <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\n" +
-"\n" +
-"  <title>Performica Report</title>\n" +
-"</head>\n" +
-"<body style='padding-right: 500px;padding-right:500px; font-family:Verdana;'>\n" +
-"  <div class=\"row justify-content-center\">\n" +
-"    <div class=\"col-lg-6 col-md-6 col-sm-12\" style=\"border: solid #000 1px;\">\n" +
-"      <img src=\"cid:image\" class=\"img-fluid\" width=\"999\" height=\"180\"\">\n" +
-"      <h1 class=\"px-2\"></h1>\n" +
-"      <div class=\"row\">\n" +
-"        <div class=\"col-12\">\n" +
-"          <p  style=\"padding-left: 25;padding-right: 30;\"><strong>Hi "+ getName(email) +",</strong></p><br>\n" +
-"          You have successfully completed your technical induction training program. We are happy to share the detailed report of your performance during the training period. We thank you for your participation in our training program and hope you had a good learning experience.</p><br>\n" +
-"          Should you need any further information, please do not hesitate to contact us.</p>\n" +
-"\n" +
-"          <strong>Wish you the best for your future!</strong></p><br>\n" +
-"          Thanks and Regards,</p><br>\n" +
-"          Training and Development Team</p><br>\n" +
-"        </div>\n" +
-"          <img src=\"cid:congrats\" class=\"img-fluid\" height=\"50\"; width= \"999\">\n" +
-"      </div>\n" +
-"      <div class=\"container-fluid\" style=\"background: rgb(0,102,161); overflow: hidden;\">\n" +
-"        <div class=\"row justify-content-center\">\n" +
-"          <div align=\"center\" style=style='font-size:9.0pt; line-height:150%; font-family:\"Verdana\",sans-serif; color:white'>\n" +
-"            For internal circulation only.© 2019\n" +
-"          </div>\n" +
-"        </div>\n" +
-"      </div>\n" +
-"    </div>\n" +
-"\n" +
-"  </div>\n" +
-"\n" +
-"\n" +
-"  <!-- Optional JavaScript -->\n" +
-"  <!-- jQuery first, then Popper.js, then Bootstrap JS -->\n" +
-"  <script src=\"https://code.jquery.com/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>\n" +
-"  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js\" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q\" crossorigin=\"anonymous\"></script>\n" +
-"  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js\" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\" crossorigin=\"anonymous\"></script>\n" +
-"</body>\n" +
-"</html>";
-            messageBodyPart.setContent(htmlText, "text/html");
+            String htmlText = "<html lang=\"en\">\n" +
+            "<head>\n" +
+            "<title>Performica</title>\n" +
+            "<meta charset=\"utf-8\">\n" +
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+            "<style>\n" +
+            "* {\n" +
+            "  box-sizing: border-box;\n" +
+            "}\n" +
+            "\n" +
+            "/* Clear floats after the columns */\n" +
+            "section:after {\n" +
+            "  content: \"\";\n" +
+            "  display: table;\n" +
+            "  clear: both;\n" +
+            "}\n" +
+            "@media (max-width: 600px) {\n" +
+            "  nav, article {\n" +
+            "    width: 100%;\n" +
+            "    height: auto;\n" +
+            "  }\n" +
+            "}\n" +
+            "</style>\n" +
+            "</head>\n" +
+            "<body style=\"  font-family: Verdana, sans-serif;\n" +
+            "  width: 800px;\n" +
+            "  border: solid;\n" +
+            "  margin: 0px 0px 0px 10px;\n" +
+            "  padding-left: 0px;\">\n" +
+            "\n" +
+            "<header style=\"  height: 195px;\n" +
+            "  position:relative;  \n" +
+            "  height:12.1em;\n" +
+            "  width 100%;\"><img src=\"cid:image\" width=\"799\"></header>\n" +
+            "<section>\n" +
+            "  \n" +
+            "  <article style='float: left;width: 100%;padding-left: 20px;padding-right: 20px;font-family: Verdana;'>\n" +
+            "    <p style=\"padding-left: 20px;padding-right: 20px\";><strong>Hi " + getName(email) +",</strong><br>\n" +
+            "    <br>You have successfully completed your technical induction training program. We are happy to share the detailed report of your performance during the training period. We thank you for your participation in our training program and hope you had a good learning experience.<br>\n" +
+            "    <br>Should you need any further information, please do not hesitate to contact us.\n" +
+            "	 \n" +
+            "    <br><br><strong>Wish you the best for your future!</strong><br></p>\n" +
+            "    <img src=\"cid:image2\" width=\"794\";> \n" +
+            "    <p style=\"padding-left: 20px;padding-right: 20px\";><br><br>Thanks and Regards,\n" +
+            "    <br>Training and Development Team</p><br>\n" +
+            "  </article>\n" +
+            "</section>\n" +
+            "<div style=\"background: rgb(0,102,161);color: #fff;font-family:Verdana; height:1.5em;\">\n" +
+            "      <p align=\"center\">For internal circulation only.©" + Calendar.getInstance().get(Calendar.YEAR)  +"</p>\n" +
+            "  </div> \n" +
+
+            "\n" +
+            "</body>\n" +
+            "</html>";
+            messageBodyPart.setContent(htmlText, "text/html;charset=iso-8859-1");
             // add it
             multipart.addBodyPart(messageBodyPart);
             //add header image
@@ -156,12 +163,12 @@ public class SendEmail {
             multipart.addBodyPart(messageBodyPart);
             // Send the complete message parts
            // message.setContent(multipart);
-            System.out.println(System.getProperty("user.dir"));
+            //System.out.println(System.getProperty("user.dir"));
             messageBodyPart = new MimeBodyPart();
             DataSource fds2 = new FileDataSource(
             "welcome.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds2));
-            messageBodyPart.setHeader("Content-ID", "<congrats>");
+            messageBodyPart.setHeader("Content-ID", "<image2>");
             multipart.addBodyPart(messageBodyPart);
             // Send the complete message parts
             

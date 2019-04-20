@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,82 +18,141 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 // it doesn't connect to the database, the data to be written is passed in
 public class ExcelWriter {
 
-    private String relativePath; // where the templates are saved
-    private final String fileExtension;
-    private final String fileTag; // appended to the stream name to complete the file name
+    private final String scoreTag; // appended to each module name to communicate that it is a score column
+    private OutputStream outputStream;
     private ArrayList<String> columnTitles;
+    private String[] instructions;
+    private int numStaticColTitles;
+    // for columns that should be wider than their titles text length (name, email, reporting manager)
+    private final int WIDER_WIDTH; 
     
     /*
         constructor
-        parameters - @relativePath: where the created files should be stored
-                                it's relative to the project's root directory
-                                (Ex.) "./downloadable/"
-     */
-    public ExcelWriter(String relativePath) {
-        this.relativePath = relativePath;
-        this.fileExtension = ".xlsx";
-        this.fileTag = "-Template";
+        parameters - @outputStream: where the excel data should be written to
+                                    always ResponseOutputStream in this application  
+    */
+    public ExcelWriter(OutputStream outputStream) {
+        this.outputStream = outputStream;
+
+        scoreTag = " Score "; 
         
-        this.columnTitles = new ArrayList<>();
-        // all template files start with these columns
+        columnTitles = new ArrayList<>(); // all template files start with these columns
         columnTitles.add("Employee ID"); 
         columnTitles.add("Name");
-        columnTitles.add("Email");   
+        columnTitles.add("Email");
+        columnTitles.add("Reporting Manager");
+        
+        // the number of titles that don't come from the database
+        numStaticColTitles = columnTitles.size();
+        
+        // printed in the first rows
+        instructions = new String[] {
+            "Performica Data Entry Template",
+            "Please enter employee details and scores across a single row.",
+            "Score 1 is the first attempt, score 2 is the first retake, and score 3 is the second retake.",
+            "If retakes do not apply to the student, then leave those cells blank."
+        };
+        int maxNumCharacters = 35;
+        int widthOfCharacter = 256;
+        WIDER_WIDTH = (maxNumCharacters * widthOfCharacter);
     }
     
-    public void createExcelTemplateFile(String streamName, ArrayList<String> moduleNames) {
+    public void createExcelTemplateFile(ArrayList<String> moduleNames) {
+
+        ArrayList<String> scoreTitles = createScoreTitles(moduleNames);
+        columnTitles.addAll(scoreTitles); // add dynamic column titles
 
         XSSFWorkbook workbook = new XSSFWorkbook(); // blank workbook
-
-        // blank spreadsheet
         XSSFSheet spreadsheet = workbook.createSheet("Performance Reports Template");
-
-        int firstRowIndex = 0; // only writing to the first row
-        XSSFRow row = spreadsheet.createRow(firstRowIndex); // title row, indicates the data to be entered
-
-        int columnIndex = 0;
-
-        columnTitles.addAll(moduleNames); // append "[module] score" to the column titles
         
+        XSSFFont boldFont = workbook.createFont();
+        boldFont.setBold(true); // column titles are bold
+        
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setFont(boldFont); // cell style uses bold font
+        
+        addInstructionsToSpreadsheet(spreadsheet);
+
+        // title row, indicates the data to be entered below
+        XSSFRow row = spreadsheet.createRow(getColumnTitleIndex()); 
+
+        int columnIndex = 0; // left most column
+
         // go through titles, write their values in consecutive cells
-        for(String colTitle: columnTitles) {
-                Cell cell = row.createCell(columnIndex++);
-                cell.setCellValue(colTitle);
+        for(String columnTitle: columnTitles) {
+                Cell cell = row.createCell(columnIndex);
+                
+                cell.setCellValue(columnTitle);
+                cell.setCellStyle(style); // make each title bold
+                
+                if(cellShouldBeWider(columnIndex))
+                    spreadsheet.setColumnWidth(columnIndex, WIDER_WIDTH);
+                else
+                    spreadsheet.autoSizeColumn(columnIndex); // expand column to match text width
+                
+                columnIndex++; // move to the next column
         }
         
         try {
-            FileOutputStream out = createFileOutputStream(streamName);
-            workbook.write(out);
-            out.close();
+            workbook.write(outputStream); // up to the caller to close stream
+            workbook.close();
             System.out.println("Template spreadsheet was written successfully");
         } catch (IOException e) {
-            System.err.println("CreateExcelTemplateForStream: there was an issue creating the template file");
+            e.printStackTrace();
+            System.err.println("createExcelTemplateFile: there was an issue creating the template file");
         }  
     }
     
-    private FileOutputStream createFileOutputStream(String filename) throws FileNotFoundException {
+    /*
+    *   input - @modulesNames: the current template's modules
+    *
+    *   output - each module name repeated 3 times with "Score [#]" appended to it
+    */
+    private ArrayList<String> createScoreTitles(ArrayList<String> moduleNames) {
         
-        String fullPathFilename = createFullPathFilename(filename);
+        final int retakeLimit = 4; // 3 retakes, this makes it one-indexed
+        ArrayList<String> scoreTitles = new ArrayList<>();
         
-        return new FileOutputStream(new File(fullPathFilename));
+        // go through each module name
+        for(String moduleName: moduleNames) {
+            
+            // append score tag and test take number to each column title
+            for(int i = 1; i < retakeLimit; i++) {
+                // [module name] Score [1, 2, 3]
+                String columnTitle = (moduleName + scoreTag + i);
+                scoreTitles.add(columnTitle);
+            }
+        }
+        
+        return scoreTitles;
+    }
+
+    private void addInstructionsToSpreadsheet(XSSFSheet spreadsheet) {
+    
+        int currentRow = (-1);
+        int FIRST_COL_INDEX = 0;
+        
+        // loop through instruction strings and rows together writing them in the first column
+        for(currentRow = 0; currentRow < instructions.length; currentRow++) {
+            
+            XSSFRow row = spreadsheet.createRow(currentRow);
+            Cell cell = row.createCell(FIRST_COL_INDEX);
+            
+            cell.setCellValue(instructions[currentRow]);
+        }
     }
     
-    private String createFullPathFilename(String filename) {
-        StringBuilder fullPathBuilder = new StringBuilder(relativePath); // directory path
-        fullPathBuilder.append(filename); // followed by the file name
-        fullPathBuilder.append(fileTag); // and the tag "-template"
-        fullPathBuilder.append(fileExtension); // and the extension ".xlsx"
-        
-        return fullPathBuilder.toString();
+    private int getColumnTitleIndex() {
+        // column titles are an extra row away from the instructions
+        return (instructions.length + 1);
     }
     
-    public static void main(String[] args) {
+    private boolean cellShouldBeWider(int columnIndex) {
+        int instructionsColIndex = 0;
         
-        ExcelWriter excelWriter = new ExcelWriter("./downloadable/");
-        ArrayList<String> staticModuleNames = new ArrayList<>(2);
-        staticModuleNames.add("web tech");
-        staticModuleNames.add("bootstrap");
-        
-        excelWriter.createExcelTemplateFile("DB343", staticModuleNames);
+        // any column after the instructions and before the scores should be
+        // wider than its column title's text length
+        return ((instructionsColIndex < columnIndex) && 
+                (columnIndex < numStaticColTitles));
     }
 }

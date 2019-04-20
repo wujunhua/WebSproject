@@ -33,7 +33,6 @@ public class UploadAuthentication extends SimpleFormController implements Contro
 
     @Override
     protected ModelAndView onSubmit(Object command) throws Exception {
-        
         ExcelUploadObject excel =(ExcelUploadObject)command;
         
       

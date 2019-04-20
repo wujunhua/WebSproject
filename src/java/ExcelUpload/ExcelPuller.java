@@ -42,23 +42,15 @@ public class ExcelPuller {
                     while (cellIterator.hasNext() ) {
                     	Cell currentCell = cellIterator.next();
                     	if (currentCell.getCellType() == CellType.STRING) {
-                            
                     		columns.add(currentCell.getStringCellValue());
-                    	
                     	} else if (currentCell.getCellType() == CellType.NUMERIC) {
-                           	
                     		columns.add(currentCell.getStringCellValue());
-                    	
                     	}
                         cols++;
                     }
-                    
-                   
+
                     // go through every row after the first row
                     // create employee and module classes from these rows
-                    
-                  
-                    
                     while (iterator.hasNext()) {
                       
                       currentRow = iterator.next(); // goes to the next row
@@ -70,37 +62,20 @@ public class ExcelPuller {
                         	
                         	if (counter == 0) {
                                         currentCell = cellIterator.next();
-                                       
                         		newEmp.setEmployeeID(currentCell.getStringCellValue());//Gets and sets Emp ID
-                        		
-                                        
-                                        System.out.println(currentCell.getStringCellValue());
                         	} else if(counter == 1){
                                         currentCell = cellIterator.next();
                         		newEmp.setEmployeeName(currentCell.getStringCellValue());//Gets and sets Emp Name
-                        		
-                                        
-                                        System.out.println(currentCell.getStringCellValue());
                         	} else if(counter == 2) {
                                         currentCell = cellIterator.next();
                         		newEmp.setEmployeeEmail(currentCell.getStringCellValue());//Gets and sets Emp Email
-                        		
-                                        
-                                        System.out.println(currentCell.getStringCellValue());
                         	} else if (counter == 3){
                                         currentCell = cellIterator.next();
                         		newEmp.setManagerID(currentCell.getStringCellValue()); //Adds scores to an employee
-                        		
-                                        
-                                        System.out.println(currentCell.getStringCellValue());
                                         currentCell = cellIterator.next();
                                 } else if (counter >= 4){
                                             if(currentCell.getColumnIndex() == counter){
-                                                
-                                                newEmp.addScore(columns.get(counter), currentCell.getNumericCellValue()); //Adds scores to an employee
-                                                
-                                                System.out.println(counter + " " + currentCell.getNumericCellValue());
-                                                
+                                                newEmp.addScore(columns.get(counter), currentCell.getNumericCellValue()); //Adds scores to an employee   
                                                 if(cellIterator.hasNext())
                                                 currentCell = cellIterator.next();
                                             }
@@ -110,12 +85,8 @@ public class ExcelPuller {
                         		
                         	} else {
                         		System.out.println("All data entered");
-                        	}
-                        	            
-                        
-                        	
-                        	
-                        	}
+                                }
+                       }
                         newEmp.setClassID(classID);
                         emps.add(newEmp);
                     }

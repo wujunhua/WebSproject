@@ -15,9 +15,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 // it doesn't connect to the database, the data to be written is passed in
 public class ExcelWriter {
 
-    private String relativePath; // where the templates are saved
+    private final String relativePath; // where the templates are saved
     private final String fileExtension;
     private final String fileTag; // appended to the stream name to complete the file name
+    private final String scoreTag; // appended to each module name to communicate that's the score column
     private ArrayList<String> columnTitles;
     
     /*
@@ -28,8 +29,10 @@ public class ExcelWriter {
      */
     public ExcelWriter(String relativePath) {
         this.relativePath = relativePath;
-        this.fileExtension = ".xlsx";
-        this.fileTag = "-Template";
+        fileExtension = ".xlsx";
+        fileTag = "-Template";
+        // trailing whitespace since it's appended to the module name and a # is appended to it
+        scoreTag = " Score "; 
         
         this.columnTitles = new ArrayList<>();
         // all template files start with these columns
@@ -40,6 +43,10 @@ public class ExcelWriter {
     
     public void createExcelTemplateFile(String streamName, ArrayList<String> moduleNames) {
 
+        ArrayList<String> scoreTitles = createScoreTitles(moduleNames);
+        columnTitles.addAll(scoreTitles);
+        
+        
         XSSFWorkbook workbook = new XSSFWorkbook(); // blank workbook
 
         // blank spreadsheet
@@ -50,8 +57,6 @@ public class ExcelWriter {
 
         int columnIndex = 0;
 
-        columnTitles.addAll(moduleNames); // append "[module] score" to the column titles
-        
         // go through titles, write their values in consecutive cells
         for(String colTitle: columnTitles) {
                 Cell cell = row.createCell(columnIndex++);
@@ -64,8 +69,33 @@ public class ExcelWriter {
             out.close();
             System.out.println("Template spreadsheet was written successfully");
         } catch (IOException e) {
+            e.printStackTrace();
             System.err.println("CreateExcelTemplateForStream: there was an issue creating the template file");
         }  
+    }
+    
+    /*
+    *   input - @modulesNames: the current template's modules
+    *
+    *   output - each module name repeated 3 times with "Score [#]" appended to it
+    */
+    
+    private ArrayList<String> createScoreTitles(ArrayList<String> moduleNames) {
+        
+        final int retakeLimit = 4; // 3 retakes, this makes it one-indexed
+        ArrayList<String> scoreTitles = new ArrayList<>();
+        
+        // go through each module name
+        for(String moduleName: moduleNames) {
+            
+            // append score tag and test take number to each column title
+            for(int i = 1; i < retakeLimit; i++) {
+                String columnTitle = (moduleName + scoreTag + i); // [module name] Score [#]
+                scoreTitles.add(columnTitle);
+            }
+        }
+        
+        return scoreTitles;
     }
     
     private FileOutputStream createFileOutputStream(String filename) throws FileNotFoundException {

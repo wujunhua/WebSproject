@@ -11,7 +11,6 @@
   } catch (Exception e) {
     out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
   }
-
   String dbUser = "Student_Performance";
   String dbPasswd = "Student_Performance";
   String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -37,7 +36,6 @@
   request.setAttribute("fullmodList", fullmodList);
   
 //out.println(fullmodList);
-
 %>
 <!--<p>${streamname}</p>-->
 

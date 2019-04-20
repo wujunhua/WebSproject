@@ -146,7 +146,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?streamName="+sName+"&num=2", true);
+  xhttp.open("GET", "jackson_1.htm?streamName="+encodeURIComponent(sName)+"&num=2", true);
   xhttp.send();
 }
 </script>

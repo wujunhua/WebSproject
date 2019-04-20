@@ -145,7 +145,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?newCat="+nName+"&num=3", true);
+  xhttp.open("GET", "jackson_1.htm?newCat="+encodeURIComponent(nName)+"&num=3", true);
   xhttp.send();
 }
 </script>

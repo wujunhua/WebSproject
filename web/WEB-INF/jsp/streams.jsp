@@ -174,7 +174,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+sName+"&num=7", true);
+  xhttp.open("GET", "jackson_1.htm?name="+encodeURIComponent(sName)+"&num=7", true);
   xhttp.send();
 }
 </script>

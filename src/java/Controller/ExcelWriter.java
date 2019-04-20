@@ -30,11 +30,10 @@ public class ExcelWriter {
         constructor
         parameters - @outputStream: where the excel data should be written to
                                     always ResponseOutputStream in this application  
-     */
+    */
     public ExcelWriter(OutputStream outputStream) {
         this.outputStream = outputStream;
-        
-        // trailing whitespace since it's appended to the module name, and a # is appended to it
+
         scoreTag = " Score "; 
         
         columnTitles = new ArrayList<>(); // all template files start with these columns
@@ -62,8 +61,7 @@ public class ExcelWriter {
 
         ArrayList<String> scoreTitles = createScoreTitles(moduleNames);
         columnTitles.addAll(scoreTitles); // add dynamic column titles
-        
-        
+
         XSSFWorkbook workbook = new XSSFWorkbook(); // blank workbook
         XSSFSheet spreadsheet = workbook.createSheet("Performance Reports Template");
         
@@ -110,7 +108,6 @@ public class ExcelWriter {
     *
     *   output - each module name repeated 3 times with "Score [#]" appended to it
     */
-    
     private ArrayList<String> createScoreTitles(ArrayList<String> moduleNames) {
         
         final int retakeLimit = 4; // 3 retakes, this makes it one-indexed
@@ -130,7 +127,6 @@ public class ExcelWriter {
         return scoreTitles;
     }
 
-    
     private void addInstructionsToSpreadsheet(XSSFSheet spreadsheet) {
     
         int currentRow = (-1);

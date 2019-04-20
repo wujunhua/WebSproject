@@ -96,7 +96,8 @@ boolean userCantBeUpdated = rs.next();
             <div class="form-group row mt-3">
               <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
               <div class="col-sm-9">
-                <input type="email" class="form-control" id="inputEmail3" name="newusername" value="${param.id}" required>
+                <input type="email" class="form-control" id="inputEmail3" onchange="myFunction()" name="newusername" value="${param.id}" required>
+              <div><small id="jackson_1" class="text-danger"></small></div>
               </div>
               <div class="col-sm-9">
                 <input type="hidden" class="form-control" id="inputEmail4" name="oldusername" value="${param.id}" required>
@@ -119,7 +120,7 @@ boolean userCantBeUpdated = rs.next();
             <div class="row justify-content-center mt-1">
               <div class="row pt-3">
                 <div class="col-6">
-                    <button class="btn btn-sm ghost" type="submit">
+                    <button class="btn btn-sm btn-secondary" type="submit">
                       <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i> Update </span>
                     </button>
                 </div>
@@ -144,3 +145,21 @@ boolean userCantBeUpdated = rs.next();
 
 </body>
 </html>
+
+<script>
+function myFunction()
+{
+  var oName = document.getElementById("inputEmail4").value;
+  var nName = document.getElementById("inputEmail3").value;
+  
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("jackson_1").innerHTML = this.responseText;
+    }
+  };
+  
+  xhttp.open("GET", "jackson_1.htm?oldUn="+oName+"&newUn="+nName+"&num=5", true);
+  xhttp.send();
+}
+</script>

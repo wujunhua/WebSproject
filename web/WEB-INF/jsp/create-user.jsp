@@ -4,6 +4,7 @@
     Author     : syntel
 --%>
 
+<%@page import="Controller.SendEmail"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>
@@ -38,6 +39,14 @@
   String passWord = request.getParameter("password");
   String admin = request.getParameter("example");  
  
+  String sql2;
+	  
+	sql2 = "select user_id from users where user_id='" + user_name + "'";
+	
+	rs = stmt.executeQuery(sql2);
+	
+    if(rs.next() == false)
+    {
   //insert
    try {
     
@@ -48,9 +57,7 @@
         } catch (SQLException e) {
         out.println("Error encountered during row insertion for users: " + e.toString() + "<BR>");
         }
-   
-  
-  
+    }
   
   //rs.close();
   stmt.close();
@@ -60,7 +67,7 @@
   
   //disconnect
   conn.close();
-  
+  SendEmail.sendUserNamePassword(user_name, passWord);
 String site = "admin.htm" ;
 response.setStatus(response.SC_MOVED_TEMPORARILY);
 response.setHeader("Location", site);

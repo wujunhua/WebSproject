@@ -66,10 +66,10 @@ public class ExcelWriter {
         
         addInstructionsToSpreadsheet(spreadsheet); // place instructions on spreadsheet
 
-        int firstRowIndex = 0; // only writing to the first row
-        XSSFRow row = spreadsheet.createRow(firstRowIndex); // title row, indicates the data to be entered
+        // title row, indicates the data to be entered below
+        XSSFRow row = spreadsheet.createRow(getColumnTitleIndex()); 
 
-        int columnIndex = 0;
+        int columnIndex = 0; // left most column
 
         // go through titles, write their values in consecutive cells
         for(String colTitle: columnTitles) {
@@ -112,7 +112,7 @@ public class ExcelWriter {
     }
 
     
-    private int addInstructionsToSpreadsheet(XSSFSheet spreadsheet) {
+    private void addInstructionsToSpreadsheet(XSSFSheet spreadsheet) {
     
         int currentRow = (-1);
         int FIRST_COL_INDEX = 0;
@@ -125,8 +125,10 @@ public class ExcelWriter {
             
             cell.setCellValue(instructions[currentRow]);
         }
-        
-        return (currentRow + 1); // one index past the last instruction row
     }
     
+    private int getColumnTitleIndex() {
+        // so column titles are an extra row away from the instructions
+        return (instructions.length + 1);
+    }
 }

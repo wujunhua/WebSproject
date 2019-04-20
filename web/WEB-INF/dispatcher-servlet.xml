@@ -46,6 +46,7 @@
                 <prop key="streams.htm">adminController</prop>
                 <prop key="modules.htm">adminController</prop>
                 <prop key="category.htm">adminController</prop>
+                <prop key="ajax.htm">adminController</prop>
 
                 
                 <prop key="manage-user.htm">adminController</prop>

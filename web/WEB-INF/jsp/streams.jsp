@@ -3,8 +3,7 @@
 <%@ page import="java.sql.*" %>
 
 <%
-  session.setAttribute("username", request.getAttribute("username"));
-  
+  session.setAttribute("username", request.getAttribute("username"));  
   //initialize driver class
   try {    
     Class.forName("oracle.jdbc.driver.OracleDriver");

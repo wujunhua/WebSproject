@@ -240,9 +240,9 @@
             <c:set var="count" value="1"/>
             <c:forEach items="${moduleList}" var="module">
             <tr value="${module}">
-                <th scope="row"><a href="manage-module.htm?id=${moduleIdList.get(count-1)}&name=${catagoryName.get(count-1)}&stream=${cleanedStreamNameList.get(count-1)}&okay=${cleanedModuleList.get(count-1)}">${moduleIdList.get(count-1)}</a></th>
+                <th scope="row">${moduleIdList.get(count-1)}</th>
                 <td>
-                   ${module}
+                    <a href="manage-module.htm?id=${moduleIdList.get(count-1)}&name=${catagoryName.get(count-1)}&stream=${cleanedStreamNameList.get(count-1)}&okay=${cleanedModuleList.get(count-1)}">${module}</a>
                 </td>
                 <td>
                     ${catagoryName.get(count-1)}

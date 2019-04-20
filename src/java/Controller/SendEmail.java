@@ -1,16 +1,13 @@
 package Controller;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Scanner;
 import java.sql.Statement;
 import java.util.Calendar;
-import javafx.util.Pair;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -67,22 +64,11 @@ public class SendEmail {
             String[] startEndDates = getStartEnd(email);
             message.setSubject("Performica Report["+ getStreamName(email) + "]["+ startEndDates[0] + "]-["+startEndDates[1]+"]");
 
-            
             // Create the message part
             BodyPart messageBodyPart = new MimeBodyPart();
 
-            // Now set the actual message
-            /*
-            messageBodyPart.setText("Congratulations, " + getName(email) + "\nHere is your Performica Report! Inside is the score of each module you completed and a small graph"+
-            " to show where you stand compared to the class average. We hope you enjoyed your experience in our " +
-            " training program and wish you the best for your future!");
-            */
-
             // Create a multipart message
             Multipart multipart = new MimeMultipart();
-
-            // Set text message part
-            //multipart.addBodyPart(messageBodyPart);
 
             // Part two is attachment
             messageBodyPart = new MimeBodyPart();
@@ -161,12 +147,8 @@ public class SendEmail {
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<image>");
             multipart.addBodyPart(messageBodyPart);
-            // Send the complete message parts
-           // message.setContent(multipart);
-            //System.out.println(System.getProperty("user.dir"));
             messageBodyPart = new MimeBodyPart();
-            DataSource fds2 = new FileDataSource(
-            "welcome.jpg");
+            DataSource fds2 = new FileDataSource("welcome.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds2));
             messageBodyPart.setHeader("Content-ID", "<image2>");
             multipart.addBodyPart(messageBodyPart);
@@ -218,24 +200,91 @@ public class SendEmail {
         //imported code
         try {
             
-         MimeMessage message = new MimeMessage(session);
+           MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(userName));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject("Atos Syntel - Performica Account Created");
+    
+            // Create the message part
+            BodyPart messageBodyPart = new MimeBodyPart();
 
-         // Set From: header field of the header.
-         message.setFrom(new InternetAddress(userName));
+            // Create a multipart message
+            Multipart multipart = new MimeMultipart();
+            messageBodyPart = new MimeBodyPart();
+            String htmlText = "<!DOCTYPE html>\n" +
+            "<html lang=\"en\">\n" +
+            "<head>\n" +
+            "<title>Performica</title>\n" +
+            "<meta charset=\"utf-8\">\n" +
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+            "<style>\n" +
+            "* {\n" +
+            "  box-sizing: border-box;\n" +
+            "}\n" +
+            "\n" +
+            "/* Clear floats after the columns */\n" +
+            "section:after {\n" +
+            "  content: \"\";\n" +
+            "  display: table;\n" +
+            "  clear: both;\n" +
+            "}\n" +
+            "/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */\n" +
+            "@media (max-width: 600px) {\n" +
+            "  nav, article {\n" +
+            "    width: 100%;\n" +
+            "    height: auto;\n" +
+            "  }\n" +
+            "}\n" +
+            "</style>\n" +
+            "</head>\n" +
+            "<body style=\"  font-family: Verdana, sans-serif;\n" +
+            "  width: 800px;\n" +
+            "  border: solid;\n" +
+            "  margin: 0px 0px 0px 150px;\n" +
+            "  padding-left: 0px;\">\n" +
+            "\n" +
+            "<header style=\"  height: 195px;\n" +
+            "  position:relative;  \n" +
+            "  height:12.1em;\n" +
+            "  width 100%;\"><img src=\"cid:image\" width=\"794\"></header>\n" +
+            "<section>\n" +
+            "  \n" +
+            "  <article style='padding-left: 20px;padding-right: 20px;font-family: Verdana;'>\n" +
+            "    <p style=\"padding-left: 20px;padding-right:20px;\"><strong>Welcome to Atos Syntel!</strong><br>\n" +
+            "    <br>Your Performica account has successfully been created! Sign in detials are below:<br>\n" +
+            "    <br><strong>Email/Username: " + email + "<br>\n" +
+            "    Password: " + pswd + "</strong><br>\n" +
+            "\n" +
+            "    <br>Once you have loggeed in, you will be able to change your default password.\n" +
+            "\n" +
+            "    <br><br>Thanks and Regards,\n" +
+            "    <br>Training and Development Team</p>\n" +
+            "  </article>\n" +
+            "</section>\n" +
+            "  <div style=\"background: rgb(0,102,161);color: #fff;font-family:Verdana; height:1.5em;\">\n" +
+            "      <p align=\"center\">For internal circulation only.© 2019</p>\n" +
+            "  </div> \n" +
+            "</body>\n" +
+            "</html>";
+            messageBodyPart.setContent(htmlText, "text/html;charset=iso-8859-1");
+            // add it
+            multipart.addBodyPart(messageBodyPart);
+            //add header image
+            messageBodyPart = new MimeBodyPart();
+            DataSource fds = new FileDataSource(
+            "header.jpg");
 
-         // Set To: header field of the header.
-         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            messageBodyPart.setDataHandler(new DataHandler(fds));
+            messageBodyPart.setHeader("Content-ID", "<image>");
+            multipart.addBodyPart(messageBodyPart);
+            
+            message.setContent(multipart);
 
-         // Set Subject: header field
-         message.setSubject("Atos Syntel Account Created!");
+            
+            Transport tr = session.getTransport("smtp");
+            tr.send(message);
 
-         // Now set the actual message
-         message.setText("Welcome to Atos Syntel!\n\nYour account has been created. Please sign into your account with the details below:\n\nUsername: " + email + "\nPassword: " + pswd 
-                     );
-
-         // Send message
-         Transport.send(message);
-         System.out.print("Message sent!");
+            System.out.println("message sent!");
 
 
         }
@@ -259,81 +308,81 @@ public class SendEmail {
     }
     
     static boolean validateEmail(String username)
+    {
+	int count = 0;
+	try
 	{
-		int count = 0;
-		try
-		{
-			Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
-			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select email from employees where email = " + "'" + username + "'");
+            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select email from employees where email = " + "'" + username + "'");
 									
-			while(rs.next())
-			{
-				++count;
-			}
-			con.commit();
-			st.close();
-			con.close();
+            while(rs.next())
+            {
+		++count;
+            }
+            con.commit();
+            st.close();
+            con.close();
         
-			if(count == 0 || count > 1)
-			{
-				System.out.println("Not Valid Email!!!");
-				return false;
-			}
-			else if(count ==1)
-			{
-				System.out.println("Valid Email!");
-				return true;
-			}
+            if(count == 0 || count > 1)
+            {
+		System.out.println("Not Valid Email!!!");
+                    return false;
+            }
+            else if(count ==1)
+            {
+		System.out.println("Valid Email!");
+		return true;
+            }
 		                
-		}catch (Exception ex) 
-		{
-					System.out.println(ex);
-		}
+            }catch (Exception ex) 
+            {
+		System.out.println(ex);
+            }
 				
 
-		return false;
-	}
+            return false;
+    }
     
     static boolean validateClassId(String id)
+    {
+        int count = 0;
+	try
 	{
-		int count = 0;
-		try
-		{
-			Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
-			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select class_id from class where class_id = " + "'" + id + "'");
+            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select class_id from class where class_id = " + "'" + id + "'");
 									
-			while(rs.next())
-			{
-				++count;
-			}
+            while(rs.next())
+            {
+		++count;
+            }
 					
-			con.commit();
-			st.close();
-			con.close();
+            con.commit();
+            st.close();
+            con.close();
 			        
 			        
-			if(count == 0 || count > 1)
-			{
-				System.out.println("Not Valid Class ID");
-				return false;
-			}
-			else if(count ==1)
-			{
-				System.out.println("Success: Valid Class ID");
-				return true;
-			}
-		                
-		}catch (Exception ex) 
-		{
-					System.out.println(ex);
-		}
-				
+            if(count == 0 || count > 1)
+            {
+		System.out.println("Not Valid Class ID");
 		return false;
-	}
+            }
+            else if(count ==1)
+            {
+                System.out.println("Success: Valid Class ID");
+		return true;
+            }
+		                
+            }catch (Exception ex) 
+            {
+		System.out.println(ex);
+            }
+				
+            return false;
+    }
     
     static String[] getEmployee(String email) {//getEmployee returns an array of attributes
     	

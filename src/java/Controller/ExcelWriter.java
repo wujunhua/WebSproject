@@ -72,10 +72,13 @@ public class ExcelWriter {
         int columnIndex = 0; // left most column
 
         // go through titles, write their values in consecutive cells
-        for(String colTitle: columnTitles) {
-                Cell cell = row.createCell(columnIndex++);
-                cell.setCellValue(colTitle);
-                cell.setCellStyle(style); // apply styling to each cell
+        for(String columnTitle: columnTitles) {
+                Cell cell = row.createCell(columnIndex);
+                
+                cell.setCellValue(columnTitle);
+                cell.setCellStyle(style); // make each title bold
+                spreadsheet.autoSizeColumn(columnIndex); // expand columns to match text width
+                columnIndex++; // move to the next column
         }
         
         try {

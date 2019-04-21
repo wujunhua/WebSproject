@@ -35,18 +35,30 @@ public class ExcelPuller {
                     Iterator<Cell> cellIterator = currentRow.iterator();                 //Grabs connects the first cell
                     
                     
+                    Cell currentCell = cellIterator.next();
+                    
+                    while(!(currentCell.getStringCellValue().equals("Employee ID"))){
+                        System.out.println(currentCell.getStringCellValue());
+                        currentRow = iterator.next();
+                        cellIterator = currentRow.cellIterator();
+                        currentCell = cellIterator.next();
+                    }
+                    
+                    System.out.println(currentCell.getStringCellValue());
                     /** Iterates through the first row, and retrieves all the column.
                      * Columns should be in order (Sutdent_ID, Name, Email, first Module ID, second Module ID, ...)
                      * Saves the column names in an array list to use as a reference later. 
                      */
+                    
+                    
                     while (cellIterator.hasNext() ) {
-                    	Cell currentCell = cellIterator.next();
                     	if (currentCell.getCellType() == CellType.STRING) {
                     		columns.add(currentCell.getStringCellValue());
                     	} else if (currentCell.getCellType() == CellType.NUMERIC) {
                     		columns.add(currentCell.getStringCellValue());
                     	}
                         cols++;
+                        currentCell = cellIterator.next();
                     }
 
                     // go through every row after the first row
@@ -56,7 +68,7 @@ public class ExcelPuller {
                       currentRow = iterator.next(); // goes to the next row
                       cellIterator = currentRow.iterator(); // moves to the first cell in that row
                       
-                      Cell currentCell = null;
+                      
                       Employee newEmp = new Employee(); //Initializes an employee instance
                        for(int counter = 0; counter < cols; counter++) {                           
                         	

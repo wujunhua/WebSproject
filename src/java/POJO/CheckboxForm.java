@@ -19,7 +19,7 @@ public class CheckboxForm {
         this.userNames = userNames;
     }
 
-
+    
     public String[] getUserNames() {
         return userNames;
     }
@@ -32,9 +32,9 @@ public class CheckboxForm {
     public String toString() {
         return "User{" + "userNames=" + userNames + '}';
     }
-    
-    
-    
-    
 
+    
+    
+    
+    
 }

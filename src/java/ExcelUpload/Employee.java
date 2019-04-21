@@ -25,7 +25,7 @@ public class Employee {
 		this.employeeName = employeeName;
 		this.employeeEmail = employeeEmail;
 		this.classID = classID;
-    this.managerID = managerID;
+                this.managerID = managerID;
 	}
 
 	
@@ -74,13 +74,13 @@ public class Employee {
 		 this.modScores.add(mod);
 	}
         
-  public void setManagerID(String managerID){
-      this.managerID = managerID;
-  }
+        public void setManagerID(String managerID){
+            this.managerID = managerID;
+        }
 
-  public String getManagerID(){            
-      return managerID;
-  }
+        public String getManagerID(){            
+            return managerID;
+        }
 	
 	@Override
 	public String toString() {

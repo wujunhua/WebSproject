@@ -50,9 +50,9 @@ try {
  
 //check to see if it can be deleted
 String id = request.getParameter("id");
-String mn = request.getParameter("module_name");
-sql3 = "select c.course_name from courses c, modules m where c.module_id=m.module_id and m.module_id = " + id;
-rs = stmt.executeQuery(sql);
+String mn = request.getParameter("okay");
+sql3 = "select c.course_name from courses c, modules m where c.module_id=m.module_id and m.module_name = '" + mn + "'";
+rs = stmt.executeQuery(sql3);
 
 boolean moduleCanBeDeleted = rs.next();
 
@@ -111,9 +111,9 @@ boolean moduleCanBeDeleted = rs.next();
               <form action="deleteModule.htm">
                   <input type="hidden" name='moduleId' id ="moduleId" value='${param.id}' />
                    <% if(moduleCanBeDeleted){%>
-                   <button class="btn btn-sm btn-danger" type ="submit" >
+                   <button class="btn btn-sm btn-danger" type ="submit" title="This module contains courses and cannot be deleted" disabled >
                     <%} else{%>
-                    <button class="btn btn-sm btn-danger" type="submit" title="This module contains courses and cannot be deleted" disabled >
+                    <button class="btn btn-sm btn-danger" type="submit" >
                     <%}%>
                 <!--a href="" class="btn btn-sm btn-danger"-->
                   <span style="white-space: nowrap;"><i class="fas fa-user-minus"></i> Delete </span>

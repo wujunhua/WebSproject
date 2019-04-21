@@ -94,7 +94,7 @@ public class PDF {
         PDFinfo info = new PDFinfo(dataSource.getConnection());
         info.setDataSource(dataSource);
         info.setNjdbc(njdbc);
-        
+       
         if(!info.getAllIds().contains(empid)){ //this is O(n^2) methinks. make the query return one think and do bool return.
             System.out.println("Employee ID not found. PDF has not been generated.");
             return;
@@ -109,8 +109,9 @@ public class PDF {
         domains.addAll(info.getModuleScoresByCategory(empid, "PD01"));
         fGrade=info.getAverageScoreByCategory(empid, "FOUND01");
         sGrade=info.getAverageScoreByCategory(empid, "SPEC01");
+        System.out.println("MAde it");
         dGrade=info.getAverageScoreByCategory(empid, "PD01");
-		
+        
         //define a <hr />
         char[] charArray = new char[1835];
         Arrays.fill(charArray, ' ');
@@ -147,7 +148,7 @@ public class PDF {
         //document.add(new VerticalSpacer(6.5f));
         
         document.add(new VerticalSpacer(2*sectionBreak));
-        
+        System.out.println("Right Here");
         Paragraph p1 = new Paragraph();
         p1.addMarkup("{color:#0066a1}__*My Trainings*__:", 12, font);
         document.add(p1);
@@ -233,7 +234,7 @@ public class PDF {
         //document.add(new VerticalSpacer(linspace));
         
         final OutputStream outputStream = new FileOutputStream(
-		filePath + empid + ".pdf");
+		empid + ".pdf");
         document.save(outputStream);
 
 	}	

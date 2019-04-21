@@ -421,7 +421,11 @@ public class SendEmail {
     	try
 	{
             String[] emp = getEmployee(email);
-            return emp[0];
+            String empid = emp[0];
+            if(empid == null)
+                return "";
+            else
+                return empid;
                 
 	}
         catch (Exception ex) 
@@ -437,7 +441,11 @@ public class SendEmail {
     	try
 	{
             String[] emp = getEmployee(email);
-            return emp[1];
+            String name = emp[1];
+            if(name == null)
+                return "";
+            else
+                return name;
 	}	
         catch (Exception ex) 
         {
@@ -452,7 +460,11 @@ public class SendEmail {
     	try
 	{
             String[] emp = getEmployee(email);
-            return emp[3];
+            String RM = emp[3];
+            if(RM==null)
+                return "";
+            else
+                return RM;
 	}
 		
 	catch (Exception ex) 
@@ -460,7 +472,7 @@ public class SendEmail {
             System.out.println(ex);
 	}
     	
-    	return " ";
+    	return "";
     }
     
     static String getStreamName(String email) {//getEmployee returns an array of attributes
@@ -473,7 +485,10 @@ public class SendEmail {
             ResultSet rs = st.executeQuery("select s.stream_name from employees e ,class c ,stream s where e.email = '" + email + "' AND e.class_id=c.class_id AND c.stream_id = s.stream_id");
             
             while(rs.next()){
-                return rs.getString(1);
+                if( rs.getString(1) == null)
+                    return "";
+                else
+                    return rs.getString(1);
                 
             }
 			

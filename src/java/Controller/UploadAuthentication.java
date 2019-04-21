@@ -14,16 +14,8 @@ import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 
-public class UploadAuthentication extends SimpleFormController implements Controller{
+public class UploadAuthentication extends SimpleFormController {
 
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest request,
-                                HttpServletResponse response){
-               
-        String username = (String) request.getAttribute("username");
-        System.out.println("********* UploadAuthentication: " + username);
-        return new ModelAndView("CreateClass", "username", username);
-    }
     
     public UploadAuthentication() {
         setCommandClass(ExcelUploadObject.class);
@@ -43,7 +35,7 @@ public class UploadAuthentication extends SimpleFormController implements Contro
         // bring in all streams
         
         
-        return new ModelAndView("createclass");
+        return new ModelAndView("instructor");
     }
     
     public File convert(MultipartFile file) throws IOException{

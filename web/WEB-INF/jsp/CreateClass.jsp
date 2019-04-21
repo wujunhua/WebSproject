@@ -118,7 +118,7 @@
             <div class="container pb-5 pt-4">
                 <div class="row mx-1">
                     <div class="col-sm-8 px-3 py-3"> 
-                        <s:form commandName="excel">
+                        <s:form commandName="excel" enctype="multipart/form-data" method="POST">
                             <div class="form-group row">
                                 <div class="col-sm-2">
                             <label class="my-1 mr-2" for="selectedStream">Stream</label>

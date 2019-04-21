@@ -109,7 +109,7 @@ boolean moduleCanBeDeleted = rs.next();
             <i class="fas fa-layer-group pr-2"></i> Manage Module 
             <span style="float: right;">
               <form action="deleteModule.htm">
-                  <input type="hidden" name='moduleId' id ="moduleId" value='${param.id}' />
+                  <input type="hidden" name='moduleName' id ="moduleName" value='${param.okay}' />
                    <% if(moduleCanBeDeleted){%>
                    <button class="btn btn-sm btn-danger" type ="submit" title="This module contains courses and cannot be deleted" disabled >
                     <%} else{%>

@@ -128,7 +128,7 @@ public class PDF {
         Paragraph hRule = new Paragraph();
         hRule.addMarkup("__" + hrHelp + " __", 1, font);
         //------------------------------------------------
-        
+                
         //create PDF
         float linspace = 12;
         float sectionBreak = 18;
@@ -183,17 +183,19 @@ public class PDF {
                 
                 for(int i = 0; i < scores.size() - 1; i++){
                     String[] score = scores.get(i);
-                    par.addMarkup(score[0] + ",  ", 11, font);
-                    
+                    par.addMarkup(score[0] + ",  ", 11, font);         
+                    String classScore = info.getClassModuleScores(empid, score[0]);
+                    //set up for chart: add number, series label, bar label
+                    dataset.addValue( Float.parseFloat(score[1]), name , score[0]);
+                    dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
                 }
                 String[] score = scores.get(scores.size() - 1);
                 par.addMarkup(score[0], 11, font);
-
-                String classScore = info.getClassModuleScores(empid, score[1]);
+                           
+                String classScore = info.getClassModuleScores(empid, score[0]);
                 //set up for chart: add number, series label, bar label
                 dataset.addValue( Float.parseFloat(score[1]), name , score[0]);
                 dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
-                
                 
                 document.add(par, VerticalLayoutHint.LEFT);
                 document.add(hRule);
@@ -205,6 +207,7 @@ public class PDF {
         par.addMarkup("{color:#0066a1}__*My Performence*__", 12, font);
         document.add(new VerticalSpacer(linspace));
         document.add(par);
+        
         
         String chartFileName = "graph.png";
         makeChart(dataset, chartFileName);
@@ -233,7 +236,7 @@ public class PDF {
 
     public static void makeChart(DefaultCategoryDataset dataset, String filename){
        JFreeChart barChart = ChartFactory.createBarChart(
-            "Training Performance Details",
+            "",
             "", "",
             //"Module", "Assessment Score", 
             dataset,PlotOrientation.VERTICAL, 

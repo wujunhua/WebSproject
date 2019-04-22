@@ -171,28 +171,22 @@ public class PDFinfo {
     * @param empID - the employee id of the employee
     * @param modName
     * @return a string representation of the average score
-    * @throws java.lang.Exception
     */
-	public ArrayList<String[]> getClassModuleScores(String empID, String modName) throws Exception{
-		ArrayList<String[]> list = new ArrayList<String[]>();
+	public String getClassModuleScores(String empID, String modName) throws Exception{
 		Statement s1 = c1.createStatement();
         
   		ResultSet r1=s1.executeQuery(
-                "SELECT AVG(s.scores)"
-              + "FROM modules m INNER JOIN employees_take_modules s ON m.module_id=s.module_id"
-              + "WHERE m.module_name = '" + modName +"' AND employee_id IN ("
-              +     "SELECT employee_id FROM employees WHERE class_id IN ("
-              +         "SELECT class_id FROM employees WHERE employee_id = '" + empID + "'"
-              +     ")"
-              + ")"
-              + "GROUP BY m.module_name ORDER BY m.module_name"
+            "SELECT AVG(s.scores) "
+            + "FROM modules m INNER JOIN employees_take_modules s ON m.module_id=s.module_id "
+            + "WHERE m.module_name = 'JFSD Found 4' AND employee_id IN ( "
+            + "SELECT employee_id FROM employees WHERE class_id IN ( "
+            + "SELECT class_id FROM employees WHERE employee_id = 'JFSDTest3' "
+            + ") "
+            + ") "
+            + "GROUP BY m.module_name ORDER BY m.module_name"
         );
 		
-        while(r1.next()){
-            String[] pair = {r1.getString(1), r1.getString(2)};
-			list.add(pair);
-		}
-		
-		return list;
+        r1.next();
+        return r1.getString(1);
 	}
 }

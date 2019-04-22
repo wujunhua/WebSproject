@@ -1,11 +1,28 @@
 package Controller;
 
+import java.awt.Color;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javaapplication4.BarChart2;
 import javax.sql.DataSource;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 //pdf-box layout used under MIT license. Found at https://github.com/ralfstuckert/pdfbox-layout
@@ -23,6 +40,8 @@ public class PDF {
     
     private static DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
+    
+    private final DefaultCategoryDataset dataset;
 
 	private final static BaseFont font = BaseFont.Helvetica;
 	private PDPage page = new PDPage();
@@ -32,9 +51,10 @@ public class PDF {
     private final static String imagePath = "C:\\trainingkb\\WebSproject\\web\\resources\\img\\pdf_banner.png"; //path to AS logo
 
     //java.io.File.separator
-    public PDF(){}
+    public PDF(){this.dataset = new DefaultCategoryDataset();}
     
 	public PDF(DataSource dataSource) throws ClassNotFoundException {
+        this.dataset = new DefaultCategoryDataset();
         Class.forName("oracle.jdbc.driver.OracleDriver");
         System.out.println("Constructor Called");
         PDF.dataSource=dataSource;
@@ -165,12 +185,19 @@ public class PDF {
                 par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", 11, font);
                 
                 for(int i = 0; i < scores.size() - 1; i++){
-                    String[] score = scores.get(i); 
+                    String[] score = scores.get(i);
                     par.addMarkup(score[0] + ",  ", 11, font);
+                    
                 }
                 String[] score = scores.get(scores.size() - 1);
                 par.addMarkup(score[0], 11, font);
 
+                String classScore = info.getClassModuleScores(empid, score[1]);
+                //set up for chart: add number, series label, bar label
+                dataset.addValue( Float.parseFloat(score[1]), name , score[0]);
+                dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
+                
+                
                 document.add(par, VerticalLayoutHint.LEFT);
                 document.add(hRule);
                 document.add(new VerticalSpacer(linspace));
@@ -178,9 +205,15 @@ public class PDF {
         }
                 
         par = new Paragraph();
-        par.addMarkup("{color:#0066a1}__*My Performence*__\n\n<<bargraph goes here>>", 12, font); //http://www.java2s.com/Code/Java/Chart/JFreeChartHorizontalBarChartDemo2.htm
+        par.addMarkup("{color:#0066a1}__*My Performence*__", 12, font);
         document.add(new VerticalSpacer(linspace));
         document.add(par);
+        
+        String chartFileName = "graph.png";
+        makeChart(dataset, chartFileName);
+        document.add(new ImageElement(chartFileName), new VerticalLayoutHint(Alignment.Left, 0, 0,
+		0, 0, true)); 
+        
         document.add(new VerticalSpacer(50));
 
         par = new Paragraph();
@@ -200,8 +233,50 @@ public class PDF {
         document.save(outputStream);
 
 	}	
-}
 
+    public static void makeChart(DefaultCategoryDataset dataset, String filename){
+       JFreeChart barChart = ChartFactory.createBarChart(
+            "Training Performance Details",
+            "", "",
+            //"Module", "Assessment Score", 
+            dataset,PlotOrientation.VERTICAL, 
+            true, true, false);
+
+        CategoryPlot plot = barChart.getCategoryPlot();
+        plot.setBackgroundPaint(null);
+        plot.setDomainGridlinePaint(Color.black);
+        plot.setRangeGridlinePaint(Color.black);
+
+        ValueAxis yAxis = plot.getRangeAxis();
+        yAxis.setAutoRange(false);
+        yAxis.setRange(0.00, 100.00);
+
+        CategoryAxis axis = plot.getDomainAxis();     
+        axis.setLowerMargin(.01);
+        axis.setUpperMargin(.01);
+        axis.setMaximumCategoryLabelLines(3);
+
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setBarPainter(new StandardBarPainter());
+        renderer.setSeriesPaint(0, new Color(0, 102, 161)); //from website
+        renderer.setSeriesPaint(1, new Color(106, 206, 242));  //from banner
+        renderer.setShadowVisible(false);
+        renderer.setDrawBarOutline(false);
+        renderer.setItemMargin(0.0); //space between bars
+        renderer.setBaseItemLabelsVisible(true);
+        renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+
+        int width = 525;    /* Width of the image */
+        int height = 275;   /* Height of the image */ 
+        File BarChart = new File( filename ); 
+        try {
+            ChartUtilities.saveChartAsJPEG( BarChart , barChart , width , height );
+        } catch (IOException ex) {
+            Logger.getLogger(BarChart2.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Cannot save chart:\n" + ex.toString());
+        }
+   }
+}
 /* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.
 //Saved for possible later use and as a reminder to not Do The Thing
 Stroke stroke = new Stroke();

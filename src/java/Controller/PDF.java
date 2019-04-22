@@ -173,7 +173,7 @@ public class PDF {
         document.add(par);
         document.add(new VerticalSpacer(1.5f*linspace));
         
-        document.add(hRule);
+        //document.add(hRule);
         document.add(new VerticalSpacer(linspace));
         for (String[] cat : cats){
             ArrayList<String[]> scores = new ArrayList<String[]>();
@@ -202,13 +202,13 @@ public class PDF {
                 dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
                 
                 document.add(par, VerticalLayoutHint.LEFT);
-                document.add(hRule);
-                document.add(new VerticalSpacer(linspace));
+                //document.add(hRule);
+                document.add(new VerticalSpacer(1.5f*linspace));
             }
         }
                 
         par = new Paragraph();
-        par.addMarkup("{color:#0066a1}__*My Performence*__:", textSize + 1, font);
+        par.addMarkup("{color:#0066a1}__*My Performance*__:", textSize + 1, font);
         document.add(new VerticalSpacer(linspace));
         document.add(par);
         
@@ -248,7 +248,7 @@ public class PDF {
         document.add(new VerticalSpacer(linspace));
         document.add(par);
         
-        final OutputStream outputStream = new FileOutputStream(empid + ".pdf");
+        final OutputStream outputStream = new FileOutputStream(filePath + empid + ".pdf");
         document.save(outputStream);
 
 	}	

@@ -41,7 +41,7 @@ public class PDF {
     private static DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
     
-    private final DefaultCategoryDataset dataset;
+    private DefaultCategoryDataset dataset;
 
 	private final static BaseFont font = BaseFont.Helvetica;
 	private PDPage page = new PDPage();
@@ -103,6 +103,7 @@ public class PDF {
     
 	    public void generate(String empid) throws Exception{
         //init config
+        dataset = new DefaultCategoryDataset();
         njdbc = new NamedParameterJdbcTemplate(dataSource);
         PDFinfo info = new PDFinfo(dataSource.getConnection());
         info.setDataSource(dataSource);

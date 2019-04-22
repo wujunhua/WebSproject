@@ -26,11 +26,10 @@
   Statement stmt = conn.createStatement();
   ResultSet rs;
   String stream = "";
-  int id = Integer.parseInt(request.getParameter("moduleId"));
-  out.println(id);
+  String name = request.getParameter("moduleName");
   //insert
    try {
-        sql = ("DELETE FROM MODULES WHERE Module_Id=" + id);
+        sql = ("DELETE FROM MODULES WHERE module_name='" + name + "'");
         numRowsAffected = stmt.executeUpdate(sql);
         out.println(numRowsAffected + " Deleted <BR>");
   

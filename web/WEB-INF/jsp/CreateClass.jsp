@@ -118,7 +118,7 @@
             <div class="container pb-5 pt-4">
                 <div class="row mx-1">
                     <div class="col-sm-8 px-3 py-3"> 
-                        <s:form commandName="excel">
+                        <s:form commandName="excel" enctype="multipart/form-data" method="POST">
                             <div class="form-group row">
                                 <div class="col-sm-2">
                             <label class="my-1 mr-2" for="selectedStream">Stream</label>
@@ -225,87 +225,3 @@
     </body>
 </html>
 
-<style>
-    html{
-        height: 100%;
-    }
-
-    p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, button, tr, td, table, input, label{
-        font-family: 'Noto Sans', sans-serif;
-    }
-
-    .atos-blue{
-        color: rgb(0,102,161) !important;
-    }
-
-    .noto{
-        font-family: 'Noto Sans', sans-serif;
-    }
-
-    .font-dark{
-        color: #393E41;
-    }
-
-    .bg-white{
-        background: #fff;
-    }
-
-    .bg-gray{
-        background: #e5e5e5 !important;
-    }
-
-    /* adds little triangle on dropdown menu */
-
-    .triangle:before {
-        position: absolute;
-        top: -7px;
-        left: 9px;
-        display: inline-block;
-        border-right: 7px solid transparent;
-        border-bottom: 7px solid #CCC;
-        border-left: 7px solid transparent;
-        border-bottom-color: rgba(0, 0, 0, 0.2);
-        content: '';
-    }
-
-    .triangle:after {
-        position: absolute;
-        top: -6px;
-        left: 10px;
-        display: inline-block;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid white;
-        border-left: 6px solid transparent;
-        content: '';
-    }
-
-    /* End Triange Dropdown */
-
-    .card-header{
-        background: rgb(241,248,255);
-    }
-
-    .btn-ghost{
-        background: rgb(248,249,251);
-        border: 1px solid rgba(27,31,35,.2);
-        transition: background;
-        transition-timing-function: ease-in-out;
-        transition-duration: .2s;
-        font-size: .8em;
-    }
-
-    .btn-ghost:hover{
-        background: #e6ebf1;
-    }
-
-    .ghost{
-        background: rgb(248,249,251);
-        border: 1px solid rgba(27,31,35,.2);
-        transition: background;
-        transition-timing-function: ease-in-out;
-        transition-duration: .2s;
-    }
-    .ghost:hover{
-        background: #e6ebf1;
-    }
-</style>

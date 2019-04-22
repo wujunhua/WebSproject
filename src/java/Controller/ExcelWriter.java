@@ -143,8 +143,8 @@ public class ExcelWriter {
     }
     
     private int getColumnTitleIndex() {
-        // column titles are an extra row away from the instructions
-        return (instructions.length + 1);
+        // column titles are right below the instructions
+        return instructions.length;
     }
     
     private boolean cellShouldBeWider(int columnIndex) {

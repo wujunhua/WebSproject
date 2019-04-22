@@ -38,47 +38,45 @@
                 <prop key="deleteEmployees.htm">empController</prop>
                 <prop key="searchEmployees.htm">empController</prop>
                 
+                <prop key="download.htm">downloadTemplateController</prop>
+                <prop key="forbidden.htm">forbiddenController</prop>
+                <prop key="reset-password.htm">resetController</prop>
+                
                 <!--all admin pages should use the adminController-->             
                 <prop key="admin.htm">adminController</prop>
-                <prop key="test.htm">adminController</prop>
-                
-                <prop key="courses.htm">adminController</prop>
-                <prop key="streams.htm">adminController</prop>
-                <prop key="modules.htm">adminController</prop>
-                <prop key="category.htm">adminController</prop>
+      
                 <prop key="ajax.htm">adminController</prop>
 
-                
                 <prop key="manage-user.htm">adminController</prop>
                 <prop key="create-user.htm">adminController</prop>
                 <prop key="delete-user.htm">adminController</prop>
                 <prop key="update-user.htm">adminController</prop>
                 
+                <prop key="streams.htm">adminController</prop>
                 <prop key="manage-stream.htm">adminController</prop>
                 <prop key="create-stream.htm">adminController</prop>
                 <prop key="delete-stream.htm">adminController</prop>
                 <prop key="update-stream.htm">adminController</prop>
               
+                <prop key="courses.htm">adminController</prop>
                 <prop key="manage-course.htm">adminController</prop>
                 <prop key="create-courses.htm">adminController</prop>
                 <prop key="delete-courses.htm">adminController</prop>
                 <prop key="update-courses.htm">adminController</prop> 
                 
+                <prop key="modules.htm">adminController</prop>
                 <prop key="manage-module.htm">adminController</prop>
                 <prop key="createModule.htm">adminController</prop>
                 <prop key="deleteModule.htm">adminController</prop>
                 <prop key="updateModule.htm">adminController</prop>
                 
+                <prop key="category.htm">adminController</prop>
                 <prop key="manage-category.htm">adminController</prop>
                 <prop key="create-category.htm">adminController</prop>
                 <prop key="delete-category.htm">adminController</prop>
                 <prop key="update-category.htm">adminController</prop>
-                 
-                <prop key="jackson_1.htm">adminController</prop>
                 
-                <prop key="download.htm">downloadTemplateController</prop>
-              
-                <prop key="reset-password.htm">resetController</prop>
+                <prop key="jackson_1.htm">adminController</prop>
             </props>
         </property>
     </bean>
@@ -135,4 +133,8 @@
     <bean id = "multipartResolver" 
           class ="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
+    <bean id="forbiddenController"
+        class="Controller.ForbiddenController"
+    />
+    
 </beans>

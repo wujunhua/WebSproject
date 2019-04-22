@@ -38,7 +38,7 @@ import rst.pdfbox.layout.elements.ImageElement;
 
 public class PDF {
     
-    private static DataSource dataSource;
+    private DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
     
     private DefaultCategoryDataset dataset;
@@ -57,7 +57,7 @@ public class PDF {
         this.dataset = new DefaultCategoryDataset();
         Class.forName("oracle.jdbc.driver.OracleDriver");
         System.out.println("Constructor Called");
-        PDF.dataSource=dataSource;
+        this.dataSource=dataSource;
         njdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
    
@@ -78,7 +78,7 @@ public class PDF {
     }
 
     public void setDataSource(DataSource dataSource) {
-        PDF.dataSource = dataSource;
+        this.dataSource = dataSource;
     }
 
     public void setNjdbc(NamedParameterJdbcTemplate njdbc) {
@@ -170,7 +170,7 @@ public class PDF {
         document.add(new VerticalSpacer(0.25f*linspace));
         
         par = new Paragraph();
-        par.addMarkup("{color:#000000}*Stream*: " + stream.get(0) + " - " + stream.get(1), textSize + 1, font);
+        par.addMarkup("{color:#000000}*Stream*: " + stream.get(1), textSize + 1, font);
         document.add(par);
         document.add(new VerticalSpacer(1.5f*linspace));
         
@@ -184,24 +184,17 @@ public class PDF {
                 gradeNumbers += cat[0] + " Grade: " + info.getAverageScoreByCategory(empid, cat[1]) + "  |  ";
                 
                 par = new Paragraph();
-                par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
+                par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:", textSize, font);
                 
-                for(int i = 0; i < scores.size() - 1; i++){
-                    String[] score = scores.get(i);
-                    par.addMarkup(score[0] + ",  ", textSize, font);         
+                par.addMarkup("|", textSize, font);
+                for (String[] score : scores) {
+                    par.addMarkup("  " + score[0] + "  |", textSize, font);         
                     String classScore = info.getClassModuleScores(empid, score[0]);
                     //set up for chart: add number, series label, bar label
                     dataset.addValue( Float.parseFloat(score[1]), name , score[0]);
                     dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
                 }
-                String[] score = scores.get(scores.size() - 1);
-                par.addMarkup(score[0], textSize, font);
-                           
-                String classScore = info.getClassModuleScores(empid, score[0]);
-                //set up for chart: add number, series label, bar label
-                dataset.addValue( Float.parseFloat(score[1]), name , score[0]);
-                dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
-                
+                                
                 document.add(par, VerticalLayoutHint.LEFT);
                 //document.add(hRule);
                 document.add(new VerticalSpacer(1.5f*linspace));
@@ -221,15 +214,15 @@ public class PDF {
         
         document.add(new VerticalSpacer(285));
 
-        char[] Array = new char[1040];
+        char[] Array = new char[1050];
         Arrays.fill(Array, ' ');
         String line = new String(Array);
         
         par = new Paragraph();
         par.addMarkup("__" + line + "__\n", 1, font);
-        par.addMarkup("|Grade Range  |  > 90.00  |  80.00 - 89.99  |  70.00 - 79.99 | < 70  |\n", textSize, font);
+        par.addMarkup("|  Grade Range  |  > 90.00  |  80.00 - 89.99  |  70.00 - 79.99 | < 70  |\n", textSize, font);
         par.addMarkup("__" + line + "__\n", 1, font);
-        par.addMarkup("|        Letter      |       A       |           B            |           C          |    F    |\n", textSize, font);
+        par.addMarkup("|   Letter Grade   |       A       |           B            |           C          |    F    |\n", textSize, font);
         par.addMarkup("__" + line + "__", 1, font);
         
         par.setAlignment(Alignment.Center);
@@ -248,6 +241,7 @@ public class PDF {
         par.setAlignment(Alignment.Center);
         document.add(new VerticalSpacer(linspace));
         document.add(par);
+        document.add(hRule);
         
         final OutputStream outputStream = new FileOutputStream(filePath + empid + ".pdf");
         document.save(outputStream);

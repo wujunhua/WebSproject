@@ -15,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.validation.BindException;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -35,7 +37,12 @@ public class Authentication extends SimpleFormController{
     }
 
     @Override
-    protected ModelAndView onSubmit(Object command) throws Exception {
+    protected ModelAndView onSubmit(HttpServletRequest request,
+                                HttpServletResponse response,
+                                Object command,
+                                BindException errors)
+                         throws Exception {
+        
         User user = (User) command;
         
         ServletContext context = this.getServletContext();
@@ -53,20 +60,19 @@ public class Authentication extends SimpleFormController{
             System.out.println("user retrieved, about to check if password matches");
             if (userMatcher.getPassword().trim().equals(user.getPassword().trim())) {
                 
+                ModelAndView userNameAndStatus = new ModelAndView();
+                
+                // available during this session, to check for admin capabilities
+                request.getSession().setAttribute("currentUserName", userMatcher.getUserName());
+                request.getSession().setAttribute("isAdmin", userMatcher.isAdmin());
+                
                 if (userMatcher.isAdmin()) {
-                    ModelAndView userNameAndStatus = new ModelAndView("streams");
-                    userNameAndStatus.addObject("username", userMatcher.getUserName());
-                    userNameAndStatus.addObject("isAdmin", "Yes");
-                 
-                    return userNameAndStatus;
+                    userNameAndStatus = new ModelAndView(new RedirectView("streams.htm"));
                 }
-                else
-                {
-                    ModelAndView userNameAndStatus = new ModelAndView("CreateClass");
-                    userNameAndStatus.addObject("username", userMatcher.getUserName());
-                    userNameAndStatus.addObject("isAdmin", "No");
-                    return userNameAndStatus;
+                else {
+                    userNameAndStatus = new ModelAndView(new RedirectView("createclass.htm"));
                 }
+                return userNameAndStatus;
             }
             else {
                 System.out.println("password did not match one in the DB");

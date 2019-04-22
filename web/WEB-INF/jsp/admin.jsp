@@ -56,6 +56,7 @@
   //disconnect
   conn.close();
   
+
 %>  
 
 <body class="bg-light">
@@ -95,7 +96,7 @@
     </div>
   </div>
 
-  <div class="container-fluid bg-white" style="min-height: 100vh;">
+  <div class="container-fluid bg-white" style="min-height: 100vh;"> 
     <div class="container pb-5">
 
       <div class="row py-3">

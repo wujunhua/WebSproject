@@ -132,31 +132,29 @@ public class PDF {
        	document.add(par, VerticalLayoutHint.CENTER);
         document.add(new VerticalSpacer(sectionBreak));
    
-        Paragraph emp = new Paragraph();
-        emp.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "            " +
+        par = new Paragraph();
+        par.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "            " +
                 "{color:#0066a1}*EMPLOYEE ID*{color:#000000}: " + empid, 14, font);
-        emp.setAlignment(Alignment.Center);
-        document.add(emp);
-        
-        //document.add(new VerticalSpacer(6.5f));
-        
+        par.setAlignment(Alignment.Center);
+        document.add(par);
+
         document.add(new VerticalSpacer(2*sectionBreak));
         
-        Paragraph p1 = new Paragraph();
-        p1.addMarkup("{color:#0066a1}__*My Trainings*__:", 12, font);
-        document.add(p1);
+        par = new Paragraph();
+        par.addMarkup("{color:#0066a1}__*My Trainings*__:", 12, font);
+        document.add(par);
         document.add(new VerticalSpacer(linspace));
         
-        Paragraph pur = new Paragraph();
-        pur.addMarkup("{color:#000000}*Stream*: " + stream.get(0) + " - " + stream.get(1), 12, font);
-        document.add(pur);
+        par = new Paragraph();
+        par.addMarkup("{color:#000000}*Stream*: " + stream.get(0) + " - " + stream.get(1), 12, font);
+        document.add(par);
         document.add(new VerticalSpacer(linspace));
         
         //modules
         document.add(hRule);
         document.add(new VerticalSpacer(linspace));
         for (String[] cat : cats){
-            ArrayList<String> scores = new ArrayList<String>();
+            ArrayList<String[]> scores = new ArrayList<String[]>();
             scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
             
             if (scores.size() > 0){
@@ -164,12 +162,14 @@ public class PDF {
                 
                 document.add(new VerticalSpacer(5));
                 par = new Paragraph();
-
                 par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", 11, font);
-                for(int i = 0; i < scores.size() - 2; i+=2){
-                    par.addMarkup(scores.get(i) + ",  ", 11, font);
+                
+                for(int i = 0; i < scores.size() - 1; i++){
+                    String[] score = scores.get(i); 
+                    par.addMarkup(score[0] + ",  ", 11, font);
                 }
-                par.addMarkup(scores.get(scores.size() - 2), 11, font);
+                String[] score = scores.get(scores.size() - 1);
+                par.addMarkup(score[0], 11, font);
 
                 document.add(par, VerticalLayoutHint.LEFT);
                 document.add(hRule);
@@ -177,35 +177,35 @@ public class PDF {
             }
         }
                 
-        Paragraph p2 = new Paragraph();
-        p2.addMarkup("{color:#0066a1}__*My Performence*__\n\n<<bargraph goes here>>", 12, font); //http://www.java2s.com/Code/Java/Chart/JFreeChartHorizontalBarChartDemo2.htm
+        par = new Paragraph();
+        par.addMarkup("{color:#0066a1}__*My Performence*__\n\n<<bargraph goes here>>", 12, font); //http://www.java2s.com/Code/Java/Chart/JFreeChartHorizontalBarChartDemo2.htm
         document.add(new VerticalSpacer(linspace));
-        document.add(p2);
+        document.add(par);
         document.add(new VerticalSpacer(50));
 
-        Paragraph grades = new Paragraph();
-        grades.addMarkup(gradeNumbers, 11, font);
-        grades.setAlignment(Alignment.Center);
-        document.add(grades);
+        par = new Paragraph();
+        par.addMarkup(gradeNumbers, 11, font);
+        par.setAlignment(Alignment.Center);
+        document.add(par);
         document.add(new VerticalSpacer(linspace));
         
-        Paragraph quote = new Paragraph();
-        quote.addMarkup("{color:#000000}_*\"Learning is the lifelong process of transforming information and experience into knowledge, skills, behaviours and attitudes\"*_\n", 10, font);
-        quote.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", 10, font);
-        quote.setAlignment(Alignment.Center);
+        par = new Paragraph();
+        par.addMarkup("{color:#000000}_*\"Learning is the lifelong process of transforming information and experience into knowledge, skills, behaviours and attitudes\"*_\n", 10, font);
+        par.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", 10, font);
+        par.setAlignment(Alignment.Center);
         document.add(new VerticalSpacer(linspace));
-        document.add(quote);
+        document.add(par);
         
         final OutputStream outputStream = new FileOutputStream(empid + ".pdf");
         document.save(outputStream);
 
-	}
+	}	
 }
 
-        /* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.
-        * Saved for possible later use and as a reminder to not Do The Thing
-        Stroke stroke = new Stroke();
-        RenderContext rc = new RenderContext(document, document.getPDDocument());
-        stroke.applyTo(rc.getContentStream());
-        rc.close();
-        */
+/* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.
+//Saved for possible later use and as a reminder to not Do The Thing
+Stroke stroke = new Stroke();
+RenderContext rc = new RenderContext(document, document.getPDDocument());
+stroke.applyTo(rc.getContentStream());
+rc.close();
+*/

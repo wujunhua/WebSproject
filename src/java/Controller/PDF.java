@@ -155,7 +155,7 @@ public class PDF {
         Paragraph par = new Paragraph();
         
         par = new Paragraph();
-        par.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "            " +
+        par.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "                            " +
                 "{color:#0066a1}*EMPLOYEE ID*{color:#000000}: " + empid, 13, font);
         par.setAlignment(Alignment.Center);
         document.add(par);
@@ -165,7 +165,7 @@ public class PDF {
         document.add(new VerticalSpacer(sectionBreak));
         
         par = new Paragraph();
-        par.addMarkup("{color:#0066a1}__*My Trainings*__:", textSize + 1, font);
+        par.addMarkup("{color:#0066a1}__*My Training*__:  ", textSize + 1, font);
         document.add(par);
         document.add(new VerticalSpacer(0.25f*linspace));
         
@@ -184,7 +184,7 @@ public class PDF {
                 gradeNumbers += cat[0] + " Grade: " + info.getAverageScoreByCategory(empid, cat[1]) + "  |  ";
                 
                 par = new Paragraph();
-                par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:", textSize, font);
+                par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
                 
                 par.addMarkup("|", textSize, font);
                 for (String[] score : scores) {

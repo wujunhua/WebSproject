@@ -31,6 +31,8 @@
                 
                 <prop key="instructor.htm">instructorController</prop>
                 <prop key="email.htm">emailController</prop>
+                <prop key="sendEmail.htm">emailController</prop>
+                <prop key="searchEmailEmployees.htm">emailController</prop>
                 <prop key="createclass.htm">createClassController</prop>
                 
                 <prop key="showEmployees.htm">empController</prop>

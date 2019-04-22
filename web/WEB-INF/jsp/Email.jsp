@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>
@@ -111,7 +112,16 @@
  
     <div class="container-fluid bg-white" style="height: 100vh;">
         <div class="container pb-5 pt-3">
-            <s:form commandName="email" class="mt-2"> 
+            <form:form method="post" action="/WebSproject/searchEmailEmployees.htm" class="form-inline pt-1 pb-2 w-100">                 
+                <button class="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i class="fas fa-search pr-1"></i>Search</button>
+                <select name="col" class="custom-select my-1 mr-sm-2">
+                    <option value="name">Name</option>
+                    <option value="email">Email</option>
+                </select>
+                <input type="text" placeholder="Search.." name="search" class="form-control my-1 mr-sm-2">
+            </form:form>
+            
+            <form:form id="emailForm" method="post" action="/WebSproject/sendEmail.htm" class="mt-2"> 
             <table class="table table-bordered table-striped table-sm">
                 <thead>
                     <tr>
@@ -122,13 +132,12 @@
                 </thead>
                 <tbody>
               <!--<div class="btn-group-toggle" data-toggle="buttons">-->
-                  <c:forEach items="${usersList}" var="user" varStatus="loop">
+                  <c:forEach items="${empList}" var="user" varStatus="loop">
                       <tr>
-                        <td class="noto">${nameList[loop.index]}</td>
-                        <td class="noto">${user}</td>
-                        <td class="text-center noto"><s:checkbox path="userNames" value="${user}" /></td>
+                        <td class="noto">${user.employeeName}</td>
+                        <td class="noto">${user.employeeEmail}</td>
+                        <td class="text-center noto"><input class="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
                       </tr>
-
                   </c:forEach>
               <!--</div>-->
                 </tbody>
@@ -137,14 +146,14 @@
               <button type="submit" value="Login" class="btn btn-primary px-3 mx-1 rounded-0"><i class="fas fa-paper-plane pr-2"></i>Send</button>
               <button type="reset" value="Reset" class="btn-secondary btn mx-1 px-3 rounded-0"><i class="fas fa-sync-alt pr-2"></i>Reset</button>
             </div>
-              </s:form>
+            </form:form>
         </div>
     </div>
 
     <!-- Optional JavaScript -->
-
+ 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <!-- Bootstrap.js -->

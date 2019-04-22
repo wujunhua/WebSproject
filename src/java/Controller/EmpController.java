@@ -51,7 +51,8 @@ public class EmpController extends SimpleFormController {
     public ModelAndView searchEmployees(String viewName, EmployeeServiceDAO esd, HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("showEmployees");       
-        mav.addObject("emplist",  esd.readAllEmployeeFromCol(request.getParameter("col"), request.getParameter("search")));
+        mav.addObject("emplist",  esd.readAllEmployeeFromCol(request.getParameter("col"),
+                request.getParameter("search").trim()));
         
         return mav;
     }
@@ -68,7 +69,8 @@ public class EmpController extends SimpleFormController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("showEmployees");
         esd.updateEmployee(request.getParameter("editModalButton"), 
-                request.getParameter("editName"), request.getParameter("editEmail"), request.getParameter("editManagerID"));
+                request.getParameter("editName").trim(), request.getParameter("editEmail").trim()
+                ,request.getParameter("editManagerID").trim());
         
         mav.addObject("emplist", esd.readAllEmployee());
        
@@ -82,5 +84,5 @@ public class EmpController extends SimpleFormController {
         mav.addObject("emplist", esd.readAllEmployee());
         
         return mav;
-    }
+    }                      
 }

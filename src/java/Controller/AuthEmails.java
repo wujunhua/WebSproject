@@ -69,7 +69,7 @@ public class AuthEmails extends SimpleFormController{
             for(int i = 0; i<emails.length; ++i)
                 SendEmail.sendIdividualEmail(emails[i], SendEmail.getEmpId(emails[i]));
             
-            return new ModelAndView("instructor");
+            return new ModelAndView("emailSuccess");
         }
         
         //Load email hub page

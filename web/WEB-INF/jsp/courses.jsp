@@ -165,7 +165,7 @@
                 </div>
                 <div class="col-lg-3">
                   <input type="text" name="coursename" id="coursename" class="form-control" onChange="myFunction()" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required>
-                <div><small id="jackson_1" class="text-danger"></small></div>
+                <div><small id="ajaxconf" class="text-danger"></small></div>
                 </div>
                   <div class="form-group col-md-3">
                       <select class="custom-select" name= "streamname" id="streamname" onchange="loadDoc()">
@@ -261,11 +261,11 @@ function myFunction()
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("jackson_1").innerHTML = this.responseText;
+     document.getElementById("ajaxconf").innerHTML = this.responseText;
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+encodeURIComponent(cName)+"&num=8", true);
+  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(cName)+"&num=8", true);
   xhttp.send();
 }
 </script>

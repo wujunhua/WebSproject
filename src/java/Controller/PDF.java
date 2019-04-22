@@ -147,7 +147,7 @@ public class PDF {
         document.add(new VerticalSpacer(90));
               
         
-        document.add(new ImageElement("performica.png"), new VerticalLayoutHint(Alignment.Left, 0, 0,
+        document.add(new ImageElement("C:\\trainingkb\\WebSproject\\src\\java\\Controller\\performica.png"), new VerticalLayoutHint(Alignment.Left, 0, 0,
 		0, 0, true)); 
         document.add(new VerticalSpacer(50)); //font: Vivaldi
    

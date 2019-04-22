@@ -142,13 +142,13 @@ public class SendEmail {
             //add header image
             messageBodyPart = new MimeBodyPart();
             DataSource fds = new FileDataSource(
-            "header.jpg");
+            "C:\\trainingkb\\WebSproject\\web\\resources\\img\\header.jpg");
 
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<image>");
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
-            DataSource fds2 = new FileDataSource("welcome.jpg");
+            DataSource fds2 = new FileDataSource("C:\\trainingkb\\WebSproject\\web\\resources\\img\\welcome.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds2));
             messageBodyPart.setHeader("Content-ID", "<image2>");
             multipart.addBodyPart(messageBodyPart);
@@ -272,7 +272,7 @@ public class SendEmail {
             //add header image
             messageBodyPart = new MimeBodyPart();
             DataSource fds = new FileDataSource(
-            "header.jpg");
+            "C:\\trainingkb\\WebSproject\\web\\resources\\img\\header.jpg");
 
             messageBodyPart.setDataHandler(new DataHandler(fds));
             messageBodyPart.setHeader("Content-ID", "<image>");

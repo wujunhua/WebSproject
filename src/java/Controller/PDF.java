@@ -88,27 +88,21 @@ public class PDF {
         info.setDataSource(dataSource);
         info.setNjdbc(njdbc);
         
-        if(!info.getAllIds().contains(empid)){ //this is O(n^2) methinks. make the query return one think and do bool return.
+        String name = info.getEmployeeName(empid);
+        
+        if(name.equals("")){
             System.out.println("Employee ID not found. PDF has not been generated.");
             return;
         }
 
         //define output vars
-        String name, avgGrade, fGrade, sGrade, dGrade;
+        String gradeNumbers = "Overall Grade: " + info.getAverageScore(empid) + "\n|  ";
         
-        ArrayList<String> stream = new ArrayList();
+        ArrayList<String> stream = info.getStreamIDName(empid);
        
         ArrayList<String[]> cats = new ArrayList<String[]>();
         cats.addAll(info.getCategoryNameID());
-        
-        //populate output variables
-        name=info.getEmployeeName(empid);
-        stream=info.getStreamIDName(empid);
-        avgGrade=info.getAverageScore(empid);
-        fGrade=info.getAverageScoreByCategory(empid, "FOUND01");
-        sGrade=info.getAverageScoreByCategory(empid, "SPEC01");
-        dGrade=info.getAverageScoreByCategory(empid, "PD01");
-		
+ 
         //define a <hr /> --------------------------------
         char[] charArray = new char[1835];
         Arrays.fill(charArray, ' ');
@@ -133,9 +127,9 @@ public class PDF {
               
         Paragraph par = new Paragraph();
         
-        Paragraph title = new Paragraph();
-        title.addMarkup("{color:#0066a1}__***PERFORMICA REPORT***__", 20, font);
-       	document.add(title, VerticalLayoutHint.CENTER);
+        par = new Paragraph();
+        par.addMarkup("{color:#0066a1}__***PERFORMICA REPORT***__", 20, font);
+       	document.add(par, VerticalLayoutHint.CENTER);
         document.add(new VerticalSpacer(sectionBreak));
    
         Paragraph emp = new Paragraph();
@@ -158,22 +152,6 @@ public class PDF {
         document.add(pur);
         document.add(new VerticalSpacer(linspace));
         
-        /*Paragraph strm = new Paragraph();
-        strm.addMarkup("{color:#0066a1}*INDUCTION*{color:#000000}: " + stream.get(0) + " - " + stream.get(1), 14, font);
-        strm.setAlignment(Alignment.Center);
-        document.add(strm);
-        
-		
-        document.add(new VerticalSpacer(15.5f));
-        
-        Paragraph p1 = new Paragraph();
-        p1.addMarkup("{color:#0066a1}*Training Modules Completed*", 12, font);
-        document.add(p1);
-        document.add(new VerticalSpacer(linspace));
-        */
-        
-        
-        
         //modules
         document.add(hRule);
         document.add(new VerticalSpacer(linspace));
@@ -182,6 +160,8 @@ public class PDF {
             scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
             
             if (scores.size() > 0){
+                gradeNumbers += cat[0] + " Grade: " + info.getAverageScoreByCategory(empid, cat[1]) + "  |  ";
+                
                 document.add(new VerticalSpacer(5));
                 par = new Paragraph();
 
@@ -202,11 +182,7 @@ public class PDF {
         document.add(new VerticalSpacer(linspace));
         document.add(p2);
         document.add(new VerticalSpacer(50));
-        
-        String gradeNumbers = "Overall Grade: " + avgGrade + "\n"
-                + "Foundation Grade: "+fGrade+"  |  "
-                + "Specialization Grade: "+sGrade+"  |  "
-                + "Process/Domain Grade: "+dGrade;
+
         Paragraph grades = new Paragraph();
         grades.addMarkup(gradeNumbers, 11, font);
         grades.setAlignment(Alignment.Center);
@@ -217,15 +193,13 @@ public class PDF {
         quote.addMarkup("{color:#000000}_*\"Learning is the lifelong process of transforming information and experience into knowledge, skills, behaviours and attitudes\"*_\n", 10, font);
         quote.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", 10, font);
         quote.setAlignment(Alignment.Center);
-        document.add(new VerticalSpacer(5*linspace));
+        document.add(new VerticalSpacer(linspace));
         document.add(quote);
-        //document.add(new VerticalSpacer(linspace));
         
-        final OutputStream outputStream = new FileOutputStream(
-		empid + ".pdf");
+        final OutputStream outputStream = new FileOutputStream(empid + ".pdf");
         document.save(outputStream);
 
-	}	
+	}
 }
 
         /* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.

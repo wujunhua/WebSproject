@@ -111,7 +111,7 @@ public class PDF {
         sGrade=info.getAverageScoreByCategory(empid, "SPEC01");
         System.out.println("MAde it");
         dGrade=info.getAverageScoreByCategory(empid, "PD01");
-        
+        System.out.println("Didn't Make it");
         //define a <hr />
         char[] charArray = new char[1835];
         Arrays.fill(charArray, ' ');

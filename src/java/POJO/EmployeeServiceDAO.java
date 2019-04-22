@@ -39,21 +39,20 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         Employee emp = new Employee();
         try {
             System.out.println("Read from employees...");
-            emp = (Employee) jdbcTemplateObject.queryForObject(sql, new Object[]{employeeID}, new EmployeeRowMapper());
-            System.out.println(emp);
+            emp = (Employee) jdbcTemplateObject.queryForObject(sql, new Object[]{employeeID}, new EmployeeRowMapper());            
         } catch(Exception e) {
             System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
         }
         return emp;
     }
     
+    @Override
     public ArrayList<Employee> readAllEmployee(){
         ArrayList<Employee> list = new ArrayList<>();
         String sql = "select * from employees";
         try {
             System.out.println("Read from employees...");
             list = (ArrayList<Employee>) jdbcTemplateObject.query(sql, new EmployeeRowMapper());
-            System.out.println(list);
         } catch(Exception e) {
             System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
         }
@@ -66,21 +65,20 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         String sql = "";
         switch(col){
             case "name":
-                sql = "select * from employees where name = ?";
+                sql = "select * from employees where name like ?";
                 break;
             case "email":
-                sql = "select * from employees where email = ?";
+                sql = "select * from employees where email like ?";
                 break;
             case "classID":
-                sql = "select * from employees where class_id = ?";
+                sql = "select * from employees where class_id like ?";
                 break;
         }
         try {
             System.out.println("Read from employees from searching a column...");
             list = (ArrayList<Employee>) jdbcTemplateObject.query(sql, 
-                    new Object[]{str}, new EmployeeRowMapper());
+                    new Object[]{"%"+str+"%"}, new EmployeeRowMapper());
                     
-            System.out.println(list);
         } catch(Exception e) {
             System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
         }

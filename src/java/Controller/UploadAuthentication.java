@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,15 +28,18 @@ public class UploadAuthentication extends SimpleFormController {
     protected ModelAndView onSubmit(Object command) throws Exception {
         ExcelUploadObject excel =(ExcelUploadObject)command;
         
-      
+      try{
         MultipartFile multiFile = excel.getFile();
         File file = convert(multiFile);
   
         Runner.ExcelUpload(file, excel.getLocation(), excel.getSite(), excel.getStreamName(), excel.getInsEmail(), excel.getStartDate(), excel.getEndDate());
         // bring in all streams
+        return new ModelAndView("emailRedirect");
+      } catch(Exception e){
+          return new ModelAndView("uploadErrorPage");
+      }
         
         
-        return new ModelAndView("instructor");
     }
     
     public File convert(MultipartFile file) throws IOException{
@@ -44,6 +48,7 @@ public class UploadAuthentication extends SimpleFormController {
         try (FileOutputStream fos = new FileOutputStream(convFile)) {
             fos.write(file.getBytes());
         }
+        
         return convFile;
     }
 

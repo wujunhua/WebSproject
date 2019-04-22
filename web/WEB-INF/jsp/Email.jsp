@@ -136,7 +136,7 @@
                       <tr>
                         <td class="noto">${user.employeeName}</td>
                         <td class="noto">${user.employeeEmail}</td>
-                        <td class="text-center noto"><input class="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
+                        <td class="text-center noto"><input class="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" checked /></td>
                       </tr>
                   </c:forEach>
               <!--</div>-->

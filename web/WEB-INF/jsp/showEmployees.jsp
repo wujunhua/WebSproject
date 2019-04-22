@@ -79,6 +79,11 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
         <title>Atos Syntel &middot; Land</title>
+        <style>
+            p, h1, h2, h3, h4, h5, h6, li, ul, ol{
+                font-family: Verdana,Geneva,sans-serif;
+            }
+        </style>
     </head>
 <body class="bg-light">
     

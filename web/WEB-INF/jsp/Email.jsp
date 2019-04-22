@@ -77,6 +77,11 @@
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
         <title>Atos Syntel &middot; Land</title>
+        <style>
+            p, h1, h2, h3, h4, h5, h6, li, ul, ol{
+                font-family: Verdana,Geneva,sans-serif;
+            }
+        </style>
     </head>
 <body class="bg-light">
     

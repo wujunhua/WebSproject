@@ -218,7 +218,22 @@ public class PDF {
         document.add(new ImageElement(chartFileName), new VerticalLayoutHint(Alignment.Left, 0, 0,
 		0, 0, true)); 
         
-        document.add(new VerticalSpacer(300));
+        document.add(new VerticalSpacer(285));
+
+        char[] Array = new char[1040];
+        Arrays.fill(Array, ' ');
+        String line = new String(Array);
+        
+        par = new Paragraph();
+        par.addMarkup("__" + line + "__\n", 1, font);
+        par.addMarkup("|Grade Range  |  > 90.00  |  80.00 - 89.99  |  70.00 - 79.99 | < 70  |\n", textSize, font);
+        par.addMarkup("__" + line + "__\n", 1, font);
+        par.addMarkup("|        Letter      |       A       |           B            |           C          |    F    |\n", textSize, font);
+        par.addMarkup("__" + line + "__", 1, font);
+        
+        par.setAlignment(Alignment.Center);
+        document.add(par);
+        document.add(new VerticalSpacer(sectionBreak));
 
         par = new Paragraph();
         par.addMarkup(gradeNumbers, textSize, font);

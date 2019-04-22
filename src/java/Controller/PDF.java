@@ -14,12 +14,15 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.TextAnchor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 //pdf-box layout used under MIT license. Found at https://github.com/ralfstuckert/pdfbox-layout
@@ -98,7 +101,7 @@ public class PDF {
 		this.filePath = filePath;
 	}
     
-    public void generate(String empid) throws Exception{
+	    public void generate(String empid) throws Exception{
         //init config
         njdbc = new NamedParameterJdbcTemplate(dataSource);
         PDFinfo info = new PDFinfo(dataSource.getConnection());
@@ -130,8 +133,9 @@ public class PDF {
         //------------------------------------------------
                 
         //create PDF
-        float linspace = 12;
-        float sectionBreak = 18;
+        float linspace = 10;
+        float sectionBreak = 15;
+        float textSize = 10;
         float leftMargin = 40;
         float rightMargin = 40;
         float topMargin = 20;
@@ -140,34 +144,35 @@ public class PDF {
         
         document.add(new ImageElement(imagePath), new VerticalLayoutHint(Alignment.Left, 0, 0,
 		0, 0, true)); 
-        document.add(new VerticalSpacer(100));
+        document.add(new VerticalSpacer(90));
               
+        
+        document.add(new ImageElement("performica.png"), new VerticalLayoutHint(Alignment.Left, 0, 0,
+		0, 0, true)); 
+        document.add(new VerticalSpacer(50)); //font: Vivaldi
+   
         Paragraph par = new Paragraph();
         
         par = new Paragraph();
-        par.addMarkup("{color:#0066a1}__***PERFORMICA REPORT***__", 20, font);
-       	document.add(par, VerticalLayoutHint.CENTER);
-        document.add(new VerticalSpacer(sectionBreak));
-   
-        par = new Paragraph();
         par.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "            " +
-                "{color:#0066a1}*EMPLOYEE ID*{color:#000000}: " + empid, 14, font);
+                "{color:#0066a1}*EMPLOYEE ID*{color:#000000}: " + empid, 13, font);
         par.setAlignment(Alignment.Center);
         document.add(par);
-
-        document.add(new VerticalSpacer(2*sectionBreak));
+        document.add(hRule);
+        document.add(hRule);
+        
+        document.add(new VerticalSpacer(sectionBreak));
         
         par = new Paragraph();
-        par.addMarkup("{color:#0066a1}__*My Trainings*__:", 12, font);
+        par.addMarkup("{color:#0066a1}__*My Trainings*__:", textSize + 1, font);
         document.add(par);
-        document.add(new VerticalSpacer(linspace));
+        document.add(new VerticalSpacer(0.25f*linspace));
         
         par = new Paragraph();
-        par.addMarkup("{color:#000000}*Stream*: " + stream.get(0) + " - " + stream.get(1), 12, font);
+        par.addMarkup("{color:#000000}*Stream*: " + stream.get(0) + " - " + stream.get(1), textSize + 1, font);
         document.add(par);
-        document.add(new VerticalSpacer(linspace));
+        document.add(new VerticalSpacer(1.5f*linspace));
         
-        //modules
         document.add(hRule);
         document.add(new VerticalSpacer(linspace));
         for (String[] cat : cats){
@@ -177,20 +182,19 @@ public class PDF {
             if (scores.size() > 0){
                 gradeNumbers += cat[0] + " Grade: " + info.getAverageScoreByCategory(empid, cat[1]) + "  |  ";
                 
-                document.add(new VerticalSpacer(5));
                 par = new Paragraph();
-                par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", 11, font);
+                par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
                 
                 for(int i = 0; i < scores.size() - 1; i++){
                     String[] score = scores.get(i);
-                    par.addMarkup(score[0] + ",  ", 11, font);         
+                    par.addMarkup(score[0] + ",  ", textSize, font);         
                     String classScore = info.getClassModuleScores(empid, score[0]);
                     //set up for chart: add number, series label, bar label
                     dataset.addValue( Float.parseFloat(score[1]), name , score[0]);
                     dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
                 }
                 String[] score = scores.get(scores.size() - 1);
-                par.addMarkup(score[0], 11, font);
+                par.addMarkup(score[0], textSize, font);
                            
                 String classScore = info.getClassModuleScores(empid, score[0]);
                 //set up for chart: add number, series label, bar label
@@ -204,7 +208,7 @@ public class PDF {
         }
                 
         par = new Paragraph();
-        par.addMarkup("{color:#0066a1}__*My Performence*__", 12, font);
+        par.addMarkup("{color:#0066a1}__*My Performence*__:", textSize + 1, font);
         document.add(new VerticalSpacer(linspace));
         document.add(par);
         
@@ -214,17 +218,17 @@ public class PDF {
         document.add(new ImageElement(chartFileName), new VerticalLayoutHint(Alignment.Left, 0, 0,
 		0, 0, true)); 
         
-        document.add(new VerticalSpacer(50));
+        document.add(new VerticalSpacer(300));
 
         par = new Paragraph();
-        par.addMarkup(gradeNumbers, 11, font);
+        par.addMarkup(gradeNumbers, textSize, font);
         par.setAlignment(Alignment.Center);
         document.add(par);
         document.add(new VerticalSpacer(linspace));
         
         par = new Paragraph();
         par.addMarkup("{color:#000000}_*\"Learning is the lifelong process of transforming information and experience into knowledge, skills, behaviours and attitudes\"*_\n", 10, font);
-        par.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", 10, font);
+        par.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", textSize - 2, font);
         par.setAlignment(Alignment.Center);
         document.add(new VerticalSpacer(linspace));
         document.add(par);
@@ -263,8 +267,9 @@ public class PDF {
         renderer.setShadowVisible(false);
         renderer.setDrawBarOutline(false);
         renderer.setItemMargin(0.0); //space between bars
-        renderer.setBaseItemLabelsVisible(true);
         renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        renderer.setBaseItemLabelsVisible(true);
+        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE9, TextAnchor.BASELINE_LEFT));
 
         int width = 525;    /* Width of the image */
         int height = 275;   /* Height of the image */ 

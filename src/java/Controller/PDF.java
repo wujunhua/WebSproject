@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javaapplication4.BarChart2;
 import javax.sql.DataSource;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.jfree.chart.ChartFactory;
@@ -272,7 +269,6 @@ public class PDF {
         try {
             ChartUtilities.saveChartAsJPEG( BarChart , barChart , width , height );
         } catch (IOException ex) {
-            Logger.getLogger(BarChart2.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Cannot save chart:\n" + ex.toString());
         }
    }

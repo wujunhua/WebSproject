@@ -1,7 +1,7 @@
 function validate()
 {
-    var stop = true;
-    
+    document.getElementById("emailValidation").innerHTML = "";
+    document.getElementById("endDateValidation").innerHTML = "";
     //check email
     var email = document.getElementById("insEmail").value;
     email = email.toLowerCase();
@@ -68,12 +68,8 @@ function validate()
         return;
     }
     
-    stop = false;
-    //submitting the form
-    if (stop === false)
-    {
-        document.getElementById("createClassForm").submit();
-    }
+    document.getElementById("actualButton").click();
+
 }
 
 

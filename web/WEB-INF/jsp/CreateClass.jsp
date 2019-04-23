@@ -193,10 +193,13 @@
                                     <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="file" name="file" runat="server" title="Uploaded file must be an excel" required/>
                                 </div>
                             </div>
-                        </s:form>
-                        <div class="row justify-content-center">
+                            <div class="row justify-content-center">
                                 <button type="button" class="btn btn-primary rounded-0 px-3" onclick="validate()" ><i class="far fa-file-alt pr-2"></i>Submit</button>
                             </div>
+                             <div class="row justify-content-center">
+                                <button type="submit" id="actualButton" class="btn btn-primary rounded-0 px-3" style="display: none;" ><i class="far fa-file-alt pr-2"></i>Submit</button>
+                            </div>
+                        </s:form>                       
                     </div><!-- End col 8 -->
                     <div class="col-sm-4 mt-2">
                         <div class='card'>

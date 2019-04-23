@@ -61,7 +61,7 @@
   //disconnect
   conn.close();
   
-String site = "createclass.htm" ;
+String site = "login.htm" ;
 response.setStatus(response.SC_MOVED_TEMPORARILY);
 response.setHeader("Location", site);
   

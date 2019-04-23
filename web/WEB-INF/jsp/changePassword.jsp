@@ -26,18 +26,19 @@ try {
   }
 
 String sql;
-int numRowsAffected;
 Statement stmt = conn.createStatement();
 ResultSet rs;
 String user_id = (String)session.getAttribute("currentUserName");
-String oldpasswordcheck;
+
+ArrayList oldpassCheck = new ArrayList();
+request.setAttribute("oldpassCheck", oldpassCheck);
 
 sql = "select password from users where user_id='" + user_id + "'";
 rs = stmt.executeQuery(sql);
 
 while(rs.next())
 {
-   oldpasswordcheck = rs.getString("password");
+   oldpassCheck.add(rs.getString("password"));
 }
 
 
@@ -60,30 +61,40 @@ while(rs.next())
           <div class="card-header text-muted noto bg-white">
             <i class="fas fa-user pr-2"></i> Change Password
           </div>
-          <form action="update-password.htm">
+            
+          <form id="changePass" action="passwordChangeSuccess.htm">
             <div class="form-group row mt-3">
-              <label for="oldpassword" class="col-sm-3 col-form-label">Old Password</label>
+              <label for="oldpassword" class="col-sm-3 col-form-label">Current Password</label>
               <div class="col-sm-9">
-                <input type="password" class="form-control" id="oldpassword"  name="oldpassword" placeholder="Old Password" required>
-              <div><small id="jackson_1" class="text-danger"></small></div>
+                <input type="password" class="form-control" id="oldpassword"  name="oldpassword" placeholder="Enter Current Password" required>
+              <font color="red"><span id="oldpass"></span></font>
               </div>
               <div class="col-sm-9">
-                <input type="hidden" class="form-control" id="oldpasscheck" name="oldpasscheck" value=oldpasswordcheck >
+                <input type="hidden" class="form-control" id="oldpasscheck" name="oldpasscheck" value="${oldpassCheck.get(0)}" >
               </div>
+            </div>
+            <div class="form-group row mt-3">
+              <label for="oldpassword" class="col-sm-3 col-form-label">New Password</label>
               <div class="col-sm-9">
                 <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="Enter New Password" title="password must be 8-15 characters & contain atleast one alphanumric character" required pattern="(?=.*\d)(?=.*[A-Z]).{8,}" minlength = "8" maxlength = "15" required>
               </div>
+            </div>
+              
+            <div class="form-group row mt-3">
+              <label for="oldpassword" class="col-sm-3 col-form-label">Repeat Password</label>
               <div class="col-sm-9">
                 <input type="password" class="form-control" id="newpasscheck" name="newpasscheck" placeholder="Repeat New Password" required>
+                <font color="red"><span id="passMatch"></span></font>
               </div>
             </div>
-
-            
-            <div class="row justify-content-center mt-1">
+              <div class="row justify-content-center mt-1">
               <div class="row pt-3">
                 <div class="col-6">
-                    <button class="btn btn-sm btn-secondary" type="submit" onclick="checkPass()">
+                    <button class="btn btn-sm btn-secondary" type="button" onclick="checkPass()">
                       <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i> Change Password </span>
+                    </button>
+                    <button class="btn btn-sm btn-secondary" id="clickButton" style="display:none;" type="submit">
+                      <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i></span>
                     </button>
                 </div>
               </div>
@@ -108,29 +119,25 @@ while(rs.next())
   <script type="text/javascript">
    function checkPass() {
         var newPassword = document.getElementById("newpassword").value;
-        var newPasswordCheck = document,getElementById("newpasscheck").value;
+        var newPasswordCheck = document.getElementById("newpasscheck").value;
         var oldPassword = document.getElementById("oldpassword").value;
-        var oldPasswordCheck = document,getElementById("oldpasscheck").value;
+        var oldPasswordCheck = document.getElementById("oldpasscheck").value;
+        document.getElementById("oldpass").innerHTML = "";
+        document.getElementById("passMatch").innerHTML = "";
         
-        if(oldPassword === oldPasswordCheck)
+        if(!(oldPassword == oldPasswordCheck))
         {
+            document.getElementById("oldpass").innerHTML = "Incorrect password";
+            return;
         }
-        else
+        else if(!(newPassword == newPasswordCheck))        
         {
-            alert("Old password did not match password change failed");
-            event.preventDefault();
+            document.getElementById("passMatch").innerHTML = "The repeated password does not match";
+            return;
         }
-        
-        if(newPassword === newPasswordCheck)
-        {
-            return true;
-        }
-        else
-        {
-            alert("Your new passwords did not match password change failed");
-            event.preventDefault();
-        }
-}   
+        else 
+            document.getElementById("clickButton").click();  
+    }   
  </script>
  
 </body>

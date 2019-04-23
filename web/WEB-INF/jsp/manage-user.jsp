@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%
 //initialize driver class
@@ -92,11 +93,11 @@ boolean userCantBeUpdated = rs.next();
               </form>
             </span>
           </div>
-          <form action="update-user.htm">
+          <form>
             <div class="form-group row mt-3">
               <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
               <div class="col-sm-9">
-                <input type="email" class="form-control" id="inputEmail3" onchange="myFunction()" name="newusername" value="${param.id}" required>
+                <input type="email" class="form-control" id="inputEmail3" onchange="myFunction()" name="newusername" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required>
               <div><small id="jackson_1" class="text-danger"></small></div>
               </div>
               <div class="col-sm-9">
@@ -120,7 +121,7 @@ boolean userCantBeUpdated = rs.next();
             <div class="row justify-content-center mt-1">
               <div class="row pt-3">
                 <div class="col-6">
-                    <button class="btn btn-sm btn-secondary" type="submit">
+                    <button class="btn btn-sm btn-secondary" type="submit" onclick="checkDomain()">
                       <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i> Update </span>
                     </button>
                 </div>
@@ -143,6 +144,28 @@ boolean userCantBeUpdated = rs.next();
   <!-- Bootstrap.js -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+  <script type="text/javascript">
+   function checkDomain() {
+        var x = document.getElementById("inputEmail3").value;
+        x = x.toLowerCase();
+        x = x.split('@'); 
+        x = x[1];
+        if(x === "syntelinc.com")
+        {
+            return true;
+        }
+        else if(x === "atos.net")
+        {
+            return true;
+        }
+        else
+        {
+            alert("Not a valid atos or syntel email");
+            event.preventDefault();
+        }
+}   
+ </script>
+ 
 </body>
 </html>
 

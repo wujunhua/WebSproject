@@ -134,7 +134,7 @@
 
 <jsp:include page="head-tag.jsp"/>
 
-<body class="bg-light">
+<body class="bg-light" onload="loadDoc()">
 
   <jsp:include page="nav.jsp"/>
   <div class="container-fluid">

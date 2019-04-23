@@ -61,7 +61,7 @@
   //disconnect
   conn.close();
   
-String site = "login.htm" ;
+String site = "passwordChangeSuccess.htm" ;
 response.setStatus(response.SC_MOVED_TEMPORARILY);
 response.setHeader("Location", site);
   

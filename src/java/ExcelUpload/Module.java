@@ -2,26 +2,26 @@ package ExcelUpload;
 
 public class Module {
 	
-	private String moduleID;  // This is actually module name not module Id
+	private String moudleName;  
 	private double moduleScore;
 	
 	public Module() {
 		super();
-		this.moduleID = "N/A";
+		this.moudleName = "N/A";
 		this.moduleScore = -1;
 	}
 	public Module(String moduleID, double moduleScore) {
 		super();
-		this.moduleID = moduleID;
+		this.moudleName = moduleID;
 		this.moduleScore = moduleScore;
 	}
 
 	
-	public String getModuleID() {
-		return moduleID;
+	public String getMoudleName() {
+		return moudleName;
 	}
-	public void setModuleID(String moduleID) {
-		this.moduleID = moduleID;
+	public void setMoudleName(String moudleName) {
+		this.moudleName = moudleName;
 	}
 
 	public double getmoduleScore() {
@@ -33,6 +33,6 @@ public class Module {
 
 	@Override
 	public String toString() {
-		return "Module [moduleID=" + moduleID + ", moduleScore=" + moduleScore + "]";
+		return "Module [moduleID=" + moudleName + ", moduleScore=" + moduleScore + "]";
 	}	
 }

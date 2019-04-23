@@ -5,6 +5,7 @@ import ExcelUpload.Runner;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
@@ -30,14 +31,14 @@ public class UploadAuthentication extends SimpleFormController {
         
       try{
         MultipartFile multiFile = excel.getFile();
-        System.out.println("Made it");
+        
         File file = convert(multiFile);
-        System.out.println("Possibly made it");
+       
   
         Runner.ExcelUpload(file, excel.getLocation(), excel.getSite(), excel.getStreamName(), excel.getInsEmail(), excel.getStartDate(), excel.getEndDate());
         // bring in all streams
         return new ModelAndView("emailRedirect");
-      } catch(Exception e){
+      } catch(IOException | ParseException e){
           return new ModelAndView("uploadErrorPage");
       }
         

@@ -4,18 +4,19 @@ package ExcelUpload;
 	import java.sql.Connection;
 	import java.sql.DriverManager;
 	import java.sql.ResultSet;
+import java.sql.SQLException;
 
 	public class EmployeeCRUD {
 		
-		public boolean insertEmployee(Statement st, String employee_id, String name, String email, String class_id, String manager_id){
+		public boolean insertEmployee(Statement st, Employee employee){
                             
                             try {
 				System.out.println("Creating new employee. ");
-				int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee_id + "','" + name + "','" + email + "','" + class_id + "','"+manager_id+"')");
+				int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee.getEmployeeID() + "','" + employee.getEmployeeName() + "','" + employee.getEmployeeEmail() + "','" + employee.getClassID() + "','"+employee.getManagerID()+"')");
 				
                                 System.out.println(rows + " employee added.");
                                 return true;
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				System.out.println("Exception: " +  e.getMessage());
                                 return false;
 			}
@@ -28,7 +29,7 @@ package ExcelUpload;
 				ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employee_id + "'");
 				while(rs.next())
 					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				System.out.println("Exception: " +  e.getMessage());
 			}
 		}
@@ -39,7 +40,7 @@ package ExcelUpload;
 				int rows = st.executeUpdate("UPDATE Student_Performance.Employees SET name ='" + name + "' ,email ='" + email +
 						"'WHERE employee_id ='" + employee_id + "'");
 				System.out.println(rows + " employee updated.");
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				System.out.println("Exception: " +  e.getMessage());
 			}
 		}
@@ -49,16 +50,16 @@ package ExcelUpload;
 				System.out.println("Delete employee.");
 				int rows = st.executeUpdate("DELETE FROM Student_Performance.Employees WHERE employee_id = '" + employee_id + "'");
 				System.out.println(rows + " employee deleted.");
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				System.out.println("Exception: " +  e.getMessage());
 			}
 		}
                 
-                public void updateClass(Statement st, String classId, String employeeId){
+                public void updateClass(Statement st, Employee employee){
                     try {
-                        int rows = st.executeUpdate("UPDATE employees Set class_id = '"+classId+"' where employee_id = '"+employeeId+"'");
+                        int rows = st.executeUpdate("UPDATE employees Set class_id = '"+employee.getClassID()+"' where employee_id = '"+employee.getEmployeeID()+"'");
                         System.out.println("Employee Updated");
-                    } catch(Exception e){
+                    } catch(SQLException e){
                         System.out.println(e.getMessage());
                         
                     }
@@ -74,16 +75,16 @@ package ExcelUpload;
 				String email = "IM506@syn.com";
 				String classid = "JV123";
 				Class.forName("oracle.jdbc.OracleDriver");
-				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "Student_Performance", "Student_Performance");
-				Statement st = con.createStatement();
-			
-				//ec.insertEmployee(st, empid, name, email, classid);
-				//ec.readEmployee(st, empid);
-				//ec.updateEmployee(st, empid, name, email);
-				//ec.deleteEmployee(st, empid);
-				st.close();
-				con.close();
-			} catch (Exception e) {
+                            try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "Student_Performance", "Student_Performance")) {
+                                Statement st = con.createStatement();
+                                
+                                //ec.insertEmployee(st, empid, name, email, classid);
+                                //ec.readEmployee(st, empid);
+                                //ec.updateEmployee(st, empid, name, email);
+                                //ec.deleteEmployee(st, empid);
+                                st.close();
+                            }
+			} catch (ClassNotFoundException | SQLException e) {
 				System.out.println("Exception " + e.getMessage());
 			} 
 		}

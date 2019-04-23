@@ -1,4 +1,10 @@
 
+<% 
+    // get session attribute, used to hide admin link
+    Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
+
+%>
+
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: rgb(0,102,161);">
   <div class="container">
     <a class="navbar-brand" href="#">
@@ -11,7 +17,11 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Admin <span class="sr-only">(current)</span></a>
+            
+          <% if(isAdmin){ // only show admin button if they are an admin %> 
+                <a class="nav-link" href="streams.htm">Admin <span class="sr-only">(current)</span></a>
+          <% } %>  
+            
         </li>
         <li class="nav-item">
           <a class="nav-link" href="createclass.htm">Instructor</a>
@@ -23,7 +33,7 @@
            <small> <i class="fas fa-user pr-1"></i>${sessionScope.currentUserName}</small>
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#"><small><i class="fas fa-lock pr-2"></i>Change Password</small></a>
+            <a class="dropdown-item" href="changePassword.htm"><small><i class="fas fa-lock pr-2"></i>Change Password</small></a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="login.htm"><small>Logout</small></a>
           </div>

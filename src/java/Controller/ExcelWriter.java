@@ -118,8 +118,9 @@ public class ExcelWriter {
             
             // append score tag and test take number to each column title
             for(int i = 1; i < retakeLimit; i++) {
-                // [module name] Score [1, 2, 3]
-                String columnTitle = (moduleName + scoreTag + i);
+                
+                // DEV: don't append "score #" to allow excel puller to read it
+                String columnTitle = moduleName;//(moduleName + scoreTag + i);
                 scoreTitles.add(columnTitle);
             }
         }

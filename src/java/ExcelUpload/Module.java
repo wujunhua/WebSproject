@@ -2,7 +2,7 @@ package ExcelUpload;
 
 public class Module {
 	
-	private String moduleID;
+	private String moduleID;  // This is actually module name not module Id
 	private double moduleScore;
 	
 	public Module() {

@@ -31,7 +31,7 @@ public class PassOrFail {
         
         for(Module mod: checkScores){
                 
-                currentModule = mod.getMoudleName();
+                currentModule = mod.getModuleName();
                 
                 
                 //If the proceeding module is not the same as the current one

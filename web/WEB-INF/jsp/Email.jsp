@@ -150,7 +150,6 @@
             <div class="row justify-content-center my-5">
               <button type="submit" value="Login" class="btn btn-primary px-3 mx-1 rounded-0"><i class="fas fa-paper-plane pr-2"></i>Send</button>
               <button type="button" value="selectAll" class="btn btn-secondary px-3 mx-1 rounded-0" onclick="selectAll()"><i class="fas fa fa-check pr-2"></i>Select All</button>
-              <button type="reset" value="Reset" class="btn-danger btn mx-1 px-3 rounded-0"><i class="fas fa-sync-alt pr-2"></i>Reset</button>
             </div>
             </form:form>
         </div>
@@ -159,14 +158,35 @@
     <script type="text/javaScript">
         
        function selectAll(){
-            var form = document.forms[1];
+           var form = document.forms[1];
+           var checkboxTotal = 0;
+           for(var i = 0; i<form.length; ++i){
+               if(form[i].type == 'checkbox')
+                   ++checkboxTotal;
+           }
+               
            
-            for (var i = 0; i < form.length; ++i) {
+           var countChecked = 0; 
+           for (var i = 0; i < checkboxTotal; ++i) {
                 if (form[i].type == 'checkbox') {
-                    
-                    form[i].checked = true;
+                    if(form[i].checked == true)
+                        countChecked++;
                 }
-            } 
+           }
+           if(countChecked == checkboxTotal){
+                for (var i = 0; i < checkboxTotal; ++i) {
+                    if (form[i].type == 'checkbox') {
+                        form[i].checked = false;
+                    }
+                }
+           }else{
+                for (var i = 0; i < checkboxTotal; ++i) {
+                    if (form[i].type == 'checkbox') {
+                        form[i].checked = true;
+                    }
+                }
+                
+           }
         }
         
     </script>

@@ -201,7 +201,7 @@
               </div>
               <div class="col-4">
                 <input type="text" class="form-control" id="modName" onchange="myFunction()" name="modName" placeholder="Module Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 2 and 45 characters." required>
-              <div><small id="jackson_1" class="text-danger"></small></div>
+              <div><small id="ajaxconf" class="text-danger"></small></div>
               </div>
               <div class="col-3">
                 <select id="inputState" class="form-control" required="" name ="modCategory">
@@ -279,11 +279,11 @@ function myFunction()
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("jackson_1").innerHTML = this.responseText;
+     document.getElementById("ajaxconf").innerHTML = this.responseText;
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+encodeURIComponent(modName)+"&num=6", true);
+  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(modName)+"&num=6", true);
   xhttp.send();
 }
 </script>

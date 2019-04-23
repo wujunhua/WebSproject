@@ -178,11 +178,11 @@ function myFunction()
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("jackson_1").innerHTML = this.responseText;
+     document.getElementById("ajaxconf").innerHTML = this.responseText;
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?oldUn="+encodeURIComponent(oName)+"&newUn="+encodeURIComponent(nName)+"&num=5", true);
+  xhttp.open("GET", "ajaxconf.htm?oldUn="+encodeURIComponent(oName)+"&newUn="+encodeURIComponent(nName)+"&num=5", true);
   xhttp.send();
 }
 </script>

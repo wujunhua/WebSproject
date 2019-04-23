@@ -128,7 +128,7 @@ boolean moduleCanBeDeleted = rs.next();
               <label for="new_module" class="col-sm-3 col-form-label">Module</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="modName" onchange="myFunction()" name ="modName" placeholder="" value="${param.okay}" required>
-                <div><small id="jackson_1" class="text-danger"></small></div>
+                <div><small id="ajaxconf" class="text-danger"></small></div>
               </div>
             </div>
               
@@ -202,11 +202,11 @@ function myFunction()
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("jackson_1").innerHTML = this.responseText;
+     document.getElementById("ajaxconf").innerHTML = this.responseText;
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?modName="+encodeURIComponent(modName)+"&modId="+encodeURIComponent(modId)+"&num=1", true);
+  xhttp.open("GET", "ajaxconf.htm?modName="+encodeURIComponent(modName)+"&modId="+encodeURIComponent(modId)+"&num=1", true);
   xhttp.send();
 }
 </script>

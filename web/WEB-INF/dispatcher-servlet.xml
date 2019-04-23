@@ -79,7 +79,7 @@
                 <prop key="delete-category.htm">adminController</prop>
                 <prop key="update-category.htm">adminController</prop>
                 
-                <prop key="jackson_1.htm">adminController</prop>
+                <prop key="ajaxconf.htm">adminController</prop>
             </props>
         </property>
     </bean>

@@ -141,7 +141,7 @@
                        
                             <div class="form-group row">
                                 <div class="col-sm-2 my-1">
-                               <label class="my-1 mr-2" for="location">Location</label>
+                               <label class="my-1 mr-2" for="location">City/Country</label>
                                 </div>
                                 <div class="col-sm-6 my-1">
                                <input type="text" id="location" name="location" class="form-control" pattern="[a-zA-Z][a-zA-Z]{2,50}" title="Location must contain only letters and be atleast 3 characters." required/>
@@ -193,7 +193,6 @@
                                     <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="file" name="file" runat="server" title="Uploaded file must be an excel" required/>
                                 </div>
                             </div>
-                        
                         </s:form>
                         <div class="row justify-content-center">
                                 <button type="button" class="btn btn-primary rounded-0 px-3" onclick="validate()" ><i class="far fa-file-alt pr-2"></i>Submit</button>

@@ -3,6 +3,7 @@
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
 <%@page import="java.util.ArrayList"%>
+<%@ page import="ExcelUpload.Module" %>
 <%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -115,13 +116,12 @@
     <div class="container-fluid bg-white" style="height: 100vh;">
         <div class="container pb-5 pt-3">
             
-            <form:form method="post" action="/WebSproject/searchEmployees.htm" class="form-inline pt-1 pb-2 w-100"> 
+            <form:form method="post" action="searchEmployees.htm" class="form-inline pt-1 pb-2 w-100"> 
                 
                 <button class="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i class="fas fa-search pr-1"></i>Search</button>
                     <select name="col" class="custom-select my-1 mr-sm-2">
                         <option value="name">Name</option>
                         <option value="email">Email</option>
-                        <option value="classID">Class ID</option>
                     </select>
                     <input type="text" placeholder="Search.." name="search" class="form-control my-1 mr-sm-2">
               
@@ -130,7 +130,6 @@
             <table class="table table-striped table-sm table-bordered">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Manager</th>
@@ -138,24 +137,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:set var="count" value="1"/>
                     <c:forEach items = "${emplist}" var = "emp">
                         <tr>
-                            <td>${count}</td>
                             <td>
-                                ${emp.employeeName}
+                                <a href="#" id="editButton" data-toggle="modal" data-target="#editModal" 
+                                   data-target="#editModal" data-id="${emp.employeeID}" data-name="${emp.employeeName}" 
+                                   data-email="${emp.employeeEmail}" data-managerid="${emp.managerID}" data-modulescores="${emp.modScores}">${emp.employeeName}
+                                </a>
                             </td>
                             <td>${emp.employeeEmail}</td>
                             <td>${emp.managerID}</td>
                             <td>
-                                <button id="editButton" type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#editModal" data-id="${emp.employeeID}" data-name="${emp.employeeName}" 
-                                        data-email="${emp.employeeEmail}" data-managerid="${emp.managerID}">Edit</button>
                                 <button id="deleteButton" type="button" class="btn btn-danger" data-toggle="modal"
                                         data-target="#deleteModal" data-id="${emp.employeeID}">Delete</button>
                             </td>                        
                         </tr>
-                        <c:set var="count" value="${count + 1}"/>
                     </c:forEach>          
                 </tbody>
             </table>
@@ -170,7 +166,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form:form method="post" action="/WebSproject/editEmployees.htm">
+                        <form:form method="post" action="editEmployees.htm">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="editName">Employee Name: 
@@ -184,9 +180,15 @@
                                     <label for="editManagerID">Employee Manager ID: 
                                     </label> <input type="text" id="editManagerID" name="editManagerID" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                 </div>
+                                <div class="form-group">
+                                    <label for="selectModule">Module Name: </label> 
+                                    <select id="selectModule" name="selectModule" class="custom-select my-1 mr-sm-2"></select>
+                                    <label for="editModuleModule">Module Score: </label>
+                                    <input type="number" id="editModuleScore" name="editModuleScore" class="form-control my-1 mr-sm-2" step="0.01">
+                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id="editCloseModalButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button name="editModalButton" type="submit" id="editModalButton" class="btn btn-primary btn-primary">
                                     Confirm Update
                                 </button>
@@ -210,7 +212,7 @@
                             Are you sure you want to delete this employee?
                         </div>
                         <div class="modal-footer">
-                            <form:form method="post" action="/WebSproject/deleteEmployees.htm">
+                            <form:form method="post" action="deleteEmployees.htm">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button name="deleteModalButton" type="submit" id="deleteModalButton" class="btn btn-primary btn-danger">
                                     Confirm Delete
@@ -225,14 +227,51 @@
             <!-- Add data thru modal buttons -->
             <script type="text/javascript">
                 $(document).ready(function(){
+                    //Clear modure score drop down when modal is closed.
+                    $(document).on("hidden.bs.modal", function(){
+                        $("#selectModule").empty();
+                         $("#editModuleScore").val("");
+                    });
+                    //Update module score when drop box of module name is changed.
+                    $(document).on("change", "#selectModule", function(){
+                        $("#editModuleScore").val($("#selectModule option:selected").data("modscore"));
+                    });
+                    //Send data to edit modal
                     $(document).on("click", "#deleteButton", function(){
                         $("#deleteModalButton").val($(this).data("id"));
                     });
+                    //Send data to delete modal
                     $(document).on("click", "#editButton", function(){
                         $("#editModalButton").val($(this).data("id"));
                         $("#editName").val($(this).data("name"));
                         $("#editEmail").val($(this).data("email"));
                         $("#editManagerID").val($(this).data("managerid"));
+                        
+                        //Parse out arraylist of modules
+                        var scoreArr = $(this).data("modulescores").toString();
+                        //Remove []
+                        scoreArr = scoreArr.toString().substring(1, scoreArr.length);
+                        scoreArr = scoreArr.toString().substring(0, scoreArr.length-2);
+                        //Spilt into single modules
+                        var s = scoreArr.split("], ");
+                        //Extract module name and score
+                        for(i = 0; i < s.length; i++){ 
+                           //Seperate module name and score for each module name
+                           var str = s[i].substring(8, s[i].length).split(", ");                           
+                           var name = str[0].substring(9, str[0].length);
+                           var scoreVal = str[1].substring(12, str[1].length);
+                           //Create new option in select tag for drop down
+                           var o = new Option(name, name);  
+                           $(o).html(name);   //inner html
+                           $(o).attr("data-modscore", scoreVal); //Add data attr of score.
+                           $("#selectModule").append(o);                           
+                        }
+                        //If scores not empty then display score of selected.
+                        if(s.length>0){
+                            //Set to first option.
+                            $("#selectModule>option:eq(0)").attr("selected", true);
+                            $("#editModuleScore").val($("#selectModule option:selected").data("modscore"));
+                        }
                     });
                  });
             </script>

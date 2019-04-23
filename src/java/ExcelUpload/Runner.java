@@ -62,7 +62,6 @@ public class Runner {
                 }
                 con.close();
         } catch(ClassNotFoundException | SQLException e){
-            e.printStackTrace();
         }
   
       return emps;

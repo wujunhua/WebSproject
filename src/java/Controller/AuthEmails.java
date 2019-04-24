@@ -40,7 +40,7 @@ public class AuthEmails extends SimpleFormController{
         ModelAndView mav = new ModelAndView();
         if(viewName.equals("searchEmailEmployees")){      
             mav.setViewName("Email");       
-            mav.addObject("empList", esd.readAllEmployeeFromCol(request.getParameter("col"), request.getParameter("search")));
+            mav.addObject("empList", esd.readAllEmployeeFromCol(request.getParameter("col"), request.getParameter("search").trim()));
 
             return mav;
         }

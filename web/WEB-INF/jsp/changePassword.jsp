@@ -62,7 +62,7 @@ while(rs.next())
             <i class="fas fa-user pr-2"></i> Change Password
           </div>
             
-          <form id="changePass" action="passwordChangeSuccess.htm">
+          <form id="changePass" action="update-password.htm">
             <div class="form-group row mt-3">
               <label for="oldpassword" class="col-sm-3 col-form-label">Current Password</label>
               <div class="col-sm-9">

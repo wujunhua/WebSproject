@@ -61,7 +61,7 @@
 
 
 <!DOCTYPE html>
-<html>
+
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -235,5 +235,5 @@
         
         
     </body>
-</html>
+
 

@@ -33,7 +33,7 @@
            <small> <i class="fas fa-user pr-1"></i>${sessionScope.currentUserName}</small>
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#"><small><i class="fas fa-lock pr-2"></i>Change Password</small></a>
+            <a class="dropdown-item" href="changePassword.htm"><small><i class="fas fa-lock pr-2"></i>Change Password</small></a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="login.htm"><small>Logout</small></a>
           </div>

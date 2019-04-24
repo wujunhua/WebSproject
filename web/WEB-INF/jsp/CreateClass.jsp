@@ -123,7 +123,7 @@
             <div class="container pb-5 pt-4">
                 <div class="row mx-1">
                     <div class="col-sm-8 px-3 py-3"> 
-                        <s:form commandName="excel" enctype="multipart/form-data" method="POST">
+                        <s:form commandName="excel" id="createClassForm" enctype="multipart/form-data" method="POST">
                             <div class="form-group row">
                                 <div class="col-sm-2">
                             <label class="my-1 mr-2" for="selectedStream">Stream</label>
@@ -141,7 +141,7 @@
                        
                             <div class="form-group row">
                                 <div class="col-sm-2 my-1">
-                               <label class="my-1 mr-2" for="location">Location</label>
+                               <label class="my-1 mr-2" for="location">City/Country</label>
                                 </div>
                                 <div class="col-sm-6 my-1">
                                <input type="text" id="location" name="location" class="form-control" pattern="[a-zA-Z][a-zA-Z]{2,50}" title="Location must contain only letters and be atleast 3 characters." required/>
@@ -165,6 +165,7 @@
                                 <div class="col-sm-10 my-1">
                                     <input type="email" name="insEmail" id="insEmail" class="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required/>
                                 </div>
+                                <font color="red"><span id="emailValidation"></span></font>
                             </div>
                             
                             <div class="form-group row">
@@ -181,6 +182,7 @@
                                 <div class="col-sm-4 my-1">
                                     <input type="date" name="endDate" id="endDate" class="form-control" required/>
                                 </div>
+                                <font color="red"><span id="endDateValidation"></span></font>
                             </div>
 
                             <div class="form-group row">
@@ -191,11 +193,13 @@
                                     <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="file" name="file" runat="server" title="Uploaded file must be an excel" required/>
                                 </div>
                             </div>
-
                             <div class="row justify-content-center">
-                                <button type="submit" class="btn btn-primary rounded-0 px-3" onclick="validate();"><i class="far fa-file-alt pr-2"></i>Submit</button>
+                                <button type="button" class="btn btn-primary rounded-0 px-3" onclick="validate()" ><i class="far fa-file-alt pr-2"></i>Submit</button>
                             </div>
-                        </s:form>
+                             <div class="row justify-content-center">
+                                <button type="submit" id="actualButton" class="btn btn-primary rounded-0 px-3" style="display: none;" ><i class="far fa-file-alt pr-2"></i>Submit</button>
+                            </div>
+                        </s:form>                       
                     </div><!-- End col 8 -->
                     <div class="col-sm-4 mt-2">
                         <div class='card'>
@@ -226,7 +230,10 @@
         <!-- Bootstrap.js -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+        
         <script src="<c:url value="/resources/js/classValidate.js" />"></script>
+        
+        
     </body>
 </html>
 

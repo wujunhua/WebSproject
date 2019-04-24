@@ -82,6 +82,10 @@
                 <prop key="update-category.htm">adminController</prop>
                 
                 <prop key="ajaxconf.htm">adminController</prop>
+                
+                <prop key="changePassword.htm">empController</prop>
+                <prop key="update-password.htm">empController</prop>
+                <prop key="passwordChangeSuccess.htm">empController</prop>
             </props>
         </property>
     </bean>

@@ -1,10 +1,12 @@
 
 package Controller;
+import ExcelUpload.ExcelPuller;
 import POJO.ExcelUploadObject;
 import ExcelUpload.Runner;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
@@ -13,10 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 public class UploadAuthentication extends SimpleFormController {
-
     
     public UploadAuthentication() {
         setCommandClass(ExcelUploadObject.class);
@@ -30,14 +32,21 @@ public class UploadAuthentication extends SimpleFormController {
         
       try{
         MultipartFile multiFile = excel.getFile();
-        System.out.println("Made it");
+        
         File file = convert(multiFile);
-        System.out.println("Possibly made it");
+       
   
         Runner.ExcelUpload(file, excel.getLocation(), excel.getSite(), excel.getStreamName(), excel.getInsEmail(), excel.getStartDate(), excel.getEndDate());
         // bring in all streams
-        return new ModelAndView("emailRedirect");
-      } catch(Exception e){
+        
+        ExcelPuller excelPuller = new ExcelPuller();
+        String classID = excelPuller.generateClassID(excel.getLocation(), excel.getSite(), excel.getStreamName());
+        
+        RedirectView emailSearchView = getEmailClassSearchView(classID);
+
+        return new ModelAndView(emailSearchView);
+        
+      } catch(IOException | ParseException e){
           return new ModelAndView("uploadErrorPage");
       }
         
@@ -54,5 +63,12 @@ public class UploadAuthentication extends SimpleFormController {
         return convFile;
     }
 
-      
+    
+    private RedirectView getEmailClassSearchView(String classID) {
+        
+        String searchEmailsUrl = "searchEmailEmployees.htm?col=classID&search=" + classID;
+
+        return new RedirectView(searchEmailsUrl);
+    }
+    
 }

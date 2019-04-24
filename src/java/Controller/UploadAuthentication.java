@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 
 public class UploadAuthentication extends SimpleFormController {
-
     
     public UploadAuthentication() {
         setCommandClass(ExcelUploadObject.class);
@@ -44,7 +43,7 @@ public class UploadAuthentication extends SimpleFormController {
         String classID = excelPuller.generateClassID(excel.getLocation(), excel.getSite(), excel.getStreamName());
         
         RedirectView emailSearchView = getEmailClassSearchView(classID);
-        
+
         return new ModelAndView(emailSearchView);
         
       } catch(IOException | ParseException e){
@@ -66,12 +65,10 @@ public class UploadAuthentication extends SimpleFormController {
 
     
     private RedirectView getEmailClassSearchView(String classID) {
-        System.err.println("getEmailClassSearchView: classID: " + classID);
         
         String searchEmailsUrl = "searchEmailEmployees.htm?col=classID&search=" + classID;
-        System.err.println("getEmailClassSearchView: email url: " + searchEmailsUrl);
-        
-        
+
         return new RedirectView(searchEmailsUrl);
     }
+    
 }

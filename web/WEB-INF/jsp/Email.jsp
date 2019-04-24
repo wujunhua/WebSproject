@@ -1,4 +1,5 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
@@ -87,6 +88,14 @@
     
     <jsp:include page="nav.jsp"/>
     
+    <!--confirmation that a class was successfully created on the previous page, createclass.htm-->
+    <div id="classSuccessAlert" class="alert alert-success alert-dismissible fade text-center d-none" role="alert">
+        Data was read successfully, your class has been created.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    
     <div class="container-fluid">
         <div class="container mt-2 pt-4 pb-3">
             <nav aria-label="breadcrumb">
@@ -97,6 +106,7 @@
             </nav>
         </div>
     </div>
+    
     
     <!-- Tabs -->
     <div class="container-fluid">
@@ -190,8 +200,9 @@
         }
         
     </script>
-    <!-- Optional JavaScript -->
- 
+    <!-- Custom JavaScript -->
+    <script src="<c:url value="/resources/js/confirmation.js" />"></script>
+    
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
     <!-- Popper.js -->

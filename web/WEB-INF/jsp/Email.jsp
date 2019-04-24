@@ -117,7 +117,7 @@
  
     <div class="container-fluid bg-white" style="height: 100vh;">
         <div class="container pb-5 pt-3">
-            <form:form method="post" action="/WebSproject/searchEmailEmployees.htm" class="form-inline pt-1 pb-2 w-100">                 
+            <form:form method="post" action="searchEmailEmployees.htm" class="form-inline pt-1 pb-2 w-100">                 
                 <button class="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i class="fas fa-search pr-1"></i>Search</button>
                 <select name="col" class="custom-select my-1 mr-sm-2">
                     <option value="name">Name</option>
@@ -126,7 +126,7 @@
                 <input type="text" placeholder="Search.." name="search" class="form-control my-1 mr-sm-2">
             </form:form>
             
-            <form:form id="emailForm" method="post" action="/WebSproject/sendEmail.htm" class="mt-2"> 
+            <form:form id="emailForm" method="post" action="sendEmail.htm" class="mt-2"> 
             <table class="table table-bordered table-striped table-sm">
                 <thead>
                     <tr>

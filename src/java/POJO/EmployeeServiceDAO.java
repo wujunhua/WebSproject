@@ -82,10 +82,12 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     }
  
     @Override
-    public ArrayList<Employee> readAllEmployeeFromCol(String col, String str){
-        ArrayList<Employee> list = new ArrayList<>();
+    public ArrayList<Employee> readAllEmployeeFromCol(String searchBy, String searchTerm) {
+        
+        ArrayList<Employee> matchingEmps = new ArrayList<>();
         String sql = "";
-        switch(col){
+        
+        switch(searchBy){
             case "name":
                 sql = "select * from employees where lower(name) like ?";
                 break;
@@ -98,14 +100,15 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         }
         try {
             System.out.println("Read from employees from searching a column...");
-            list = (ArrayList<Employee>) jdbcTemplateObject.query(sql, 
-                    new Object[]{"%"+str+"%"}, new EmployeeRowMapper());
+            
+            matchingEmps = (ArrayList<Employee>) jdbcTemplateObject.query(sql, 
+                    new Object[]{"%" + searchTerm.toLowerCase() + "%"}, new EmployeeRowMapper());
                     
         } catch(Exception e) {
             System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
         }
         
-        return list;
+        return matchingEmps;
     }
 
     @Override

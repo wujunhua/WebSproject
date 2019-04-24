@@ -56,7 +56,7 @@ public class PassOrFail {
                 //then that student has failed, and will return null
                 } else if (previousModule.equals(currentModule) && mod.getmoduleScore() <70){
                     passFailCounter++;
-                    if(passFailCounter == 2){ 
+                    if(passFailCounter == 3){ 
                         passing = false; // if 3 failures on a given module then the student fails
                     }
                  //If the current module and the previous module are the different then it incriments
@@ -64,7 +64,7 @@ public class PassOrFail {
                 //then that student has failed, and will return null
                 } else if (!previousModule.equals(currentModule) && mod.getmoduleScore() < 70 ) {
                     passFailCounter++;
-                    if(passFailCounter == 2){
+                    if(passFailCounter == 3){
                         passing = false; // if 3 failures on a given module then the student fails
                     }
                 }

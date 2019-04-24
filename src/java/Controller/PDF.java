@@ -117,7 +117,7 @@ public class PDF {
         }
 
         //define output vars
-        String gradeNumbers = "Overall Grade: " + info.getAverageScore(empid) + "\n|  ";
+        String gradeNumbers = "Overall Grade: " + numToLetter(info.getAverageScore(empid)) + "\n|  ";
         
         ArrayList<String> stream = info.getStreamIDName(empid);
        
@@ -181,7 +181,7 @@ public class PDF {
             scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
             
             if (scores.size() > 0){
-                gradeNumbers += cat[0] + " Grade: " + info.getAverageScoreByCategory(empid, cat[1]) + "  |  ";
+                gradeNumbers += cat[0] + " Grade: " + numToLetter(info.getAverageScoreByCategory(empid, cat[1])) + "  |  ";
                 
                 par = new Paragraph();
                 par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
@@ -289,6 +289,19 @@ public class PDF {
         } catch (IOException ex) {
             System.out.println("Cannot save chart:\n" + ex.toString());
         }
+   }
+    
+   private char numToLetter(String n){
+       float num = Float.parseFloat(n);
+       if (num >= 90f){
+           return 'A';
+       } else if (num >= 80f){
+           return 'B';
+       } else if (num >= 70f){
+           return 'C';
+       } else {
+           return 'F';
+       }
    }
 }
 /* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.

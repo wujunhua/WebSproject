@@ -35,20 +35,23 @@
   ResultSet rs;
   
   // select
-  sql = "select email, name from employees";
+  sql = "select email, name, employee_id from employees";
   rs = stmt.executeQuery(sql);
   
-  ArrayList usersList = new ArrayList();
+  ArrayList usersList = new ArrayList(); // emails
   request.setAttribute("usersList", usersList);
+  
   ArrayList nameList = new ArrayList();
   request.setAttribute("nameList", nameList);
+  
+  ArrayList employeeIDs =  new ArrayList();
+  request.setAttribute("employeeIDs", employeeIDs);
   
   while (rs.next()) {
         usersList.add(rs.getString("email"));
         nameList.add(rs.getString("name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
-        } // End while 
-  
+        employeeIDs.add(rs.getString("employee_id"));
+  }
   
   rs.close();
   stmt.close();
@@ -88,6 +91,17 @@
     
     <jsp:include page="nav.jsp"/>
     
+    <%  String pdfSaved = request.getParameter("pdfSaved");
+        
+        if(pdfSaved != null) { %>
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                The pdf is available for preview at C:/Users/syntel/personal_domain/config
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+    <% } %> <!-- end of if -->
+
     <!--confirmation that a class was successfully created on the previous page, createclass.htm-->
     <div id="classSuccessAlert" class="alert alert-success alert-dismissible fade text-center d-none" role="alert">
         Data was read successfully, your class has been created.
@@ -95,7 +109,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    
+  
     <div class="container-fluid">
         <div class="container mt-2 pt-4 pb-3">
             <nav aria-label="breadcrumb">
@@ -140,9 +154,10 @@
             <table class="table table-bordered table-striped table-sm">
                 <thead>
                     <tr>
-                        <th scope="col" style="width: 40%;">Name</th>
-                        <th scope="col" style="width: 40%;">Email</th>
-                        <th scope="col text-center" style="width: 20%;">Send?</th> 
+                        <th scope="col" style="width: 35%;">Name</th>
+                        <th scope="col" style="width: 35%;">Email</th>
+                        <th scope="col" style="width: 10%;" class="text-center">PDF</th>
+                        <th scope="col" style="width: 20%;" class="text-center">Send?</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -151,6 +166,11 @@
                       <tr>
                         <td class="noto">${user.employeeName}</td>
                         <td class="noto">${user.employeeEmail}</td>
+                        <td class="noto text-center"> <!-- link to PDF preview for this employee's report -->
+                            <a href="pdf-preview.htm?empID=${employeeIDs[loop.index]}">
+                                <i class="fas fa-file-pdf px-2"></i>
+                            </a>
+                        </td>
                         <td class="text-center noto"><input class="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
                       </tr>
                   </c:forEach>

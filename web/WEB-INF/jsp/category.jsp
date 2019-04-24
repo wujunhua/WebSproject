@@ -122,7 +122,7 @@
               </div>
                 <div class="col-sm-10">
                <input type="text" class="form-control" id ="CategoryName" onChange="myFunction()" name="categoryName" placeholder="Category Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 45 characters." required/>
-              <div><small id="jackson_1" class="text-danger"></small></div>
+              <div><small id="ajaxconf" class="text-danger"></small></div>
               </div>
             </div>
          
@@ -176,11 +176,11 @@ function myFunction()
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("jackson_1").innerHTML = this.responseText;
+     document.getElementById("ajaxconf").innerHTML = this.responseText;
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+encodeURIComponent(catName)+"&num=9", true);
+  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(catName)+"&num=9", true);
   xhttp.send();
 }
 </script>

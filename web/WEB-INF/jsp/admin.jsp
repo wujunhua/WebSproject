@@ -109,7 +109,7 @@
               </div>
               <div class="col-6">
                 <input type="email" class="form-control" id="username" onChange="myFunction()" name="username"  placeholder="Email" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required>
-              <div><small id="jackson_1" class="text-danger"></small></div>
+              <div><small id="ajaxconf" class="text-danger"></small></div>
               </div>
               <div >
                 <input type="hidden" class="form-control" id="password" name="password"  value="syntel123" >
@@ -182,11 +182,11 @@ function myFunction()
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("jackson_1").innerHTML = this.responseText;
+     document.getElementById("ajaxconf").innerHTML = this.responseText;
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?name="+encodeURIComponent(uName)+"&num=10", true);
+  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(uName)+"&num=10", true);
   xhttp.send();
 }
 </script>

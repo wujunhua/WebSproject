@@ -134,7 +134,7 @@
 
 <jsp:include page="head-tag.jsp"/>
 
-<body class="bg-light">
+<body class="bg-light" onload="loadDoc()">
 
   <jsp:include page="nav.jsp"/>
   <div class="container-fluid">
@@ -195,7 +195,7 @@
               <div class="col-sm-9">
                   <input type="hidden" name="course_name" id="course_name" value='${param.id}' />
                 <input type="text" class="form-control" id="new_course_name" onchange="myFunction()" name="new_course_name" value="${param.id}" required>
-                <div><small id="jackson_1" class="text-danger"></small></div>
+                <div><small id="ajaxconf" class="text-danger"></small></div>
               </div>
             </div>
 
@@ -277,11 +277,11 @@ function myFunction()
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("jackson_1").innerHTML = this.responseText;
+     document.getElementById("ajaxconf").innerHTML = this.responseText;
     }
   };
   
-  xhttp.open("GET", "jackson_1.htm?newC="+encodeURIComponent(nName)+"&oldC="+encodeURIComponent(oName)+"&num=4", true);
+  xhttp.open("GET", "ajaxconf.htm?newC="+encodeURIComponent(nName)+"&oldC="+encodeURIComponent(oName)+"&num=4", true);
   xhttp.send();
 }
 </script>

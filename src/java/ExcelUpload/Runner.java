@@ -15,6 +15,7 @@ public class Runner {
     
     public static ArrayList<Employee> ExcelUpload(File FILE_PATH, String loc, String site, String stream, String insEmail, String startDate, String endDate) throws IOException, ParseException {
         
+        PassOrFail pof = new PassOrFail();
         ExcelPuller pul = new ExcelPuller();
         ArrayList<Employee> emps = new ArrayList<>();
         EmployeeCRUD empCrud = new EmployeeCRUD();
@@ -33,20 +34,34 @@ public class Runner {
                 
       
                 //Iterates through the created employees to upload their data
-        	for(Employee x: emps) {
-            	
-                  boolean inserted =  empCrud.insertEmployee(st, x.getEmployeeID(), x.getEmployeeName(), x.getEmployeeEmail(), x.getClassID(), x.getManagerID());
-                    if(inserted == false){
-                        empCrud.updateClass(st, x.getClassID(), x.getEmployeeID());
-                    }
-                   
-                    for(Module z: x.getModScores()) {
-                        eCrud.insertETM(st, z.getModuleID(), z.getmoduleScore(), x.getEmployeeID(), stream); //Uploads the scores from the list in the employees
-                    }
-        	}
+        	for(Employee employee: emps) {
+                  
+                 ArrayList<Module> passingModules = new ArrayList<>();
+                 
+                 //returns a list of only passing modules, and filters out any retakes
+                 passingModules = pof.passingOrFailing(employee);
+                 
+                  //If pof returns null then the employee failed the module and the retakes
+                  //and therefore does not get inserted into the database
+                  if (passingModules != null){
+                      boolean inserted =  empCrud.insertEmployee(st, employee);
+                      
+                      //if the employee is already in the database, then it updates the classID for that employee
+                      if(!inserted){
+                        empCrud.updateClass(st, employee);
+                      }
+                      
+                      //inserts all the passing modules into the database
+                      for(Module module: passingModules) {
+                          eCrud.insertETM(st,  module, employee.getEmployeeID(), stream); //Uploads the scores from the list in the employees
+                      }
+                      
+                  } else{
+                      System.out.println("Employee " + employee.getEmployeeName()+ " failed");
+                  }
+                }
                 con.close();
         } catch(ClassNotFoundException | SQLException e){
-        	e.printStackTrace();
         }
   
       return emps;

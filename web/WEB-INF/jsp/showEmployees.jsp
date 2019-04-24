@@ -80,6 +80,11 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
         <title>Atos Syntel &middot; Land</title>
+        <style>
+            p, h1, h2, h3, h4, h5, h6, li, ul, ol{
+                font-family: Verdana,Geneva,sans-serif;
+            }
+        </style>
     </head>
 <body class="bg-light">
     
@@ -185,6 +190,7 @@
                                     <select id="selectModule" name="selectModule" class="custom-select my-1 mr-sm-2"></select>
                                     <label for="editModuleModule">Module Score: </label>
                                     <input type="number" id="editModuleScore" name="editModuleScore" class="form-control my-1 mr-sm-2" step="0.01">
+                                    <input type="hidden" id="editModuleID" name="editModuleID">
                                  </div>
                             </div>
                             <div class="modal-footer">
@@ -231,10 +237,12 @@
                     $(document).on("hidden.bs.modal", function(){
                         $("#selectModule").empty();
                          $("#editModuleScore").val("");
+                         $("#editModuleID").val("");
                     });
                     //Update module score when drop box of module name is changed.
                     $(document).on("change", "#selectModule", function(){
                         $("#editModuleScore").val($("#selectModule option:selected").data("modscore"));
+                        $("#editModuleID").val($("#selectModule option:selected").data("modid"));
                     });
                     //Send data to edit modal
                     $(document).on("click", "#deleteButton", function(){
@@ -257,13 +265,16 @@
                         //Extract module name and score
                         for(i = 0; i < s.length; i++){ 
                            //Seperate module name and score for each module name
-                           var str = s[i].substring(8, s[i].length).split(", ");                           
+                           var str = s[i].substring(8, s[i].length).split(", ");
                            var name = str[0].substring(9, str[0].length);
                            var scoreVal = str[1].substring(12, str[1].length);
+                           var scoreID = str[2].substring(9, str[2].length);
+                           
                            //Create new option in select tag for drop down
                            var o = new Option(name, name);  
                            $(o).html(name);   //inner html
                            $(o).attr("data-modscore", scoreVal); //Add data attr of score.
+                           $(o).attr("data-modid", scoreID); //Add data attr of id.
                            $("#selectModule").append(o);                           
                         }
                         //If scores not empty then display score of selected.
@@ -271,6 +282,7 @@
                             //Set to first option.
                             $("#selectModule>option:eq(0)").attr("selected", true);
                             $("#editModuleScore").val($("#selectModule option:selected").data("modscore"));
+                            $("#editModuleID").val($("#selectModule option:selected").data("modid"));
                         }
                     });
                  });

@@ -1,11 +1,28 @@
 package Controller;
 
+import java.awt.Color;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.sql.DataSource;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.TextAnchor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 //pdf-box layout used under MIT license. Found at https://github.com/ralfstuckert/pdfbox-layout
@@ -21,23 +38,26 @@ import rst.pdfbox.layout.elements.ImageElement;
 
 public class PDF {
     
-    private static DataSource dataSource;
+    private DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
+    
+    private DefaultCategoryDataset dataset;
 
 	private final static BaseFont font = BaseFont.Helvetica;
 	private PDPage page = new PDPage();
     private PDFinfo pdfinfo;
 
 	private String filePath = "C:/Users/syntel/Music/"; //use getfilepath in the email logic?
-    private final static String imagePath = "C:\\trainingkb\\WebSproject\\web\\resources\\img\\pdf_banner.png"; //path to AS logo
+    private final static String imagePath = "C:\\Examples\\WebSproject\\web\\resources\\img\\pdf_banner.png"; //path to AS logo
 
     //java.io.File.separator
-    public PDF(){}
+    public PDF(){this.dataset = new DefaultCategoryDataset();}
     
 	public PDF(DataSource dataSource) throws ClassNotFoundException {
+        this.dataset = new DefaultCategoryDataset();
         Class.forName("oracle.jdbc.driver.OracleDriver");
         System.out.println("Constructor Called");
-        PDF.dataSource=dataSource;
+        this.dataSource=dataSource;
         njdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
    
@@ -58,7 +78,7 @@ public class PDF {
     }
 
     public void setDataSource(DataSource dataSource) {
-        PDF.dataSource = dataSource;
+        this.dataSource = dataSource;
     }
 
     public void setNjdbc(NamedParameterJdbcTemplate njdbc) {
@@ -81,49 +101,42 @@ public class PDF {
 		this.filePath = filePath;
 	}
     
-	public void generate(String empid) throws Exception{ //empid not implemented yet, should be able to get everything you will need from it
-        //define output vars
-        ArrayList<String> stream = new ArrayList();
-        ArrayList<String> foundations = new ArrayList();
-        ArrayList<String> specializations = new ArrayList();
-        ArrayList<String> domains = new ArrayList();         
-        String name, avgGrade, fGrade, sGrade, dGrade;
-        System.out.println(empid + " EmpID");
+	    public void generate(String empid) throws Exception{
         //init config
+        dataset = new DefaultCategoryDataset();
         njdbc = new NamedParameterJdbcTemplate(dataSource);
         PDFinfo info = new PDFinfo(dataSource.getConnection());
         info.setDataSource(dataSource);
         info.setNjdbc(njdbc);
-       
-        if(!info.getAllIds().contains(empid)){ //this is O(n^2) methinks. make the query return one think and do bool return.
+        
+        String name = info.getEmployeeName(empid);
+        
+        if(name.equals("")){
             System.out.println("Employee ID not found. PDF has not been generated.");
             return;
         }
 
-        //populate output variables
-        name=info.getEmployeeName(empid);
-        stream=info.getStreamIDName(empid);
-        avgGrade=info.getAverageScore(empid);
-        foundations.addAll(info.getModuleScoresByCategory(empid, "FOUND01"));
-        specializations.addAll(info.getModuleScoresByCategory(empid, "SPEC01"));
-        domains.addAll(info.getModuleScoresByCategory(empid, "PD01"));
-        fGrade=info.getAverageScoreByCategory(empid, "FOUND01");
-        sGrade=info.getAverageScoreByCategory(empid, "SPEC01");
-        System.out.println("MAde it");
-        dGrade=info.getAverageScoreByCategory(empid, "PD01");
-        System.out.println("Didn't Make it");
-        //define a <hr />
+        //define output vars
+        String gradeNumbers = "Overall Grade: " + info.getAverageScore(empid) + "\n|  ";
+        
+        ArrayList<String> stream = info.getStreamIDName(empid);
+       
+        ArrayList<String[]> cats = new ArrayList<String[]>();
+        cats.addAll(info.getCategoryNameID());
+ 
+        //define a <hr /> --------------------------------
         char[] charArray = new char[1835];
         Arrays.fill(charArray, ' ');
         String hrHelp = new String(charArray);
         
         Paragraph hRule = new Paragraph();
-        hRule.addMarkup("__" + hrHelp + " __", 1, font); 
-        //because the "real way" is being diffuclt, cheat by adding a realy tiny empty string that is underlined.
-        
+        hRule.addMarkup("__" + hrHelp + " __", 1, font);
+        //------------------------------------------------
+                
         //create PDF
-        float linspace = 12;
-        float sectionBreak = 18;
+        float linspace = 10;
+        float sectionBreak = 15;
+        float textSize = 10;
         float leftMargin = 40;
         float rightMargin = 40;
         float topMargin = 20;
@@ -131,119 +144,157 @@ public class PDF {
         Document document = new Document(leftMargin, rightMargin, topMargin, bottomMargin);
         
         document.add(new ImageElement(imagePath), new VerticalLayoutHint(Alignment.Left, 0, 0,
-		0, 0, true));
-        document.add(new VerticalSpacer(100));
-                        
-        Paragraph title = new Paragraph();
-        title.addMarkup("{color:#0066a1}__***PERFORMICA REPORT***__", 20, font);
-       	document.add(title, VerticalLayoutHint.CENTER);
-        document.add(new VerticalSpacer(sectionBreak));
+		0, 0, true)); 
+        document.add(new VerticalSpacer(90));
+              
+        
+        document.add(new ImageElement("C:\\Examples\\WebSproject\\src\\java\\Controller\\performica.png"), new VerticalLayoutHint(Alignment.Left, 0, 0,
+		0, 0, true)); 
+        document.add(new VerticalSpacer(50)); //font: Vivaldi
    
-        Paragraph emp = new Paragraph();
-        emp.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "            " +
-                "{color:#0066a1}*EMPLOYEE ID*{color:#000000}: " + empid, 14, font);
-        emp.setAlignment(Alignment.Center);
-        document.add(emp);
+        Paragraph par = new Paragraph();
         
-        //document.add(new VerticalSpacer(6.5f));
-        
-        document.add(new VerticalSpacer(2*sectionBreak));
-        System.out.println("Right Here");
-        Paragraph p1 = new Paragraph();
-        p1.addMarkup("{color:#0066a1}__*My Trainings*__:", 12, font);
-        document.add(p1);
-        document.add(new VerticalSpacer(linspace));
-        
-        Paragraph pur = new Paragraph();
-        pur.addMarkup("{color:#000000}*Stream*: " + stream.get(0) + " - " + stream.get(1), 12, font);
-        document.add(pur);
-        document.add(new VerticalSpacer(linspace));
-        
-        /*Paragraph strm = new Paragraph();
-        strm.addMarkup("{color:#0066a1}*INDUCTION*{color:#000000}: " + stream.get(0) + " - " + stream.get(1), 14, font);
-        strm.setAlignment(Alignment.Center);
-        document.add(strm);
-        
-		
-        document.add(new VerticalSpacer(15.5f));
-        
-        Paragraph p1 = new Paragraph();
-        p1.addMarkup("{color:#0066a1}*Training Modules Completed*", 12, font);
-        document.add(p1);
-        document.add(new VerticalSpacer(linspace));
-        */
-        
+        par = new Paragraph();
+        par.addMarkup( "{color:#0066a1}*NAME*{color:#000000}: " + name + "                            " +
+                "{color:#0066a1}*EMPLOYEE ID*{color:#000000}: " + empid, 13, font);
+        par.setAlignment(Alignment.Center);
+        document.add(par);
         document.add(hRule);
-        document.add(new VerticalSpacer(5));
-        Paragraph found = new Paragraph();
-        found.addMarkup("{color:#0066a1}*Foundations*{color:#000000}:  ", 11, font);
-        for(int i = 0; i < foundations.size() - 2; i+=2){
-            
-            found.addMarkup(foundations.get(i) + ",  ", 11, font);
-        }
-        found.addMarkup(foundations.get(foundations.size() - 2), 11, font);
-
-        document.add(found);
         document.add(hRule);
-        document.add(new VerticalSpacer(linspace));
-
-        Paragraph spec = new Paragraph();
-        spec.addMarkup("{color:#0066a1}*Specializations*{color:#000000}: ", 11, font);
-        for(int i = 0; i < specializations.size() - 2; i+=2){
-            
-            spec.addMarkup(specializations.get(i) + ",  ", 11, font);
-        }
         
-        spec.addMarkup(specializations.get(specializations.size() - 2), 11, font);  
-        document.add(spec);
-        document.add(hRule);
-        document.add(new VerticalSpacer(linspace));
-        
-        Paragraph pd = new Paragraph();
-        pd.addMarkup("{color:#0066a1}*Process / Domain*{color:#000000}: ", 11, font);
-        for(int i = 0; i < domains.size() - 2; i+=2){
-            pd.addMarkup(domains.get(i) + ",  ", 11, font);
-        }
-        pd.addMarkup(domains.get(domains.size() - 2), 11, font);  
-        document.add(pd);
-        document.add(hRule);
         document.add(new VerticalSpacer(sectionBreak));
         
-        Paragraph p2 = new Paragraph();
-        p2.addMarkup("{color:#0066a1}__*My Performence*__\n\n<<bargraph goes here>>", 12, font); //http://www.java2s.com/Code/Java/Chart/JFreeChartHorizontalBarChartDemo2.htm
+        par = new Paragraph();
+        par.addMarkup("{color:#0066a1}__*My Training*__:  ", textSize + 1, font);
+        document.add(par);
+        document.add(new VerticalSpacer(0.25f*linspace));
+        
+        par = new Paragraph();
+        par.addMarkup("{color:#000000}*Stream*: " + stream.get(1), textSize + 1, font);
+        document.add(par);
+        document.add(new VerticalSpacer(1.5f*linspace));
+        
+        //document.add(hRule);
         document.add(new VerticalSpacer(linspace));
-        document.add(p2);
-        document.add(new VerticalSpacer(50));
+        for (String[] cat : cats){
+            ArrayList<String[]> scores = new ArrayList<String[]>();
+            scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
+            
+            if (scores.size() > 0){
+                gradeNumbers += cat[0] + " Grade: " + info.getAverageScoreByCategory(empid, cat[1]) + "  |  ";
+                
+                par = new Paragraph();
+                par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
+                
+                par.addMarkup("|", textSize, font);
+                for (String[] score : scores) {
+                    par.addMarkup("  " + score[0] + "  |", textSize, font);         
+                    String classScore = info.getClassModuleScores(empid, score[0]);
+                    //set up for chart: add number, series label, bar label
+                    dataset.addValue( Float.parseFloat(score[1]), name , score[0]);
+                    dataset.addValue( Float.parseFloat(classScore), "Class Average" , score[0]);
+                }
+                                
+                document.add(par, VerticalLayoutHint.LEFT);
+                //document.add(hRule);
+                document.add(new VerticalSpacer(1.5f*linspace));
+            }
+        }
+                
+        par = new Paragraph();
+        par.addMarkup("{color:#0066a1}__*My Performance*__:", textSize + 1, font);
+        document.add(new VerticalSpacer(linspace));
+        document.add(par);
         
-        String gradeNumbers = "Overall Grade: " + avgGrade + "\n"
-                + "Foundation Grade: "+fGrade+"  |  "
-                + "Specialization Grade: "+sGrade+"  |  "
-                + "Process/Domain Grade: "+dGrade;
-        Paragraph grades = new Paragraph();
-        grades.addMarkup(gradeNumbers, 11, font);
-        grades.setAlignment(Alignment.Center);
-        document.add(grades);
+        
+        String chartFileName = "graph.png";
+        makeChart(dataset, chartFileName);
+        document.add(new ImageElement(chartFileName), new VerticalLayoutHint(Alignment.Left, 0, 0,
+		0, 0, true)); 
+        
+        document.add(new VerticalSpacer(285));
+
+        char[] Array = new char[1050];
+        Arrays.fill(Array, ' ');
+        String line = new String(Array);
+        
+        par = new Paragraph();
+        par.addMarkup("__" + line + "__\n", 1, font);
+        par.addMarkup("|  Grade Range  |  > 90.00  |  80.00 - 89.99  |  70.00 - 79.99 | < 70  |\n", textSize, font);
+        par.addMarkup("__" + line + "__\n", 1, font);
+        par.addMarkup("|   Letter Grade   |       A       |           B            |           C          |    F    |\n", textSize, font);
+        par.addMarkup("__" + line + "__", 1, font);
+        
+        par.setAlignment(Alignment.Center);
+        document.add(par);
+        document.add(new VerticalSpacer(sectionBreak));
+
+        par = new Paragraph();
+        par.addMarkup(gradeNumbers, textSize, font);
+        par.setAlignment(Alignment.Center);
+        document.add(par);
         document.add(new VerticalSpacer(linspace));
         
-        Paragraph quote = new Paragraph();
-        quote.addMarkup("{color:#000000}_*\"Learning is the lifelong process of transforming information and experience into knowledge, skills, behaviours and attitudes\"*_\n", 10, font);
-        quote.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", 10, font);
-        quote.setAlignment(Alignment.Center);
-        document.add(new VerticalSpacer(5*linspace));
-        document.add(quote);
-        //document.add(new VerticalSpacer(linspace));
+        par = new Paragraph();
+        par.addMarkup("{color:#000000}_*\"Learning is the lifelong process of transforming information and experience into knowledge, skills, behaviours and attitudes\"*_\n", 10, font);
+        par.addMarkup(" - Jeff Cobb, _10 Ways to be a Better Learner_", textSize - 2, font);
+        par.setAlignment(Alignment.Center);
+        document.add(new VerticalSpacer(linspace));
+        document.add(par);
+        document.add(hRule);
         
-        final OutputStream outputStream = new FileOutputStream(
-		empid + ".pdf");
+        final OutputStream outputStream = new FileOutputStream(filePath + empid + ".pdf");
         document.save(outputStream);
 
 	}	
-}
 
-        /* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.
-        * Saved for possible later use and as a reminder to not Do The Thing
-        Stroke stroke = new Stroke();
-        RenderContext rc = new RenderContext(document, document.getPDDocument());
-        stroke.applyTo(rc.getContentStream());
-        rc.close();
-        */
+    public static void makeChart(DefaultCategoryDataset dataset, String filename){
+       JFreeChart barChart = ChartFactory.createBarChart(
+            "",
+            "", "",
+            //"Module", "Assessment Score", 
+            dataset,PlotOrientation.VERTICAL, 
+            true, true, false);
+
+        CategoryPlot plot = barChart.getCategoryPlot();
+        plot.setBackgroundPaint(null);
+        plot.setDomainGridlinePaint(Color.black);
+        plot.setRangeGridlinePaint(Color.black);
+
+        ValueAxis yAxis = plot.getRangeAxis();
+        yAxis.setAutoRange(false);
+        yAxis.setRange(0.00, 100.00);
+
+        CategoryAxis axis = plot.getDomainAxis();     
+        axis.setLowerMargin(.01);
+        axis.setUpperMargin(.01);
+        axis.setMaximumCategoryLabelLines(3);
+
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setBarPainter(new StandardBarPainter());
+        renderer.setSeriesPaint(0, new Color(0, 102, 161)); //from website
+        renderer.setSeriesPaint(1, new Color(106, 206, 242));  //from banner
+        renderer.setShadowVisible(false);
+        renderer.setDrawBarOutline(false);
+        renderer.setItemMargin(0.0); //space between bars
+        renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        renderer.setBaseItemLabelsVisible(true);
+        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE9, TextAnchor.BASELINE_LEFT));
+
+        int width = 525;    /* Width of the image */
+        int height = 275;   /* Height of the image */ 
+        File BarChart = new File( filename ); 
+        try {
+            ChartUtilities.saveChartAsJPEG( BarChart , barChart , width , height );
+        } catch (IOException ex) {
+            System.out.println("Cannot save chart:\n" + ex.toString());
+        }
+   }
+}
+/* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.
+//Saved for possible later use and as a reminder to not Do The Thing
+Stroke stroke = new Stroke();
+RenderContext rc = new RenderContext(document, document.getPDDocument());
+stroke.applyTo(rc.getContentStream());
+rc.close();
+*/

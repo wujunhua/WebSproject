@@ -1,5 +1,6 @@
 
 package Controller;
+import ExcelUpload.ExcelPuller;
 import POJO.ExcelUploadObject;
 import ExcelUpload.Runner;
 import java.io.File;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 public class UploadAuthentication extends SimpleFormController {
@@ -37,7 +39,14 @@ public class UploadAuthentication extends SimpleFormController {
   
         Runner.ExcelUpload(file, excel.getLocation(), excel.getSite(), excel.getStreamName(), excel.getInsEmail(), excel.getStartDate(), excel.getEndDate());
         // bring in all streams
-        return new ModelAndView("emailRedirect");
+        
+        ExcelPuller excelPuller = new ExcelPuller();
+        String classID = excelPuller.generateClassID(excel.getLocation(), excel.getSite(), excel.getStreamName());
+        
+        RedirectView emailSearchView = getEmailClassSearchView(classID);
+        
+        return new ModelAndView(emailSearchView);
+        
       } catch(IOException | ParseException e){
           return new ModelAndView("uploadErrorPage");
       }
@@ -55,5 +64,14 @@ public class UploadAuthentication extends SimpleFormController {
         return convFile;
     }
 
-      
+    
+    private RedirectView getEmailClassSearchView(String classID) {
+        System.err.println("getEmailClassSearchView: classID: " + classID);
+        
+        String searchEmailsUrl = "searchEmailEmployees.htm?col=classID&search=" + classID;
+        System.err.println("getEmailClassSearchView: email url: " + searchEmailsUrl);
+        
+        
+        return new RedirectView(searchEmailsUrl);
+    }
 }

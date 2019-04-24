@@ -54,6 +54,7 @@ public class PDF {
     public PDF(){this.dataset = new DefaultCategoryDataset();}
     
 	public PDF(DataSource dataSource) throws ClassNotFoundException {
+            System.out.println(System.getProperty("user.dir"));
         this.dataset = new DefaultCategoryDataset();
         Class.forName("oracle.jdbc.driver.OracleDriver");
         System.out.println("Constructor Called");

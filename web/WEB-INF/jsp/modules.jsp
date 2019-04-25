@@ -213,7 +213,7 @@
                     </select>
               </div>
                 <div class="col-3">
-                    <select id="inputState" class="form-control" required="" name ="streamName">
+                    <select id="inputState2" onchange="myFunction()" class="form-control" required="" name ="streamName">
                         <c:forEach items="${streamName}" var="stream">
                             <option value="${stream}">
                                 ${stream}
@@ -275,6 +275,7 @@
 function myFunction()
 {
   var modName = document.getElementById("modName").value;
+  var sName = document.getElementById("inputState2").value;
   
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -283,7 +284,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(modName)+"&num=6", true);
+  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(modName)+"&sname="+encodeURIComponent(sName)+"&num=6", true);
   xhttp.send();
 }
 </script>

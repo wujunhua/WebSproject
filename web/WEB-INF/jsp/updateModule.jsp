@@ -36,9 +36,22 @@
   
   //insert
   
-  String sql2;
-  sql2 = "select module_name from modules where module_name='" + moduleName + "' and module_id!=" + 
-          id;
+  
+  String sqlid, sqlid2;
+      
+      sqlid = "select stream_id from stream where stream_name='" + streamName + "'";
+      rs = stmt.executeQuery(sqlid);
+      
+      sqlid2 = "";
+      
+      while(rs.next())
+      {
+        sqlid2 = rs.getString("stream_id");
+      }
+ 
+  //insert 
+    String sql2;
+    sql2 = "select module_name from modules where module_name='" + moduleName + "' and stream_id='" + sqlid2 + "' and module_id!=" + id;
   rs = stmt.executeQuery(sql2);
  
   if(rs.next() == false)

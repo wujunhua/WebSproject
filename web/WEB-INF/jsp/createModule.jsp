@@ -32,10 +32,22 @@
   String streamName= request.getParameter("streamName");
   String modCategoryId= " ";
   
+  String sqlid, sqlid2;
+  
+  sqlid = "select stream_id from stream where stream_name='" + streamName + "'";
+  rs = stmt.executeQuery(sqlid);
+
+  sqlid2 = "";
+
+  while(rs.next())
+  {
+    sqlid2 = rs.getString("stream_id");
+  }
+
   String sql2;
   
-  sql2 = "select module_name from modules where module_name='" + name + "'";
-  
+  sql2 = "select module_name from modules where module_name='" + name + 
+          "' and stream_id='" + sqlid2 + "'";
   rs = stmt.executeQuery(sql2);
   
   if(rs.next() == false)

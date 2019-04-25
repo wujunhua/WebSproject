@@ -168,7 +168,7 @@
                 <div><small id="ajaxconf" class="text-danger"></small></div>
                 </div>
                   <div class="form-group col-md-3">
-                      <select class="custom-select" name= "streamname" id="streamname" onchange="loadDoc()">
+                      <select class="custom-select" name= "streamname" id="streamname" onchange="loadDoc()" />
                     <c:forEach items="${fullstreamList}" var="streamer">
                         <option value="${streamer}">
                             ${streamer}
@@ -178,7 +178,7 @@
                 </div>
                 <div class="form-group col-md-3">
                   <div id="dropdown_stuff">
-                        <select class="custom-select" name= "modulename" id="modulename">
+                        <select class="custom-select" name= "modulename" id="modulename" onChange="myFunction()">
                     <c:forEach items="${fullmodList}" var="modder">
                         <option value="${modder}">
                             ${modder}
@@ -228,6 +228,7 @@
   <!-- Optional JavaScript -->
   <script>
     function loadDoc() {
+      //myFunction();
       var xhttp = new XMLHttpRequest();
       
       xhttp.onreadystatechange = function() {
@@ -240,6 +241,7 @@
       //alert("Value= "+okay);
       xhttp.open("GET", "ajax.htm?id="+okay, true);
       xhttp.send();
+      
     }
 </script>
 
@@ -257,6 +259,7 @@
 function myFunction()
 {
   var cName = document.getElementById("coursename").value;
+  var sName = document.getElementById("modulename").value;
   
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -265,7 +268,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(cName)+"&num=8", true);
+  xhttp.open("GET", "ajaxconf.htm?name="+encodeURIComponent(cName)+"&sname="+encodeURIComponent(sName)+"&num=8", true);
   xhttp.send();
 }
 </script>

@@ -110,6 +110,7 @@ boolean moduleCanBeDeleted = rs.next();
             <span style="float: right;">
               <form action="deleteModule.htm">
                   <input type="hidden" name='moduleName' id ="moduleName" value='${param.okay}' />
+                  <input type="hidden" name='moduleIdd' id ="moduleIdd" value='${param.id}' />
                    <% if(moduleCanBeDeleted){%>
                    <button class="btn btn-sm btn-danger" type ="submit" title="This module contains courses and cannot be deleted" disabled >
                     <%} else{%>
@@ -153,7 +154,7 @@ boolean moduleCanBeDeleted = rs.next();
             <div class="form-group row mt-3">
               <label for="new_stream_id" class="col-sm-3 col-form-label">Stream Name</label>
               <div class="col-sm-9">
-                  <select id="inputState" class="form-control" required="" name ="streamName" id ="streamName">
+                  <select id="inputState2" class="form-control" required="" onchange="myFunction()" name ="streamName" id ="streamName">
                     <option selected hidden value="${param.stream}">${param.stream}</option>
                       <c:forEach items="${streamName}" var="stream">
                           <option value="${stream}">
@@ -198,6 +199,7 @@ function myFunction()
 {
   var modName = document.getElementById("modName").value;
   var modId = document.getElementById("moduleId").value;
+  var sName = document.getElementById("inputState2").value;
   
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -206,7 +208,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "ajaxconf.htm?modName="+encodeURIComponent(modName)+"&modId="+encodeURIComponent(modId)+"&num=1", true);
+  xhttp.open("GET", "ajaxconf.htm?modName="+encodeURIComponent(modName)+"&modId="+encodeURIComponent(modId)+"&sName="+encodeURIComponent(sName)+"&num=1", true);
   xhttp.send();
 }
 </script>

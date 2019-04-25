@@ -27,9 +27,11 @@
   ResultSet rs;
   String stream = "";
   String name = request.getParameter("moduleName");
+  int id = Integer.parseInt(request.getParameter("moduleIdd"));
+  
   //insert
    try {
-        sql = ("DELETE FROM MODULES WHERE module_name='" + name + "'");
+        sql = ("DELETE FROM MODULES WHERE module_name='" + name + "' and module_Id=" + id);
         numRowsAffected = stmt.executeUpdate(sql);
         out.println(numRowsAffected + " Deleted <BR>");
   

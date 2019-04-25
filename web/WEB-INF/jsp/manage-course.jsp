@@ -273,6 +273,7 @@ function myFunction()
 {
   var oName = document.getElementById("course_name").value;
   var nName = document.getElementById("new_course_name").value;
+  var sName = document.getElementById("modulename").value;
   
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -281,7 +282,7 @@ function myFunction()
     }
   };
   
-  xhttp.open("GET", "ajaxconf.htm?newC="+encodeURIComponent(nName)+"&oldC="+encodeURIComponent(oName)+"&num=4", true);
+  xhttp.open("GET", "ajaxconf.htm?newC="+encodeURIComponent(nName)+"&oldC="+encodeURIComponent(oName)+"&sName="+encodeURIComponent(sName)+"&num=4", true);
   xhttp.send();
 }
 </script>

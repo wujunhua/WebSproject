@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <!--static files-->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources location="/img/" mapping="/img/**" />
+    
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+
+    <!--
+    Most controllers will use the ControllerClassNameHandlerMapping above, but
+    for the index controller we are using ParameterizableViewController, so we must
+    define an explicit mapping for it.
+    -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                
+                <prop key="index.htm">indexController</prop>
+                
+                <prop key="login.htm">loginController</prop>
+                
+                
+                <prop key="instructor.htm">instructorController</prop>
+                <prop key="email.htm">emailController</prop>
+                <prop key="sendEmail.htm">emailController</prop>
+                <prop key="searchEmailEmployees.htm">emailController</prop>
+                <prop key="createclass.htm">createClassController</prop>
+                
+                <prop key="showEmployees.htm">empController</prop>
+                <prop key="editEmployees.htm">empController</prop>
+                <prop key="deleteEmployees.htm">empController</prop>
+                <prop key="searchEmployees.htm">empController</prop>
+                
+                <prop key="download.htm">downloadTemplateController</prop>
+                <prop key="forbidden.htm">forbiddenController</prop>
+                <prop key="reset-password.htm">resetController</prop>
+                
+                <prop key="pdf-preview.htm">pdfViewController</prop>
+                
+                <!--all admin pages should use the adminController-->             
+                <prop key="admin.htm">adminController</prop>
+      
+                <prop key="ajax.htm">adminController</prop>
+
+                <prop key="manage-user.htm">adminController</prop>
+                <prop key="create-user.htm">adminController</prop>
+                <prop key="delete-user.htm">adminController</prop>
+                <prop key="update-user.htm">adminController</prop>
+                
+                <prop key="streams.htm">adminController</prop>
+                <prop key="manage-stream.htm">adminController</prop>
+                <prop key="create-stream.htm">adminController</prop>
+                <prop key="delete-stream.htm">adminController</prop>
+                <prop key="update-stream.htm">adminController</prop>
+              
+                <prop key="courses.htm">adminController</prop>
+                <prop key="manage-course.htm">adminController</prop>
+                <prop key="create-courses.htm">adminController</prop>
+                <prop key="delete-courses.htm">adminController</prop>
+                <prop key="update-courses.htm">adminController</prop> 
+                
+                <prop key="modules.htm">adminController</prop>
+                <prop key="manage-module.htm">adminController</prop>
+                <prop key="createModule.htm">adminController</prop>
+                <prop key="deleteModule.htm">adminController</prop>
+                <prop key="updateModule.htm">adminController</prop>
+                
+                <prop key="category.htm">adminController</prop>
+                <prop key="manage-category.htm">adminController</prop>
+                <prop key="create-category.htm">adminController</prop>
+                <prop key="delete-category.htm">adminController</prop>
+                <prop key="update-category.htm">adminController</prop>
+                
+                <prop key="ajaxconf.htm">adminController</prop>
+                
+                <prop key="changePassword.htm">empController</prop>
+                <prop key="update-password.htm">empController</prop>
+                <prop key="passwordChangeSuccess.htm">empController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+
+    <!--
+    The index controller.
+    -->
+    
+     <bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
+    
+    
+    <bean name="loginController"
+          class="Controller.Authentication"
+          p:formView="Login"
+       />
+    
+    <bean name="adminController"
+          class="Controller.AdminController">
+    </bean>
+    
+    <bean name="instructorController"
+          class="Controller.InstructorController">
+    </bean>
+    
+    <bean name="emailController"
+          class="Controller.AuthEmails"
+          p:formView="Email"
+    />
+    
+    <bean name="createClassController"
+          class="Controller.UploadAuthentication"
+          p:formView="CreateClass"
+    />
+    
+    <bean name="downloadTemplateController"
+        class="Controller.DownloadTemplateController"
+    />
+    
+    <bean name="empController"
+          class="Controller.EmpController">
+    </bean>
+  
+   <bean name="resetController"
+          class="Controller.ResetPass"
+          p:formView="reset-password"/>
+   
+    <bean id = "multipartResolver" 
+          class ="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+    <bean id="forbiddenController"
+        class="Controller.ForbiddenController"
+    />
+    
+    <bean id="pdfViewController"
+        class="Controller.PdfViewController"
+    />
+    
+</beans>

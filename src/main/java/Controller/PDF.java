@@ -46,7 +46,7 @@ public class PDF {
     private PDPage page = new PDPage();
     private PDFinfo pdfinfo;
 
-    private String filePath = "C:\\Users\\syntel\\Music"; //use getfilepath in the email logic?
+    private String filePath = "C:\\Users\\syntel\\Music\\"; //use getfilepath in the email logic?
     private final static String imagePath = "C:\\Examples\\WebSproject\\src\\main\\resources\\img\\pdf_banner.png"; //path to AS logo
 
     //java.io.File.separator
@@ -245,6 +245,7 @@ public class PDF {
 
         final OutputStream outputStream = new FileOutputStream(filePath + empid + ".pdf");
         document.save(outputStream);
+        System.out.println("Saved file to:" + filePath + empid + ".pdf");
 
     }
 
@@ -255,7 +256,6 @@ public class PDF {
                 //"Module", "Assessment Score", 
                 dataset, PlotOrientation.VERTICAL,
                 true, true, false);
-
         CategoryPlot plot = barChart.getCategoryPlot();
         plot.setBackgroundPaint(null);
         plot.setDomainGridlinePaint(Color.black);

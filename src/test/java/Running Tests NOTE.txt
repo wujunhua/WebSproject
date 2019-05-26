@@ -1,1 +1,24 @@
-NOTE: The Selenium project is configured to run on localhost port whatever Kate has. You will need to change the port to whatever you have for it to work.
+NOTE: The Selenium project is configured to run on localhost port whatever Kate has. 
+You will need to change the port to whatever you have for it to work.
+
+
+* Since all our localhost port is 8084
+We can run the selenium test case on the same port without the need to changing/modifying the port
+* To run the selenium test cases:
+1. Install node (version 8 or 10)
+2. npm install -g selenium-side-runner
+3. install web drivers:
+    3.1: npm install -g chromedriver
+    3.2: npm install -g edgedriver
+    3.3: npm install -g geckodriver
+    3.4: npm install -g iedriver
+4. All the web drivers should be located in users/syntel/AppData/Roaming/npm/node_modules,
+make sure to add each of the drivers to your PATH
+5. run selenium test case (this will run the tests base on your default browser):
+    5.1: selenium-side-runner /path/to/your-project.side 
+6. You can also specify certain browser to run
+    6.1: selenium-side-runner -c "browserName=firefox" /path/to/your-project.side
+    6.2: selenium-side-runner -c "browserName=chrome" /path/to/your-project.side
+    6.3: selenium-side-runner -c "browserName=edge" /path/to/your-project.side
+    6.4: selenium-side-runner -c "browserName='internet explorer" /path/to/your-project.side
+* internet explorer and edge didn't work for me yet.

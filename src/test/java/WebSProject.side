@@ -2897,7 +2897,21 @@
       ],
       "value": ""
     }, {
-      "id": "0784c458-701d-4f38-a2a5-ebe1fd973afc",
+      "id": "357bcf38-ccf5-49ca-8372-d180aa8c37ba",
+      "comment": "",
+      "command": "type",
+      "target": "id=file",
+      "targets": [
+        ["id=file", "id"],
+        ["name=file", "name"],
+        ["css=#file", "css:finder"],
+        ["xpath=//input[@id='file']", "xpath:attributes"],
+        ["xpath=//form[@id='createClassForm']/div[5]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div[2]/input", "xpath:position"]
+      ],
+      "value": "C:\\fakepath\\Schedule for JavaFSD-Apr25-2019.xlsx"
+    }, {
+      "id": "185754cb-ccd8-4b6e-a103-6856cf1096ac",
       "comment": "",
       "command": "click",
       "target": "css=.row:nth-child(6) > .btn",
@@ -3142,13 +3156,6 @@
         ["xpath=//form[2]/div/button", "xpath:position"],
         ["xpath=//button[contains(.,'Send')]", "xpath:innerText"]
       ],
-      "value": ""
-    }, {
-      "id": "aab7a9c3-5be5-4ade-aa10-77022e674550",
-      "comment": "",
-      "command": "assertAlert",
-      "target": "Email Sent Successfully!",
-      "targets": [],
       "value": ""
     }]
   }, {
@@ -3439,13 +3446,6 @@
     }]
   }],
   "suites": [{
-    "id": "07062574-e00c-445c-bc2c-fb465f2db7e8",
-    "name": "Default Suite",
-    "persistSession": false,
-    "parallel": false,
-    "timeout": 300,
-    "tests": []
-  }, {
     "id": "c650db82-8065-4525-8cab-add3b7c834bd",
     "name": "Login Basics",
     "persistSession": false,

@@ -95,7 +95,7 @@
         
         if(pdfSaved != null) { %>
             <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                The pdf is available for preview at C:/Users/syntel/personal_domain/config
+                The pdf is available for preview at C:/Users/syntel/Music/
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

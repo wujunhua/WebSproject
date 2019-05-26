@@ -60,3 +60,4 @@ build.xml
 ## OS X
 ##########################
 .DS_Store
+/nbproject/

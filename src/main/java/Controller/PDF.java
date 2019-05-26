@@ -243,7 +243,7 @@ public class PDF {
         document.add(par);
         document.add(hRule);
 
-        final OutputStream outputStream = new FileOutputStream(empid + ".pdf");
+        final OutputStream outputStream = new FileOutputStream(filePath + empid + ".pdf");
         document.save(outputStream);
 
     }

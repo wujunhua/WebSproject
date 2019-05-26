@@ -1,0 +1,25 @@
+{
+  "name": "WebSProject",
+  "version": "0.0.0",
+  "jest": {
+    "extraGlobals": [],
+    "modulePaths": [
+      "C:\\Users\\syntel\\AppData\\Roaming\\npm\\node_modules\\selenium-side-runner\\node_modules",
+      "C:\\Users\\syntel\\AppData\\Roaming\\npm\\node_modules"
+    ],
+    "setupFilesAfterEnv": [
+      "C:\\Users\\syntel\\AppData\\Roaming\\npm\\node_modules\\selenium-side-runner\\node_modules\\jest-environment-selenium\\dist\\setup.js"
+    ],
+    "testEnvironment": "jest-environment-selenium",
+    "testEnvironmentOptions": {
+      "capabilities": {
+        "browserName": "chrome"
+      },
+      "params": {},
+      "runId": "7736e37017259157407d679cf4662e2f",
+      "path": "C:\\Users\\syntel\\AppData\\Roaming\\npm\\node_modules\\",
+      "timeout": 15000
+    }
+  },
+  "dependencies": {}
+}

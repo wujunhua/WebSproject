@@ -35,8 +35,8 @@ describe("Admin Actions", () => {
     await tests["Admin login; Switch view to instructor; Search and email"](driver, vars);
     expect(true).toBeTruthy();
   });
-  it("Admin login; Switch view to instructor; Search employee and delete", async () => {
-    await tests["Admin login; Switch view to instructor; Search employee and delete"](driver, vars);
+  it("Admin login; Switch view to instructor; Search employee", async () => {
+    await tests["Admin login; Switch view to instructor; Search employee"](driver, vars);
     expect(true).toBeTruthy();
   });
 });

@@ -15,8 +15,8 @@ describe("Instructor Actions", () => {
     await tests["Instructor login; Search and email"](driver, vars);
     expect(true).toBeTruthy();
   });
-  it("Instructor login; Search employee and delete", async () => {
-    await tests["Instructor login; Search employee and delete"](driver, vars);
+  it("Instructor login; Search employee", async () => {
+    await tests["Instructor login; Search employee"](driver, vars);
     expect(true).toBeTruthy();
   });
 });

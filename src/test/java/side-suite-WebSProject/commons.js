@@ -337,25 +337,13 @@ tests["Admin login; Insert, update and delete modules"] = async (driver, vars, o
   });
   await driver.wait(until.elementLocated(By.id(`modName`)), configuration.timeout);
   await driver.findElement(By.id(`modName`)).then(element => {
+    return element.click();
+  });
+  await driver.wait(until.elementLocated(By.id(`modName`)), configuration.timeout);
+  await driver.findElement(By.id(`modName`)).then(element => {
     return element.clear().then(() => {
       return element.sendKeys(`CSS`);
     });
-  });
-  await driver.wait(until.elementLocated(By.id(`inputState`)), configuration.timeout);
-  await driver.findElement(By.id(`inputState`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`inputState`)), configuration.timeout);
-  await driver.findElement(By.id(`inputState`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`inputState2`)), configuration.timeout);
-  await driver.findElement(By.id(`inputState2`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`inputState2`)), configuration.timeout);
-  await driver.findElement(By.id(`inputState2`)).then(element => {
-    return element.click();
   });
   await driver.wait(until.elementLocated(By.css(`.btn-primary`)), configuration.timeout);
   await driver.findElement(By.css(`.btn-primary`)).then(element => {
@@ -365,26 +353,22 @@ tests["Admin login; Insert, update and delete modules"] = async (driver, vars, o
   await driver.findElement(By.linkText(`CSS`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.id(`inputState`)), configuration.timeout);
-  await driver.findElement(By.id(`inputState`)).then(element => {
+  await driver.wait(until.elementLocated(By.id(`modName`)), configuration.timeout);
+  await driver.findElement(By.id(`modName`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.id(`inputState`)), configuration.timeout);
-  await driver.findElement(By.id(`inputState`)).then(element => {
-    return element.findElement(By.xpath(`//option[. = 'Specialization']`)).then(option => {
-      return option.click();
+  await driver.wait(until.elementLocated(By.id(`modName`)), configuration.timeout);
+  await driver.findElement(By.id(`modName`)).then(element => {
+    return element.clear().then(() => {
+      return element.sendKeys(`CSS3`);
     });
-  });
-  await driver.wait(until.elementLocated(By.id(`inputState`)), configuration.timeout);
-  await driver.findElement(By.id(`inputState`)).then(element => {
-    return element.click();
   });
   await driver.wait(until.elementLocated(By.css(`.btn-secondary > span`)), configuration.timeout);
   await driver.findElement(By.css(`.btn-secondary > span`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.linkText(`CSS`)), configuration.timeout);
-  await driver.findElement(By.linkText(`CSS`)).then(element => {
+  await driver.wait(until.elementLocated(By.linkText(`CSS3`)), configuration.timeout);
+  await driver.findElement(By.linkText(`CSS3`)).then(element => {
     return element.click();
   });
   await driver.wait(until.elementLocated(By.css(`.btn-danger > span`)), configuration.timeout);
@@ -648,18 +632,8 @@ tests["Admin login; Switch view to instructor; Create class"] = async (driver, v
   await driver.findElement(By.linkText(`Instructor`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.id(`selectedStream`)), configuration.timeout);
-  await driver.findElement(By.id(`selectedStream`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`selectedStream`)), configuration.timeout);
-  await driver.findElement(By.id(`selectedStream`)).then(element => {
-    return element.findElement(By.xpath(`//option[. = 'Java Core']`)).then(option => {
-      return option.click();
-    });
-  });
-  await driver.wait(until.elementLocated(By.id(`selectedStream`)), configuration.timeout);
-  await driver.findElement(By.id(`selectedStream`)).then(element => {
+  await driver.wait(until.elementLocated(By.name(`streamName`)), configuration.timeout);
+  await driver.findElement(By.name(`streamName`)).then(element => {
     return element.click();
   });
   await driver.wait(until.elementLocated(By.id(`location`)), configuration.timeout);
@@ -669,12 +643,8 @@ tests["Admin login; Switch view to instructor; Create class"] = async (driver, v
   await driver.wait(until.elementLocated(By.id(`location`)), configuration.timeout);
   await driver.findElement(By.id(`location`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`US`);
+      return element.sendKeys(`USA`);
     });
-  });
-  await driver.wait(until.elementLocated(By.css(`.custom-control:nth-child(1) > .custom-control-label`)), configuration.timeout);
-  await driver.findElement(By.css(`.custom-control:nth-child(1) > .custom-control-label`)).then(element => {
-    return element.click();
   });
   await driver.wait(until.elementLocated(By.id(`insEmail`)), configuration.timeout);
   await driver.findElement(By.id(`insEmail`)).then(element => {
@@ -683,52 +653,8 @@ tests["Admin login; Switch view to instructor; Create class"] = async (driver, v
   await driver.wait(until.elementLocated(By.id(`insEmail`)), configuration.timeout);
   await driver.findElement(By.id(`insEmail`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`jun_W@syntelinc.com`);
+      return element.sendKeys(`katherine_bollinger@syntelinc.com`);
     });
-  });
-  await driver.wait(until.elementLocated(By.id(`startDate`)), configuration.timeout);
-  await driver.findElement(By.id(`startDate`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`startDate`)), configuration.timeout);
-  await driver.findElement(By.id(`startDate`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`startDate`)), configuration.timeout);
-  await driver.findElement(By.id(`startDate`)).then(element => {
-    return element.clear().then(() => {
-      return element.sendKeys(`2019-05-06`);
-    });
-  });
-  await driver.wait(until.elementLocated(By.id(`endDate`)), configuration.timeout);
-  await driver.findElement(By.id(`endDate`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`endDate`)), configuration.timeout);
-  await driver.findElement(By.id(`endDate`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`endDate`)), configuration.timeout);
-  await driver.findElement(By.id(`endDate`)).then(element => {
-    return element.clear().then(() => {
-      return element.sendKeys(`2019-05-31`);
-    });
-  });
-  await driver.wait(until.elementLocated(By.id(`file`)), configuration.timeout);
-  await driver.findElement(By.id(`file`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.row:nth-child(6) > .btn`)), configuration.timeout);
-  await driver.findElement(By.css(`.row:nth-child(6) > .btn`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`startDate`)), configuration.timeout);
-  await driver.findElement(By.id(`startDate`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`startDate`)), configuration.timeout);
-  await driver.findElement(By.id(`startDate`)).then(element => {
-    return element.click();
   });
   await driver.wait(until.elementLocated(By.id(`startDate`)), configuration.timeout);
   await driver.findElement(By.id(`startDate`)).then(element => {
@@ -747,48 +673,26 @@ tests["Admin login; Switch view to instructor; Create class"] = async (driver, v
   await driver.wait(until.elementLocated(By.id(`endDate`)), configuration.timeout);
   await driver.findElement(By.id(`endDate`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`2019-05-17`);
+      return element.sendKeys(`2019-05-23`);
+    });
+  });
+  await driver.wait(until.elementLocated(By.id(`file`)), configuration.timeout);
+  await driver.findElement(By.id(`file`)).then(element => {
+    return element.click();
+  });
+  await driver.wait(until.elementLocated(By.id(`file`)), configuration.timeout);
+  await driver.findElement(By.id(`file`)).then(element => {
+    return element.clear().then(() => {
+      return element.sendKeys(`C://Users//syntel//Downloads//FSD123-Template.xlsx`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.row:nth-child(6) > .btn`)), configuration.timeout);
   await driver.findElement(By.css(`.row:nth-child(6) > .btn`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.id(`location`)), configuration.timeout);
-  await driver.findElement(By.id(`location`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`location`)), configuration.timeout);
-  await driver.findElement(By.id(`location`)).then(element => {
-    return element.clear().then(() => {
-      return element.sendKeys(`New York`);
-    });
-  });
-  await driver.wait(until.elementLocated(By.css(`.row:nth-child(6) .far`)), configuration.timeout);
-  await driver.findElement(By.css(`.row:nth-child(6) .far`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.form-group:nth-child(2)`)), configuration.timeout);
-  await driver.findElement(By.css(`.form-group:nth-child(2)`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`location`)), configuration.timeout);
-  await driver.findElement(By.id(`location`)).then(element => {
-    return element.clear().then(() => {
-      return element.sendKeys(`USA`);
-    });
-  });
-  await driver.wait(until.elementLocated(By.css(`.row:nth-child(6) .far`)), configuration.timeout);
-  await driver.findElement(By.css(`.row:nth-child(6) .far`)).then(element => {
-    return element.click();
-  });
 }
 tests["Admin login; Switch view to instructor; Search and email"] = async (driver, vars, opts = {}) => {
   await driver.get("http://localhost:8084/WebSproject/login.htm");
-  await driver.manage().window().setRect({
-    width: 1366,
-    height: 728
-  });
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.click();
@@ -850,7 +754,7 @@ tests["Admin login; Switch view to instructor; Search and email"] = async (drive
     });
   });
 }
-tests["Admin login; Switch view to instructor; Search employee and delete"] = async (driver, vars, opts = {}) => {
+tests["Admin login; Switch view to instructor; Search employee"] = async (driver, vars, opts = {}) => {
   await driver.get("http://localhost:8084/WebSproject/login.htm");
   await driver.manage().window().setRect({
     width: 1366,
@@ -902,21 +806,9 @@ tests["Admin login; Switch view to instructor; Search employee and delete"] = as
   await driver.findElement(By.css(`.rounded-0`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.id(`deleteButton`)), configuration.timeout);
-  await driver.findElement(By.id(`deleteButton`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`deleteModalButton`)), configuration.timeout);
-  await driver.findElement(By.id(`deleteModalButton`)).then(element => {
-    return element.click();
-  });
 }
 tests["Instructor login; Create class"] = async (driver, vars, opts = {}) => {
   await driver.get("http://localhost:8084/WebSproject/login.htm");
-  await driver.manage().window().setRect({
-    width: 1366,
-    height: 728
-  });
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.click();
@@ -941,18 +833,8 @@ tests["Instructor login; Create class"] = async (driver, vars, opts = {}) => {
   await driver.findElement(By.css(`.btn`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.id(`selectedStream`)), configuration.timeout);
-  await driver.findElement(By.id(`selectedStream`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`selectedStream`)), configuration.timeout);
-  await driver.findElement(By.id(`selectedStream`)).then(element => {
-    return element.findElement(By.xpath(`//option[. = 'Big Data']`)).then(option => {
-      return option.click();
-    });
-  });
-  await driver.wait(until.elementLocated(By.id(`selectedStream`)), configuration.timeout);
-  await driver.findElement(By.id(`selectedStream`)).then(element => {
+  await driver.wait(until.elementLocated(By.name(`streamName`)), configuration.timeout);
+  await driver.findElement(By.name(`streamName`)).then(element => {
     return element.click();
   });
   await driver.wait(until.elementLocated(By.id(`location`)), configuration.timeout);
@@ -1006,7 +888,7 @@ tests["Instructor login; Create class"] = async (driver, vars, opts = {}) => {
   await driver.wait(until.elementLocated(By.id(`file`)), configuration.timeout);
   await driver.findElement(By.id(`file`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`C:\fakepath\Schedule for JavaFSD-Apr25-2019.xlsx`);
+      return element.sendKeys(`C://Users//syntel//Downloads//FSD123-Template.xlsx`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.row:nth-child(6) > .btn`)), configuration.timeout);
@@ -1060,7 +942,7 @@ tests["Instructor login; Search and email"] = async (driver, vars, opts = {}) =>
   });
   await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
   await driver.findElement(By.name(`search`)).then(element => {
-    return element.sendKeys(Key["ENTER"]);
+    return element.click();
   });
   await driver.wait(until.elementLocated(By.name(`col`)), configuration.timeout);
   await driver.findElement(By.name(`col`)).then(element => {
@@ -1099,7 +981,7 @@ tests["Instructor login; Search and email"] = async (driver, vars, opts = {}) =>
     return element.click();
   });
 }
-tests["Instructor login; Search employee and delete"] = async (driver, vars, opts = {}) => {
+tests["Instructor login; Search employee"] = async (driver, vars, opts = {}) => {
   await driver.get("http://localhost:8084/WebSproject/login.htm");
   await driver.manage().window().setRect({
     width: 1366,
@@ -1181,28 +1063,6 @@ tests["Instructor login; Search employee and delete"] = async (driver, vars, opt
   });
   await driver.wait(until.elementLocated(By.css(`.rounded-0`)), configuration.timeout);
   await driver.findElement(By.css(`.rounded-0`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`deleteButton`)), configuration.timeout);
-  await driver.findElement(By.id(`deleteButton`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`deleteButton`)), configuration.timeout);
-  await driver.findElement(By.id(`deleteButton`)).then(element => {
-    return driver.actions({
-      bridge: true
-    }).move({
-      origin: element
-    }).perform();
-  });
-  await driver.actions({
-    bridge: true
-  }).move({
-    x: 0,
-    y: 0
-  }).perform();
-  await driver.wait(until.elementLocated(By.id(`deleteModalButton`)), configuration.timeout);
-  await driver.findElement(By.id(`deleteModalButton`)).then(element => {
     return element.click();
   });
 }

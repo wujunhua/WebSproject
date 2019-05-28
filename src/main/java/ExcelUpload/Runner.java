@@ -4,6 +4,7 @@ package ExcelUpload;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.sql.*;
 import java.text.ParseException;
 
@@ -13,7 +14,7 @@ import java.text.ParseException;
 
 public class Runner {
     
-    public static ArrayList<Employee> ExcelUpload(File FILE_PATH, String loc, String site, String stream, String insEmail, String startDate, String endDate) throws IOException, ParseException {
+    public static List<Employee> ExcelUpload(File filePath, String loc, String site, String stream, String insEmail, String startDate, String endDate) throws IOException, ParseException {
         
         PassOrFail pof = new PassOrFail();
         ExcelPuller pul = new ExcelPuller();
@@ -21,22 +22,24 @@ public class Runner {
         EmployeeCRUD empCrud = new EmployeeCRUD();
         ClassCRUD cCrud = new ClassCRUD();
         ETMCrud eCrud= new ETMCrud();
-        emps = pul.generateEmployees(FILE_PATH, loc, site, stream);
+        emps = pul.generateEmployees(filePath, loc, site, stream);
         
 
-        
         try {
-        	
-        	Class.forName("oracle.jdbc.driver.OracleDriver");
-        	Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-        	Statement st = con.createStatement();
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e1) {
+			e1.getMessage();
+		}
+        
+        try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
+        	Statement st = con.createStatement();) {
         	cCrud.insertClass(st, emps.get(0).getClassID(), stream, insEmail, startDate, endDate);
                 
       
                 //Iterates through the created employees to upload their data
         	for(Employee employee: emps) {
                   
-                 ArrayList<Module> passingModules = new ArrayList<>();
+                 List<Module> passingModules;
                  
                  //returns a list of only passing modules, and filters out any retakes
                  passingModules = pof.passingOrFailing(employee);
@@ -60,8 +63,8 @@ public class Runner {
                       System.out.println("Employee " + employee.getEmployeeName()+ " failed");
                   }
                 }
-                con.close();
-        } catch(ClassNotFoundException | SQLException e){
+        } catch(SQLException e){
+        	e.getMessage();
         }
   
       return emps;

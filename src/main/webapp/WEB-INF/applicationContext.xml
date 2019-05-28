@@ -25,7 +25,7 @@
        <property name = "dataSource" ref = "dataSource" />
    </bean>
    
-    <bean id="moduleDAO" class="Controller.ModuleServiceDAO">
+    <bean id="moduleDAO" class="com.atossyntel.controller.ModuleServiceDAO">
         <property name="dataSource" ref="dataSource" /> <!-- refers to the datasource above -->
     </bean>
     

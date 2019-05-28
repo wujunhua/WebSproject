@@ -1,4 +1,4 @@
-package Controller;
+package com.atossyntel.controller;
 
 
 import java.sql.Statement;

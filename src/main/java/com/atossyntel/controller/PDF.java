@@ -1,4 +1,4 @@
-package Controller;
+package com.atossyntel.controller;
 
 import java.awt.Color;
 import java.io.File;
@@ -149,7 +149,7 @@ public class PDF {
                 0, 0, true));
         document.add(new VerticalSpacer(90));
 
-        document.add(new ImageElement("C:\\Examples\\WebSproject\\src\\main\\java\\Controller\\performica.PNG"), new VerticalLayoutHint(Alignment.Left, 0, 0,
+        document.add(new ImageElement("C:\\Examples\\WebSproject\\src\\main\\java\\com.atossyntel.controller\\performica.PNG"), new VerticalLayoutHint(Alignment.Left, 0, 0,
                 0, 0, true));
         document.add(new VerticalSpacer(50)); //font: Vivaldi
 

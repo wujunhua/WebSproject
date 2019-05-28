@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package com.atossyntel.controller;
 
 
-import POJO.ResetPassForm;
-import POJO.User;
-import POJO.UserServiceDAO;
 import java.util.Map;
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -30,6 +27,10 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+
+import POJO.ResetPassForm;
+import POJO.User;
+import POJO.UserServiceDAO;
 
 public class ResetPass extends SimpleFormController {
         

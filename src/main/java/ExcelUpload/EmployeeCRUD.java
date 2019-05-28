@@ -70,18 +70,12 @@ import java.sql.SQLException;
 		public static void main(String[] args) {
 			EmployeeCRUD ec = new EmployeeCRUD();
 			try {
-				String empid = "IM505";
+				String empId = "IM505";
 				String name = "Icema";
 				String email = "IM506@syn.com";
-				String classid = "JV123";
 				Class.forName("oracle.jdbc.OracleDriver");
                             try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "Student_Performance", "Student_Performance")) {
                                 Statement st = con.createStatement();
-                                
-                                //ec.insertEmployee(st, empid, name, email, classid);
-                                //ec.readEmployee(st, empid);
-                                //ec.updateEmployee(st, empid, name, email);
-                                //ec.deleteEmployee(st, empid);
                                 st.close();
                             }
 			} catch (ClassNotFoundException | SQLException e) {

@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package com.atossyntel.controller;
 
-import POJO.EmployeeServiceDAO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +13,17 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
+import POJO.EmployeeServiceDAO;
+
 /**
  *
  * @author syntel
  */
 public class EmpController extends SimpleFormController {
 
+	private String objectName = "emplist";
+	private String namedView = "showEmployees";
+	
     @Override
     public ModelAndView handleRequest(HttpServletRequest request,
                                 HttpServletResponse response){       
@@ -36,11 +40,11 @@ public class EmpController extends SimpleFormController {
         //Go to right ModelAndView
         switch (viewName) {
             case "searchEmployees":
-                return searchEmployees(viewName, esd, request);
+                return searchEmployees(esd, request);
             case "editEmployees":
-                return editEmployee(viewName, esd, request);
+                return editEmployee(esd, request);
             case "deleteEmployees":
-                return deleteEmployee(viewName, esd, request);
+                return deleteEmployee(esd, request);
             default:
                 break;
         }
@@ -48,10 +52,10 @@ public class EmpController extends SimpleFormController {
         return showEmployees(viewName, esd);
     }
     
-    public ModelAndView searchEmployees(String viewName, EmployeeServiceDAO esd, HttpServletRequest request){
+    public ModelAndView searchEmployees(EmployeeServiceDAO esd, HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("showEmployees");       
-        mav.addObject("emplist",  esd.readAllEmployeeFromCol(request.getParameter("col"),
+        mav.setViewName(namedView);       
+        mav.addObject(objectName,  esd.readAllEmployeeFromCol(request.getParameter("col"),
                 request.getParameter("search").trim()));
         
         return mav;
@@ -60,14 +64,14 @@ public class EmpController extends SimpleFormController {
     public ModelAndView showEmployees(String viewName, EmployeeServiceDAO esd){
         ModelAndView mav = new ModelAndView();
         mav.setViewName(viewName);
-        mav.addObject("emplist", esd.readAllEmployee());
+        mav.addObject(objectName, esd.readAllEmployee());
         
         return mav;
     }
     
-    public ModelAndView editEmployee(String viewName, EmployeeServiceDAO esd, HttpServletRequest request){
+    public ModelAndView editEmployee(EmployeeServiceDAO esd, HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("showEmployees");
+        mav.setViewName(namedView);
         
         esd.updateEmployee(request.getParameter("editModalButton"), 
                 request.getParameter("editName").trim(), request.getParameter("editEmail").trim()
@@ -77,16 +81,16 @@ public class EmpController extends SimpleFormController {
                request.getParameter("editModalButton"), request.getParameter("selectModule"),
                request.getParameter("editModuleID"));
         
-        mav.addObject("emplist", esd.readAllEmployee());
+        mav.addObject(objectName, esd.readAllEmployee());
        
         return mav;
     }
     
-    public ModelAndView deleteEmployee(String viewName, EmployeeServiceDAO esd, HttpServletRequest request){
+    public ModelAndView deleteEmployee(EmployeeServiceDAO esd, HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("showEmployees");
+        mav.setViewName(namedView);
         esd.deleteEmployee(request.getParameter("deleteModalButton"));
-        mav.addObject("emplist", esd.readAllEmployee());
+        mav.addObject(objectName, esd.readAllEmployee());
         
         return mav;
     }                      

@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package com.atossyntel.controller;
 
-import POJO.EmployeeServiceDAO;
-import POJO.UserServiceDAO;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.servlet.ServletContext;
@@ -17,10 +15,14 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
+import POJO.EmployeeServiceDAO;
+import POJO.UserServiceDAO;
+
 /**
  *
  * @author LS5028230
  */
+@SuppressWarnings("deprecation")
 public class AuthEmails extends SimpleFormController{
 
     @Override
@@ -88,7 +90,6 @@ public class AuthEmails extends SimpleFormController{
            
             
             PDF temp = new PDF(usrDAO.getDataSource());
-            //temp.setDataSource(usrDAO.getDataSource());
 
             for(int i=0; i<ids.length; ++i)
                 temp.generate(SendEmail.getEmpId(ids[i]));            

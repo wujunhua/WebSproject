@@ -1,5 +1,5 @@
 
-package Controller;
+package com.atossyntel.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

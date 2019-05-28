@@ -6,6 +6,7 @@
 package ExcelUpload;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,11 +17,11 @@ public class PassOrFail {
     //Filters through all of an employee's modules scores
     //Returns only passing grades, and 1 of each module
     //If an employee fails all retakes, then returns null
-    public ArrayList<Module> passingOrFailing(Employee emp){
+    public List<Module> passingOrFailing(Employee emp){
         boolean passing = true;
         int passFailCounter = 0;
         
-        ArrayList<Module> checkScores = new ArrayList<>();
+        List<Module> checkScores;
         ArrayList<Module> finalScores = new ArrayList<>();
         
         checkScores = emp.getModScores();
@@ -62,12 +63,7 @@ public class PassOrFail {
                  //If the current module and the previous module are the different then it incriments
                 //the counter, when three failures are recorded for a given module name
                 //then that student has failed, and will return null
-                } else if (!previousModule.equals(currentModule) && mod.getmoduleScore() < 70 ) {
-                    passFailCounter++;
-                    if(passFailCounter == 3){
-                        passing = false; // if 3 failures on a given module then the student fails
-                    }
-                }
+                } 
                 previousModule = currentModule;
             }
        
@@ -75,8 +71,8 @@ public class PassOrFail {
        
         
         
-        if (passing == false){
-            return null;
+        if (!passing){
+            return new ArrayList<>();
         } else{
             return finalScores;
         }

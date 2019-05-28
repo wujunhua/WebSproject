@@ -1,7 +1,6 @@
 
-package Controller;
+package com.atossyntel.controller;
 
-import POJO.UserServiceDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -12,6 +11,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
+
+import POJO.UserServiceDAO;
 
 
 public class PdfViewController implements Controller {

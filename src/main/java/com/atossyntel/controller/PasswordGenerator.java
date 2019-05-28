@@ -1,4 +1,4 @@
-package Controller;
+package com.atossyntel.controller;
 
 public class PasswordGenerator {
     

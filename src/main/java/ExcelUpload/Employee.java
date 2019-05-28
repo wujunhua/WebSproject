@@ -1,5 +1,7 @@
 package ExcelUpload;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 public class Employee {
 	
 	private String employeeID;
@@ -37,12 +39,12 @@ public class Employee {
 		this.employeeName = employeeName;
 	}
 	
-	public ArrayList<Module> getModScores() {
+	public List<Module> getModScores() {
 		return modScores;
 	}
 	
-	public void setModScores(ArrayList<Module> modScores) {
-		this.modScores = modScores;
+	public void setModScores(List<Module> modScores) {
+		this.modScores = (ArrayList<Module>) modScores;
 	}
 	
 	public String getEmployeeEmail() {

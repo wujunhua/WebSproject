@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -17,7 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 // creates template files for a specific stream
 // it doesn't connect to the database, the data to be written is passed in
 public class ExcelWriter {
-
+final static Logger logger = Logger.getLogger(ExcelWriter.class);
     private final String scoreTag; // appended to each module name to communicate that it is a score column
     private OutputStream outputStream;
     private ArrayList<String> columnTitles;
@@ -96,10 +97,10 @@ public class ExcelWriter {
         try {
             workbook.write(outputStream); // up to the caller to close stream
             workbook.close();
-            System.out.println("Template spreadsheet was written successfully");
+            logger.info("Template spreadsheet was written successfully");
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("createExcelTemplateFile: there was an issue creating the template file");
+            logger.error("createExcelTemplateFile: there was an issue creating the template file");
         }  
     }
     

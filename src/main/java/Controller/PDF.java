@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.sql.DataSource;
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -36,7 +37,7 @@ import rst.pdfbox.layout.elements.ImageElement;
 
 //import org.jfree.chart.ChartUtilities;
 public class PDF {
-
+final static Logger logger = Logger.getLogger(PDF.class);
     private DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
 
@@ -55,10 +56,10 @@ public class PDF {
     }
 
     public PDF(DataSource dataSource) throws ClassNotFoundException {
-        System.out.println(System.getProperty("user.dir"));
+        logger.info(System.getProperty("user.dir"));
         this.dataset = new DefaultCategoryDataset();
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        System.out.println("Constructor Called");
+        logger.info("Constructor Called");
         this.dataSource = dataSource;
         njdbc = new NamedParameterJdbcTemplate(dataSource);
     }
@@ -114,7 +115,7 @@ public class PDF {
         String name = info.getEmployeeName(empid);
 
         if (name.equals("")) {
-            System.out.println("Employee ID not found. PDF has not been generated.");
+            logger.error("Employee ID not found. PDF has not been generated.");
             return;
         }
 
@@ -245,7 +246,7 @@ public class PDF {
 
         final OutputStream outputStream = new FileOutputStream(filePath + empid + ".pdf");
         document.save(outputStream);
-        System.out.println("Saved file to:" + filePath + empid + ".pdf");
+        logger.info("Saved file to:" + filePath + empid + ".pdf");
 
     }
 
@@ -289,7 +290,7 @@ public class PDF {
         try {
             ChartUtilities.saveChartAsJPEG(BarChart, barChart, width, height);
         } catch (IOException ex) {
-            System.out.println("Cannot save chart:\n" + ex.toString());
+            logger.error("Cannot save chart:\n" + ex.toString());
         }
     }
 

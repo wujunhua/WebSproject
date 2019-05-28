@@ -16,12 +16,14 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author LS5028230
  */
 public class AuthEmails extends SimpleFormController{
+    final static Logger logger = Logger.getLogger(AuthEmails.class);
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request,
@@ -94,8 +96,8 @@ public class AuthEmails extends SimpleFormController{
                 temp.generate(SendEmail.getEmpId(ids[i]));            
       
         }catch(Exception ex){
-            System.out.println("invalid error in create PDFs");
-            System.out.println(ex);
+            logger.error("invalid error in create PDFs");
+            logger.error(ex);
         }
         
     }

@@ -23,12 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author LS5028230
  */
 public class Authentication extends SimpleFormController{
+    final static Logger logger = Logger.getLogger(Authentication.class);
 
     
     public Authentication() {
@@ -50,14 +52,14 @@ public class Authentication extends SimpleFormController{
             WebApplicationContextUtils.getRequiredWebApplicationContext(context);
         
         UserServiceDAO usrDAO = (UserServiceDAO)ctx.getBean("user1");
-        System.out.println("User Form: " + user);
+        logger.info("User Form: " + user);
         
         String errorMessage = "NO_ERROR_SET";
         User userMatcher;
         
         try {
             userMatcher = usrDAO.getUser(user.getUserName());
-            System.out.println("user retrieved, about to check if password matches");
+            logger.info("user retrieved, about to check if password matches");
             if (userMatcher.getPassword().trim().equals(user.getPassword().trim())) {
                 
                 ModelAndView userNameAndStatus = new ModelAndView();
@@ -75,7 +77,7 @@ public class Authentication extends SimpleFormController{
                 return userNameAndStatus;
             }
             else {
-                System.out.println("password did not match one in the DB");
+                logger.error("password did not match one in the DB");
                 errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
                         + "  <strong>Error:</strong> password did not match\n"
                         + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
@@ -86,8 +88,8 @@ public class Authentication extends SimpleFormController{
             }
             
         }catch(Exception e) {
-            System.err.println(e);
-            System.out.println("in exception, the user was not in the DB");
+            logger.error(e);
+            logger.error("in exception, the user was not in the DB");
             errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
                     + "  <strong>Error:</strong> user was not in the database\n"
                     + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"

@@ -2,6 +2,7 @@ package com.atossyntel.controller;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class PDFinfo {
         } catch (Exception e){
             logger.error("No Categories found.");
             logger.error(e.getMessage());
-            return null;
+            return new ArrayList<>();
         }
 	}
 
@@ -93,7 +94,7 @@ public class PDFinfo {
     * @return a list of strings, formatted as [id1, name1, id2, name2, ...]
     * @throws java.lang.Exception
     */
-    public List<String> getStreamIDName(String empID) throws Exception{
+    public List<String> getStreamIDName(String empID) throws SQLException {
         List<String> list = new ArrayList<>();
         Statement s1 = c1.createStatement();
      
@@ -127,7 +128,7 @@ public class PDFinfo {
     * @return a string representation of the average score
     * @throws java.lang.Exception
     */
-	public String getAverageScoreByCategory(String empID, String category) throws Exception{
+	public String getAverageScoreByCategory(String empID, String category) {
         SqlParameterSource namedParams;
         String sql = "SELECT AVG(s.scores) "
                 + "FROM employees_take_modules s INNER JOIN modules m ON m.module_id = s.module_ID "
@@ -165,7 +166,7 @@ public class PDFinfo {
             return list;
         } catch (Exception e){
             logger.error("Something went wrong: " + e.getMessage());
-            return null;
+            return new ArrayList<>();
         }
 	}
     

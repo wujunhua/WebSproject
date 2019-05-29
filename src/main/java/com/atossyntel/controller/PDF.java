@@ -55,10 +55,9 @@ static final Logger logger = Logger.getLogger(PDF.class);
         this.dataset = new DefaultCategoryDataset();
     }
 
-    public PDF(DataSource dataSource) throws ClassNotFoundException {
+    public PDF(DataSource dataSource) {
         logger.info(System.getProperty("user.dir"));
         this.dataset = new DefaultCategoryDataset();
-        Class.forName("oracle.jdbc.driver.OracleDriver");
         logger.info("Constructor Called");
         this.dataSource = dataSource;
         njdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -213,9 +212,9 @@ static final Logger logger = Logger.getLogger(PDF.class);
 
         document.add(new VerticalSpacer(285));
 
-        char[] Array = new char[1050];
-        Arrays.fill(Array, ' ');
-        String line = new String(Array);
+        char[] array = new char[1050];
+        Arrays.fill(array, ' ');
+        String line = new String(array);
 
         par = new Paragraph();
         par.addMarkup("__" + line + "__\n", 1, font);
@@ -284,9 +283,9 @@ static final Logger logger = Logger.getLogger(PDF.class);
         /* Width of the image */
         int height = 275;
         /* Height of the image */
-        File BarChart = new File(filename);
+        File secondBarChart = new File(filename);
         try {
-            ChartUtilities.saveChartAsJPEG(BarChart, barChart, width, height);
+            ChartUtilities.saveChartAsJPEG(secondBarChart, barChart, width, height);
         } catch (IOException ex) {
             logger.error("Cannot save chart:\n" + ex.toString());
         }
@@ -307,7 +306,4 @@ static final Logger logger = Logger.getLogger(PDF.class);
 }
 /* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.
 //Saved for possible later use and as a reminder to not Do The Thing
-RenderContext rc = new RenderContext(document, document.getPDDocument());
-stroke.applyTo(rc.getContentStream());
-rc.close();
  */

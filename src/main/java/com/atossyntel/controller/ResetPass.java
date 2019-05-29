@@ -30,7 +30,7 @@ import com.atossyntel.pojo.UserServiceDAO;
 import org.apache.log4j.Logger;
 
 public class ResetPass extends SimpleFormController {
-    static final Logger logger = Logger.getLogger(ResetPass.class);
+    static final Logger log = Logger.getLogger(ResetPass.class);
         
     public ResetPass(){
         setCommandClass(com.atossyntel.pojo.ResetPassForm.class);
@@ -86,14 +86,14 @@ public class ResetPass extends SimpleFormController {
           //  Transport tr = session.getTransport("smtp");
             Transport.send(message);
 
-            logger.info("message sent!");
+            log.info("message sent!");
 
         }
         catch (MessagingException mex)
         {
-            logger.error("********RESETPASS.JAVA ********\n"
+            log.error("********RESETPASS.JAVA ********\n"
                     + "Error: unable to send message....");
-            logger.error(mex.toString());
+            log.error(mex.toString());
             
         }
         
@@ -103,7 +103,7 @@ public class ResetPass extends SimpleFormController {
     protected ModelAndView onSubmit(Object command) throws Exception{
         ResetPassForm userEmail = (ResetPassForm) command;
         
-        logger.info("ResetPass: " + userEmail);
+        log.info("ResetPass: " + userEmail);
         
         ServletContext context = this.getServletContext();
         WebApplicationContext ctx;
@@ -120,7 +120,7 @@ public class ResetPass extends SimpleFormController {
             usrDAO.setUserPassword(userEmail.getEmail(), newPass);
             //send email to user with the new password
             sendResetEmail(userEmail.getEmail(), newPass);
-            logger.info("Password Changed");
+            log.info("Password Changed");
             
         }catch(Exception e){
             String errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
@@ -129,9 +129,9 @@ public class ResetPass extends SimpleFormController {
                     + "    <span aria-hidden=\"true\">&times;</span>\n"
                     + "  </button>\n"
                     + "</div>";
-            logger.error("********EXCEPTION IN RESETPASS.JAVA**********");
-            logger.error("Invalid Email");
-            logger.error(e);
+            log.error("********EXCEPTION IN RESETPASS.JAVA**********");
+            log.error("Invalid Email");
+            log.error(e);
             return new ModelAndView("reset-password", "errorMessage", errorMessage);
         }
         String confirmMessage = "<div class=\"alert alert-success mx-5 alert-dismissible fade show\" role=\"alert\">\n"

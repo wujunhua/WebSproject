@@ -57,10 +57,10 @@ function validate()
     }
         
     //check to see if start date is not in future
-    var today = new Date();
-    var date_from = document.getElementById("startDate").value;
-    date_from = new Date(date_from);
-    if(today <= date_from)
+    var thisToday = new Date();
+    var thisDateFrom = document.getElementById("startDate").value;
+    var newDateFrom = new Date(thisDateFrom);
+    if(thisToday <= newDateFrom)
     {
         document.getElementById("endDateValidation").innerHTML = "You cannot select a future date or todays date for start date.";
         document.getElementById("startDate").value="";

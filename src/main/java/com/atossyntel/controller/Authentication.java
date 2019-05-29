@@ -24,7 +24,7 @@ import com.atossyntel.pojo.UserServiceDAO;
  * @author LS5028230
  */
 public class Authentication extends SimpleFormController{
-    static final Logger logger = Logger.getLogger(Authentication.class);
+    static final Logger log = Logger.getLogger(Authentication.class);
 
     
     public Authentication() {
@@ -46,14 +46,14 @@ public class Authentication extends SimpleFormController{
             WebApplicationContextUtils.getRequiredWebApplicationContext(context);
         
         UserServiceDAO usrDAO = (UserServiceDAO)ctx.getBean("user1");
-        logger.info("User Form: " + user);
+        log.info("User Form: " + user);
         
         String errorMessage = "NO_ERROR_SET";
         User userMatcher;
         
         try {
             userMatcher = usrDAO.getUser(user.getUserName());
-            logger.info("user retrieved, about to check if password matches");
+            log.info("user retrieved, about to check if password matches");
             if (userMatcher.getPassword().trim().equals(user.getPassword().trim())) {
                 
                 ModelAndView userNameAndStatus;
@@ -71,7 +71,7 @@ public class Authentication extends SimpleFormController{
                 return userNameAndStatus;
             }
             else {
-                logger.error("password did not match one in the DB");
+                log.error("password did not match one in the DB");
                 errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
                         + "  <strong>Error:</strong> password did not match\n"
                         + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"
@@ -82,8 +82,8 @@ public class Authentication extends SimpleFormController{
             }
             
         }catch(Exception e) {
-            logger.error(e);
-            logger.error("in exception, the user was not in the DB");
+            log.error(e);
+            log.error("in exception, the user was not in the DB");
             errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
                     + "  <strong>Error:</strong> user was not in the database\n"
                     + "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n"

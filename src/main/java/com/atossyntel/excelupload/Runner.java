@@ -3,10 +3,12 @@ package com.atossyntel.excelupload;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.*;
-import java.text.ParseException;
 import org.apache.log4j.Logger;
 
 

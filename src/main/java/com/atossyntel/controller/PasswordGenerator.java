@@ -3,7 +3,7 @@ package com.atossyntel.controller;
 import org.apache.log4j.Logger;
 
 public class PasswordGenerator {
-    final static Logger logger = Logger.getLogger(PasswordGenerator.class);
+    static final Logger logger = Logger.getLogger(PasswordGenerator.class);
     
     // **JUST CALL THIS METHOD TO GENERATE THE RANDOM PASSWORD. IT WILL TAKE CARE OF EVERYTHING.
     public String generatePassword()

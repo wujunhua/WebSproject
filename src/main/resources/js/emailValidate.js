@@ -13,7 +13,6 @@ function checkDomain() {
         }
         else
         {
-            alert("Not a valid atos or syntel email");
             event.preventDefault();
         }
 }

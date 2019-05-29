@@ -65,7 +65,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
                 list.get(i).setModScores(getModuleIDAndScore(list.get(i).getEmployeeID()));
             }            
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
         return list;
     }
@@ -81,7 +81,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
             logger.info("Get Employee Module and Scores...");
             list = jdbcTemplateObject.query(sql, new Object[]{id}, new ModuleListRowMapper());
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
         return list;        
     }
@@ -113,7 +113,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
                     new Object[]{"%" + searchTerm.toLowerCase() + "%"}, new EmployeeRowMapper());
                     
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
         
         return matchingEmps;
@@ -127,7 +127,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
             int row = jdbcTemplateObject.update(sql, employeeID, name, email, managerID, employeeID);    
             logger.info("* " + row + " row updated.\n");
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
     }
     
@@ -138,7 +138,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
             int row = jdbcTemplateObject.update(sql, score, employeeID, moduleID);    
             logger.info("* " + row + " row updated.\n");
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }        
     }
 
@@ -150,7 +150,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
             int row = jdbcTemplateObject.update(sql, employeeID);
             logger.info("* " + row + " row deleted.\n");
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
     }
     

@@ -25,7 +25,7 @@ import com.atossyntel.pojo.UserServiceDAO;
  */
 @SuppressWarnings("deprecation")
 public class AuthEmails extends SimpleFormController{
-    static final Logger logger = Logger.getLogger(AuthEmails.class);
+    static final Logger log = Logger.getLogger(AuthEmails.class);
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request,
@@ -97,8 +97,8 @@ public class AuthEmails extends SimpleFormController{
                 temp.generate(SendEmail.getEmpId(ids[i]));            
       
         }catch(Exception ex){
-            logger.error("invalid error in create PDFs");
-            logger.error(ex);
+            log.error("invalid error in create PDFs");
+            log.error(ex);
         }
         
     }

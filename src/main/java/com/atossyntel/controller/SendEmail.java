@@ -27,7 +27,11 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.log4j.Logger;
 
 public class SendEmail {
-    final static Logger logger = Logger.getLogger(SendEmail.class);
+	
+	private SendEmail() {
+		super();
+	}
+    static final Logger logger = Logger.getLogger(SendEmail.class);
     
     public static void sendIdividualEmail(String email, String id) {
     	
@@ -49,6 +53,7 @@ public class SendEmail {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+        			@Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(user,password);
                     }
@@ -68,13 +73,12 @@ public class SendEmail {
             message.setSubject("Performica Report["+ getStreamName(email) + "]["+ startEndDates[0] + "]-["+startEndDates[1]+"]");
             logger.info("here");
             // Create the message part
-            BodyPart messageBodyPart = new MimeBodyPart();
 
             // Create a multipart message
             Multipart multipart = new MimeMultipart();
 
             // Part two is attachment
-            messageBodyPart = new MimeBodyPart();
+            BodyPart messageBodyPart = new MimeBodyPart();
             String path = "C:/Users/syntel/Music/" + id + ".pdf";
             String filename = id + ".pdf";
             DataSource source = new FileDataSource(path);
@@ -195,6 +199,7 @@ public class SendEmail {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+        			@Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(userName,pass);
                     }
@@ -209,11 +214,10 @@ public class SendEmail {
             message.setSubject("Atos Syntel - Performica Account Created");
     
             // Create the message part
-            BodyPart messageBodyPart = new MimeBodyPart();
 
             // Create a multipart message
             Multipart multipart = new MimeMultipart();
-            messageBodyPart = new MimeBodyPart();
+            BodyPart messageBodyPart = new MimeBodyPart();
             String htmlText = "<!DOCTYPE html>\n" +
             "<html lang=\"en\">\n" +
             "<head>\n" +
@@ -315,7 +319,6 @@ public class SendEmail {
 	int count = 0;
 	try
 	{
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select email from employees where email = " + "'" + username + "'");
@@ -353,7 +356,6 @@ public class SendEmail {
         int count = 0;
 	try
 	{
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select class_id from class where class_id = " + "'" + id + "'");
@@ -391,11 +393,10 @@ public class SendEmail {
     	
     	try
 	{
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select employee_id, name, class_id, manager_id from employees where email = '" + email + "'");
-            String emp[] = new String[4];
+            String[] emp = new String[4];
             while(rs.next()){
                 emp[0] = rs.getString("employee_id");
                 emp[1] = rs.getString("name");
@@ -416,7 +417,7 @@ public class SendEmail {
             logger.error(ex);
 	}
     	
-    	return null;
+    	return new String[0];
     }
     
     static String getEmpId(String email) {
@@ -463,11 +464,11 @@ public class SendEmail {
     	try
 	{
             String[] emp = getEmployee(email);
-            String RM = emp[3];
-            if(RM==null)
+            String rm = emp[3];
+            if(rm==null)
                 return "";
             else
-                return RM;
+                return rm;
 	}
 		
 	catch (Exception ex) 
@@ -482,7 +483,6 @@ public class SendEmail {
     	
     	try
 	{
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select s.stream_name from employees e ,class c ,stream s where e.email = '" + email + "' AND e.class_id=c.class_id AND c.stream_id = s.stream_id");
@@ -513,11 +513,10 @@ public class SendEmail {
     	
     	try
 	{
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select c.start_date,c.end_date from employees e ,class c where e.email = '" + email + "' AND e.class_id=c.class_id");
-            String duration[] = new String[2];
+            String[] duration = new String[2];
             while(rs.next()){
                 duration[0] = rs.getString(1).substring(0,10);
                 duration[1] = rs.getString(2).substring(0,10);
@@ -535,17 +534,15 @@ public class SendEmail {
 	{
             logger.error(ex);
 	}
-    	
-    	return null;
+    	return new String[0];
     }
     
     static Map<String,String> getBatchEmails(String classid) {
     	
-    	Map<String,String> batchEmails = new HashMap<String,String>();
+    	Map<String,String> batchEmails = new HashMap<>();
     	
     	try
 	{
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Type 4 Driver Pure Java Driver
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select employee_id, email from employees where class_id = " + "'" + classid + "'");

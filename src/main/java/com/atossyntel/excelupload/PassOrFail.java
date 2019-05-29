@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  * @author syntel
  */
 public class PassOrFail {
-    final static Logger logger = Logger.getLogger(PassOrFail.class);
+    static final Logger logger = Logger.getLogger(PassOrFail.class);
     
     //Filters through all of an employee's modules scores
     //Returns only passing grades, and 1 of each module

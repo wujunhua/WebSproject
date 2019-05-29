@@ -28,14 +28,16 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-import POJO.ResetPassForm;
-import POJO.User;
-import POJO.UserServiceDAO;
+import com.atossyntel.pojo.ResetPassForm;
+import com.atossyntel.pojo.User;
+import com.atossyntel.pojo.UserServiceDAO;
+import org.apache.log4j.Logger;
 
 public class ResetPass extends SimpleFormController {
+    final static Logger logger = Logger.getLogger(ResetPass.class);
         
     public ResetPass(){
-        setCommandClass(POJO.ResetPassForm.class);
+        setCommandClass(com.atossyntel.pojo.ResetPassForm.class);
         setCommandName("forgotPass");
     }
     
@@ -88,14 +90,14 @@ public class ResetPass extends SimpleFormController {
             Transport tr = session.getTransport("smtp");
             tr.send(message);
 
-            System.out.println("message sent!");
+            logger.info("message sent!");
 
         }
         catch (MessagingException mex)
         {
-            System.out.println("********RESETPASS.JAVA ********\n"
+            logger.error("********RESETPASS.JAVA ********\n"
                     + "Error: unable to send message....");
-            System.out.println(mex.toString());
+            logger.error(mex.toString());
             
         }
         
@@ -105,7 +107,7 @@ public class ResetPass extends SimpleFormController {
     protected ModelAndView onSubmit(Object command) throws Exception{
         ResetPassForm userEmail = (ResetPassForm) command;
         
-        System.out.println("ResetPass: " + userEmail);
+        logger.info("ResetPass: " + userEmail);
         
         ServletContext context = this.getServletContext();
         WebApplicationContext ctx;
@@ -124,7 +126,7 @@ public class ResetPass extends SimpleFormController {
             usrDAO.setUserPassword(userEmail.getEmail(), newPass);
             //send email to user with the new password
             SendResetEmail(userEmail.getEmail(), newPass);
-            System.out.println("Password Changed");
+            logger.info("Password Changed");
             
         }catch(Exception e){
             String errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
@@ -133,9 +135,9 @@ public class ResetPass extends SimpleFormController {
                     + "    <span aria-hidden=\"true\">&times;</span>\n"
                     + "  </button>\n"
                     + "</div>";
-            System.out.println("********EXCEPTION IN RESETPASS.JAVA**********");
-            System.out.println("Invalid Email");
-            System.out.println(e);
+            logger.error("********EXCEPTION IN RESETPASS.JAVA**********");
+            logger.error("Invalid Email");
+            logger.error(e);
             return new ModelAndView("reset-password", "errorMessage", errorMessage);
         }
         String confirmMessage = "<div class=\"alert alert-success mx-5 alert-dismissible fade show\" role=\"alert\">\n"

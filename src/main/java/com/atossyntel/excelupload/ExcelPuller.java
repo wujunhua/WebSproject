@@ -1,4 +1,4 @@
- package ExcelUpload;
+ package com.atossyntel.excelupload;
 import java.util.*;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
+import org.apache.log4j.Logger;
 public class ExcelPuller {
+    final static Logger logger = Logger.getLogger(ClassCRUD.class);
 	
             public ArrayList<Employee> generateEmployees(File FILE_PATH, String loc, String site, String stream) throws IOException{
       
@@ -38,7 +40,7 @@ public class ExcelPuller {
                     Cell currentCell = cellIterator.next();
                     
                     while(!(currentCell.getStringCellValue().equals("Employee ID"))){
-                        System.out.println(currentCell.getStringCellValue());
+                        logger.info(currentCell.getStringCellValue());
                         currentRow = iterator.next();
                         cellIterator = currentRow.cellIterator();
                         currentCell = cellIterator.next();
@@ -96,7 +98,7 @@ public class ExcelPuller {
                                      
                         		
                         	} else {
-                        		System.out.println("All data entered");
+                        		logger.info("All data entered");
                                 }
                        }
                         newEmp.setClassID(classID);

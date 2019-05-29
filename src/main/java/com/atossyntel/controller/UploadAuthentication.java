@@ -1,8 +1,8 @@
 
 package com.atossyntel.controller;
-import ExcelUpload.ExcelPuller;
-import ExcelUpload.Runner;
-import POJO.ExcelUploadObject;
+import com.atossyntel.excelupload.ExcelPuller;
+import com.atossyntel.excelupload.Runner;
+import com.atossyntel.pojo.ExcelUploadObject;
 
 import java.io.File;
 import java.io.FileOutputStream;

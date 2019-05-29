@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
  */
 
 public class PDFinfo {
-    final static Logger logger = Logger.getLogger(AuthEmails.class);
+    final static Logger logger = Logger.getLogger(PDFinfo.class);
     private Connection c1;
     private NamedParameterJdbcTemplate njdbc;
     private DataSource dataSource;

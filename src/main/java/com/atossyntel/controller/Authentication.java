@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import org.apache.log4j.Logger;
 
-import POJO.User;
-import POJO.UserServiceDAO;
+import com.atossyntel.pojo.User;
+import com.atossyntel.pojo.UserServiceDAO;
 
 /**
  *

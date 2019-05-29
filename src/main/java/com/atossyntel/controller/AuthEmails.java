@@ -16,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.apache.log4j.Logger;
 
-import POJO.EmployeeServiceDAO;
-import POJO.UserServiceDAO;
+import com.atossyntel.pojo.EmployeeServiceDAO;
+import com.atossyntel.pojo.UserServiceDAO;
 
 /**
  *

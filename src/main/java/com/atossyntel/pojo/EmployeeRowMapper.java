@@ -1,6 +1,6 @@
-package POJO;
+package com.atossyntel.pojo;
 
-import ExcelUpload.Employee;
+import com.atossyntel.excelupload.Employee;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;

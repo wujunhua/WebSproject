@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package POJO;
+package com.atossyntel.pojo;
 
-import ExcelUpload.Module;
-import ExcelUpload.ModuleWithID;
+import com.atossyntel.excelupload.Module;
+import com.atossyntel.excelupload.ModuleWithID;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;

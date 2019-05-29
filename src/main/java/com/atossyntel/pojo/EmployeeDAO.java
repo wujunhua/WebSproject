@@ -1,6 +1,6 @@
-package POJO;
+package com.atossyntel.pojo;
 
-import ExcelUpload.Employee;
+import com.atossyntel.excelupload.Employee;
 import java.util.ArrayList;
 import javax.sql.DataSource;
 

@@ -1,18 +1,21 @@
-package ExcelUpload;
+package com.atossyntel.excelupload;
 
 
+import com.atossyntel.excelupload.Module;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import java.text.ParseException;
+import org.apache.log4j.Logger;
 
 
 
 
 
 public class Runner {
+    final static Logger logger = Logger.getLogger(Runner.class);
     
     public static List<Employee> ExcelUpload(File filePath, String loc, String site, String stream, String insEmail, String startDate, String endDate) throws IOException, ParseException {
         
@@ -60,7 +63,7 @@ public class Runner {
                       }
                       
                   } else{
-                      System.out.println("Employee " + employee.getEmployeeName()+ " failed");
+                      logger.info("Employee " + employee.getEmployeeName()+ " failed");
                   }
                 }
         } catch(SQLException e){

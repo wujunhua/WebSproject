@@ -15,8 +15,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-import POJO.EmployeeServiceDAO;
-import POJO.UserServiceDAO;
+import com.atossyntel.pojo.EmployeeServiceDAO;
+import com.atossyntel.pojo.UserServiceDAO;
 
 /**
  *

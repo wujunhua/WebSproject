@@ -1,4 +1,4 @@
- package ExcelUpload;
+ package com.atossyntel.excelupload;
 import java.util.*;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 public class ExcelPuller {
 	
-            public ArrayList<Employee> generateEmployees(File FILE_PATH, String loc, String site, String stream) throws IOException{
+            public List<Employee> generateEmployees(File filePath, String loc, String site, String stream) throws IOException{
       
             	Workbook workbook = null;                                          //used to open the excel file
             	ArrayList<String> columns = new ArrayList<>();                    // the column titles: "name", "email", "empID", "mod1Score"
@@ -26,7 +26,7 @@ public class ExcelPuller {
             	
                 try {
                     int cols = 0;
-                    FileInputStream excelFile = new FileInputStream(FILE_PATH);          //Opens the stream for the excel file
+                    FileInputStream excelFile = new FileInputStream(filePath);          //Opens the stream for the excel file
                     workbook = new XSSFWorkbook(excelFile);                              //The actual Excel workbook
                     Sheet datatypeSheet = workbook.getSheetAt(0);                         //The current sheet of the excel doc (Should only be 1 sheet)
                     Iterator<Row> iterator = datatypeSheet.iterator();                   //Used to traverse the rows in the excel file
@@ -52,11 +52,9 @@ public class ExcelPuller {
                     
                     
                     while (cellIterator.hasNext() ) {
-                    	if (currentCell.getCellType() == CellType.STRING) {
+                    	if (currentCell.getCellType() == CellType.STRING || currentCell.getCellType() == CellType.NUMERIC) {
                     		columns.add(currentCell.getStringCellValue());
-                    	} else if (currentCell.getCellType() == CellType.NUMERIC) {
-                    		columns.add(currentCell.getStringCellValue());
-                    	}
+                    	}                    	
                         cols++;
                         currentCell = cellIterator.next();
                     }

@@ -1,9 +1,5 @@
 
 package com.atossyntel.controller;
-import ExcelUpload.ExcelPuller;
-import ExcelUpload.Runner;
-import POJO.ExcelUploadObject;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
+
+import com.atossyntel.excelupload.ExcelPuller;
+import com.atossyntel.excelupload.Runner;
+import com.atossyntel.pojo.ExcelUploadObject;
 
 
 public class UploadAuthentication extends SimpleFormController {

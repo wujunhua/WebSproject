@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
 
-import POJO.UserServiceDAO;
+import com.atossyntel.pojo.UserServiceDAO;
 
 
 public class PdfViewController implements Controller {

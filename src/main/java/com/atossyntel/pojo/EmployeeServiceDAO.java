@@ -1,10 +1,11 @@
-package POJO;
+package com.atossyntel.pojo;
 
-import ExcelUpload.Employee;
-import ExcelUpload.Module;
 import java.util.ArrayList;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.atossyntel.excelupload.Employee;
+import com.atossyntel.excelupload.Module;
 
 public class EmployeeServiceDAO implements EmployeeDAO{
     private DataSource dataSource;
@@ -17,7 +18,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         try { 
             jdbcTemplateObject = new JdbcTemplate(dataSource);
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            System.out.println(e.getMessage());
         }
     }
 

@@ -1,4 +1,4 @@
-package ExcelUpload;
+package com.atossyntel.excelupload;
 
 import java.sql.SQLException;
 import java.sql.Statement;

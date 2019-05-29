@@ -1,9 +1,10 @@
-package POJO;
+package com.atossyntel.pojo;
 
-import ExcelUpload.Employee;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
+
+import com.atossyntel.excelupload.Employee;
 
 public class EmployeeRowMapper implements RowMapper{
 

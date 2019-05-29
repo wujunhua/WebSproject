@@ -1,4 +1,4 @@
-package ExcelUpload;
+package com.atossyntel.excelupload;
 
 	import java.sql.Statement;
 	import java.sql.Connection;
@@ -17,38 +17,37 @@ import java.sql.SQLException;
                                 System.out.println(rows + " employee added.");
                                 return true;
 			} catch (SQLException e) {
-				System.out.println("Exception: " +  e.getMessage());
+				System.out.println(e.getMessage());
                                 return false;
 			}
                         
 		}
 		
-		public void readEmployee(Statement st, String employee_id){
-			try {
+		public void readEmployee(Statement st, String employeeId){
+			try (ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employeeId + "'");){
 				System.out.println("Reading employee.");
-				ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employee_id + "'");
 				while(rs.next())
 					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
 			} catch (SQLException e) {
-				System.out.println("Exception: " +  e.getMessage());
+				System.out.println(e.getMessage());
 			}
 		}
 		
-		public void updateEmployee(Statement st, String employee_id, String name, String email){
+		public void updateEmployee(Statement st, String employeeId, String name, String email){
 			try {
 				System.out.println("Update employee.");
 				int rows = st.executeUpdate("UPDATE Student_Performance.Employees SET name ='" + name + "' ,email ='" + email +
-						"'WHERE employee_id ='" + employee_id + "'");
+						"'WHERE employee_id ='" + employeeId + "'");
 				System.out.println(rows + " employee updated.");
 			} catch (SQLException e) {
 				System.out.println("Exception: " +  e.getMessage());
 			}
 		}
 		
-		public void deleteEmployee(Statement st, String employee_id){
+		public void deleteEmployee(Statement st, String employeeId){
 			try {
 				System.out.println("Delete employee.");
-				int rows = st.executeUpdate("DELETE FROM Student_Performance.Employees WHERE employee_id = '" + employee_id + "'");
+				int rows = st.executeUpdate("DELETE FROM Student_Performance.Employees WHERE employee_id = '" + employeeId + "'");
 				System.out.println(rows + " employee deleted.");
 			} catch (SQLException e) {
 				System.out.println("Exception: " +  e.getMessage());
@@ -57,7 +56,7 @@ import java.sql.SQLException;
                 
                 public void updateClass(Statement st, Employee employee){
                     try {
-                        int rows = st.executeUpdate("UPDATE employees Set class_id = '"+employee.getClassID()+"' where employee_id = '"+employee.getEmployeeID()+"'");
+                        st.executeUpdate("UPDATE employees Set class_id = '"+employee.getClassID()+"' where employee_id = '"+employee.getEmployeeID()+"'");
                         System.out.println("Employee Updated");
                     } catch(SQLException e){
                         System.out.println(e.getMessage());

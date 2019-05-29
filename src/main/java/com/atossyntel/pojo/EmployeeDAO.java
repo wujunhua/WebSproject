@@ -1,8 +1,9 @@
-package POJO;
+package com.atossyntel.pojo;
 
-import ExcelUpload.Employee;
 import java.util.ArrayList;
 import javax.sql.DataSource;
+
+import com.atossyntel.excelupload.Employee;
 
 public interface EmployeeDAO {
     public void setDataSource(DataSource ds);

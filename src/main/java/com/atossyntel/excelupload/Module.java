@@ -1,4 +1,4 @@
-package ExcelUpload;
+package com.atossyntel.excelupload;
 
 public class Module {
 	

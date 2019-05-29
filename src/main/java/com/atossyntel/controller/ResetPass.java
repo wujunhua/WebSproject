@@ -28,14 +28,14 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-import POJO.ResetPassForm;
-import POJO.User;
-import POJO.UserServiceDAO;
+import com.atossyntel.pojo.ResetPassForm;
+import com.atossyntel.pojo.User;
+import com.atossyntel.pojo.UserServiceDAO;
 
 public class ResetPass extends SimpleFormController {
         
     public ResetPass(){
-        setCommandClass(POJO.ResetPassForm.class);
+        setCommandClass(com.atossyntel.pojo.ResetPassForm.class);
         setCommandName("forgotPass");
     }
     

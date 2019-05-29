@@ -1,4 +1,4 @@
-package ExcelUpload;
+package com.atossyntel.excelupload;
 
 
 import java.io.File;
@@ -18,7 +18,7 @@ public class Runner {
         
         PassOrFail pof = new PassOrFail();
         ExcelPuller pul = new ExcelPuller();
-        ArrayList<Employee> emps = new ArrayList<>();
+        List<Employee> emps = new ArrayList<>();
         EmployeeCRUD empCrud = new EmployeeCRUD();
         ClassCRUD cCrud = new ClassCRUD();
         ETMCrud eCrud= new ETMCrud();

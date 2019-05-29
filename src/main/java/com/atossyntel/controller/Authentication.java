@@ -15,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 
-import POJO.User;
-import POJO.UserServiceDAO;
+import com.atossyntel.pojo.User;
+import com.atossyntel.pojo.UserServiceDAO;
 
 /**
  *

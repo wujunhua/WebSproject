@@ -1,5 +1,5 @@
 
-package POJO;
+package com.atossyntel.pojo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

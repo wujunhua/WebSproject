@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package POJO;
+package com.atossyntel.pojo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

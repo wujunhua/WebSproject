@@ -1,4 +1,4 @@
-package ExcelUpload;
+package com.atossyntel.excelupload;
 
 import java.util.ArrayList;
 import java.util.List;

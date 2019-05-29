@@ -2,23 +2,26 @@ package com.atossyntel.pojo;
 
 import java.util.ArrayList;
 import javax.sql.DataSource;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.atossyntel.excelupload.Employee;
 import com.atossyntel.excelupload.Module;
 
 public class EmployeeServiceDAO implements EmployeeDAO{
+    final static Logger logger = Logger.getLogger(EmployeeServiceDAO.class);
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
     
     @Override
     public void setDataSource(DataSource ds) {
-        System.out.println("Setting the data source and creating JDBC Template interface");
+        logger.info("Setting the data source and creating JDBC Template interface");
         dataSource = ds;
         try { 
             jdbcTemplateObject = new JdbcTemplate(dataSource);
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
     }
 
@@ -26,11 +29,11 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     public void insertEmployee(String employeeID, String name, String email, String classID, String managerID) {
         String sql = "insert into employees values (?, ?, ?, ?, ?)";
         try {
-            System.out.println("Insert into employees...");
+            logger.info("Insert into employees...");
             int row = jdbcTemplateObject.update(sql, employeeID, name, email, classID, managerID);
-            System.out.println("* " + row + " row inserted.\n");
+            logger.info("* " + row + " row inserted.\n");
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
     }
 
@@ -40,10 +43,10 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         String sql = "select * from employees where employee_id = ?";
         Employee emp = new Employee();
         try {
-            System.out.println("Read from employees...");
+            logger.info("Read from employees...");
             emp = (Employee) jdbcTemplateObject.queryForObject(sql, new Object[]{employeeID}, new EmployeeRowMapper());            
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
         return emp;
     }
@@ -54,14 +57,14 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         String sql = "select * from employees";
         
         try {
-            System.out.println("Read from employees...");
+            logger.info("Read from employees...");
             list = (ArrayList<Employee>) jdbcTemplateObject.query(sql, new EmployeeRowMapper());
             //For each employee get modules and set employee scores.
             for(int i=0; i<list.size(); i++){
                 list.get(i).setModScores(getModuleIDAndScore(list.get(i).getEmployeeID()));
             }            
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
         return list;
     }
@@ -74,10 +77,10 @@ public class EmployeeServiceDAO implements EmployeeDAO{
                 + "AND etm.module_id = m.module_id AND e.employee_id = ?";
         
         try {
-            System.out.println("Get Employee Module and Scores...");
+            logger.info("Get Employee Module and Scores...");
             list = (ArrayList<Module>) jdbcTemplateObject.query(sql, new Object[]{id}, new ModuleListRowMapper());
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
         return list;        
     }
@@ -100,13 +103,13 @@ public class EmployeeServiceDAO implements EmployeeDAO{
                 break;
         }
         try {
-            System.out.println("Read from employees from searching a column...");
+            logger.info("Read from employees from searching a column...");
             
             matchingEmps = (ArrayList<Employee>) jdbcTemplateObject.query(sql, 
                     new Object[]{"%" + searchTerm.toLowerCase() + "%"}, new EmployeeRowMapper());
                     
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
         
         return matchingEmps;
@@ -116,11 +119,11 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     public void updateEmployee(String employeeID, String name, String email, String managerID) {
         String sql = "update employees set employee_id = ?, name = ?, email = ?, manager_id = ? where employee_id = ?";
         try {
-            System.out.println("Update employee...");
+            logger.info("Update employee...");
             int row = jdbcTemplateObject.update(sql, employeeID, name, email, managerID, employeeID);    
-            System.out.println("* " + row + " row updated.\n");
+            logger.info("* " + row + " row updated.\n");
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
     }
     
@@ -129,9 +132,9 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         String sql = "update employees_take_modules set scores = ? where employee_id = ? AND module_id = ?";
         try {
             int row = jdbcTemplateObject.update(sql, score, employeeID, moduleID);    
-            System.out.println("* " + row + " row updated.\n");
+            logger.info("* " + row + " row updated.\n");
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }        
     }
 
@@ -139,11 +142,11 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     public void deleteEmployee(String employeeID) {
         String sql = "delete from employees where employee_id = ?";
         try {
-            System.out.println("Delete employee...");
+            logger.info("Delete employee...");
             int row = jdbcTemplateObject.update(sql, employeeID);
-            System.out.println("* " + row + " row deleted.\n");
+            logger.info("* " + row + " row deleted.\n");
         } catch(Exception e) {
-            System.out.println("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
     }
     

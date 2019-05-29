@@ -7,6 +7,7 @@ package com.atossyntel.pojo;
 
 import java.sql.PreparedStatement;
 import javax.sql.DataSource;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -14,13 +15,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author syntel
  */
 public class UserServiceDAO implements UserDAO{
+    final static Logger logger = Logger.getLogger(UserDAO.class);
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
     
     @Override
     public void setDataSource(DataSource ds){
-        System.out.println("Setting the Data Source and creating JDBC Template instance");
+        logger.info("Setting the Data Source and creating JDBC Template instance");
         dataSource = ds;
         jdbcTemplateObject = new JdbcTemplate(dataSource);
     }

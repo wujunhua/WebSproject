@@ -16,6 +16,7 @@ import com.atossyntel.pojo.UserServiceDAO;
 
 
 public class PdfViewController implements Controller {
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PdfViewController.class);
     @Override
     public ModelAndView handleRequest(HttpServletRequest request,
                                 HttpServletResponse response){
@@ -32,7 +33,7 @@ public class PdfViewController implements Controller {
             PDF pdfGenerator = new PDF(userDAO.getDataSource());
             pdfGenerator.generate(employeeID);
         } catch (Exception ex) {
-            System.err.println("PdfViewController: There was an issue with generating the PDF");
+            logger.error("PdfViewController: There was an issue with generating the PDF");
             ex.printStackTrace();
         }
                 

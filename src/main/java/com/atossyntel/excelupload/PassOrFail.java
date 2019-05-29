@@ -5,14 +5,17 @@
  */
 package com.atossyntel.excelupload;
 
+import com.atossyntel.excelupload.Module;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author syntel
  */
 public class PassOrFail {
+    final static Logger logger = Logger.getLogger(PassOrFail.class);
     
     //Filters through all of an employee's modules scores
     //Returns only passing grades, and 1 of each module
@@ -67,7 +70,7 @@ public class PassOrFail {
                 previousModule = currentModule;
             }
        
-            System.out.println(finalScores);
+            logger.info(finalScores);
        
         
         

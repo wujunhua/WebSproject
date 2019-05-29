@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.sql.DataSource;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -14,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
  */
 
 public class PDFinfo {
+    final static Logger logger = Logger.getLogger(PDFinfo.class);
     private Connection c1;
     private NamedParameterJdbcTemplate njdbc;
     private DataSource dataSource;
@@ -66,8 +68,8 @@ public class PDFinfo {
             return list;
             
         } catch (Exception e){
-            System.out.println("No Categories found.");
-            System.out.println(e.getMessage());
+            logger.error("No Categories found.");
+            logger.error(e.getMessage());
             return null;
         }
 	}
@@ -161,7 +163,7 @@ public class PDFinfo {
             }
             return list;
         } catch (Exception e){
-            System.out.println("Something went wrong: " + e.getMessage());
+            logger.error("Something went wrong: " + e.getMessage());
             return null;
         }
 	}

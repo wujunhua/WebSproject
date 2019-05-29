@@ -5,61 +5,67 @@ package com.atossyntel.excelupload;
 	import java.sql.DriverManager;
 	import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 
 	public class EmployeeCRUD {
+            final static Logger logger = Logger.getLogger(EmployeeCRUD.class);
 		
 		public boolean insertEmployee(Statement st, Employee employee){
                             
                             try {
-				System.out.println("Creating new employee. ");
+				logger.info("Creating new employee. ");
 				int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee.getEmployeeID() + "','" + employee.getEmployeeName() + "','" + employee.getEmployeeEmail() + "','" + employee.getClassID() + "','"+employee.getManagerID()+"')");
 				
-                                System.out.println(rows + " employee added.");
+                                logger.info(rows + " employee added.");
                                 return true;
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+
+				logger.error("Exception: " +  e.getMessage());
                                 return false;
 			}
                         
 		}
 		
-		public void readEmployee(Statement st, String employeeId){
-			try (ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employeeId + "'");){
-				System.out.println("Reading employee.");
+
+		public void readEmployee(Statement st, String employee_id){
+			try {
+				logger.info("Reading employee.");
+				ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employee_id + "'");
 				while(rs.next())
-					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
+					logger.info(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				logger.error("Exception: " +  e.getMessage());
 			}
 		}
 		
 		public void updateEmployee(Statement st, String employeeId, String name, String email){
 			try {
-				System.out.println("Update employee.");
+				logger.info("Update employee.");
 				int rows = st.executeUpdate("UPDATE Student_Performance.Employees SET name ='" + name + "' ,email ='" + email +
+
 						"'WHERE employee_id ='" + employeeId + "'");
-				System.out.println(rows + " employee updated.");
+				logger.info(rows + " employee updated.");
 			} catch (SQLException e) {
-				System.out.println("Exception: " +  e.getMessage());
+				logger.error("Exception: " +  e.getMessage());
 			}
 		}
 		
 		public void deleteEmployee(Statement st, String employeeId){
 			try {
-				System.out.println("Delete employee.");
+				logger.info("Delete employee.");
 				int rows = st.executeUpdate("DELETE FROM Student_Performance.Employees WHERE employee_id = '" + employeeId + "'");
-				System.out.println(rows + " employee deleted.");
-			} catch (SQLException e) {
-				System.out.println("Exception: " +  e.getMessage());
+				logger.info(rows + " employee deleted.");
+			} catch (Exception e) {
+				logger.error("Exception: " +  e.getMessage());
 			}
 		}
                 
                 public void updateClass(Statement st, Employee employee){
                     try {
                         st.executeUpdate("UPDATE employees Set class_id = '"+employee.getClassID()+"' where employee_id = '"+employee.getEmployeeID()+"'");
-                        System.out.println("Employee Updated");
+                        logger.info("Employee Updated");
                     } catch(SQLException e){
-                        System.out.println(e.getMessage());
+                        logger.error(e.getMessage());
                         
                     }
                     
@@ -78,7 +84,7 @@ import java.sql.SQLException;
                                 st.close();
                             }
 			} catch (ClassNotFoundException | SQLException e) {
-				System.out.println("Exception " + e.getMessage());
+				logger.error("Exception " + e.getMessage());
 			} 
 		}
 		

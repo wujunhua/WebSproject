@@ -24,8 +24,10 @@ import javax.mail.BodyPart;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
+import org.apache.log4j.Logger;
 
 public class SendEmail {
+    final static Logger logger = Logger.getLogger(SendEmail.class);
     
     public static void sendIdividualEmail(String email, String id) {
     	
@@ -64,7 +66,7 @@ public class SendEmail {
             String[] startEndDates = getStartEnd(email);
          
             message.setSubject("Performica Report["+ getStreamName(email) + "]["+ startEndDates[0] + "]-["+startEndDates[1]+"]");
-            System.out.println("here");
+            logger.info("here");
             // Create the message part
             BodyPart messageBodyPart = new MimeBodyPart();
 
@@ -162,13 +164,13 @@ public class SendEmail {
             Transport tr = session.getTransport("smtp");
             tr.send(message);
 
-            System.out.println("message sent!");
+            logger.info("message sent!");
 
         }
         catch (MessagingException mex)
         {
-            System.out.println("Error: unable to send message....");
-            System.out.println(mex.toString());
+            logger.error("Error: unable to send message....");
+            logger.error(mex.toString());
             
         }
         
@@ -285,14 +287,14 @@ public class SendEmail {
             Transport tr = session.getTransport("smtp");
             tr.send(message);
 
-            System.out.println("message sent!");
+            logger.info("message sent!");
 
 
         }
         catch (MessagingException mex)
         {
-            System.out.println("Error: unable to send message....");
-            System.out.println(mex.toString());
+            logger.error("Error: unable to send message....");
+            logger.error(mex.toString());
             
         }
         
@@ -328,18 +330,18 @@ public class SendEmail {
         
             if(count == 0 || count > 1)
             {
-		System.out.println("Not Valid Email!!!");
+		logger.info("Not Valid Email!!!");
                     return false;
             }
             else if(count ==1)
             {
-		System.out.println("Valid Email!");
+		logger.info("Valid Email!");
 		return true;
             }
 		                
             }catch (Exception ex) 
             {
-		System.out.println(ex);
+		logger.error(ex);
             }
 				
 
@@ -368,18 +370,18 @@ public class SendEmail {
 			        
             if(count == 0 || count > 1)
             {
-		System.out.println("Not Valid Class ID");
+		logger.info("Not Valid Class ID");
 		return false;
             }
             else if(count ==1)
             {
-                System.out.println("Success: Valid Class ID");
+                logger.info("Success: Valid Class ID");
 		return true;
             }
 		                
             }catch (Exception ex) 
             {
-		System.out.println(ex);
+		logger.info(ex);
             }
 				
             return false;
@@ -411,7 +413,7 @@ public class SendEmail {
 		
 	catch (Exception ex) 
 	{
-            System.out.println(ex);
+            logger.error(ex);
 	}
     	
     	return null;
@@ -431,7 +433,7 @@ public class SendEmail {
 	}
         catch (Exception ex) 
         {
-            System.out.println(ex);
+            logger.error(ex);
 	}
     	
     	return " ";
@@ -450,7 +452,7 @@ public class SendEmail {
 	}	
         catch (Exception ex) 
         {
-            System.out.println(ex);
+            logger.error(ex);
 	}
     	
     	return " ";
@@ -470,7 +472,7 @@ public class SendEmail {
 		
 	catch (Exception ex) 
 	{
-            System.out.println(ex);
+            logger.error(ex);
 	}
     	
     	return "";
@@ -502,7 +504,7 @@ public class SendEmail {
 		
 	catch (Exception ex) 
 	{
-            System.out.println(ex);
+            logger.error(ex);
 	}
     	
     	return " ";
@@ -531,7 +533,7 @@ public class SendEmail {
 		
 	catch (Exception ex) 
 	{
-            System.out.println(ex);
+            logger.error(ex);
 	}
     	
     	return null;
@@ -560,7 +562,7 @@ public class SendEmail {
 	}	
         catch (Exception ex) 
 	{
-            System.out.println(ex);
+            logger.error(ex);
 	}
     	
     	return batchEmails;

@@ -1,5 +1,5 @@
 package UnitTesting;
-import Controller.AdminController;
+import com.atossyntel.controller.AdminController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +20,7 @@ public class TestAdminController{
     HttpServletResponse res;
     @Mock
     HttpSession mockedSession;
+    
     @Test
     public void testAdminHtm(){
         MockitoAnnotations.initMocks(this);

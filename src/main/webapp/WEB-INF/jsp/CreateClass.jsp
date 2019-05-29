@@ -1,4 +1,4 @@
-<%@page import="POJO.Stream"%>
+<%@page import="com.atossyntel.pojo.Stream"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>

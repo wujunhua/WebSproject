@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-import POJO.User;
 import java.sql.PreparedStatement;
 
 @RunWith(Parameterized.class)
@@ -42,6 +41,7 @@ public class TestStream {
         sqlQuery = "select stream_id from stream";
         PreparedStatement getIds = null;
         try{getIds = conn.prepareStatement(sqlQuery);} catch(SQLException e){}
+        
         Object[][] data = new Object[][] { {"el@Syntelinc.com","abc123",true}, 
                                             {"sl@Syntelinc.com","def456",false}, 
                                             {"jp@Syntelinc.com","ghi789",true}, 

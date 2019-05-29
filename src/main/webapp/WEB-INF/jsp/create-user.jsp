@@ -4,7 +4,7 @@
     Author     : syntel
 --%>
 
-<%@page import="Controller.SendEmail"%>
+<%@page import="com.atossyntel.controller.SendEmail"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*" %>

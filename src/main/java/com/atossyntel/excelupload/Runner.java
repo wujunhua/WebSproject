@@ -1,7 +1,6 @@
 package com.atossyntel.excelupload;
 
 
-import com.atossyntel.excelupload.Module;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,9 +14,14 @@ import org.apache.log4j.Logger;
 
 
 public class Runner {
-    final static Logger logger = Logger.getLogger(Runner.class);
+	
+    private Runner() {
+		super();
+	}
+
+	static final Logger logger = Logger.getLogger(Runner.class);
     
-    public static List<Employee> ExcelUpload(File filePath, String loc, String site, String stream, String insEmail, String startDate, String endDate) throws IOException, ParseException {
+    public static List<Employee> excelUpload(File filePath, String loc, String site, String stream, String insEmail, String startDate, String endDate) throws IOException {
         
         PassOrFail pof = new PassOrFail();
         ExcelPuller pul = new ExcelPuller();
@@ -26,13 +30,6 @@ public class Runner {
         ClassCRUD cCrud = new ClassCRUD();
         ETMCrud eCrud= new ETMCrud();
         emps = pul.generateEmployees(filePath, loc, site, stream);
-        
-
-        try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e1) {
-			e1.getMessage();
-		}
         
         try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
         	Statement st = con.createStatement();) {

@@ -43,12 +43,12 @@ static final Logger logger = Logger.getLogger(PDF.class);
 
     private DefaultCategoryDataset dataset;
 
-    private final static BaseFont font = BaseFont.Helvetica;
+    private static final BaseFont font = BaseFont.Helvetica;
     private PDPage page = new PDPage();
     private PDFinfo pdfinfo;
 
     private String filePath = "C:\\Users\\syntel\\Music\\"; //use getfilepath in the email logic?
-    private final static String imagePath = "C:\\Examples\\WebSproject\\src\\main\\resources\\img\\pdf_banner.png"; //path to AS logo
+    private static final String IMAGEPATH = "C:\\Examples\\WebSproject\\src\\main\\resources\\img\\pdf_banner.png"; //path to AS logo
 
     //java.io.File.separator
     public PDF() {
@@ -124,7 +124,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
 
         List<String> stream = info.getStreamIDName(empid);
 
-        ArrayList<String[]> cats = new ArrayList<String[]>();
+        List<String[]> cats = new ArrayList<>();
         cats.addAll(info.getCategoryNameID());
 
         //define a <hr /> --------------------------------
@@ -146,7 +146,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
         float bottomMargin = 20;
         Document document = new Document(leftMargin, rightMargin, topMargin, bottomMargin);
 
-        document.add(new ImageElement(imagePath), new VerticalLayoutHint(Alignment.Left, 0, 0,
+        document.add(new ImageElement(IMAGEPATH), new VerticalLayoutHint(Alignment.Left, 0, 0,
                 0, 0, true));
         document.add(new VerticalSpacer(90));
 
@@ -176,13 +176,12 @@ static final Logger logger = Logger.getLogger(PDF.class);
         document.add(par);
         document.add(new VerticalSpacer(1.5f * linspace));
 
-        //document.add(hRule);
         document.add(new VerticalSpacer(linspace));
         for (String[] cat : cats) {
-            ArrayList<String[]> scores = new ArrayList<String[]>();
+            List<String[]> scores = new ArrayList<>();
             scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
 
-            if (scores.size() > 0) {
+            if (scores.isEmpty()) {
                 gradeNumbers += cat[0] + " Grade: " + numToLetter(info.getAverageScoreByCategory(empid, cat[1])) + "  |  ";
 
                 par = new Paragraph();
@@ -198,7 +197,6 @@ static final Logger logger = Logger.getLogger(PDF.class);
                 }
 
                 document.add(par, VerticalLayoutHint.LEFT);
-                //document.add(hRule);
                 document.add(new VerticalSpacer(1.5f * linspace));
             }
         }
@@ -309,7 +307,6 @@ static final Logger logger = Logger.getLogger(PDF.class);
 }
 /* "Real Way" to underline Do not use - inserts new, completely blank, page before rest of content.
 //Saved for possible later use and as a reminder to not Do The Thing
-Stroke stroke = new Stroke();
 RenderContext rc = new RenderContext(document, document.getPDDocument());
 stroke.applyTo(rc.getContentStream());
 rc.close();

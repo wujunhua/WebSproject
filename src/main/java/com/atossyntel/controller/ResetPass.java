@@ -30,14 +30,14 @@ import com.atossyntel.pojo.UserServiceDAO;
 import org.apache.log4j.Logger;
 
 public class ResetPass extends SimpleFormController {
-    final static Logger logger = Logger.getLogger(ResetPass.class);
+    static final Logger logger = Logger.getLogger(ResetPass.class);
         
     public ResetPass(){
         setCommandClass(com.atossyntel.pojo.ResetPassForm.class);
         setCommandName("forgotPass");
     }
     
-    public void SendResetEmail(String email, String pass_message) {
+    public void sendResetEmail(String email, String passMessage) {
         String host="smtp.gmail.com";
         final String user="jmcgregtemp@gmail.com";//ENTER YOUR EMAIL!!
         final String password="mcgregor1"; //ENTER YOUR PASSWORD
@@ -73,7 +73,7 @@ public class ResetPass extends SimpleFormController {
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message
-            messageBodyPart.setText("Your password has been reset, the new password is:" + pass_message);
+            messageBodyPart.setText("Your password has been reset, the new password is:" + passMessage);
 
             // Create a multipart message
             Multipart multipart = new MimeMultipart();
@@ -119,7 +119,7 @@ public class ResetPass extends SimpleFormController {
             //set the new password in the database
             usrDAO.setUserPassword(userEmail.getEmail(), newPass);
             //send email to user with the new password
-            SendResetEmail(userEmail.getEmail(), newPass);
+            sendResetEmail(userEmail.getEmail(), newPass);
             logger.info("Password Changed");
             
         }catch(Exception e){

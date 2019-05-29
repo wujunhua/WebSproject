@@ -8,12 +8,12 @@ import java.util.logging.Logger;
 
 
 public class Stream {
-    private String ID;
+    private String id;
     private String name;
 
     public Stream(ResultSet rs) {
         try {
-            this.ID = rs.getString("stream_id");
+            this.id = rs.getString("stream_id");
             this.name = rs.getString("stream_name");
         } catch (SQLException ex) {
             Logger.getLogger(Stream.class.getName()).log(Level.SEVERE, null, ex);
@@ -22,11 +22,11 @@ public class Stream {
     
     
     public String getID() {
-        return ID;
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -40,6 +40,6 @@ public class Stream {
     
     @Override
     public String toString() {
-        return "Stream{" + "ID=" + ID + ", name=" + name + '}';
+        return "Stream{" + "id=" + id + ", name=" + name + '}';
     }
 }

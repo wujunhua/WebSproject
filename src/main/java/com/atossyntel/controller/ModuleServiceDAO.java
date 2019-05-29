@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class ModuleServiceDAO {
-final static Logger logger = Logger.getLogger(ModuleServiceDAO.class);
+static final Logger logger = Logger.getLogger(ModuleServiceDAO.class);
     private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DataSource dataSource) {    

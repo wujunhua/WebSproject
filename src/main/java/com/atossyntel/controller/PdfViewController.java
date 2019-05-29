@@ -32,7 +32,7 @@ public class PdfViewController implements Controller {
             pdfGenerator.generate(employeeID);
         } catch (Exception ex) {
             logger.error("PdfViewController: There was an issue with generating the PDF");
-            ex.printStackTrace();
+            logger.error(ex.getMessage());
         }
                 
         RedirectView emailRedirect = new RedirectView("email.htm"); // go back to the same email page        

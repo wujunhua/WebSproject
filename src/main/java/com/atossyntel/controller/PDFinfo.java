@@ -57,12 +57,12 @@ public class PDFinfo {
     * Get name-id pairs of all categories 
     * @return ArrayList of String[] = {category name, category ID}
     */
-    public ArrayList<String[]> getCategoryNameID(){
+    public List<String[]> getCategoryNameID(){
         try(
             Statement s1 = c1.createStatement();
             ResultSet r1=s1.executeQuery("SELECT category_name, category_id FROM category");
         ){
-            ArrayList<String[]> list = new ArrayList<String[]>();
+            List<String[]> list = new ArrayList<>();
             while(r1.next()){
                 String[] pair = {r1.getString(1), r1.getString(2)};
                 list.add(pair);	
@@ -82,10 +82,9 @@ public class PDFinfo {
     * @return employee name
     */
     public String getEmployeeName(String empID) {
-        String SQL = "SELECT name FROM Employees WHERE employee_id = :id";
+        String sql = "SELECT name FROM Employees WHERE employee_id = :id";
         SqlParameterSource namedParams= new MapSqlParameterSource("id",empID);
-        String str = njdbc.queryForObject(SQL, namedParams, String.class);
-        return str;
+        return njdbc.queryForObject(sql, namedParams, String.class);
     }
     
     /**
@@ -95,7 +94,7 @@ public class PDFinfo {
     * @throws java.lang.Exception
     */
     public List<String> getStreamIDName(String empID) throws Exception{
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         Statement s1 = c1.createStatement();
      
         ResultSet r1=s1.executeQuery("select s.stream_id, s.stream_name from Stream s, Class c, Employees e where s.stream_id=c.stream_id and c.class_id=e.class_id and e.employee_id='"+empID+"'");
@@ -130,17 +129,17 @@ public class PDFinfo {
     */
 	public String getAverageScoreByCategory(String empID, String category) throws Exception{
         SqlParameterSource namedParams;
-        String SQL = "SELECT AVG(s.scores) "
+        String sql = "SELECT AVG(s.scores) "
                 + "FROM employees_take_modules s INNER JOIN modules m ON m.module_id = s.module_ID "
                 + "WHERE s.employee_id = :id";
         namedParams = new MapSqlParameterSource("id",empID);
 
         if (category.length() > 0){
-            SQL += " AND m.category_id = :category";
+            sql += " AND m.category_id = :category";
             namedParams= new MapSqlParameterSource("id",empID).addValue("category", category);
         }
         
-        String str = njdbc.queryForObject(SQL, namedParams, String.class);
+        String str = njdbc.queryForObject(sql, namedParams, String.class);
 
 		return String.format("%.2f", Float.parseFloat(str));
 	}
@@ -151,14 +150,14 @@ public class PDFinfo {
     * @param category - the desired category
     * @return a string representation of the average score
     */
-	public ArrayList<String[]> getModuleScoresByCategory(String empID, String category) {
+	public List<String[]> getModuleScoresByCategory(String empID, String category) {
         try(
             Statement s1 = c1.createStatement();
             ResultSet r1=s1.executeQuery("SELECT m.module_name, s.scores "
                     + "FROM modules m INNER JOIN employees_take_modules s ON m.module_id=s.module_id "
                     + "WHERE employee_id = '" + empID + "' AND category_id='" + category + "'");
         ){
-            ArrayList<String[]> list = new ArrayList<String[]>();
+            List<String[]> list = new ArrayList<>();
             while(r1.next()){
                 String[] pair = {r1.getString(1), r1.getString(2)};
                 list.add(pair);		
@@ -177,7 +176,7 @@ public class PDFinfo {
     * @return a string representation of the average score
     */
 	public String getClassModuleScores(String empID, String modName){
-		String SQL = "SELECT AVG(s.scores) "
+		String sql = "SELECT AVG(s.scores) "
             + "FROM modules m INNER JOIN employees_take_modules s ON m.module_id=s.module_id "
             + "WHERE m.module_name = :m AND employee_id IN ( "
             + "SELECT employee_id FROM employees WHERE class_id IN ( "
@@ -187,7 +186,7 @@ public class PDFinfo {
             + "GROUP BY m.module_name ORDER BY m.module_name";
 
         SqlParameterSource namedParams= new MapSqlParameterSource("m",modName).addValue("e", empID);
-        String str = njdbc.queryForObject(SQL, namedParams, String.class);
+        String str = njdbc.queryForObject(sql, namedParams, String.class);
         return String.format("%.2f", Float.parseFloat(str));
 	}
 }

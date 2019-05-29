@@ -39,9 +39,9 @@ public class UserServiceDAO implements UserDAO{
 
     @Override
     public void setUserPassword(String id, String password) {
-        String SQL = "update users set password = ? where user_id = ?";
+        String sql = "update users set password = ? where user_id = ?";
         
-        jdbcTemplateObject.update(SQL, password, id);
+        jdbcTemplateObject.update(sql, password, id);
     }
     
     

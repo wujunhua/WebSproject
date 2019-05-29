@@ -59,7 +59,7 @@ static final Logger logger = Logger.getLogger(ExcelWriter.class);
         ArrayList<String> scoreTitles = createScoreTitles(moduleNames);
         columnTitles.addAll(scoreTitles); // add dynamic column titles
 
-        XSSFWorkbook workbook = new XSSFWorkbook(); // blank workbook
+        try(XSSFWorkbook workbook = new XSSFWorkbook();) { // blank workbook
         XSSFSheet spreadsheet = workbook.createSheet("Performance Reports Template");
         
         XSSFFont boldFont = workbook.createFont();
@@ -88,18 +88,14 @@ static final Logger logger = Logger.getLogger(ExcelWriter.class);
                     spreadsheet.autoSizeColumn(columnIndex); // expand column to match text width
                 
                 columnIndex++; // move to the next column
-        }
-        
-        try {
+        }        
             workbook.write(outputStream); // up to the caller to close stream
-            workbook.close();
             logger.info("Template spreadsheet was written successfully");
         } catch (IOException e) {
             logger.error(e.getMessage());
             logger.error("createExcelTemplateFile: there was an issue creating the template file");
         }  
-    }
-    
+}
     /*
     *   input - @modulesNames: the current template's modules
     *

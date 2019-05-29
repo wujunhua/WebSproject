@@ -4,7 +4,6 @@ package com.atossyntel.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,7 +33,7 @@ public class UploadAuthentication extends SimpleFormController {
         File file = convert(multiFile);
        
   
-        Runner.ExcelUpload(file, excel.getLocation(), excel.getSite(), excel.getStreamName(), excel.getInsEmail(), excel.getStartDate(), excel.getEndDate());
+        Runner.excelUpload(file, excel.getLocation(), excel.getSite(), excel.getStreamName(), excel.getInsEmail(), excel.getStartDate(), excel.getEndDate());
         // bring in all streams
         
         ExcelPuller excelPuller = new ExcelPuller();
@@ -44,7 +43,7 @@ public class UploadAuthentication extends SimpleFormController {
 
         return new ModelAndView(emailSearchView);
         
-      } catch(IOException | ParseException e){
+      } catch(IOException e){
           return new ModelAndView("uploadErrorPage");
       }
         
@@ -53,9 +52,11 @@ public class UploadAuthentication extends SimpleFormController {
     
     public File convert(MultipartFile file) throws IOException{
         File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
+        if(convFile.createNewFile())
+        {
         try (FileOutputStream fos = new FileOutputStream(convFile)) {
             fos.write(file.getBytes());
+        }
         }
         
         return convFile;

@@ -1,8 +1,6 @@
 
 package com.atossyntel.controller;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +14,7 @@ import com.atossyntel.pojo.UserServiceDAO;
 
 
 public class PdfViewController implements Controller {
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PdfViewController.class);
+    static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PdfViewController.class);
     @Override
     public ModelAndView handleRequest(HttpServletRequest request,
                                 HttpServletResponse response){

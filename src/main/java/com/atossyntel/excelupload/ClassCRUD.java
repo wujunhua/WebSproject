@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 
 public class ClassCRUD {
-    final static Logger logger = Logger.getLogger(ClassCRUD.class);
+    static final Logger logger = Logger.getLogger(ClassCRUD.class);
 
 	public void insertClass(Statement st, String classId, String streamId, String userId, String startDate, String endDate) throws SQLException{
 		

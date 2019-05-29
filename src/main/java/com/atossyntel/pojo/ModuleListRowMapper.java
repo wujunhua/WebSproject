@@ -13,7 +13,7 @@ import com.atossyntel.excelupload.Module;
 import com.atossyntel.excelupload.ModuleWithID;
 
 
-public class ModuleListRowMapper implements RowMapper{
+public class ModuleListRowMapper implements RowMapper<Module>{
 
     @Override
     public Module mapRow(ResultSet rs, int i) throws SQLException {

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 	public class EmployeeCRUD {
-            final static Logger logger = Logger.getLogger(EmployeeCRUD.class);
+            static final Logger logger = Logger.getLogger(EmployeeCRUD.class);
 		
 		public boolean insertEmployee(Statement st, Employee employee){
                             
@@ -20,21 +20,20 @@ import org.apache.log4j.Logger;
                                 return true;
 			} catch (SQLException e) {
 
-				logger.error("Exception: " +  e.getMessage());
+				logger.error(e.getMessage());
                                 return false;
 			}
                         
 		}
 		
 
-		public void readEmployee(Statement st, String employee_id){
-			try {
+		public void readEmployee(Statement st, String employeeId){
+			try(ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employeeId + "'");) {
 				logger.info("Reading employee.");
-				ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employee_id + "'");
 				while(rs.next())
 					logger.info(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
 			} catch (SQLException e) {
-				logger.error("Exception: " +  e.getMessage());
+				logger.error(e.getMessage());
 			}
 		}
 		
@@ -46,7 +45,7 @@ import org.apache.log4j.Logger;
 						"'WHERE employee_id ='" + employeeId + "'");
 				logger.info(rows + " employee updated.");
 			} catch (SQLException e) {
-				logger.error("Exception: " +  e.getMessage());
+				logger.error(e.getMessage());
 			}
 		}
 		
@@ -73,11 +72,7 @@ import org.apache.log4j.Logger;
                 
 
 		public static void main(String[] args) {
-			EmployeeCRUD ec = new EmployeeCRUD();
 			try {
-				String empId = "IM505";
-				String name = "Icema";
-				String email = "IM506@syn.com";
 				Class.forName("oracle.jdbc.OracleDriver");
                             try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "Student_Performance", "Student_Performance")) {
                                 Statement st = con.createStatement();

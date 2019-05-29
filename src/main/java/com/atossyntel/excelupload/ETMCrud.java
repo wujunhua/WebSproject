@@ -5,7 +5,7 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 public class ETMCrud {
-    final static Logger logger = Logger.getLogger(ETMCrud.class);
+    static final Logger logger = Logger.getLogger(ETMCrud.class);
 	
 	public void insertETM(Statement st, Module module, String empId, String streamName){
 		try {

@@ -1,6 +1,7 @@
 package com.atossyntel.controller;
 
 import java.awt.Color;
+import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,9 +36,8 @@ import rst.pdfbox.layout.text.Alignment;
 import rst.pdfbox.layout.text.BaseFont;
 import rst.pdfbox.layout.elements.ImageElement;
 
-//import org.jfree.chart.ChartUtilities;
 public class PDF {
-final static Logger logger = Logger.getLogger(PDF.class);
+static final Logger logger = Logger.getLogger(PDF.class);
     private DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
 
@@ -122,7 +122,7 @@ final static Logger logger = Logger.getLogger(PDF.class);
         //define output vars
         String gradeNumbers = "Overall Grade: " + numToLetter(info.getAverageScore(empid)) + "\n|  ";
 
-        ArrayList<String> stream = info.getStreamIDName(empid);
+        List<String> stream = info.getStreamIDName(empid);
 
         ArrayList<String[]> cats = new ArrayList<String[]>();
         cats.addAll(info.getCategoryNameID());

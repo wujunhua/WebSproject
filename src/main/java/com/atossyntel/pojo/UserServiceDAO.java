@@ -5,7 +5,6 @@
  */
 package com.atossyntel.pojo;
 
-import java.sql.PreparedStatement;
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author syntel
  */
 public class UserServiceDAO implements UserDAO{
-    final static Logger logger = Logger.getLogger(UserDAO.class);
+    static final Logger logger = Logger.getLogger(UserDAO.class);
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
@@ -28,9 +27,9 @@ public class UserServiceDAO implements UserDAO{
     }
     @Override
     public User getUser(String id){
-        String SQL = "select * from users where user_id = ?";
-        User emp = jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new UserRowMapper());
-        return emp;
+        String sql = "select * from users where user_id = ?";
+        return jdbcTemplateObject.queryForObject(sql, new Object[]{id}, new UserRowMapper());
+        
         
     }
     

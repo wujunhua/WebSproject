@@ -1,6 +1,8 @@
 package com.atossyntel.pojo;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,19 +11,18 @@ import com.atossyntel.excelupload.Employee;
 import com.atossyntel.excelupload.Module;
 
 public class EmployeeServiceDAO implements EmployeeDAO{
-    final static Logger logger = Logger.getLogger(EmployeeServiceDAO.class);
-    private DataSource dataSource;
+    static final Logger logger = Logger.getLogger(EmployeeServiceDAO.class);
     private JdbcTemplate jdbcTemplateObject;
     
     @Override
     public void setDataSource(DataSource ds) {
         logger.info("Setting the data source and creating JDBC Template interface");
-        dataSource = ds;
+        DataSource dataSource = ds;
         try { 
             jdbcTemplateObject = new JdbcTemplate(dataSource);
         } catch(Exception e) {
 
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
     }
 
@@ -33,7 +34,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
             int row = jdbcTemplateObject.update(sql, employeeID, name, email, classID, managerID);
             logger.info("* " + row + " row inserted.\n");
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
     }
 
@@ -44,21 +45,21 @@ public class EmployeeServiceDAO implements EmployeeDAO{
         Employee emp = new Employee();
         try {
             logger.info("Read from employees...");
-            emp = (Employee) jdbcTemplateObject.queryForObject(sql, new Object[]{employeeID}, new EmployeeRowMapper());            
+            emp = jdbcTemplateObject.queryForObject(sql, new Object[]{employeeID}, new EmployeeRowMapper());            
         } catch(Exception e) {
-            logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
+            logger.error(e.getMessage());
         }
         return emp;
     }
     
     @Override
-    public ArrayList<Employee> readAllEmployee(){
-        ArrayList<Employee> list = new ArrayList<>();
+    public List<Employee> readAllEmployee(){
+        List<Employee> list = new ArrayList<>();
         String sql = "select * from employees";
         
         try {
             logger.info("Read from employees...");
-            list = (ArrayList<Employee>) jdbcTemplateObject.query(sql, new EmployeeRowMapper());
+            list = jdbcTemplateObject.query(sql, new EmployeeRowMapper());
             //For each employee get modules and set employee scores.
             for(int i=0; i<list.size(); i++){
                 list.get(i).setModScores(getModuleIDAndScore(list.get(i).getEmployeeID()));
@@ -70,15 +71,15 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     }
     
     //Get arraylist of module for employee.
-    public ArrayList<Module> getModuleIDAndScore(String id){
-        ArrayList<Module> list = new ArrayList<>();
+    public List<Module> getModuleIDAndScore(String id){
+        List<Module> list = new ArrayList<>();
         String sql = "select m.module_name, etm.scores, m.module_id from Employees e, "
                 + "Modules m, Employees_take_Modules etm where e.employee_id = etm.employee_id "
                 + "AND etm.module_id = m.module_id AND e.employee_id = ?";
         
         try {
             logger.info("Get Employee Module and Scores...");
-            list = (ArrayList<Module>) jdbcTemplateObject.query(sql, new Object[]{id}, new ModuleListRowMapper());
+            list = jdbcTemplateObject.query(sql, new Object[]{id}, new ModuleListRowMapper());
         } catch(Exception e) {
             logger.error("EXCEPTION: [ " + e.getMessage() + " ]");
         }
@@ -86,7 +87,7 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     }
  
     @Override
-    public ArrayList<Employee> readAllEmployeeFromCol(String searchBy, String searchTerm) {
+    public List<Employee> readAllEmployeeFromCol(String searchBy, String searchTerm) {
         
         ArrayList<Employee> matchingEmps = new ArrayList<>();
         String sql = "";
@@ -101,6 +102,9 @@ public class EmployeeServiceDAO implements EmployeeDAO{
             case "classID":
                 sql = "select * from employees where lower(class_id) like ?";
                 break;
+            default:
+            	break;
+            
         }
         try {
             logger.info("Read from employees from searching a column...");

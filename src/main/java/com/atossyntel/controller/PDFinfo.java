@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,7 +17,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
  */
 
 public class PDFinfo {
-    final static Logger logger = Logger.getLogger(PDFinfo.class);
+    static final Logger logger = Logger.getLogger(PDFinfo.class);
     private Connection c1;
     private NamedParameterJdbcTemplate njdbc;
     private DataSource dataSource;
@@ -92,8 +94,8 @@ public class PDFinfo {
     * @return a list of strings, formatted as [id1, name1, id2, name2, ...]
     * @throws java.lang.Exception
     */
-    public ArrayList<String> getStreamIDName(String empID) throws Exception{
-        ArrayList<String> list = new ArrayList();
+    public List<String> getStreamIDName(String empID) throws Exception{
+        List<String> list = new ArrayList<String>();
         Statement s1 = c1.createStatement();
      
         ResultSet r1=s1.executeQuery("select s.stream_id, s.stream_name from Stream s, Class c, Employees e where s.stream_id=c.stream_id and c.class_id=e.class_id and e.employee_id='"+empID+"'");

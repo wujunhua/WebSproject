@@ -17,9 +17,6 @@ import org.springframework.jdbc.core.RowMapper;
  */
 public class UserRowMapper implements RowMapper<User> {
 
-    public UserRowMapper() {
-    }
-
     @Override
     public User mapRow(ResultSet rs, int i) {
         User e = new User();
@@ -29,9 +26,9 @@ public class UserRowMapper implements RowMapper<User> {
             e.setIsAdmin(rs.getString(3));
         } catch (SQLException ex) {
             Logger.getLogger(UserRowMapper.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        } 
             return e;
-        }
+        
     }
     
 }

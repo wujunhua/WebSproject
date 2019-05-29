@@ -161,8 +161,8 @@ public class SendEmail {
             message.setContent(multipart);
 
             
-            Transport tr = session.getTransport("smtp");
-            tr.send(message);
+            //Transport tr = session.getTransport("smtp");
+            Transport.send(message);
 
             logger.info("message sent!");
 
@@ -284,8 +284,8 @@ public class SendEmail {
             message.setContent(multipart);
 
             
-            Transport tr = session.getTransport("smtp");
-            tr.send(message);
+            //Transport tr = session.getTransport("smtp");
+            Transport.send(message);
 
             logger.info("message sent!");
 

@@ -25,7 +25,7 @@ import com.atossyntel.pojo.UserServiceDAO;
  */
 @SuppressWarnings("deprecation")
 public class AuthEmails extends SimpleFormController{
-    final static Logger logger = Logger.getLogger(AuthEmails.class);
+    static final Logger logger = Logger.getLogger(AuthEmails.class);
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request,

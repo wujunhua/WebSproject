@@ -24,7 +24,7 @@ import com.atossyntel.pojo.UserServiceDAO;
  * @author LS5028230
  */
 public class Authentication extends SimpleFormController{
-    final static Logger logger = Logger.getLogger(Authentication.class);
+    static final Logger logger = Logger.getLogger(Authentication.class);
 
     
     public Authentication() {

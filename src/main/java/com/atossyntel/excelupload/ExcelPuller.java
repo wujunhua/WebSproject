@@ -1,5 +1,4 @@
  package com.atossyntel.excelupload;
-import java.util.*;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,26 +9,25 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 public class ExcelPuller {
-    final static Logger logger = Logger.getLogger(ClassCRUD.class);
+    static final Logger logger = Logger.getLogger(ClassCRUD.class);
 	
             public List<Employee> generateEmployees(File filePath, String loc, String site, String stream) throws IOException{
       
-            	Workbook workbook = null;                                          //used to open the excel file
             	ArrayList<String> columns = new ArrayList<>();                    // the column titles: "name", "email", "empID", "mod1Score"
             	ArrayList<Employee> emps = new ArrayList<>();                    // used to store all of the employees genereated from the excel
                 String classID = generateClassID(loc, site, stream);            // stores the auto generate class id
             	
-                try {
+                try(FileInputStream excelFile = new FileInputStream(filePath); Workbook workbook = new XSSFWorkbook(excelFile);) {
                     int cols = 0;
-                    FileInputStream excelFile = new FileInputStream(filePath);          //Opens the stream for the excel file
-                    workbook = new XSSFWorkbook(excelFile);                              //The actual Excel workbook
                     Sheet datatypeSheet = workbook.getSheetAt(0);                         //The current sheet of the excel doc (Should only be 1 sheet)
                     Iterator<Row> iterator = datatypeSheet.iterator();                   //Used to traverse the rows in the excel file
                    
@@ -89,7 +87,7 @@ public class ExcelPuller {
                                             if(currentCell.getColumnIndex() == counter){
                                                 newEmp.addScore(columns.get(counter), currentCell.getNumericCellValue()); //Adds scores to an employee   
                                                 if(cellIterator.hasNext())
-                                                currentCell = cellIterator.next();
+                                                	currentCell = cellIterator.next();
                                             }
                                                
                         		
@@ -102,12 +100,9 @@ public class ExcelPuller {
                         newEmp.setClassID(classID);
                         emps.add(newEmp);
                     }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    e.getMessage();
                 } 
-                workbook.close();
                return emps; 
             }
             /** used to auto generate the class ID upon upload

@@ -1,8 +1,7 @@
 package com.atossyntel.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -39,7 +38,7 @@ public class DownloadTemplateController implements Controller {
         ModuleServiceDAO moduleDAO = (ModuleServiceDAO) appContext.getBean("moduleDAO");
         
         // get all module names that belong to this stream
-        ArrayList<String> moduleNames = moduleDAO.getModuleNamesForStreamID(streamID);
+        List<String> moduleNames = moduleDAO.getModuleNamesForStreamID(streamID);
         
         String filename = createFilename(streamID); // append a tag and extension
         response.setContentType("APPLICATION/OCTET-STREAM");

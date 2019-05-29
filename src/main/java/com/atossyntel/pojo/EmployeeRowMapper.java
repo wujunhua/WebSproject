@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.atossyntel.excelupload.Employee;
 
-public class EmployeeRowMapper implements RowMapper{
+public class EmployeeRowMapper implements RowMapper<Employee>{
 
     @Override
     public Employee mapRow(ResultSet rs, int i) throws SQLException {

@@ -6,11 +6,7 @@
 package com.atossyntel.controller;
 
 
-import java.util.Map;
 import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -29,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import com.atossyntel.pojo.ResetPassForm;
-import com.atossyntel.pojo.User;
 import com.atossyntel.pojo.UserServiceDAO;
 
 import org.apache.log4j.Logger;
@@ -88,8 +83,8 @@ public class ResetPass extends SimpleFormController {
 
             // Send the complete message parts
             message.setContent(multipart);
-            Transport tr = session.getTransport("smtp");
-            tr.send(message);
+          //  Transport tr = session.getTransport("smtp");
+            Transport.send(message);
 
             logger.info("message sent!");
 
@@ -115,11 +110,9 @@ public class ResetPass extends SimpleFormController {
         ctx =  WebApplicationContextUtils.getRequiredWebApplicationContext(context);
         UserServiceDAO usrDAO = (UserServiceDAO)ctx.getBean("user1");
         
-        User match;
         
         try {
             //try to find username in database
-            match = usrDAO.getUser(userEmail.getEmail());
             //create random password
             PasswordGenerator passwordGenerator = new PasswordGenerator();
             String newPass = passwordGenerator.generatePassword();

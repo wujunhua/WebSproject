@@ -27,6 +27,7 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.log4j.Logger;
 
 public class SendEmail {
+	private static String contentId = "Content-ID";
 	
 	private SendEmail() {
 		super();
@@ -37,7 +38,7 @@ public class SendEmail {
     	
         String host="smtp.gmail.com";
         final String user="jmcgregtemp@gmail.com";
-        final String password="mcgregor1"; 
+        final String pword="mcgregor1"; 
 
         String to=email;
 
@@ -46,7 +47,7 @@ public class SendEmail {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.user", user);
-        props.put("mail.smtp.password", password);
+        props.put("mail.smtp.password", pword);
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
 
@@ -55,7 +56,7 @@ public class SendEmail {
                 new javax.mail.Authenticator() {
         			@Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(user,password);
+                        return new PasswordAuthentication(user,pword);
                     }
                 });
         
@@ -152,12 +153,12 @@ public class SendEmail {
             "C:\\Examples\\WebSproject\\src\\main\\resources\\img\\header.jpg");
 
             messageBodyPart.setDataHandler(new DataHandler(fds));
-            messageBodyPart.setHeader("Content-ID", "<image>");
+            messageBodyPart.setHeader(contentId, "<image>");
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
             DataSource fds2 = new FileDataSource("C:\\Examples\\WebSproject\\src\\main\\resources\\img\\welcome.jpg");
             messageBodyPart.setDataHandler(new DataHandler(fds2));
-            messageBodyPart.setHeader("Content-ID", "<image2>");
+            messageBodyPart.setHeader(contentId, "<image2>");
             multipart.addBodyPart(messageBodyPart);
             // Send the complete message parts
             
@@ -165,7 +166,6 @@ public class SendEmail {
             message.setContent(multipart);
 
             
-            //Transport tr = session.getTransport("smtp");
             Transport.send(message);
 
             logger.info("message sent!");
@@ -282,13 +282,12 @@ public class SendEmail {
             "C:\\Examples\\WebSproject\\src\\main\\resources\\img\\header.jpg");
 
             messageBodyPart.setDataHandler(new DataHandler(fds));
-            messageBodyPart.setHeader("Content-ID", "<image>");
+            messageBodyPart.setHeader(contentId, "<image>");
             multipart.addBodyPart(messageBodyPart);
             
             message.setContent(multipart);
 
             
-            //Transport tr = session.getTransport("smtp");
             Transport.send(message);
 
             logger.info("message sent!");
@@ -317,20 +316,14 @@ public class SendEmail {
     static boolean validateEmail(String username)
     {
 	int count = 0;
-	try
-	{
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select email from employees where email = " + "'" + username + "'");
-									
+	PropertiesAccessor prop = new PropertiesAccessor();
+	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement();             ResultSet rs = st.executeQuery("select email from employees where email = " + "'" + username + "'");)
+	{									
             while(rs.next())
             {
 		++count;
             }
             con.commit();
-            st.close();
-            con.close();
-        
             if(count == 0 || count > 1)
             {
 		logger.info("Not Valid Email!!!");
@@ -354,22 +347,16 @@ public class SendEmail {
     static boolean validateClassId(String id)
     {
         int count = 0;
-	try
-	{
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select class_id from class where class_id = " + "'" + id + "'");
-									
+    PropertiesAccessor prop = new PropertiesAccessor();
+	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select class_id from class where class_id = " + "'" + id + "'");)
+	{           						
             while(rs.next())
             {
 		++count;
             }
 					
             con.commit();
-            st.close();
-            con.close();
-			        
-			        
+    
             if(count == 0 || count > 1)
             {
 		logger.info("Not Valid Class ID");
@@ -390,12 +377,9 @@ public class SendEmail {
     }
     
     static String[] getEmployee(String email) {//getEmployee returns an array of attributes
-    	
-    	try
-	{
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select employee_id, name, class_id, manager_id from employees where email = '" + email + "'");
+    	PropertiesAccessor prop = new PropertiesAccessor();
+    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select employee_id, name, class_id, manager_id from employees where email = '" + email + "'");)
+	{         
             String[] emp = new String[4];
             while(rs.next()){
                 emp[0] = rs.getString("employee_id");
@@ -406,10 +390,7 @@ public class SendEmail {
             }
 			
             con.commit();
-	    st.close();
-	    con.close();
-            return emp;
-                
+            return emp;               
 	}
 		
 	catch (Exception ex) 
@@ -480,13 +461,9 @@ public class SendEmail {
     }
     
     static String getStreamName(String email) {//getEmployee returns an array of attributes
-    	
-    	try
+    	PropertiesAccessor prop = new PropertiesAccessor();
+    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select s.stream_name from employees e ,class c ,stream s where e.email = '" + email + "' AND e.class_id=c.class_id AND c.stream_id = s.stream_id");)
 	{
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select s.stream_name from employees e ,class c ,stream s where e.email = '" + email + "' AND e.class_id=c.class_id AND c.stream_id = s.stream_id");
-            
             while(rs.next()){
                 if( rs.getString(1) == null)
                     return "";
@@ -496,8 +473,6 @@ public class SendEmail {
             }
 			
             con.commit();
-	    st.close();
-	    con.close();
            
                 
 	}
@@ -510,12 +485,9 @@ public class SendEmail {
     	return " ";
     }
         static String[] getStartEnd(String email) {//getEmployee returns an array of attributes
-    	
-    	try
+    	PropertiesAccessor prop = new PropertiesAccessor();
+    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select c.start_date,c.end_date from employees e ,class c where e.email = '" + email + "' AND e.class_id=c.class_id");)
 	{
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select c.start_date,c.end_date from employees e ,class c where e.email = '" + email + "' AND e.class_id=c.class_id");
             String[] duration = new String[2];
             while(rs.next()){
                 duration[0] = rs.getString(1).substring(0,10);
@@ -524,8 +496,6 @@ public class SendEmail {
             }
 			
             con.commit();
-	    st.close();
-	    con.close();
            
             return duration;
 	}
@@ -540,21 +510,15 @@ public class SendEmail {
     static Map<String,String> getBatchEmails(String classid) {
     	
     	Map<String,String> batchEmails = new HashMap<>();
-    	
-    	try
-	{
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select employee_id, email from employees where class_id = " + "'" + classid + "'");
-			
+    	PropertiesAccessor prop = new PropertiesAccessor();
+    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select employee_id, email from employees where class_id = " + "'" + classid + "'");)
+	{            
             while(rs.next())
             {
 		batchEmails.put(rs.getString(2),rs.getString(1));
             }
 			
             con.commit();
-	    st.close();
-	    con.close();
                 
 	}	
         catch (Exception ex) 

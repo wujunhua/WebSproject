@@ -11,12 +11,12 @@ package com.atossyntel.pojo;
  */
 public class User {
     String userName;
-    String password;
+    String pass;
     boolean isAdmin;
 
     public User() {
         this.userName = "NA";
-        this.password = "NA";
+        this.pass = "NA";
         this.isAdmin = false;
     }
 
@@ -28,7 +28,7 @@ public class User {
 
     public User(String userName, String password, boolean isAdmin) {
         this.userName = userName;
-        this.password = password;
+        this.pass = password;
         this.isAdmin = isAdmin;
     }
     
@@ -43,16 +43,16 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return pass;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.pass = password;
     }
 
     @Override
     public String toString() {
-        return "User{" + "userName=" + userName + ", password=" + password + ", isAdmin=" + isAdmin + '}';
+        return "User{" + "userName=" + userName + ", password=" + pass + ", isAdmin=" + isAdmin + '}';
     }
 
     void setIsAdmin(String string) {

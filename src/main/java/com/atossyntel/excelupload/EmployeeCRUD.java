@@ -7,6 +7,8 @@ package com.atossyntel.excelupload;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
+import com.atossyntel.controller.PropertiesAccessor;
+
 	public class EmployeeCRUD {
             static final Logger logger = Logger.getLogger(EmployeeCRUD.class);
 		
@@ -74,7 +76,8 @@ import org.apache.log4j.Logger;
 		public static void main(String[] args) {
 			try {
 				Class.forName("oracle.jdbc.OracleDriver");
-                            try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "Student_Performance", "Student_Performance")) {
+							PropertiesAccessor prop = new PropertiesAccessor();
+                            try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", prop.getUsername(), prop.getPassword())) {
                                 Statement st = con.createStatement();
                                 st.close();
                             }

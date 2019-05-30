@@ -96,18 +96,15 @@ public class PDFinfo {
     */
     public List<String> getStreamIDName(String empID) throws SQLException {
         List<String> list = new ArrayList<>();
-        Statement s1 = c1.createStatement();
-     
-        ResultSet r1=s1.executeQuery("select s.stream_id, s.stream_name from Stream s, Class c, Employees e where s.stream_id=c.stream_id and c.class_id=e.class_id and e.employee_id='"+empID+"'");
+        try(Statement s1 = c1.createStatement(); ResultSet r1=s1.executeQuery("select s.stream_id, s.stream_name from Stream s, Class c, Employees e where s.stream_id=c.stream_id and c.class_id=e.class_id and e.employee_id='"+empID+"'");) {
+
         while(r1.next()){
             list.add(r1.getString(1));
             list.add(r1.getString(2));
         }
-              
-        r1.close();
-        s1.close();
 
         return list;
+        }
     }
     
     /**
@@ -117,7 +114,7 @@ public class PDFinfo {
     * @throws java.lang.Exception
     */
 
-	public String getAverageScore(String empID) throws Exception{
+	public String getAverageScore(String empID){
        return getAverageScoreByCategory(empID, "");
     }
     

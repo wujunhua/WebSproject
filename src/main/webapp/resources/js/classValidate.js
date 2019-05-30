@@ -34,7 +34,6 @@ function validate()
     ) - Date.parse(startDate.replace(/-/g,'\/')
     )               
     ) / 86400000);
-    Math.abs(diff);
     if(diff < 5)
     {
         document.getElementById("endDateValidation").innerHTML = "Start and End date should be atleast 5 days apart";

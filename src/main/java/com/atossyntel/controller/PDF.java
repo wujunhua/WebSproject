@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.sql.DataSource;
@@ -46,9 +47,9 @@ static final Logger logger = Logger.getLogger(PDF.class);
     private static final BaseFont font = BaseFont.Helvetica;
     private PDPage page = new PDPage();
     private PDFinfo pdfinfo;
-
-    private String filePath = "C:\\Users\\syntel\\Music\\"; //use getfilepath in the email logic?
-    private static final String IMAGEPATH = "C:\\Examples\\WebSproject\\src\\main\\resources\\img\\pdf_banner.png"; //path to AS logo
+    static PropertiesAccessor prop = new PropertiesAccessor();
+    private String filePath = prop.getFilePath(); //use getfilepath in the email logic?
+    private static final String IMAGEPATH = prop.getImagePath(); //path to AS logo
 
     //java.io.File.separator
     public PDF() {
@@ -103,7 +104,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
         this.filePath = filePath;
     }
 
-    public void generate(String empid) throws Exception {
+    public void generate(String empid) throws SQLException, IOException {
         //init config
         dataset = new DefaultCategoryDataset();
         njdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -119,7 +120,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
         }
 
         //define output vars
-        String gradeNumbers = "Overall Grade: " + numToLetter(info.getAverageScore(empid)) + "\n|  ";
+        StringBuilder gradeNumbers = new StringBuilder("Overall Grade: " + numToLetter(info.getAverageScore(empid)) + "\n|  ");
 
         List<String> stream = info.getStreamIDName(empid);
 
@@ -181,7 +182,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
             scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
 
             if (scores.isEmpty()) {
-                gradeNumbers += cat[0] + " Grade: " + numToLetter(info.getAverageScoreByCategory(empid, cat[1])) + "  |  ";
+                gradeNumbers.append(cat[0] + " Grade: " + numToLetter(info.getAverageScoreByCategory(empid, cat[1])) + "  |  ");
 
                 par = new Paragraph();
                 par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
@@ -228,7 +229,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
         document.add(new VerticalSpacer(sectionBreak));
 
         par = new Paragraph();
-        par.addMarkup(gradeNumbers, textSize, font);
+        par.addMarkup(gradeNumbers.toString(), textSize, font);
         par.setAlignment(Alignment.Center);
         document.add(par);
         document.add(new VerticalSpacer(linspace));

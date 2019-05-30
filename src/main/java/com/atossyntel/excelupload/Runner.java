@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
+import com.atossyntel.controller.PropertiesAccessor;
+
 
 
 
@@ -32,8 +34,8 @@ public class Runner {
         ClassCRUD cCrud = new ClassCRUD();
         ETMCrud eCrud= new ETMCrud();
         emps = pul.generateEmployees(filePath, loc, site, stream);
-        
-        try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");
+        PropertiesAccessor prop = new PropertiesAccessor();
+        try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE",prop.getUsername(),prop.getPassword());
         	Statement st = con.createStatement();) {
         	cCrud.insertClass(st, emps.get(0).getClassID(), stream, insEmail, startDate, endDate);
                 

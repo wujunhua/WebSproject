@@ -40,7 +40,7 @@ public class ResetPass extends SimpleFormController {
     public void sendResetEmail(String email, String passMessage) {
         String host="smtp.gmail.com";
         final String user="jmcgregtemp@gmail.com";//ENTER YOUR EMAIL!!
-        final String password="mcgregor1"; //ENTER YOUR PASSWORD
+        final String pword="mcgregor1"; //ENTER YOUR PASSWORD
 
         String to=email;
 
@@ -49,15 +49,16 @@ public class ResetPass extends SimpleFormController {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.user", user);
-        props.put("mail.smtp.password", password);
+        props.put("mail.smtp.password", pword);
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
 
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+        			@Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(user,password);
+                        return new PasswordAuthentication(user,pword);
                     }
                 });
         
@@ -83,7 +84,6 @@ public class ResetPass extends SimpleFormController {
 
             // Send the complete message parts
             message.setContent(multipart);
-          //  Transport tr = session.getTransport("smtp");
             Transport.send(message);
 
             log.info("message sent!");

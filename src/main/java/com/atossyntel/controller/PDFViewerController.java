@@ -32,16 +32,15 @@ public class PDFViewerController implements Controller {
 	response.setContentLength((int) pdfFile.length());
 	
         // reads the PDF contents into the browser.
-	FileInputStream fileInputStream = new FileInputStream(pdfFile);
-	OutputStream responseOutputStream = response.getOutputStream();
-	int bytes;
-        
-	while ((bytes = fileInputStream.read()) != -1) 
-        {
-		responseOutputStream.write(bytes);
+	try(FileInputStream fileInputStream = new FileInputStream(pdfFile);) {
+		OutputStream responseOutputStream = response.getOutputStream();
+		int bytes;
+	        
+		while ((bytes = fileInputStream.read()) != -1) 
+	        {
+			responseOutputStream.write(bytes);
+		}
 	}
-		
-	fileInputStream.close();
         
         return new ModelAndView("pdfviewer");
     }

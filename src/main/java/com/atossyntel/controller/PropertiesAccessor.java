@@ -1,6 +1,5 @@
 package com.atossyntel.controller;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -11,7 +10,7 @@ public class PropertiesAccessor {
 	Properties prop;
 	
 	 public PropertiesAccessor() {
-		 try (InputStream input = new FileInputStream("path/to/config.properties")) {
+		 try (InputStream input = getClass().getResourceAsStream("jdbc.properties")) {
 			 prop = new Properties();
 			 prop.load(input);
 		 } catch(Exception e) {

@@ -23,16 +23,12 @@ public class User {
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    
-    
 
     public User(String userName, String password, boolean isAdmin) {
         this.userName = userName;
         this.pass = password;
         this.isAdmin = isAdmin;
     }
-    
-    
 
     public String getUserName() {
         return userName;
@@ -61,7 +57,5 @@ public class User {
 
     public boolean isAdmin() {
         return isAdmin;
-    }
-    
-    
+    } 
 }

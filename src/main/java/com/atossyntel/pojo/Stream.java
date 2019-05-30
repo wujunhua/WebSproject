@@ -1,6 +1,4 @@
-
 package com.atossyntel.pojo;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -20,7 +18,6 @@ public class Stream {
         }
     }
     
-    
     public String getID() {
         return id;
     }
@@ -37,7 +34,6 @@ public class Stream {
         this.name = name;
     }
 
-    
     @Override
     public String toString() {
         return "Stream{" + "id=" + id + ", name=" + name + '}';

@@ -105,49 +105,49 @@
     
     
     <bean name="loginController"
-          class="Controller.Authentication"
+          class="com.atossyntel.controller.Authentication"
           p:formView="Login"
        />
     
     <bean name="adminController"
-          class="Controller.AdminController">
+          class="com.atossyntel.controller.AdminController">
     </bean>
     
     <bean name="instructorController"
-          class="Controller.InstructorController">
+          class="com.atossyntel.controller.InstructorController">
     </bean>
     
     <bean name="emailController"
-          class="Controller.AuthEmails"
+          class="com.atossyntel.controller.AuthEmails"
           p:formView="Email"
     />
     
     <bean name="createClassController"
-          class="Controller.UploadAuthentication"
+          class="com.atossyntel.controller.UploadAuthentication"
           p:formView="CreateClass"
     />
     
     <bean name="downloadTemplateController"
-        class="Controller.DownloadTemplateController"
+        class="com.atossyntel.controller.DownloadTemplateController"
     />
     
     <bean name="empController"
-          class="Controller.EmpController">
+          class="com.atossyntel.controller.EmpController">
     </bean>
   
    <bean name="resetController"
-          class="Controller.ResetPass"
+          class="com.atossyntel.controller.ResetPass"
           p:formView="reset-password"/>
    
     <bean id = "multipartResolver" 
           class ="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
     <bean id="forbiddenController"
-        class="Controller.ForbiddenController"
+        class="com.atossyntel.controller.ForbiddenController"
     />
     
     <bean id="pdfViewController"
-        class="Controller.PdfViewController"
+        class="com.atossyntel.controller.PdfViewController"
     />
     
 </beans>

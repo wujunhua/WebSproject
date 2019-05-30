@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.atossyntel.pojo;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.jdbc.core.RowMapper;
+
+import com.atossyntel.excelupload.Module;
+import com.atossyntel.excelupload.ModuleWithID;
+
+
+public class ModuleListRowMapper implements RowMapper<Module>{
+
+    @Override
+    public Module mapRow(ResultSet rs, int i) throws SQLException {
+        ModuleWithID m = new ModuleWithID();
+        m.setModuleName(rs.getString(1));
+        m.setmoduleScore(rs.getDouble(2));
+        m.setModuleID(rs.getString(3));
+        
+        return m;
+    }
+    
+}

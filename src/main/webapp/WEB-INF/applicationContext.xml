@@ -21,15 +21,15 @@
 
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 
-   <bean id = "user1" class="POJO.UserServiceDAO">
+   <bean id = "user1" class="com.atossyntel.pojo.UserServiceDAO">
        <property name = "dataSource" ref = "dataSource" />
    </bean>
    
-    <bean id="moduleDAO" class="Controller.ModuleServiceDAO">
+    <bean id="moduleDAO" class="com.atossyntel.controller.ModuleServiceDAO">
         <property name="dataSource" ref="dataSource" /> <!-- refers to the datasource above -->
     </bean>
     
-    <bean id="empdb" class="POJO.EmployeeServiceDAO">
+    <bean id="empdb" class="com.atossyntel.pojo.EmployeeServiceDAO">
         <property name="dataSource" ref="dataSource"/>
     </bean>
    

@@ -3,7 +3,7 @@
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
 <%@page import="java.util.ArrayList"%>
-<%@ page import="ExcelUpload.Module" %>
+<%@ page import="com.atossyntel.excelupload.Module" %>
 <%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 

@@ -23,10 +23,11 @@ public class TestStream {
     public static Collection<Object[]> data(){
         ArrayList<Object[]> results = new ArrayList<>();
         ArrayList<String> ids = new ArrayList<>();
-        try{Class.forName("oracle.jdbc.driver.OracleDriver");} catch(ClassNotFoundException e) {}
         Connection conn = null;
         try {conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","Student_Performance","Student_Performance");} 
-        catch(SQLException e) {}
+        catch(SQLException e) {
+        	e.getMessage();
+        }
         
         PreparedStatement ps = null;
         ResultSet result = null;

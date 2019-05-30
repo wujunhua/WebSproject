@@ -11,6 +11,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class TestUser {
+	static final String RESULT = "Result";
     @Parameter(0)
     public String username;
     @Parameter(1)
@@ -37,20 +38,20 @@ public class TestUser {
     public void testUsername()
     {
         User user = new User(username, password, admin);
-        assertEquals("Result", username, user.getUserName());
+        assertEquals(RESULT, username, user.getUserName());
     }
     
     @Test
     public void testPassword()
     {
         User user = new User(username, password, admin);
-        assertEquals("Result", password, user.getPassword());
+        assertEquals(RESULT, password, user.getPassword());
     }
     
     @Test
     public void testAdmin()
     {
         User user = new User(username, password, admin);
-        assertEquals("Result", admin, user.isAdmin());
+        assertEquals(RESULT, admin, user.isAdmin());
     }
 }

@@ -60,7 +60,7 @@ build.xml
 ##########################
 ## Logging
 #########################
-/log4j.application.log
+log4j-application.log
 
 
 ##########################

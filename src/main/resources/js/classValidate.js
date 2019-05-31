@@ -34,7 +34,6 @@ function validate()
     ) - Date.parse(startDate.replace(/-/g,'\/')
     )               
     ) / 86400000);
-    Math.abs(diff);
     if(diff < 5)
     {
         document.getElementById("endDateValidation").innerHTML = "Start and End date should be atleast 5 days apart";
@@ -57,10 +56,10 @@ function validate()
     }
         
     //check to see if start date is not in future
-    var today = new Date();
-    var date_from = document.getElementById("startDate").value;
-    date_from = new Date(date_from);
-    if(today <= date_from)
+    var currentDay = new Date();
+    var dateFrom = document.getElementById("startDate").value;
+    dateFrom = new Date(dateFrom);
+    if(currentDay <= dateFrom)
     {
         document.getElementById("endDateValidation").innerHTML = "You cannot select a future date or todays date for start date.";
         document.getElementById("startDate").value="";

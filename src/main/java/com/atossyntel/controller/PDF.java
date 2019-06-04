@@ -38,7 +38,8 @@ import rst.pdfbox.layout.text.BaseFont;
 import rst.pdfbox.layout.elements.ImageElement;
 
 public class PDF {
-static final Logger logger = Logger.getLogger(PDF.class);
+
+    static final Logger logger = Logger.getLogger(PDF.class);
     private DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
 

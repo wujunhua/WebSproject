@@ -86,6 +86,7 @@ CREATE TABLE Student_Performance.Courses (
 CREATE TABLE Student_Performance.Employees_take_Modules (
   module_id NUMBER(10) NULL,
   employee_id VARCHAR2(10) NULL,
+  batch_id VARCHAR2(10) NOT NULL,
   scores NUMBER(6,2) NULL
 ,
   CONSTRAINT fk_Modules_has_Modules
@@ -128,17 +129,4 @@ CREATE TABLE Student_Performance.Instructors_Teach_Batches(
   CONSTRAINT fk_Batches_has_Instructors
     FOREIGN KEY (employee_id)
     REFERENCES Student_Performance.Employees (employee_id)
-);  
-
-CREATE TABLE Batches_Have_Employees(
-  batch_id VARCHAR2(10) NOT NULL,
-  employee_id VARCHAR2(100) NOT NULL
-,
-  CONSTRAINT fk_Employees_has_Batches
-    FOREIGN KEY (batch_id)
-    REFERENCES Student_Performance.Batches (batch_id)
-,
-  CONSTRAINT fk_Batches_has_Employees
-    FOREIGN KEY (employee_id)
-    REFERENCES Student_Performance.Employees (employee_id)
-);
+); 

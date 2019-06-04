@@ -36,9 +36,9 @@ public class SendEmail {
     
     public static void sendIdividualEmail(String email, String id) {
     	
-        String host="smtp.gmail.com";
-        final String user="jmcgregtemp@gmail.com";
-        final String pword="mcgregor1"; 
+        String host="smtp.office365.com";
+        final String user="nickcook1234@outlook.com";
+        final String pword="ABC123abc!@#"; 
 
         String to=email;
 
@@ -182,9 +182,9 @@ public class SendEmail {
     
         public static void sendUserNamePassword(String email, String pswd) {
     	
-        String host="smtp.gmail.com";
-        final String userName="jmcgregtemp@gmail.com";
-        final String pass="mcgregor1"; 
+        String host="smtp.office365.com";
+        final String userName="nickcook1234.com";
+        final String pass="ABC123abc!@#"; 
         String to=email;
 
         //imported code

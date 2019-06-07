@@ -79,7 +79,9 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <!-- Google Fonts (Noto Sans) --> 
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
         <title>Atos Syntel &middot; Land</title>
         <style>
             p, h1, h2, h3, h4, h5, h6, li, ul, ol{
@@ -110,107 +112,85 @@
         </button>
     </div>
   
-    <div class="container-fluid">
-        <div class="container mt-2 pt-4 pb-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb" style="background: transparent;">
-                    <li class="breadcrumb-item"><a href="#">Instructor</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Email Hub</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <div id="root3"></div>
+    <script type ="text/babel">    
+    class HeadingLinks extends React.Component{
+        render(){
+            return(
+                <div className="container-fluid">
+                    <div className="container mt-2 pt-4 pb-3">
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb" style={{background: "transparent"}}>
+                                <li className="breadcrumb-item"><a href="#">Instructor</a></li>
+                                <li className="breadcrumb-item active" aria-current="page">Email Hub</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            );
+        }
+    };
     
+    ReactDOM.render(<HeadingLinks />, document.getElementById("root"));
     
-    <!-- Tabs -->
-    <div class="container-fluid">
-        <div class="container">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" href="createclass.htm">Create Class</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="email.htm">Email Hub</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="showEmployees.htm">Employees</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    class Tabs extends React.Component {
+        render(){
+            return (
+                <div className="container-fluid">
+                    <div className="container">
+                        <ul className="nav nav-tabs">
+                            <li className="nav-item">
+                                <a className="nav-link" href="createclass.htm">Create Class</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link active" href="email.htm">Email Hub</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="showEmployees.htm">Employees</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+    };
+    
+    ReactDOM.render(<Tabs />, document.getElementById("root2"));
  
-    <div class="container-fluid bg-white" style="height: 100vh;">
-        <div class="container pb-5 pt-3">
-            <form:form method="post" action="searchEmailEmployees.htm" class="form-inline pt-1 pb-2 w-100">                 
-                <button class="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i class="fas fa-search pr-1"></i>Search</button>
-                <select name="col" class="custom-select my-1 mr-sm-2">
-                    <option value="name">Name</option>
-                    <option value="email">Email</option>
-                </select>
-                <input type="text" placeholder="Search.." name="search" class="form-control my-1 mr-sm-2">
-            </form:form>
-            
-            <form:form id="emailForm" method="post" action="sendEmail.htm" class="mt-2"> 
-            <table class="table table-bordered table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 35%;">Name</th>
-                        <th scope="col" style="width: 35%;">Email</th>
-                        <th scope="col" style="width: 10%;" class="text-center">PDF</th>
-                        <th scope="col" style="width: 20%;" class="text-center">Send?</th> 
-                    </tr>
-                </thead>
-                <tbody>
-              <!--<div class="btn-group-toggle" data-toggle="buttons">-->
-                  <c:forEach items="${empList}" var="user" varStatus="loop">
-                      <tr>
-                        <td class="noto">${user.employeeName}</td>
-                        <td class="noto">${user.employeeEmail}</td>
-                        <td class="noto text-center"> <!-- link to PDF preview for this employee's report -->
-                            <a href="pdf-preview.htm?empID=${employeeIDs[loop.index]}">
-                                <i class="fas fa-file-pdf px-2"></i>
-                            </a>
-                        </td>
-                        <td class="text-center noto"><input class="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
-                      </tr>
-                  </c:forEach>
-              <!--</div>-->
-                </tbody>
-            </table>
-            <div class="row justify-content-center my-5">
-              <button type="submit" value="Login" class="btn btn-primary px-3 mx-1 rounded-0"><i class="fas fa-paper-plane pr-2"></i>Send</button>
-              <button type="button" value="selectAll" class="btn btn-secondary px-3 mx-1 rounded-0" onclick="selectAll()"><i class="fas fa fa-check pr-2"></i>Select All</button>
-            </div>
-            </form:form>
-        </div>
-    </div>
-
-    <script type="text/javaScript">
+    class Contents extends React.Component {
+        constructor(){
+            super();
+            this.selectAll = this.selectAll.bind(this);
+        }
         
-       function selectAll(){
-           var form = document.forms[1];
+        selectAll(event){
+            var form = document.forms[1];
            var checkboxTotal = 0;
            for(var i = 0; i<form.length; ++i){
                if(form[i].type == 'checkbox')
                    ++checkboxTotal;
            }
-               
            
-           var countChecked = 0; 
+           var countChecked = 0;
            for (var i = 0; i < checkboxTotal; ++i) {
                 if (form[i].type == 'checkbox') {
                     if(form[i].checked == true)
                         countChecked++;
                 }
            }
+           checkboxTotal -= 1;
+           console.log(checkboxTotal);
+            console.log(countChecked);
            if(countChecked == checkboxTotal){
-                for (var i = 0; i < checkboxTotal; ++i) {
+                for (var i = 1; i <= checkboxTotal; ++i) {
                     if (form[i].type == 'checkbox') {
                         form[i].checked = false;
                     }
                 }
            }else{
-                for (var i = 0; i < checkboxTotal; ++i) {
+                for (var i = 1; i <= checkboxTotal; ++i) {
                     if (form[i].type == 'checkbox') {
                         form[i].checked = true;
                     }
@@ -218,7 +198,55 @@
                 
            }
         }
-        
+            
+        render(){
+            return(
+                   <div className="container-fluid bg-whiteds" style={{height: "100vh"}}>
+                    <div className="container pb-5 pt-3">
+                        <form:form method="post" action="searchEmailEmployees.htm" className="form-inline pt-1 pb-2 w-100">                 
+                            <button className="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i className="fas fa-search pr-1"></i>Search</button>
+                            <select name="col" className="custom-select my-1 mr-sm-2">
+                                <option value="name">Name</option>
+                                <option value="email">Email</option>
+                            </select>
+                            <input type="text" placeholder="Search.." name="search" className="form-control my-1 mr-sm-2" />
+                        </form:form>
+
+                        <form:form id="emailForm" method="post" action="sendEmail.htm" className="mt-2"> 
+                        <table className="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style={{width: "35%"}}>Name</th>
+                                    <th scope="col" style={{width: "35%"}}>Email</th>
+                                    <th scope="col" style={{width: "10%"}} className="text-center">PDF</th>
+                                    <th scope="col" style={{width: "20%"}} className="text-center">Send    <input type="checkbox" onClick={this.selectAll}/></th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <c:forEach items="${empList}" var="user" varStatus="loop">
+                                  <tr>
+                                    <td className="noto">${user.employeeName}</td>
+                                    <td className="noto">${user.employeeEmail}</td>
+                                    <td className="noto text-center">
+                                        <a href="pdf-preview.htm?empID=${employeeIDs[loop.index]}">
+                                            <i className="fas fa-file-pdf px-2"></i>
+                                        </a>
+                                    </td>
+                                    <td className="text-center noto"><input className="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
+                                  </tr>
+                              </c:forEach>
+                            </tbody>
+                        </table>
+                        <div className="row justify-content-center my-5">
+                          <button type="submit" value="Login" className="btn btn-primary px-3 mx-1 rounded-0"><i className="fas fa-paper-plane pr-2"></i>Send</button>
+                        </div>
+                        </form:form>
+                    </div>
+                </div> 
+                    );
+        }
+    };
+        ReactDOM.render(<Contents />, document.getElementById("root3"));
     </script>
     <!-- Custom JavaScript -->
     <script src="<c:url value="/resources/js/confirmation.js" />"></script>

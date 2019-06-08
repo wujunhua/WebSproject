@@ -47,54 +47,70 @@ while(rs.next())
 <body class="bg-light">
 
   <jsp:include page="nav.jsp"/>
-  <div class="container-fluid">
-    <div class="container mt-2 pt-4 pb-3">
-    </div>
-  </div>
-
+  <div id="category"></div>
+        <div id="category2"></div> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
  
 
-  <div class="container-fluid bg-white" style="min-height: 100vh;">
-    <div class="container pb-5">
-      <div class="row justify-content-center">
-        <div class="card col-md-6 col-sm-12 col-lg-5 mt-4 py-3 shadow">
-          <div class="card-header text-muted noto bg-white">
-            <i class="fas fa-user pr-2"></i> Change Password
+  <script type ="text/babel">
+        class Category extends React.Component {	
+            render() {
+                return (
+                    <div className="container-fluid">
+    <div className="container mt-2 pt-4 pb-3">
+    </div>
+  </div>
+    );
+    }
+};
+
+        
+    class Category2 extends React.Component {
+        render() {
+                return (
+                   <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
+    <div className="container pb-5">
+      <div className="row justify-content-center">
+        <div className="card col-md-6 col-sm-12 col-lg-5 mt-4 py-3 shadow">
+          <div className="card-header text-muted noto bg-white">
+            <i className="fas fa-user pr-2"></i> Change Password
           </div>
             
-          <form id="changePass" action="update-password.htm">
-            <div class="form-group row mt-3">
-              <label for="oldpassword" class="col-sm-3 col-form-label">Current Password</label>
-              <div class="col-sm-9">
-                <input type="password" class="form-control" id="oldpassword"  name="oldpassword" placeholder="Enter Current Password" required>
+          <form idName="changePass" action="update-password.htm">
+            <div className="form-group row mt-3">
+              <label for="oldpassword" className="col-sm-3 col-form-label">Current Password</label>
+              <div className="col-sm-9">
+                <input type="password" className="form-control" id="oldpassword"  name="oldpassword" placeholder="Enter Current Password" required/>
               <font color="red"><span id="oldpass"></span></font>
               </div>
-              <div class="col-sm-9">
-                <input type="hidden" class="form-control" id="oldpasscheck" name="oldpasscheck" value="${oldpassCheck.get(0)}" >
+              <div className="col-sm-9">
+                <input type="hidden" className="form-control" id="oldpasscheck" name="oldpasscheck" value="${oldpassCheck.get(0)}" />
               </div>
             </div>
-            <div class="form-group row mt-3">
-              <label for="oldpassword" class="col-sm-3 col-form-label">New Password</label>
-              <div class="col-sm-9">
-                <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="Enter New Password" title="password must be 8-15 characters & contain atleast one alphanumric character" required pattern="(?=.*\d)(?=.*[A-Z]).{8,}" minlength = "8" maxlength = "15" required>
+            <div className="form-group row mt-3">
+              <label for="oldpassword" className="col-sm-3 col-form-label">New Password</label>
+              <div className="col-sm-9">
+                <input type="password" className="form-control" id="newpassword" name="newpassword" placeholder="Enter New Password" title="password must be 8-15 characters & contain atleast one alphanumric character" required pattern="(?=.*\d)(?=.*[A-Z]).{8,}" minlength = "8" maxlength = "15" required />
               </div>
             </div>
               
-            <div class="form-group row mt-3">
-              <label for="oldpassword" class="col-sm-3 col-form-label">Repeat Password</label>
-              <div class="col-sm-9">
-                <input type="password" class="form-control" id="newpasscheck" name="newpasscheck" placeholder="Repeat New Password" required>
+            <div className="form-group row mt-3">
+              <label for="oldpassword" className="col-sm-3 col-form-label">Repeat Password</label>
+              <div className="col-sm-9">
+                <input type="password" className="form-control" id="newpasscheck" name="newpasscheck" placeholder="Repeat New Password" required />
                 <font color="red"><span id="passMatch"></span></font>
               </div>
             </div>
-              <div class="row justify-content-center mt-1">
-              <div class="row pt-3">
-                <div class="col-6">
-                    <button class="btn btn-sm btn-secondary" type="button" onclick="checkPass()">
-                      <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i> Change Password </span>
+              <div className="row justify-content-center mt-1">
+              <div className="row pt-3">
+                <div className="col-6">
+                    <button className="btn btn-sm btn-secondary" type="button" onclick="checkPass()">
+                      <span style={{whiteSpace: "nowrap"}}><i className="fas fa-user-edit"></i> Change Password </span>
                     </button>
-                    <button class="btn btn-sm btn-secondary" id="clickButton" style="display:none;" type="submit">
-                      <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i></span>
+                    <button className="btn btn-sm btn-secondary" id="clickButton" style={{display: "none"}} type="submit">
+                      <span style={{whiteSpace: "nowrap"}}><i clasNames="fas fa-user-edit"></i></span>
                     </button>
                 </div>
               </div>
@@ -104,7 +120,15 @@ while(rs.next())
         </div>
       </div>
     </div>
-  </div>
+    );
+    }
+};
+
+    
+    ReactDOM.render(<Category />, document.getElementById('category'));
+    ReactDOM.render(<Category2 />, document.getElementById('category2'));
+                                                
+</script> 
   <!-- /Tabs -->
 
   <!-- Optional JavaScript -->

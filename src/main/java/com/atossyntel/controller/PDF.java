@@ -44,7 +44,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
 
     private DefaultCategoryDataset dataset;
 
-    private static final BaseFont font = BaseFont.Helvetica;
+    private static final BaseFont font = BaseFont.Helvetica; // change font to Verdana
     private PDPage page = new PDPage();
     private PDFinfo pdfinfo;
     static PropertiesAccessor prop = new PropertiesAccessor();

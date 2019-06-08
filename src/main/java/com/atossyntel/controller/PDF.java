@@ -38,7 +38,8 @@ import rst.pdfbox.layout.text.BaseFont;
 import rst.pdfbox.layout.elements.ImageElement;
 
 public class PDF {
-static final Logger logger = Logger.getLogger(PDF.class);
+
+    static final Logger logger = Logger.getLogger(PDF.class);
     private DataSource dataSource;
     private NamedParameterJdbcTemplate njdbc;
 
@@ -150,7 +151,7 @@ static final Logger logger = Logger.getLogger(PDF.class);
                 0, 0, true));
         document.add(new VerticalSpacer(90));
 
-        document.add(new ImageElement("C:\\Examples\\WebSproject\\src\\main\\java\\com.atossyntel.controller\\performica.PNG"), new VerticalLayoutHint(Alignment.Left, 0, 0,
+        document.add(new ImageElement("C:\\Examples\\WebSproject\\src\\main\\java\\com\\atossyntel\\controller\\performica.PNG"), new VerticalLayoutHint(Alignment.Left, 0, 0,
                 0, 0, true));
         document.add(new VerticalSpacer(50)); //font: Vivaldi
 

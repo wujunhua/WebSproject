@@ -15,28 +15,22 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
 
-
-
 public class TestUploadAuthentication {
-    
-    
+
     @Test
-    public void testconvertFile() throws IOException{
-        File manualFile= new File("testfile.txt");
-        String path=manualFile.getPath();
-        MockMultipartFile file=new MockMultipartFile("files", path, "text/plain", "hello".getBytes(StandardCharsets.UTF_8));
+    public void testconvertFile() throws IOException {
+        File manualFile = new File("testfile.txt");
+        String path = manualFile.getPath();
+        MockMultipartFile file = new MockMultipartFile("files", path, "text/plain", "hello".getBytes(StandardCharsets.UTF_8));
         File expectedconvFile = new File(file.getOriginalFilename());
         System.out.println(expectedconvFile.getName());
-        File actualconvFile= (new UploadAuthentication()).convert(file);
+        File actualconvFile = (new UploadAuthentication()).convert(file);
         System.out.println(actualconvFile.getName());
         assertEquals(expectedconvFile.getName(), actualconvFile.getName());
-        if(manualFile.delete()) 
-        { 
-            System.out.println("File deleted successfully"); 
-        } 
-        else
-        { 
-            System.out.println("Failed to delete the file"); 
-        } 
+        if (manualFile.delete()) {
+            System.out.println("File deleted successfully");
+        } else {
+            System.out.println("Failed to delete the file");
+        }
     }
 }

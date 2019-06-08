@@ -132,140 +132,46 @@
   
 %>  
 
-<jsp:include page="head-tag.jsp"/>
+<!DOCTYPE html>
+<html>
+    <jsp:include page="head-tag.jsp"/>
 
-<body class="bg-light" onload="loadDoc()">
+    <body class="bg-light" onload="loadDoc()">
+        <jsp:include page="nav.jsp"/>
+        
+        <div id="courses"></div>
+        <div id="redirect"></div>
+        <div id="courses-form"></div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+ 
+        <!-- Optional JavaScript -->
+        <script>
+          function loadDoc() {
+            var xhttp = new XMLHttpRequest();
 
-  <jsp:include page="nav.jsp"/>
-  <div class="container-fluid">
-    <div class="container mt-2 pt-4 pb-3">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="background: transparent;">
-          <li class="breadcrumb-item"><a href="admin.htm">Admin</a></li>
-          <li class="breadcrumb-item active">Courses</li>
-          <li class="breadcrumb-item active" aria-current="page">Manage Course</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+               document.getElementById("dropdown_stuff").innerHTML = this.responseText;
+              }
+            };
 
-  <!-- Tabs -->
-  <div class="container-fluid">
-    <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
-        </li>  
-        <li class="nav-item">
-          <a class="nav-link" href="category.htm">Category</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="courses.htm">Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+            var okay = document.getElementById("streamname").value;
+            //alert("Value= "+okay);
+            xhttp.open("GET", "ajax.htm?id="+okay, true);
+            xhttp.send();
+          }
+        </script>
 
-  <div class="container-fluid bg-white" style="min-height: 100vh;">
-    <div class="container pb-5">
-      <div class="row justify-content-center">
-        <div class="card col-md-6 col-sm-12 col-lg-5 mt-4 py-3 shadow">
-          <div class="card-header text-muted noto bg-white">
-            <i class="fas fa-book-open pr-2"></i> Manage Course
-            <span style="float: right;">
-              <form action = "delete-courses.htm">
-                  <input type='hidden' name='course_id' id="course_id" value='${param.id}' />
-                  <button class="btn btn-sm btn-danger" type="submit">
-                <!--a href="" class="btn btn-sm btn-danger"-->
-                  <span style="white-space: nowrap;"><i class="fas fa-user-minus"></i> Delete </span>
-                  </button>
-                <!--/a-->
-              </form>
-            </span>
-          </div>
-          <form action="update-courses.htm">
-            <div class="form-group row mt-3">
-              <label for="new_course_name" class="col-sm-3 col-form-label">Course</label>
-              <div class="col-sm-9">
-                  <input type="hidden" name="course_name" id="course_name" value='${param.id}' />
-                <input type="text" class="form-control" id="new_course_name" onchange="myFunction()" name="new_course_name" value="${param.id}" required>
-                <div><small id="ajaxconf" class="text-danger"></small></div>
-              </div>
-            </div>
-
-            <div class="form-group row mt-3">
-              <label for="new_id" class="col-sm-3 col-form-label">Stream</label>
-              <div class="form-group col-md-9">
-                  <select class="custom-select" name= "streamname" id="streamname" onchange="loadDoc()" placeholder="Select a Stream">
-                      <option selected hidden value="${param.name}">${param.name}</option>
-                      <c:forEach items="${fullstreamList}" var="streamer">
-                        <option value="${streamer}">
-                            ${streamer}
-                        </option>
-                    </c:forEach>
-                    </select>
-                </div>
-            </div>    
-                
-            <div class="form-group row mt-3">
-              <label for="new_id" class="col-sm-3 col-form-label">Module</label>
-              <div class="form-group col-md-9">
-                  <div id="dropdown_stuff">
-                  <select class="custom-select" name= "modulename" id="modulename">
-                      <option selected hidden value="${param.name2}">${param.name2}</option>
-                    
-                  </select></div>
-                </div>
-            </div>        
-            <div class="row justify-content-center mt-1">
-              <div class="row pt-3">
-                <div class="col-6">
-                    <button class="btn btn-sm btn-secondary" type="submit">
-                      <span style="white-space: nowrap;"><i class="fas fa-user-edit"></i> Update </span>
-                    </button>
-                </div>
-              </div>
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- /Tabs -->
-
-  <!-- Optional JavaScript -->
-  <script>
-    function loadDoc() {
-      var xhttp = new XMLHttpRequest();
-      
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-         document.getElementById("dropdown_stuff").innerHTML = this.responseText;
-        }
-      };
-      
-      var okay = document.getElementById("streamname").value;
-      //alert("Value= "+okay);
-      xhttp.open("GET", "ajax.htm?id="+okay, true);
-      xhttp.send();
-    }
-</script>
-
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!-- Popper.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <!-- Bootstrap.js -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-</body>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- Popper.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <!-- Bootstrap.js -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
 </html>
 
 <script>
@@ -286,3 +192,129 @@ function myFunction()
   xhttp.send();
 }
 </script>
+
+<script type="text/babel">
+    class Courses extends React.Component {
+        render() {
+            return (
+                    <div className="container-fluid">
+                        <div className="container mt-2 pt-4 pb-3">
+                            <nav aria-label="breadcrumb">
+                                <ol className="breadcrumb" style={{background: "transparent"}}>
+                                    <li className="breadcrumb-item"><a href="admin.htm">Admin</a></li>
+                                    <li className="breadcrumb-item active">Courses</li>
+                                    <li className="breadcrumb-item active" aria-current="page">Manage Course</li>
+                                </ol>
+                            </nav>
+                        </div>
+                     </div>
+            );
+        }
+    }
+
+    class Redirect extends React.Component {
+        render() {
+            return (
+                    <div className="container-fluid">
+                        <div className="container">
+                            <ul className="nav nav-tabs">
+                                <li className="nav-item">
+                                    <a className="nav-link" href="streams.htm">Streams</a>
+                                </li>  
+                                <li className="nav-item">
+                                    <a className="nav-link" href="category.htm">Category</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="modules.htm">Modules</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link active" href="courses.htm">Courses</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="admin.htm">Users</a>
+                                </li>
+                            </ul>
+                         </div>
+                    </div>
+            );
+        }
+    }
+
+    class CoursesForm extends React.Component {
+        render() {
+            return (
+                    <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
+                        <div className="container pb-5">
+                            <div className="row justify-content-center">
+                                <div className="card col-md-6 col-sm-12 col-lg-5 mt-4 py-3 shadow">
+                                        <div className="card-header text-muted noto bg-white">
+                                            <i className="fas fa-book-open pr-2"></i> Manage Course
+                                            <span style={{float: "right"}}>
+                                                <form action="delete-courses.htm">
+                                                    <input type='hidden' name='course_id' id="course_id" value='${param.id}' />
+                                                    <button className="btn btn-sm btn-danger" type="submit">
+                                                        <span style={{whiteSpace: "nowrap"}}><i className="fas fa-user-minus"></i> Delete </span>
+                                                    </button>        
+                                                </form>
+                                            </span>
+                                        </div>
+                                        <form action="update-courses.htm">
+                                            <div className="form-group row mt-3">
+                                                <label for="new_course_name" className="col-sm-3 col-form-label">Course</label>
+                                                <div className="col-sm-9">
+                                                    <input type="hidden" name="course_name" id="course_name" value='${param.id}' />
+                                                    <input type="text" className="form-control" id="new_course_name" onchange="myFunction()" name="new_course_name" value="${param.id}" required />
+                                                    <div><small id="ajaxconf" className="text-danger"></small></div>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row mt-3">
+                                                <label for="new_id" className="col-sm-3 col-form-label">Stream</label>
+                                                <div className="form-group col-md-9">
+                                                    <select className="custom-select" name= "streamname" id="streamname" onchange="loadDoc()" placeholder="Select a Stream">
+                                                    <option selected hidden value="${param.name}">${param.name}</option>
+                                                        <c:forEach items="${fullstreamList}" var="streamer">
+                                                            <option value="${streamer}">
+                                                                ${streamer}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row mt-3">
+                                                <label for="new_id" className="col-sm-3 col-form-label">Module</label>
+                                                <div className="form-group col-md-9">
+                                                    <div id="dropdown_stuff">
+                                                        <select className="custom-select" name= "modulename" id="modulename">
+                                                            <option selected hidden value="${param.name2}">${param.name2}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row justify-content-center mt-1">
+                                                <div className="row pt-3">
+                                                    <div className="col-6">
+                                                        <button className="btn btn-sm btn-secondary" type="submit">
+                                                            <span style={{whiteSpace: "nowrap"}}><i className="fas fa-user-edit"></i> Update </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>               
+            );
+        }
+    }
+    
+    ReactDOM.render(<Courses />, document.getElementById('courses'));
+    ReactDOM.render(<Redirect />, document.getElementById('redirect'));
+    ReactDOM.render(<CoursesForm />, document.getElementById('courses-form'));
+</script>
+
+
+
+
+
+

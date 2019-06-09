@@ -158,14 +158,14 @@ INSERT INTO Batches VALUES('POOR15', '28-JUL-18', '17-OCT-18', 'BD456', 'India',
 INSERT INTO Batches VALUES('FAIL39', '25-MAY-18', '14-JUL-18', 'FSD123', 'India', 'Chennai');
 INSERT INTO Batches VALUES('MIX8', '03-MAR-16', '13-APR-16', 'FSD123', 'Russia', 'Moscow');
 
-INSERT INTO Instructors_Teach_Batches VALUES('BEST07', '5060417');
-INSERT INTO Instructors_Teach_Batches VALUES('BEST13', '5060418');
-INSERT INTO Instructors_Teach_Batches VALUES('AVG04', '5060417');
-INSERT INTO Instructors_Teach_Batches VALUES('AVG26', '5060418');
-INSERT INTO Instructors_Teach_Batches VALUES('POOR15', '5060417');
-INSERT INTO Instructors_Teach_Batches VALUES('FAIL39', '5060418');
-INSERT INTO Instructors_Teach_Batches VALUES('POOR15', '5060418');
-INSERT INTO Instructors_Teach_Batches VALUES('FAIL39', '5060417');
-INSERT INTO Instructors_Teach_Batches VALUES('MIX8', '5060417');
+INSERT INTO Instructors_Teach_Batches VALUES('BEST07', 'Daniel_Lowery@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('BEST13', 'Nicholas_Cook@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('AVG04', 'Daniel_Lowery@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('AVG26', 'Nicholas_Cook@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('POOR15', 'Daniel_Lowery@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('FAIL39', 'Nicholas_Cook@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('POOR15', 'Nicholas_Cook@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('FAIL39', 'Daniel_Lowery@Syntelinc.com');
+INSERT INTO Instructors_Teach_Batches VALUES('MIX8', 'Daniel_Lowery@Syntelinc.com');
 
 COMMIT;

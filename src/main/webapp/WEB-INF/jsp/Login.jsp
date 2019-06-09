@@ -52,14 +52,14 @@
             return(
                     <div className="container-fluid h-100">
                         <div className="row justify-content-center align-items-center h-100">
-                            <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-6 card mx-2 py-5 animated fadeIn shadow-lg rounded-0">
-				<div class="row justify-content-center">
-					<div class="col-7">
+                            <div className="col col-sm-6 col-md-6 col-lg-4 col-xl-6 card mx-2 py-5 animated fadeIn shadow-lg rounded-0">
+				<div className="row justify-content-center">
+					<div className="col-7">
                                                <img src="resources/img/logo.png" className="img-fluid" />
 					</div>
 				</div>
 
-                                <p class="text-center text-danger">${errorMessage}</p>
+                                <p classNAme="text-center text-danger">${errorMessage}</p>
 
 				<s:form commandName="user" className="px-5 noto" id="login-form">
                                     <div className="input-group mb-3">

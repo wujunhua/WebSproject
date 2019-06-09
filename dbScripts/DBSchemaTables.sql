@@ -120,13 +120,13 @@ CREATE TABLE Student_Performance.Batches(
 
 CREATE TABLE Student_Performance.Instructors_Teach_Batches(
   batch_id VARCHAR2(10) NOT NULL,
-  employee_id VARCHAR2(100) NOT NULL
+  user_id VARCHAR2(100) NOT NULL
 ,
   CONSTRAINT fk_Batches_has_Batches
     FOREIGN KEY (batch_id)
     REFERENCES Student_Performance.Batches (batch_id)
 ,
   CONSTRAINT fk_Batches_has_Instructors
-    FOREIGN KEY (employee_id)
-    REFERENCES Student_Performance.Employees (employee_id)
+    FOREIGN KEY (user_id)
+    REFERENCES Student_Performance.Users (user_id)
 ); 

@@ -164,7 +164,7 @@
                                         <div className="form-group row mt-3">
                                             <label for="inputEmail3" className="col-sm-3 col-form-label">Email</label>
                                             <div className="col-sm-9">
-                                                <input type="email" className="form-control" id="inputEmail3" onchange="myFunction()" name="newusername" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
+                                                <input type="email" className="form-control" id="inputEmail3" onchange="myFunction()" name="newusername" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
                                                 <div><small id="jackson_1" className="text-danger"></small></div>
                                             </div>
                                             <div className="col-sm-9">

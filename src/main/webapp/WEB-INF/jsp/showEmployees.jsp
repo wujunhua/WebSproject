@@ -217,7 +217,7 @@
                             + ", moduleID=" + det[3] + "], ";
                 }
             });
-            console.log(bigString);
+            
             return bigString;
         }
         var count = 1;

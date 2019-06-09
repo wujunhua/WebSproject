@@ -102,7 +102,7 @@
                                               <button className="btn btn-sm mt-1 btn-primary no-border" onclick="checkDomain()" type="submit"><i className="fas fa-plus pr-2" />Insert User</button>
                                             </div>
                                             <div className="col-6">
-                                              <input type="email" className="form-control" id="username" onchange="myFunction()" name="username" placeholder="Email" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
+                                              <input type="email" className="form-control" id="username" onchange="myFunction()" name="username" placeholder="Email" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
                                               <div><small id="ajaxconf" className="text-danger" /></div>
                                             </div>
                                             <div>

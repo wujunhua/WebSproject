@@ -156,7 +156,7 @@
                                     <label className="my-1 mr-2" htmlFor="location">Instructor Email</label>
                                   </div>
                                   <div className="col-sm-10 my-1">
-                                    <input type="email" name="insEmail" id="insEmail" className="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
+                                    <input type="email" name="insEmail" id="insEmail" className="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
                                   </div>
                                   <font color="red"><span id="emailValidation" /></font>
                                 </div>

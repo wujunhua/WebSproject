@@ -73,7 +73,7 @@
         });
 
         var count = 1;
-        console.log(jsonData);
+        
         const tablebody = jsonData.map((stream) =>
             <tr key={stream.streamId} value={stream.streamId}>
                     <th scope="row">{count++}</th>

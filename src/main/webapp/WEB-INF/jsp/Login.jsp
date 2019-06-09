@@ -59,7 +59,7 @@
 					</div>
 				</div>
 
-                                <p classNAme="text-center text-danger">${errorMessage}</p>
+                                <p className="text-center text-danger">${errorMessage}</p>
 
 				<s:form commandName="user" className="px-5 noto" id="login-form">
                                     <div className="input-group mb-3">

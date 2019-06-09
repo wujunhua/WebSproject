@@ -53,6 +53,9 @@ public class Authentication extends SimpleFormController{
         
         try {
             userMatcher = usrDAO.getUser(user.getUserName());
+
+            System.out.println("user retrieved, about to check if password matches");
+            
             log.info("user retrieved, about to check if password matches");
             if (userMatcher.getPassword().trim().equals(user.getPassword().trim())) {
                 
@@ -71,6 +74,7 @@ public class Authentication extends SimpleFormController{
                 return userNameAndStatus;
             }
             else {
+
                 log.error("password did not match one in the DB");
                 errorMessage = "<div class=\"alert alert-danger mx-5 alert-dismissible fade show\" role=\"alert\">\n"
                         + "  <strong>Error:</strong> password did not match\n"

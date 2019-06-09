@@ -108,7 +108,7 @@
                 jsonData = data;
             });
             const options = jsonData.map((stream) =>
-                <li key={stream.streamId} value={stream.streamId} className="list-group-item"><a href="download.htm?streamID={stream.streamId}">{stream.streamName}</a></li>
+                <li key={stream.streamId} value={stream.streamId} className="list-group-item"><a href={"download.htm?streamID=" + stream.streamId}>{stream.streamName}</a></li>
             );
             return(
                 <ul className="list-group">

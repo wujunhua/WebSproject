@@ -70,54 +70,83 @@
 <body class="bg-light">
 
 <jsp:include page="nav.jsp"/>
-  <div class="container-fluid">
-    <div class="container mt-2 pt-4 pb-3">
+  <div id="category"></div>
+        <div id="category2"></div> 
+        <div id="category3"></div> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- Popper.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <!-- Bootstrap.js -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
+            
+        <script type ="text/babel">
+        class Category extends React.Component {	
+            render() {
+                return (
+                    <div className="container-fluid">
+    <div className="container mt-2 pt-4 pb-3">
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="background: transparent;">
-          <li class="breadcrumb-item"><a href="#">Admin</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Streams</li>
+        <ol className="breadcrumb" style={{background: "transparent"}}>
+          <li className="breadcrumb-item"><a href="#">Admin</a></li>
+          <li className="breadcrumb-item active" aria-current="page">Streams</li>
         </ol>
       </nav>
     </div>
   </div>
+    );
+    }
+};
 
-  <!-- Tabs -->
-  <div class="container-fluid">
-    <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" href="streams.htm">Streams</a>
+    class Category2 extends React.Component {
+        render(){
+            return (
+                        <div className="container-fluid">
+    <div className="container">
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <a className="nav-link active" href="streams.htm">Streams</a>
         </li>  
-        <li class="nav-item">
-          <a class="nav-link" href="category.htm">Category</a>
+        <li className="nav-item">
+          <a className="nav-link" href="category.htm">Category</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
+        <li className="nav-item">
+          <a className="nav-link" href="modules.htm">Modules</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="courses.htm">Courses</a>
+        <li className="nav-item">
+          <a className="nav-link" href="courses.htm">Courses</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
+        <li className="nav-item">
+          <a className="nav-link" href="admin.htm">Users</a>
         </li>
       </ul>
     </div>
   </div>
+                    );
+        }
+    }
 
-  <div class="container-fluid bg-white" style="min-height: 100vh;">
-    <div class="container pb-5">
+    class Category3 extends React.Component{	
+        render() {
+                return (
+                        <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
+    <div className="container pb-5">
 
-      <div class="row py-3">
-        <div class="col-lg-12">
+      <div className="row py-3">
+        <div className="col-lg-12">
           <form action="create-stream.htm">
-          <div class="form">
-            <div class="form-row">
-              <div class="col-lg-2">
-                <button class="btn btn-sm btn-primary no-border mt-1" type="submit"><i class="fas fa-plus pr-2"></i>Insert Stream</button>
+          <div className="form">
+            <div className="form-row">
+              <div className="col-lg-2">
+                <button className="btn btn-sm btn-primary no-border mt-1" type="submit"><i class="fas fa-plus pr-2"></i>Insert Stream</button>
               </div>
-              <div class="col-lg-10">
-               <input type="text" class="form-control" id ="streamName" onchange="myFunction()" name="streamName" placeholder="Stream Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,50}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 50 characters." required>
-              <div><small id="ajaxconf" class="text-danger"></small></div>
+              <div className="col-lg-10">
+               <input type="text" className="form-control" id ="streamName" onchange="myFunction()" name="streamName" placeholder="Stream Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,50}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 50 characters." required />
+              <div><small id="ajaxconf" className="text-danger"></small></div>
               </div>
             </div>
           </div>
@@ -125,10 +154,10 @@
         </div>
       </div>
 
-      <table class="table table-striped table-bordered">
+      <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th scope="col" style="width: 10%;">#</th>
+            <th scope="col" style={{width: "10%"}}>#</th>
             <th scope="col">Stream</th>
           </tr>
         </thead>
@@ -147,6 +176,16 @@
       </table>
     </div>
   </div>
+
+            );
+        }
+    };
+    
+    ReactDOM.render(<Category />, document.getElementById('category'));
+    ReactDOM.render(<Category2 />, document.getElementById('category2'));
+    ReactDOM.render(<Category3 />, document.getElementById("category3"));
+                                                
+</script> 
   <!-- /Tabs -->
 
   <!-- Optional JavaScript -->

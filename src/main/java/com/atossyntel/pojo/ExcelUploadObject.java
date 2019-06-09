@@ -1,17 +1,16 @@
-
 package com.atossyntel.pojo;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class ExcelUploadObject {
-	
-	private String streamName;
-	private String location;
-	private String site;
-        private MultipartFile file;
-	private String insEmail;
-        private String startDate;
-        private String endDate;
+
+    private String streamName;
+    private String location;
+    private String site;
+    private MultipartFile file;
+    private String insEmail;
+    private String startDate;
+    private String endDate;
 
     public ExcelUploadObject(String streamName, String location, String site, MultipartFile file, String insEmail, String startDate, String endDate) {
         this.streamName = streamName;
@@ -81,11 +80,4 @@ public class ExcelUploadObject {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
-        
-
-
-	
-	
-
 }
-

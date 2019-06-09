@@ -114,115 +114,147 @@
   //disconnect
   conn.close();
 %>  
-
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+    </head>
 <body class="bg-light" onload="loadDoc()">
 
   <jsp:include page="nav.jsp"/>
-  <div class="container-fluid">
-    <div class="container mt-2 pt-4 pb-3">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="background: transparent;">
-          <li class="breadcrumb-item"><a href="#">Admin</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Courses</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
+  
+  <div id="root"></div>
+  <div id="root2"></div>
+  <div id="root3"></div>
+  
+  <script type ="text/babel">
+      class HeadingLinks extends React.Component {
+          render(){
+              return(
+                    <div className="container-fluid">
+                     <div className="container mt-2 pt-4 pb-3">
+                       <nav aria-label="breadcrumb">
+                         <ol className="breadcrumb" style={{background: "transparent"}}>
+                           <li className="breadcrumb-item"><a href="#">Admin</a></li>
+                           <li className="breadcrumb-item active" aria-current="page">Courses</li>
+                         </ol>
+                       </nav>
+                     </div>
+                   </div> 
+                    );
+          }
+      };
+      
+      class Tabs extends React.Component {
+          render(){
+              return(
+                        <div className="container-fluid">
+                            <div className="container">
+                              <ul className="nav nav-tabs">
+                                <li className="nav-item">
+                                  <a className="nav-link" href="streams.htm">Streams</a>
+                                </li>  
+                                <li className="nav-item">
+                                  <a className="nav-link" href="category.htm">Category</a>
+                                </li>
+                                <li className="nav-item">
+                                  <a className="nav-link" href="modules.htm">Modules</a>
+                                </li>
+                                <li className="nav-item">
+                                  <a className="nav-link active" href="courses.htm">Courses</a>
+                                </li>
+                                <li className="nav-item">
+                                  <a className="nav-link" href="admin.htm">Users</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
 
-  <!-- Tabs -->
-  <div class="container-fluid">
-    <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
-        </li>  
-        <li class="nav-item">
-          <a class="nav-link" href="category.htm">Category</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="modules.htm">Modules</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="courses.htm">Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container-fluid bg-white" style="min-height: 100vh;">
-    <div class="container pb-5">
-
-      <div class="row py-3">
-        <div class="col-lg-12">
-          <form action="create-courses.htm">
-            <div class="form">
-              <div class="form-row">
-                <div class="col-lg-2">
-                  <button class="btn btn-sm btn-primary mt-1 no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert Course</button>
-                </div>
-                <div class="col-lg-3">
-                  <input type="text" name="coursename" id="coursename" class="form-control" onChange="myFunction()" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required>
-                <div><small id="ajaxconf" class="text-danger"></small></div>
-                </div>
-                  <div class="form-group col-md-3">
-                      <select class="custom-select" name= "streamname" id="streamname" onchange="loadDoc()" />
-                    <c:forEach items="${fullstreamList}" var="streamer">
-                        <option value="${streamer}">
-                            ${streamer}
-                        </option>
-                    </c:forEach>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                  <div id="dropdown_stuff">
-                        <select class="custom-select" name= "modulename" id="modulename" onChange="myFunction()">
-                    <c:forEach items="${fullmodList}" var="modder">
-                        <option value="${modder}">
-                            ${modder}
-                        </option>
-                    </c:forEach>
-                    </select>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="width: 10%;">#</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Stream Name</th>
-            <th scope="col">Module Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <c:set var="count" value="1"/>
-         <c:forEach items="${courseList}" var="course">
-           <tr value="${course}">
-               <th scope="row">${count}</th>
-               <td>
-                   <a href="manage-course.htm?id=${course}&name=${streamList.get(count-1)}&name2=${modList.get(count-1)}">${course}</a>
-               </td>
-               <td>
-                ${streamList.get(count-1)}
-               </td>
-               <td>
-               ${modList.get(count-1)}
-               </td>
-           </tr>
-           <c:set var="count" value="${count + 1}"/>
-       </c:forEach>
-        </tbody>
-      </table>
-    </div>
-  </div>
+                    );
+          }
+      };
+      
+      class Content extends React.Component {
+          render(){
+              return(
+                    <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
+                      <div className="container pb-5">
+                        <div className="row py-3">
+                          <div className="col-lg-12">
+                            <form action="create-courses.htm">
+                              <div className="form">
+                                <div className="form-row">
+                                  <div className="col-lg-2">
+                                    <button className="btn btn-sm btn-primary mt-1 no-border" type="submit"><i className="fas fa-plus pr-2"></i>Insert Course</button>
+                                  </div>
+                                  <div className="col-lg-3">
+                                    <input type="text" name="coursename" id="coursename" className="form-control" onchange="myFunction()" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required />
+                                  <div><small id="ajaxconf" className="text-danger"></small></div>
+                                  </div>
+                                    <div className="form-group col-md-3">
+                                        <select className="custom-select" name="streamname" id="streamname" onchange="loadDoc()" >
+                                            <c:forEach items="${fullstreamList}" var="streamer">
+                                                <option value="${streamer}">
+                                                    ${streamer}
+                                                </option>
+                                            </c:forEach>
+                                      </select>
+                                  </div>
+                                  <div className="form-group col-md-3">
+                                    <div id="dropdown_stuff">
+                                          <select className="custom-select" name= "modulename" id="modulename" onChange="myFunction()">
+                                      <c:forEach items="${fullmodList}" var="modder">
+                                          <option value="${modder}">
+                                              ${modder}
+                                          </option>
+                                      </c:forEach>
+                                      </select>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <table className="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              <th scope="col" style={{width: "10%"}}>#</th>
+                              <th scope="col">Course Name</th>
+                              <th scope="col">Stream Name</th>
+                              <th scope="col">Module Name</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <c:set var="count" value="1"/>
+                           <c:forEach items="${courseList}" var="course">
+                             <tr value="${course}">
+                                 <th scope="row">${count}</th>
+                                 <td>
+                                     <a href="manage-course.htm?id=${course}&name=${streamList.get(count-1)}&name2=${modList.get(count-1)}">${course}</a>
+                                 </td>
+                                 <td>
+                                  ${streamList.get(count-1)}
+                                 </td>
+                                 <td>
+                                 ${modList.get(count-1)}
+                                 </td>
+                             </tr>
+                             <c:set var="count" value="${count + 1}"/>
+                         </c:forEach>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>           
+                    );
+          }
+      };
+      
+      ReactDOM.render(<HeadingLinks />, document.getElementById("root"));
+      ReactDOM.render(<Tabs />, document.getElementById("root2"));
+      ReactDOM.render(<Content />, document.getElementById("root3"));
+  </script>
   <!-- /Tabs -->
 
   <!-- Optional JavaScript -->

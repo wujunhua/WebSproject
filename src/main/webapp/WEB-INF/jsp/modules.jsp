@@ -150,114 +150,144 @@
   conn.close();
   
 %>  
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+    </head>
+    <body class="bg-light">
 
-<body class="bg-light">
+    <jsp:include page="nav.jsp"/>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <div id="root3"></div>
+    
+    <script type="text/babel">
+        class HeadingLinks extends React.Component {
+            render(){
+                return(
+                    <div className="container-fluid">
+                        <div className="container mt-2 pt-4 pb-3">
+                            <nav aria-label="breadcrumb">
+                                <ol className="breadcrumb" style={{background:"transparent"}}>    
+                                    <li className="breadcrumb-item"><a href="#">Admin</a></li>
+                                    <li className="breadcrumb-item active" aria-current="page">Modules</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    );
+            }
+        };
+        
+        class Tabs extends React.Component {
+            render(){
+                return(
+                        <div className="container-fluid">
+                            <div className="container">
+                              <ul className="nav nav-tabs">
+                                <li className="nav-item">
+                                  <a className="nav-link" href="streams.htm">Streams</a>
+                                </li>  
+                                <li className="nav-item">
+                                  <a className="nav-link" href="category.htm">Category</a>
+                                </li>
+                                <li className="nav-item">
+                                  <a className="nav-link active" href="modules.htm">Modules</a>
+                                </li>
+                                <li className="nav-item">
+                                  <a className="nav-link" href="courses.htm">Courses</a>
+                                </li>
+                                <li className="nav-item">
+                                  <a className="nav-link" href="admin.htm">Users</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                    );
+            }
+        };
+        
+        class Content extends React.Component {
+            render(){
+                return(
+                    <div className="container-fluid bg-white" style={{minHeight:"100vh"}}>
+                        <div className="container pb-5">
+                            <div className="row py-3">
+                                <div className="col-lg-12">
+                                    <form action="createModule.htm">
+                                        <div className="form">
+                                            <div className="form-row">
+                                                <div className="col-2">
+                                                    <button className="btn btn-sm btn-primary mt-1 no-border" type="submit"><i className="fas fa-plus pr-2"></i>Insert Module</button>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" className="form-control" id="modName" onchange="myFunction()" name="modName" placeholder="Module Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 2 and 45 characters." required />
+                                                    <div><small id="ajaxconf" className="text-danger"></small></div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <select id="inputState" className="form-control" required="" name ="modCategory">
+                                                        <c:forEach items="${allCategoryName}" var="catNam">
+                                                            <option value="${catNam}">
+                                                                ${catNam}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <select id="inputState2" onchange="myFunction()" className="form-control" required="" name ="streamName">
+                                                        <c:forEach items="${streamName}" var="stream">
+                                                            <option value="${stream}">
+                                                                ${stream}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
-<jsp:include page="nav.jsp"/>
-  <div class="container-fluid">
-    <div class="container mt-2 pt-4 pb-3">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="background: transparent;">
-          <li class="breadcrumb-item"><a href="#">Admin</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Modules</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-
-  <!-- Tabs -->
-  <div class="container-fluid">
-    <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link" href="streams.htm">Streams</a>
-        </li>  
-        <li class="nav-item">
-          <a class="nav-link" href="category.htm">Category</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="modules.htm">Modules</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="courses.htm">Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="admin.htm">Users</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container-fluid bg-white" style="min-height: 100vh;">
-    <div class="container pb-5">
-
-      <div class="row py-3">
-        <div class="col-lg-12">
-            <form action="createModule.htm">
-          <div class="form">
-            <div class="form-row">
-              <div class="col-2">
-                  <button class="btn btn-sm btn-primary mt-1 no-border" type="submit"><i class="fas fa-plus pr-2"></i>Insert Module</button>
-              </div>
-              <div class="col-4">
-                <input type="text" class="form-control" id="modName" onchange="myFunction()" name="modName" placeholder="Module Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 2 and 45 characters." required>
-              <div><small id="ajaxconf" class="text-danger"></small></div>
-              </div>
-              <div class="col-3">
-                <select id="inputState" class="form-control" required="" name ="modCategory">
-                        <c:forEach items="${allCategoryName}" var="catNam">
-                            <option value="${catNam}">
-                                ${catNam}
-                            </option>
-                        </c:forEach>
-                    </select>
-              </div>
-                <div class="col-3">
-                    <select id="inputState2" onchange="myFunction()" class="form-control" required="" name ="streamName">
-                        <c:forEach items="${streamName}" var="stream">
-                            <option value="${stream}">
-                                ${stream}
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-          </div>
-            </form>
-        </div>
-      </div>
-
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="width: 10%;">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Stream Name</th>
-          </tr>
-        </thead>
-        <tbody>
-            <c:set var="count" value="1"/>
-            <c:forEach items="${moduleList}" var="module">
-            <tr value="${module}">
-                <th scope="row">${count}</th>
-                <td>
-                    <a href="manage-module.htm?id=${moduleIdList.get(count-1)}&name=${catagoryName.get(count-1)}&stream=${cleanedStreamNameList.get(count-1)}&okay=${cleanedModuleList.get(count-1)}">${module}</a>
-                </td>
-                <td>
-                    ${catagoryName.get(count-1)}
-                </td>
-                <td>
-                    ${streamNameList.get(count-1)}
-                </td>
-            </tr>
-            <c:set var="count" value="${count+1}"/>
-            </c:forEach>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <!-- /Tabs -->
+                            <table className="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style={{width: "10%"}}>#</th>
+                                         <th scope="col">Name</th>
+                                         <th scope="col">Category</th>
+                                         <th scope="col">Stream Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:set var="count" value="1"/>
+                                    <c:forEach items="${moduleList}" var="module">
+                                        <tr value="${module}">
+                                            <th scope="row">${count}</th>
+                                            <td>
+                                                <a href="manage-module.htm?id=${moduleIdList.get(count-1)}&name=${catagoryName.get(count-1)}&stream=${cleanedStreamNameList.get(count-1)}&okay=${cleanedModuleList.get(count-1)}">${module}</a>
+                                            </td>
+                                            <td>
+                                                ${catagoryName.get(count-1)}
+                                            </td>
+                                            <td>
+                                                ${streamNameList.get(count-1)}
+                                            </td>
+                                        </tr>
+                                        <c:set var="count" value="${count+1}"/>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    );
+            }
+        };
+        ReactDOM.render(<HeadingLinks />, document.getElementById("root"));
+        ReactDOM.render(<Tabs />, document.getElementById("root2"));
+        ReactDOM.render(<Content />, document.getElementById("root3"));
+    </script>
+  
 
   <!-- Optional JavaScript -->
 

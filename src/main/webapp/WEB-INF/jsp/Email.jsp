@@ -1,68 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
-<%@page import="java.util.ArrayList"%>
-<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%
-  
-  //initialize driver class
-  try {    
-    Class.forName("oracle.jdbc.driver.OracleDriver");
-  } catch (Exception e) {
-    out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
-  }
-  
-  String dbUser = "Student_Performance";
-  String dbPasswd = "Student_Performance";
-  String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
-
-  //connect
-  Connection conn = null;
-  try {
-    conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-    //out.println(" Connection status: " + conn + "<P>");
-  } catch(Exception e) {
-    out.println("Connection failed: " + e.toString() + "<P>");      
-  }
-
-  String sql;
-  int numRowsAffected;
-  Statement stmt = conn.createStatement();
-  ResultSet rs;
-  
-  // select
-  sql = "select email, name, employee_id from employees";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList usersList = new ArrayList(); // emails
-  request.setAttribute("usersList", usersList);
-  
-  ArrayList nameList = new ArrayList();
-  request.setAttribute("nameList", nameList);
-  
-  ArrayList employeeIDs =  new ArrayList();
-  request.setAttribute("employeeIDs", employeeIDs);
-  
-  while (rs.next()) {
-        usersList.add(rs.getString("email"));
-        nameList.add(rs.getString("name"));
-        employeeIDs.add(rs.getString("employee_id"));
-  }
-  
-  rs.close();
-  stmt.close();
-
-  //commit
-  conn.commit();
-  
-  //disconnect
-  conn.close();
-  
-%>  
 
 <HTML>
     <head>
@@ -80,8 +19,8 @@
         <!-- Google Fonts (Noto Sans) --> 
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
         <title>Atos Syntel &middot; Land</title>
         <style>
             p, h1, h2, h3, h4, h5, h6, li, ul, ol{
@@ -159,6 +98,38 @@
     
     ReactDOM.render(<Tabs />, document.getElementById("root2"));
  
+ 
+ 
+    $.ajaxSetup({
+        async: false
+    });
+
+    function GetEmployees() {
+        var jsonData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllEmployees", function(data) {
+            jsonData = data;
+        });
+
+        var count = 1;
+        console.log(jsonData);
+        const tablebody = jsonData.map((emp) =>
+            <tr key={emp.employeeId}>
+                    <td className="noto">{emp.name}</td>
+                    <td className="noto">{emp.email}</td>
+                    <td className="noto"><a href={"pdf-preview.htm?empID=" + emp.employeeId}>
+                                            <i className="fas fa-file-pdf px-2"></i>
+                                         </a></td>
+                    <td className="text-center noto"><input className="cb" type="checkbox" name="emailChecked" value={emp.email} /></td>
+            </tr>
+        );
+
+        return(
+            <tbody>
+                {tablebody}
+            </tbody>
+        );
+    }
+ 
     class Contents extends React.Component {
         constructor(){
             super();
@@ -222,20 +193,7 @@
                                     <th scope="col" style={{width: "20%"}} className="text-center">Send    <input type="checkbox" onClick={this.selectAll}/></th> 
                                 </tr>
                             </thead>
-                            <tbody>
-                              <c:forEach items="${empList}" var="user" varStatus="loop">
-                                  <tr>
-                                    <td className="noto">${user.employeeName}</td>
-                                    <td className="noto">${user.employeeEmail}</td>
-                                    <td className="noto text-center">
-                                        <a href="pdf-preview.htm?empID=${employeeIDs[loop.index]}">
-                                            <i className="fas fa-file-pdf px-2"></i>
-                                        </a>
-                                    </td>
-                                    <td className="text-center noto"><input className="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
-                                  </tr>
-                              </c:forEach>
-                            </tbody>
+                                <GetEmployees />
                         </table>
                         <div className="row justify-content-center my-5">
                           <button type="submit" value="Login" className="btn btn-primary px-3 mx-1 rounded-0"><i className="fas fa-paper-plane pr-2"></i>Send</button>
@@ -252,7 +210,7 @@
     <script src="<c:url value="/resources/js/confirmation.js" />"></script>
     
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" crossorigin="anonymous"></script>
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <!-- Bootstrap.js -->

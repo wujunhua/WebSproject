@@ -142,7 +142,7 @@ public class PDFinfo {
 
         String str = njdbc.queryForObject(sql, namedParams, String.class);
 
-        return String.format("%.2f", Float.parseFloat(str));
+        return String.format("%.0f", Float.parseFloat(str));
     }
 
     /**
@@ -181,11 +181,10 @@ public class PDFinfo {
         String sql = "SELECT AVG(s.scores) "
                 + "FROM modules m INNER JOIN employees_take_modules s ON m.module_id=s.module_id "
                 + "WHERE m.module_name = '"+ modName + "' "
-                + "AND employee_id IN (SELECT employee_id FROM employees WHERE employee_id = '" + empID + "') "
                 + "GROUP BY m.module_name ORDER BY m.module_name";
 
         SqlParameterSource namedParams = new MapSqlParameterSource("m", modName).addValue("e", empID);
         String str = njdbc.queryForObject(sql, namedParams, String.class);
-        return String.format("%.2f", Float.parseFloat(str));
+        return String.format("%.0f", Float.parseFloat(str));
     }
 }

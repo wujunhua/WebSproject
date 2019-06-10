@@ -27,7 +27,7 @@ public class PdfViewController implements Controller {
         
         String employeeID = request.getParameter("empID");
         try {
-            PDF pdfGenerator = new PDF(employeeDAO.getDataSource());
+            PDF pdfGenerator = new PDF(userDAO.getDataSource());
             pdfGenerator.generate(employeeID);
         } catch (Exception ex) {
             logger.error("PdfViewController: There was an issue with generating the PDF");

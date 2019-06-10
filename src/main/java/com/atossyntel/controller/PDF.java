@@ -47,7 +47,7 @@ public class PDF {
 
     private static final BaseFont font = BaseFont.Helvetica; // change font to Verdana
     private PDPage page = new PDPage();
-    private PDFinfo pdfinfo;
+    private PDFinfo pdfinfo = null;
     static PropertiesAccessor prop = new PropertiesAccessor();
     private String filePath = prop.getFilePath(); //use getfilepath in the email logic?
     private static final String IMAGEPATH = prop.getImagePath(); //path to AS logo
@@ -107,6 +107,7 @@ public class PDF {
 
     public void generate(String empid) throws SQLException, IOException {
         //init config
+        
         dataset = new DefaultCategoryDataset();
         njdbc = new NamedParameterJdbcTemplate(dataSource);
         PDFinfo info = new PDFinfo(dataSource.getConnection());
@@ -119,7 +120,6 @@ public class PDF {
             logger.error("Employee ID not found. PDF has not been generated.");
             return;
         }
-
         //define output vars
         StringBuilder gradeNumbers = new StringBuilder("Overall Grade: " + numToLetter(info.getAverageScore(empid)) + "\n|  ");
 
@@ -136,7 +136,6 @@ public class PDF {
         Paragraph hRule = new Paragraph();
         hRule.addMarkup("__" + hrHelp + " __", 1, font);
         //------------------------------------------------
-
         //create PDF
         float linspace = 10;
         float sectionBreak = 15;
@@ -166,7 +165,6 @@ public class PDF {
         document.add(hRule);
 
         document.add(new VerticalSpacer(sectionBreak));
-
         par = new Paragraph();
         par.addMarkup("{color:#0066a1}__*My Training*__:  ", textSize + 1, font);
         document.add(par);
@@ -176,13 +174,11 @@ public class PDF {
         par.addMarkup("{color:#000000}*Stream*: " + stream.get(1), textSize + 1, font);
         document.add(par);
         document.add(new VerticalSpacer(1.5f * linspace));
-
         document.add(new VerticalSpacer(linspace));
         for (String[] cat : cats) {
             List<String[]> scores = new ArrayList<>();
             scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
-
-            if (scores.isEmpty()) {
+            if (scores.size() > 0) {
                 gradeNumbers.append(cat[0] + " Grade: " + numToLetter(info.getAverageScoreByCategory(empid, cat[1])) + "  |  ");
                 par = new Paragraph();
                 par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
@@ -200,7 +196,6 @@ public class PDF {
                 document.add(new VerticalSpacer(1.5f * linspace));
             }
         }
-
         par = new Paragraph();
         par.addMarkup("{color:#0066a1}__*My Performance*__:", textSize + 1, font);
         document.add(new VerticalSpacer(linspace));
@@ -227,7 +222,6 @@ public class PDF {
         par.setAlignment(Alignment.Center);
         document.add(par);
         document.add(new VerticalSpacer(sectionBreak));
-
         par = new Paragraph();
         par.addMarkup(gradeNumbers.toString(), textSize, font);
         par.setAlignment(Alignment.Center);

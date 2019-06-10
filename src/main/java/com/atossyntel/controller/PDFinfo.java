@@ -98,7 +98,6 @@ public class PDFinfo {
      */
     public List<String> getStreamIDName(String empID) throws SQLException {
         List<String> list = new ArrayList<>();
-        logger.debug("*************************************************" + empID);
         String sql = "select s.stream_id, s.stream_name from Stream s, modules m, employees_take_modules etm, employees e where s.stream_id=m.stream_id and m.module_id=etm.module_id and etm.employee_id=e.employee_id and e.employee_id='" + empID + "'";
         Statement s1 = c1.createStatement(); ResultSet r1 = s1.executeQuery(sql);                                    
             while (r1.next()) {
@@ -143,7 +142,7 @@ public class PDFinfo {
 
         String str = njdbc.queryForObject(sql, namedParams, String.class);
 
-        return str;
+        return String.format("%.2f", Float.parseFloat(str));
     }
 
     /**

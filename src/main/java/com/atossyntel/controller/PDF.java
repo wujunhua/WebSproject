@@ -184,7 +184,6 @@ public class PDF {
 
             if (scores.isEmpty()) {
                 gradeNumbers.append(cat[0] + " Grade: " + numToLetter(info.getAverageScoreByCategory(empid, cat[1])) + "  |  ");
-
                 par = new Paragraph();
                 par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
 

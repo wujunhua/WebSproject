@@ -17,7 +17,9 @@ public class EmployeeCRUD {
 
         try {
             logger.info("Creating new employee. ");
-            int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee.getEmployeeID() + "','" + employee.getEmployeeName() + "','" + employee.getEmployeeEmail() + "','" + employee.getClassID() + "','" + employee.getManagerID() + "')");
+            int rows = st.executeUpdate("INSERT INTO Student_Performance.Employees VALUES ('" + employee.getEmployeeID() + "','" 
+                                                    + employee.getEmployeeName() + "','" 
+                                                    + employee.getEmployeeEmail() + "')");
 
             logger.info(rows + " employee added.");
             return true;
@@ -30,10 +32,10 @@ public class EmployeeCRUD {
     }
 
     public void readEmployee(Statement st, String employeeId) {
-        try (ResultSet rs = st.executeQuery("SELECT employee_id, name, email, class_id FROM Student_Performance.Employees WHERE employee_id = '" + employeeId + "'");) {
+        try (ResultSet rs = st.executeQuery("SELECT employee_id, name, email FROM Student_Performance.Employees WHERE employee_id = '" + employeeId + "'");) {
             logger.info("Reading employee.");
             while (rs.next()) {
-                logger.info(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
+                logger.info(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -58,30 +60,6 @@ public class EmployeeCRUD {
             logger.info(rows + " employee deleted.");
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage());
-        }
-    }
-
-    public void updateClass(Statement st, Employee employee) {
-        try {
-            st.executeUpdate("UPDATE employees Set class_id = '" + employee.getClassID() + "' where employee_id = '" + employee.getEmployeeID() + "'");
-            logger.info("Employee Updated");
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-
-        }
-
-    }
-
-    public static void main(String[] args) {
-        try {
-            Class.forName("oracle.jdbc.OracleDriver");
-            PropertiesAccessor prop = new PropertiesAccessor();
-            try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", prop.getUsername(), prop.getPassword())) {
-                Statement st = con.createStatement();
-                st.close();
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            logger.error("Exception " + e.getMessage());
         }
     }
 

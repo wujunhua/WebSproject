@@ -26,13 +26,13 @@ public class Runner {
         ExcelPuller pul = new ExcelPuller();
         List<Employee> emps = new ArrayList<>();
         EmployeeCRUD empCrud = new EmployeeCRUD();
-        ClassCRUD cCrud = new ClassCRUD();
+        
         ETMCrud eCrud = new ETMCrud();
         emps = pul.generateEmployees(filePath, loc, site, stream);
         PropertiesAccessor prop = new PropertiesAccessor();
         try (Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", prop.getUsername(), prop.getPassword());
                 Statement st = con.createStatement();) {
-            cCrud.insertClass(st, emps.get(0).getClassID(), stream, insEmail, startDate, endDate);
+           
 
             //Iterates through the created employees to upload their data
             for (Employee employee : emps) {
@@ -47,11 +47,7 @@ public class Runner {
                 if (passingModules != null) {
                     boolean inserted = empCrud.insertEmployee(st, employee);
 
-                    //if the employee is already in the database, then it updates the classID for that employee
-                    if (!inserted) {
-                        empCrud.updateClass(st, employee);
-                    }
-
+                   
                     //inserts all the passing modules into the database
                     for (Module module : passingModules) {
                         eCrud.insertETM(st, module, employee.getEmployeeID(), stream); //Uploads the scores from the list in the employees

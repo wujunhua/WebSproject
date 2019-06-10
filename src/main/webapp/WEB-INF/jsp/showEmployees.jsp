@@ -2,63 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
-<%@page import="java.util.ArrayList"%>
 <%@ page import="com.atossyntel.excelupload.Module" %>
-<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-  
-  //initialize driver class
-  try {    
-    Class.forName("oracle.jdbc.driver.OracleDriver");
-  } catch (Exception e) {
-    out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
-  }
-  
-  String dbUser = "Student_Performance";
-  String dbPasswd = "Student_Performance";
-  String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
-
-  //connect
-  Connection conn = null;
-  try {
-    conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-    //out.println(" Connection status: " + conn + "<P>");
-  } catch(Exception e) {
-    out.println("Connection failed: " + e.toString() + "<P>");      
-  }
-
-  String sql;
-  int numRowsAffected;
-  Statement stmt = conn.createStatement();
-  ResultSet rs;
-  
-  // select
-  sql = "select email, name from employees";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList usersList = new ArrayList();
-  request.setAttribute("usersList", usersList);
-  ArrayList nameList = new ArrayList();
-  request.setAttribute("nameList", nameList);
-  
-  while (rs.next()) {
-        usersList.add(rs.getString("email"));
-        nameList.add(rs.getString("name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
-        } // End while 
-  
-  
-  rs.close();
-  stmt.close();
-
-  //commit
-  conn.commit();
-  
-  //disconnect
-  conn.close();
-  
-%>  
 
 <!DOCTYPE html>
 <html>
@@ -331,7 +276,7 @@
                     </div>
             );
         }
-    }
+    };
     
 
     ReactDOM.render(<Instructor />, document.getElementById('instructor'));

@@ -115,7 +115,7 @@
         courseData.forEach(function(mod) {
             modIds.push(Object.values(mod)[1]);
         });
-        console.log(modIds);
+        
         var streamIds = [];
         modIds.forEach(function(mod) {
             for (var i = 0; i < moduleData.length; i++) {
@@ -124,7 +124,7 @@
                 }
             }
         });
-        console.log(streamIds);
+        
         var streamNames = [];
         streamIds.forEach(function(stream) {
             for (var i = 0; i < streamData.length; i++) {
@@ -133,7 +133,6 @@
                 }
             }
         });
-        console.log(streamNames);
         
         var moduleNames = [];
         modIds.forEach(function(mod) {
@@ -143,7 +142,6 @@
                 }
             }
         });
-        console.log(moduleNames);
         
         var count = 1;
 

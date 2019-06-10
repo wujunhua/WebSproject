@@ -92,7 +92,7 @@ while(rs.next())
             <div className="form-group row mt-3">
               <label for="oldpassword" className="col-sm-3 col-form-label">New Password</label>
               <div className="col-sm-9">
-                <input type="password" className="form-control" id="newpassword" name="newpassword" placeholder="Enter New Password" title="password must be 8-15 characters & contain atleast one alphanumric character" required pattern="(?=.*\d)(?=.*[A-Z]).{8,}" minlength = "8" maxlength = "15" required />
+                <input type="password" className="form-control" id="newpassword" name="newpassword" placeholder="Enter New Password" title="password must be 8-15 characters & contain atleast one alphanumric character" required pattern="(?=.*\d)(?=.*[A-Za-z]).{8,}" minlength = "8" maxlength = "15" required />
               </div>
             </div>
               

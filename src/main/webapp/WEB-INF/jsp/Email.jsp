@@ -111,7 +111,6 @@
         });
 
         var count = 1;
-        console.log(jsonData);
         const tablebody = jsonData.map((emp) =>
             <tr key={emp.employeeId}>
                     <td className="noto">{emp.name}</td>
@@ -152,8 +151,7 @@
                 }
            }
            checkboxTotal -= 1;
-           console.log(checkboxTotal);
-            console.log(countChecked);
+           
            if(countChecked == checkboxTotal){
                 for (var i = 1; i <= checkboxTotal; ++i) {
                     if (form[i].type == 'checkbox') {

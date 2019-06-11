@@ -136,8 +136,8 @@ public class PDF {
         float linspace = 10;
         float sectionBreak = 15;
         float textSize = 10;
-        float leftMargin = 40;
-        float rightMargin = 40;
+        float leftMargin = 20;
+        float rightMargin = 20;
         float topMargin = 20;
         float bottomMargin = 20;
         Document document = new Document(leftMargin, rightMargin, topMargin, bottomMargin);
@@ -266,7 +266,9 @@ public class PDF {
         axis.setLowerMargin(.01);
         axis.setUpperMargin(.01);
         axis.setMaximumCategoryLabelLines(10);
-
+        axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+        
+        
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
         renderer.setBarPainter(new StandardBarPainter());
         renderer.setSeriesPaint(0, new Color(0, 102, 161)); //from website
@@ -277,9 +279,9 @@ public class PDF {
         renderer.setItemMargin(0.0); //space between bars
         renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         renderer.setBaseItemLabelsVisible(true);
-        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE1, TextAnchor.BASELINE_RIGHT));
+        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12,TextAnchor.BASELINE_CENTER,TextAnchor.TOP_CENTER,0));
 
-        int width = 525;
+        int width = 565;
         /* Width of the image */
         int height = 315;
         /* Height of the image */

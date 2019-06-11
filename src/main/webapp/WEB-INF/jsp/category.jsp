@@ -63,7 +63,7 @@
     </div>
                     );
         }
-    }
+    };
 
     $.ajaxSetup({
         async: false

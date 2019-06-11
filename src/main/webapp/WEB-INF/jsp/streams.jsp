@@ -88,13 +88,27 @@
         );
     }
     class Category3 extends React.Component{	
-        constructor(){
-            super();
+        constructor(props){
+            super(props);
+            this.state = {streamN: ''};
+            
+            this.handleChange = this.handleChange.bind(this);
             this.handleSubmit = this.handleSubmit.bind(this);
         }
         
+        handleChange(event){
+            this.setState({streamN: event.target.value});
+        }
         handleSubmit(event){
-            
+            var letters = '';
+            this.state.streamN.toUpperCase().split(" ").forEach(function (word){
+                letters += word.substring(0,1);
+            });
+            var streamId = letters + "123";
+            var jsonVal = '{"streamId":"'+streamId+'", "streamName":"'+this.state.streamN+'"}';
+            var json = JSON.parse(jsonVal);
+            console.log(json);
+            $.post("http://localhost:8084/WebAPI/createStream", json);
         }
         render() {
                 return (
@@ -109,7 +123,9 @@
                                 <button className="btn btn-sm btn-primary no-border mt-1" type="submit"><i class="fas fa-plus pr-2"></i>Insert Stream</button>
                               </div>
                               <div className="col-lg-10">
-                               <input type="text" className="form-control" id ="streamName" onchange="myFunction()" name="streamName" placeholder="Stream Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,50}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 50 characters." required />
+                               <input type="text" className="form-control" value={this.state.streamN} onChange={this.handleChange}
+                                    id ="streamName" onchange="myFunction()" name="streamName" placeholder="Stream Name" 
+                                    pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,50}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 and 50 characters." required />
                               <div><small id="ajaxconf" className="text-danger"></small></div>
                               </div>
                             </div>

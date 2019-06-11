@@ -270,7 +270,7 @@ function myFunction()
                                             <div className="form-group row mt-3">
                                                 <label for="new_id" className="col-sm-3 col-form-label">Stream</label>
                                                 <div className="form-group col-md-9">
-                                                    <select className="custom-select" name= "streamname" id="streamname" onchange="loadDoc()" placeholder="Select a Stream">
+                                                    <select className="custom-select" name= "streamname" id="streamname" placeholder="Select a Stream">
                                                     <option selected hidden value="${param.name}">${param.name}</option>
                                                         <c:forEach items="${fullstreamList}" var="streamer">
                                                             <option value="${streamer}">
@@ -285,7 +285,7 @@ function myFunction()
                                                 <div className="form-group col-md-9">
                                                     <div id="dropdown_stuff">
                                                         <select className="custom-select" name= "modulename" id="modulename">
-                                                            <option selected hidden value="${param.name2}">${param.name2}</option>
+                                                            <option value="${param.name2}">${param.name2}</option>
                                                         </select>
                                                     </div>
                                                 </div>

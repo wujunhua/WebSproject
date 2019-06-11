@@ -22,7 +22,7 @@
   } catch(Exception e) {
     out.println("Connection failed: " + e.toString() + "<P>");      
   }
- 
+
   String sql = "select m.module_name from modules m, stream s where m.stream_id = s.stream_id AND s.stream_name LIKE '" + okay + "'";
   
   Statement stmt = conn.createStatement();

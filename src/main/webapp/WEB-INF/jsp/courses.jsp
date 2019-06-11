@@ -2,7 +2,7 @@
 
 <html>
     <jsp:include page="head-tag.jsp"/>
-    <body class="bg-light" onload="loadDoc()">
+    <body class="bg-light">
         <jsp:include page="nav.jsp"/>
         <div id="root"></div>
         <div id="root2"></div>

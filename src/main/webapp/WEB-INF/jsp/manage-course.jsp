@@ -238,9 +238,18 @@ function myFunction()
                     </div>
             );
         }
-    }
+    };
 
     class CoursesForm extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {value:'${param.id}'};
+            this.handleChange = this.handleChange.bind(this);
+        }
+
+        handleChange(event){
+            this.setState({value: event.target.value});
+        }
         render() {
             return (
                     <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
@@ -263,7 +272,7 @@ function myFunction()
                                                 <label for="new_course_name" className="col-sm-3 col-form-label">Course</label>
                                                 <div className="col-sm-9">
                                                     <input type="hidden" name="course_name" id="course_name" value='${param.id}' />
-                                                    <input type="text" className="form-control" id="new_course_name" onchange="myFunction()" name="new_course_name" value="${param.id}" required />
+                                                    <input type="text" className="form-control" id="new_course_name" value={this.state.value} onChange={this.handleChange} name="new_course_name" required />
                                                     <div><small id="ajaxconf" className="text-danger"></small></div>
                                                 </div>
                                             </div>

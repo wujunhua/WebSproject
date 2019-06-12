@@ -60,23 +60,7 @@
       
     $.ajaxSetup({
         async: false
-    });
-
-    function InsertOptionStreams() {
-        var jsonData;
-        $.getJSON("http://localhost:8084/WebAPI/getAllStreams", function(data) {
-            jsonData = data;
-        });
-        const options = jsonData.map((stream) =>
-            <option key={stream.streamId} value={stream.streamId}>{stream.streamName}</option>
-        );
-        return(
-            <select className="custom-select" name="streamname" id="streamname" onChange="loadDoc()">
-                {options}
-            </select>
-        );
-    }
-    
+    });    
     function InsertOptionModules() {
         var jsonData;
         $.getJSON("http://localhost:8084/WebAPI/getAllModules", function(data) {
@@ -87,7 +71,7 @@
         );
         return(
                 <div>
-                    <select className="custom-select" name="modulename" id="modulename" onChange="myFunction()">
+                    <select className="custom-select" name="modulename" id="modulename" onchange="myFunction()">
                         {options}
                     </select>
                 </div>
@@ -181,9 +165,6 @@
                                   <div className="col-lg-3">
                                     <input type="text" name="coursename" id="coursename" className="form-control" onchange="myFunction()" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required />
                                   <div><small id="ajaxconf" className="text-danger"></small></div>
-                                  </div>
-                                    <div className="form-group col-md-3">
-                                        <InsertOptionStreams />
                                   </div>
                                   <div className="form-group col-md-3">
                                     <InsertOptionModules />

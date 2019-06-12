@@ -152,6 +152,19 @@
             );
         }
         class Content extends React.Component {
+            constructor(props){
+                super(props);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleSubmit(event) {
+                event.preventDefault();
+                var mName = $("#modName").val();
+                var cName = $("#inputState :selected").text();
+                var sName = $("#inputState2 :selected").text();
+                
+            }
+            
             render(){
                 return(
                     <div className="container-fluid bg-white" style={{minHeight:"100vh"}}>

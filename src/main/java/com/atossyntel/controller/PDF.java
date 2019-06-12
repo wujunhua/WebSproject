@@ -251,7 +251,7 @@ public class PDF {
                 "",
                 "", "",
                 //"Module", "Assessment Score", 
-                dataset, PlotOrientation.VERTICAL,
+                dataset, PlotOrientation.HORIZONTAL,
                 true, true, false);
         CategoryPlot plot = barChart.getCategoryPlot();
         plot.setBackgroundPaint(null);
@@ -265,8 +265,8 @@ public class PDF {
         CategoryAxis axis = plot.getDomainAxis();
         axis.setLowerMargin(.01);
         axis.setUpperMargin(.01);
-        axis.setMaximumCategoryLabelLines(10);
-        axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+        axis.setMaximumCategoryLabelLines(3);
+        //axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
         
         
         BarRenderer renderer = (BarRenderer) plot.getRenderer();

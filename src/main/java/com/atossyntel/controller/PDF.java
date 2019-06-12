@@ -18,6 +18,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryAxis3D;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -257,10 +258,13 @@ public class PDF {
         plot.setBackgroundPaint(null);
         plot.setDomainGridlinePaint(Color.black);
         plot.setRangeGridlinePaint(Color.black);
-
+        plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        
+        
         ValueAxis yAxis = plot.getRangeAxis();
         yAxis.setAutoRange(false);
         yAxis.setRange(0.00, 110.00);
+        
 
         CategoryAxis axis = plot.getDomainAxis();
         axis.setLowerMargin(.01);
@@ -279,7 +283,7 @@ public class PDF {
         renderer.setItemMargin(0.0); //space between bars
         renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         renderer.setBaseItemLabelsVisible(true);
-        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12,TextAnchor.BASELINE_CENTER,TextAnchor.TOP_CENTER,0));
+        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT));
 
         int width = 565;
         /* Width of the image */

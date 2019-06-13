@@ -38,7 +38,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "9eeecff8-4ac1-4117-898f-1a65306f35d8",
       "comment": "",
@@ -64,7 +64,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "c81b9a18-de0a-413a-b21a-4b2a4a21cd49",
       "comment": "",
@@ -212,7 +212,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "84c9dfc5-1b3a-43e0-9e2f-9a44d717c7a4",
       "comment": "",
@@ -238,7 +238,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "69a0ab92-88cd-42c3-ad2e-eb07acee6b04",
       "comment": "",
@@ -364,7 +364,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "47b9da60-84a3-4e10-9e88-fe71bbb47886",
       "comment": "",
@@ -384,7 +384,7 @@
       "command": "type",
       "target": "name=password",
       "targets": [],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "e23a87ad-63ee-473d-ab0e-3e4c491e29cf",
       "comment": "",
@@ -547,7 +547,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "c3986055-76b7-41e6-bc25-1fce4d464991",
       "comment": "",
@@ -567,7 +567,7 @@
       "command": "type",
       "target": "name=password",
       "targets": [],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "ac863972-26dc-4bb3-a383-6d90ff9ee8e4",
       "comment": "",
@@ -713,21 +713,21 @@
     "id": "c5dc2ad0-167b-4a09-a265-0fce1d9c6bd1",
     "name": "Admin Switch views (admin and instructor)",
     "commands": [{
-      "id": "42d7d070-a5e5-4dd8-bcc4-6b3ed0c7bfc5",
+      "id": "2510bb29-3312-4a07-935e-88455344b8a3",
       "comment": "",
       "command": "open",
       "target": "http://localhost:8084/WebSproject/login.htm",
       "targets": [],
       "value": ""
     }, {
-      "id": "8795bbd5-4f03-487f-a47b-445387eee959",
+      "id": "96e033fb-774f-4cb3-9330-987e11e4dffc",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1382x744",
+      "target": "1378x744",
       "targets": [],
       "value": ""
     }, {
-      "id": "39e54f4d-9bd5-4f14-b2ac-64b921d0a673",
+      "id": "fd357200-8890-42b9-9038-f5ee2f5c363a",
       "comment": "",
       "command": "click",
       "target": "name=userName",
@@ -740,20 +740,7 @@
       ],
       "value": ""
     }, {
-      "id": "2c3c75fc-b468-469c-9b2b-61bc4543989d",
-      "comment": "",
-      "command": "click",
-      "target": "name=userName",
-      "targets": [
-        ["name=userName", "name"],
-        ["css=.mb-3 > .form-control-lg", "css:finder"],
-        ["xpath=//input[@name='userName']", "xpath:attributes"],
-        ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "8954376d-0cbf-4e45-bfa7-22eeedc53b87",
+      "id": "aacac3b0-8a5a-4700-bba3-b67d9cfdde95",
       "comment": "",
       "command": "type",
       "target": "name=userName",
@@ -764,22 +751,9 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
-      "id": "c56a65c9-0e0b-421d-8533-d1e8d993126a",
-      "comment": "",
-      "command": "click",
-      "target": "name=password",
-      "targets": [
-        ["name=password", "name"],
-        ["css=.mb-2 > .form-control-lg", "css:finder"],
-        ["xpath=//input[@name='password']", "xpath:attributes"],
-        ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
-        ["xpath=//div[2]/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "193cd57e-084b-4f39-85d3-65579c1ed14c",
+      "id": "e41652dc-b464-4224-a2ec-b49102db933c",
       "comment": "",
       "command": "type",
       "target": "name=password",
@@ -790,32 +764,22 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
-      "id": "30d0270b-5726-4f2b-a8f4-c6abd1380187",
+      "id": "a9ab87ec-116b-4385-83c9-6479da4fa9f9",
       "comment": "",
       "command": "click",
-      "target": "css=.fa-sign-in-alt",
+      "target": "css=.btn",
       "targets": [
-        ["css=.fa-sign-in-alt", "css:finder"],
-        ["xpath=//form[@id='login-form']/div[3]/button/i", "xpath:idRelative"],
-        ["xpath=//button/i", "xpath:position"]
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-form']/div[3]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sign In')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "e380ce00-de8b-49c7-baba-04035df6d2cb",
-      "comment": "",
-      "command": "click",
-      "target": "css=.navbar-nav > .nav-item:nth-child(1) > .nav-link",
-      "targets": [
-        ["css=.navbar-nav > .nav-item:nth-child(1) > .nav-link", "css:finder"],
-        ["xpath=//div[@id='navbarNav']/ul/li/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'streams.htm')]", "xpath:href"],
-        ["xpath=//li/a", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "cee20f2b-4c2e-413b-93c0-015df027c601",
+      "id": "3012cc8d-80dd-4057-929e-34ecefbc39c5",
       "comment": "",
       "command": "click",
       "target": "linkText=Instructor",
@@ -830,7 +794,7 @@
       ],
       "value": ""
     }, {
-      "id": "6b6400a7-3fa3-48a5-bf0a-bb20afdd8caf",
+      "id": "3469a53a-0344-4fde-a43b-f88ee86359e7",
       "comment": "",
       "command": "click",
       "target": "css=.navbar-nav > .nav-item:nth-child(1) > .nav-link",
@@ -842,47 +806,44 @@
       ],
       "value": ""
     }, {
-      "id": "8c3bdc13-aced-46d4-90aa-b60359ff18e9",
+      "id": "dca7284a-065f-4235-b47c-b2e0c80ff481",
       "comment": "",
       "command": "click",
-      "target": "linkText=Instructor",
+      "target": "css=.btn > small",
       "targets": [
-        ["linkText=Instructor", "linkText"],
-        ["css=.navbar-nav > .nav-item:nth-child(2) > .nav-link", "css:finder"],
-        ["xpath=//a[contains(text(),'Instructor')]", "xpath:link"],
-        ["xpath=//div[@id='navbarNav']/ul/li[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'createclass.htm')]", "xpath:href"],
-        ["xpath=//li[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Instructor')]", "xpath:innerText"]
+        ["css=.btn > small", "css:finder"],
+        ["xpath=//div[@id='navbarNav']/ul[2]/div/button/small", "xpath:idRelative"],
+        ["xpath=//small", "xpath:position"],
+        ["xpath=//small[contains(.,'Jay_Patel@Syntelinc.com')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "0c9398a9-9b0d-45f2-9890-4b7a6c838b30",
+      "id": "9d1f398c-55d0-4280-8f45-9b0d803133d0",
       "comment": "",
       "command": "click",
-      "target": "css=.navbar-nav > .nav-item:nth-child(1) > .nav-link",
+      "target": "linkText=Logout",
       "targets": [
-        ["css=.navbar-nav > .nav-item:nth-child(1) > .nav-link", "css:finder"],
-        ["xpath=//div[@id='navbarNav']/ul/li/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'streams.htm')]", "xpath:href"],
-        ["xpath=//li/a", "xpath:position"]
+        ["linkText=Logout", "linkText"],
+        ["css=.dropdown-item:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='navbarNav']/ul[2]/div/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'login.htm')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "76b7e762-01d5-4c06-b8c8-85b41301cc21",
+      "id": "5ef44eef-ec18-4d8b-81fe-ab5cb57f5db0",
       "comment": "",
-      "command": "click",
-      "target": "linkText=Instructor",
+      "command": "type",
+      "target": "name=userName",
       "targets": [
-        ["linkText=Instructor", "linkText"],
-        ["css=.navbar-nav > .nav-item:nth-child(2) > .nav-link", "css:finder"],
-        ["xpath=//a[contains(text(),'Instructor')]", "xpath:link"],
-        ["xpath=//div[@id='navbarNav']/ul/li[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'createclass.htm')]", "xpath:href"],
-        ["xpath=//li[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Instructor')]", "xpath:innerText"]
+        ["name=userName", "name"],
+        ["css=.mb-3 > .form-control-lg", "css:finder"],
+        ["xpath=//input[@name='userName']", "xpath:attributes"],
+        ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
       ],
-      "value": ""
+      "value": "Jay_Pat"
     }]
   }, {
     "id": "1d575679-25c5-4042-b375-49d5f0c15db5",
@@ -919,7 +880,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "986f4975-663d-4c67-bcac-3ce041d81176",
       "comment": "",
@@ -945,7 +906,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "841ff937-2df4-4c63-926b-2e713d731671",
       "comment": "",
@@ -1142,7 +1103,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "9b8fb9b3-bb63-43c0-a32a-c6ccd149f245",
       "comment": "",
@@ -1168,7 +1129,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "83216168-b404-408a-aebe-230764a08364",
       "comment": "",
@@ -1222,32 +1183,6 @@
         ["xpath=//input", "xpath:position"]
       ],
       "value": "RWD"
-    }, {
-      "id": "5a3c1407-5561-4e70-be5b-17f377211e91",
-      "comment": "",
-      "command": "click",
-      "target": "id=streamname",
-      "targets": [
-        ["id=streamname", "id"],
-        ["name=streamname", "name"],
-        ["css=#streamname", "css:finder"],
-        ["xpath=//select[@id='streamname']", "xpath:attributes"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "6821c0fc-3b9d-4c5c-a49f-60b7c99f70da",
-      "comment": "",
-      "command": "click",
-      "target": "id=streamname",
-      "targets": [
-        ["id=streamname", "id"],
-        ["name=streamname", "name"],
-        ["css=#streamname", "css:finder"],
-        ["xpath=//select[@id='streamname']", "xpath:attributes"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
     }, {
       "id": "e2a96c68-a30c-4300-bd13-0dc35ed57145",
       "comment": "",
@@ -1368,34 +1303,21 @@
     "id": "e0635480-fcdd-46d6-8d18-381b14921725",
     "name": "Admin login; Insert, update and delete user (admin & instructor)",
     "commands": [{
-      "id": "cb8b1970-c902-4e4e-81a6-4edca5f49b42",
+      "id": "b24ac656-9b34-4d92-a21b-06c5e5fae7b4",
       "comment": "",
       "command": "open",
       "target": "http://localhost:8084/WebSproject/login.htm",
       "targets": [],
       "value": ""
     }, {
-      "id": "d7e31093-ab33-4e40-a661-4394726eab21",
+      "id": "a4acfb65-c527-4d80-a38c-deb3934d0d2d",
       "comment": "",
       "command": "setWindowSize",
       "target": "1366x728",
       "targets": [],
       "value": ""
     }, {
-      "id": "0af2b762-d511-4cfa-bf5e-9816461f51eb",
-      "comment": "",
-      "command": "click",
-      "target": "name=userName",
-      "targets": [
-        ["name=userName", "name"],
-        ["css=.mb-3 > .form-control-lg", "css:finder"],
-        ["xpath=//input[@name='userName']", "xpath:attributes"],
-        ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "2c860232-24a6-475a-8713-4b173e57680e",
+      "id": "a3d8129e-ab7d-403f-badb-4ca381b0ab5c",
       "comment": "",
       "command": "type",
       "target": "name=userName",
@@ -1406,22 +1328,9 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
-      "id": "ad61b3c8-763a-436c-be7c-3c30acd9b6b0",
-      "comment": "",
-      "command": "click",
-      "target": "name=password",
-      "targets": [
-        ["name=password", "name"],
-        ["css=.mb-2 > .form-control-lg", "css:finder"],
-        ["xpath=//input[@name='password']", "xpath:attributes"],
-        ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
-        ["xpath=//div[2]/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "98c584a7-f6a1-4848-892d-bcf1da87c59f",
+      "id": "5f2852c3-650b-497c-b734-66d00a31d729",
       "comment": "",
       "command": "type",
       "target": "name=password",
@@ -1432,9 +1341,9 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
-      "id": "6f91326d-37ed-42e3-90e9-3eba471cd25b",
+      "id": "f78be61d-ec39-4e3a-bd9e-d77cecd8c93e",
       "comment": "",
       "command": "click",
       "target": "css=.btn",
@@ -1447,7 +1356,7 @@
       ],
       "value": ""
     }, {
-      "id": "67eb721e-17d8-4be8-880f-e070d7a2afd9",
+      "id": "24da00b0-8753-4674-b697-2178d6a27966",
       "comment": "",
       "command": "click",
       "target": "linkText=Users",
@@ -1455,13 +1364,14 @@
         ["linkText=Users", "linkText"],
         ["css=.nav-item:nth-child(5) > .nav-link", "css:finder"],
         ["xpath=//a[contains(text(),'Users')]", "xpath:link"],
+        ["xpath=//div[@id='category2']/div/div/ul/li[5]/a", "xpath:idRelative"],
         ["xpath=//a[contains(@href, 'admin.htm')]", "xpath:href"],
         ["xpath=//li[5]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Users')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "85a06149-f169-4bd0-9939-18e492611e54",
+      "id": "cf70b850-8dc8-429a-8f6c-c72a9da8d37c",
       "comment": "",
       "command": "click",
       "target": "id=username",
@@ -1470,11 +1380,12 @@
         ["name=username", "name"],
         ["css=#username", "css:finder"],
         ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='table-form']/div/div/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "cef09a00-fb36-4b50-9cb9-f145fd5e7730",
+      "id": "4c473bc4-9015-4f12-abcd-aec1320ee43e",
       "comment": "",
       "command": "type",
       "target": "id=username",
@@ -1483,266 +1394,129 @@
         ["name=username", "name"],
         ["css=#username", "css:finder"],
         ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='table-form']/div/div/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "jun_w@syntelinc.com"
+      "value": "Test_Test1@Syntelinc.com"
     }, {
-      "id": "ca4428bb-9b34-44b2-a70d-b31e1f311fbb",
+      "id": "cd5ddc20-d8ea-47f0-9233-1feea081a67c",
       "comment": "",
       "command": "click",
       "target": "css=.mt-1",
       "targets": [
         ["css=.mt-1", "css:finder"],
         ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='table-form']/div/div/div/div/form/div/div/div/button", "xpath:idRelative"],
         ["xpath=//div/div/button", "xpath:position"],
         ["xpath=//button[contains(.,'Insert User')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "525e8c2a-7308-418e-ace5-2c57fc79f2df",
+      "id": "30bf2eae-cf5d-4edb-a0d5-9ce906a39d3a",
       "comment": "",
       "command": "click",
-      "target": "linkText=jun_w@syntelinc.com",
+      "target": "linkText=Test_Test1@Syntelinc.com",
       "targets": [
-        ["linkText=jun_w@syntelinc.com", "linkText"],
-        ["css=tr:nth-child(3) a", "css:finder"],
-        ["xpath=//a[contains(text(),'jun_w@syntelinc.com')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'manage-user.htm?id=jun_w@syntelinc.com')]", "xpath:href"],
-        ["xpath=//tr[3]/td/a", "xpath:position"],
-        ["xpath=//a[contains(.,'jun_w@syntelinc.com')]", "xpath:innerText"]
+        ["linkText=Test_Test1@Syntelinc.com", "linkText"],
+        ["css=tr:nth-child(12) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test_Test1@Syntelinc.com')]", "xpath:link"],
+        ["xpath=//div[@id='table-form']/div/div/table/tbody/tr[12]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'manage-user.htm?id=Test_Test1@Syntelinc.com')]", "xpath:href"],
+        ["xpath=//tr[12]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test_Test1@Syntelinc.com')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "5198ffa9-62bf-40a3-a7a3-e29f0aa4cd19",
+      "id": "c26de16c-4968-44e0-a21c-39b23906d0a3",
       "comment": "",
       "command": "click",
-      "target": "css=.custom-control:nth-child(2) > .custom-control-label",
+      "target": "id=inputEmail3",
       "targets": [
-        ["css=.custom-control:nth-child(2) > .custom-control-label", "css:finder"],
-        ["xpath=//div/div[2]/label", "xpath:position"],
-        ["xpath=//label[contains(.,'Admin')]", "xpath:innerText"]
+        ["id=inputEmail3", "id"],
+        ["name=newusername", "name"],
+        ["css=#inputEmail3", "css:finder"],
+        ["xpath=//input[@id='inputEmail3']", "xpath:attributes"],
+        ["xpath=//div[@id='manage']/div/div/div/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "85fb902e-c94b-481f-ac0b-337138ecfdf9",
-      "comment": "",
-      "command": "click",
-      "target": "css=.btn-secondary > span",
-      "targets": [
-        ["css=.btn-secondary > span", "css:finder"],
-        ["xpath=//div/div/button/span", "xpath:position"],
-        ["xpath=//span[contains(.,' Update')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "1df4dc8a-0d4a-43be-ac73-a483d09696ab",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Users",
-      "targets": [
-        ["linkText=Users", "linkText"],
-        ["css=.active:nth-child(1)", "css:finder"],
-        ["xpath=//a[contains(text(),'Users')]", "xpath:link"],
-        ["xpath=(//a[contains(@href, 'admin.htm')])[2]", "xpath:href"],
-        ["xpath=//li[5]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Users')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "1f634b22-d49a-463b-aeb0-b9f6582db552",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=jun_w@syntelinc.com",
-      "targets": [
-        ["linkText=jun_w@syntelinc.com", "linkText"],
-        ["css=tr:nth-child(3) a", "css:finder"],
-        ["xpath=//a[contains(text(),'jun_w@syntelinc.com')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'manage-user.htm?id=jun_w@syntelinc.com')]", "xpath:href"],
-        ["xpath=//tr[3]/td/a", "xpath:position"],
-        ["xpath=//a[contains(.,'jun_w@syntelinc.com')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "fbe8be53-c326-434a-a7d8-ee17dba1289e",
-      "comment": "",
-      "command": "click",
-      "target": "css=.custom-control:nth-child(2) > .custom-control-label",
-      "targets": [
-        ["css=.custom-control:nth-child(2) > .custom-control-label", "css:finder"],
-        ["xpath=//div/div[2]/label", "xpath:position"],
-        ["xpath=//label[contains(.,'Admin')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "737dd3fc-3361-4d80-b979-09c0ed947449",
-      "comment": "",
-      "command": "click",
-      "target": "css=.btn-secondary > span",
-      "targets": [
-        ["css=.btn-secondary > span", "css:finder"],
-        ["xpath=//div/div/button/span", "xpath:position"],
-        ["xpath=//span[contains(.,' Update')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "8e9e965b-b93e-407e-b215-ef83b1e7db82",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Users",
-      "targets": [
-        ["linkText=Users", "linkText"],
-        ["css=.active:nth-child(1)", "css:finder"],
-        ["xpath=//a[contains(text(),'Users')]", "xpath:link"],
-        ["xpath=(//a[contains(@href, 'admin.htm')])[2]", "xpath:href"],
-        ["xpath=//li[5]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Users')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "8cf1e65e-c82b-48ea-80ff-0869ab7d1b43",
-      "comment": "",
-      "command": "click",
-      "target": "id=username",
-      "targets": [
-        ["id=username", "id"],
-        ["name=username", "name"],
-        ["css=#username", "css:finder"],
-        ["xpath=//input[@id='username']", "xpath:attributes"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "12e84556-6c30-42fd-a52c-96e90f091485",
+      "id": "8b79aa70-d77c-4282-bef5-50015bc81d38",
       "comment": "",
       "command": "type",
-      "target": "id=username",
+      "target": "id=inputEmail3",
       "targets": [
-        ["id=username", "id"],
-        ["name=username", "name"],
-        ["css=#username", "css:finder"],
-        ["xpath=//input[@id='username']", "xpath:attributes"],
-        ["xpath=//input", "xpath:position"]
+        ["id=inputEmail3", "id"],
+        ["name=newusername", "name"],
+        ["css=#inputEmail3", "css:finder"],
+        ["xpath=//input[@id='inputEmail3']", "xpath:attributes"],
+        ["xpath=//div[@id='manage']/div/div/div/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
       ],
-      "value": "test_test@syntelinc.com"
+      "value": "Test_Test@Syntelinc.com"
     }, {
-      "id": "0bcf5b4d-1d1a-4d87-8e93-ae0bf4aa302d",
-      "comment": "",
-      "command": "click",
-      "target": "css=.custom-control:nth-child(1) > .custom-control-label",
-      "targets": [
-        ["css=.custom-control:nth-child(1) > .custom-control-label", "css:finder"],
-        ["xpath=//label", "xpath:position"],
-        ["xpath=//label[contains(.,'Admin')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "c249705d-1ab9-44ae-9724-16ca1ab048dd",
-      "comment": "",
-      "command": "click",
-      "target": "css=.mt-1",
-      "targets": [
-        ["css=.mt-1", "css:finder"],
-        ["xpath=//button[@type='submit']", "xpath:attributes"],
-        ["xpath=//div/div/button", "xpath:position"],
-        ["xpath=//button[contains(.,'Insert User')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "3b22e82c-3994-42bc-a813-e1c0c53824c6",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=test_test@syntelinc.com",
-      "targets": [
-        ["linkText=test_test@syntelinc.com", "linkText"],
-        ["css=tr:nth-child(4) a", "css:finder"],
-        ["xpath=//a[contains(text(),'test_test@syntelinc.com')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'manage-user.htm?id=test_test@syntelinc.com')]", "xpath:href"],
-        ["xpath=//tr[4]/td/a", "xpath:position"],
-        ["xpath=//a[contains(.,'test_test@syntelinc.com')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "f8acfee8-2b8c-4da1-80c1-a5b5c22362f1",
-      "comment": "",
-      "command": "click",
-      "target": "css=.custom-control:nth-child(2) > .custom-control-label",
-      "targets": [
-        ["css=.custom-control:nth-child(2) > .custom-control-label", "css:finder"],
-        ["xpath=//div/div[2]/label", "xpath:position"],
-        ["xpath=//label[contains(.,'Admin')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "1c9decfd-5560-449b-9578-47063d5c77db",
+      "id": "292a78a3-28bf-4a06-8b42-c90263afd82c",
       "comment": "",
       "command": "click",
       "target": "css=.btn-secondary > span",
       "targets": [
         ["css=.btn-secondary > span", "css:finder"],
+        ["xpath=//div[@id='manage']/div/div/div/div/form/div[3]/div/div/button/span", "xpath:idRelative"],
         ["xpath=//div/div/button/span", "xpath:position"],
-        ["xpath=//span[contains(.,' Update')]", "xpath:innerText"]
+        ["xpath=//span[contains(.,'Update')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "20123351-aef8-4c84-bab1-8ac52d701581",
+      "id": "76e57bf2-9a76-4048-b0cb-4a212d734878",
       "comment": "",
       "command": "click",
-      "target": "linkText=Users",
+      "target": "linkText=Test_Test@Syntelinc.com",
       "targets": [
-        ["linkText=Users", "linkText"],
-        ["css=.active:nth-child(1)", "css:finder"],
-        ["xpath=//a[contains(text(),'Users')]", "xpath:link"],
-        ["xpath=(//a[contains(@href, 'admin.htm')])[2]", "xpath:href"],
-        ["xpath=//li[5]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Users')]", "xpath:innerText"]
+        ["linkText=Test_Test@Syntelinc.com", "linkText"],
+        ["css=tr:nth-child(12) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Test_Test@Syntelinc.com')]", "xpath:link"],
+        ["xpath=//div[@id='table-form']/div/div/table/tbody/tr[12]/td/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'manage-user.htm?id=Test_Test@Syntelinc.com')]", "xpath:href"],
+        ["xpath=//tr[12]/td/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Test_Test@Syntelinc.com')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "5ce69071-f27b-4460-a303-9424683a88c8",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=test_test@syntelinc.com",
-      "targets": [
-        ["linkText=test_test@syntelinc.com", "linkText"],
-        ["css=tr:nth-child(4) a", "css:finder"],
-        ["xpath=//a[contains(text(),'test_test@syntelinc.com')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'manage-user.htm?id=test_test@syntelinc.com')]", "xpath:href"],
-        ["xpath=//tr[4]/td/a", "xpath:position"],
-        ["xpath=//a[contains(.,'test_test@syntelinc.com')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "a74c4277-6b3e-4eb0-a414-b21f041c9961",
+      "id": "b5140613-6b89-4329-bb70-eccd38724a5c",
       "comment": "",
       "command": "click",
       "target": "css=.btn-danger > span",
       "targets": [
         ["css=.btn-danger > span", "css:finder"],
+        ["xpath=//div[@id='manage']/div/div/div/div/div/span/form/button/span", "xpath:idRelative"],
         ["xpath=//form/button/span", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "79b4653e-5efc-467b-aeb4-a107db6ff998",
+      "id": "4f2a05ee-12bf-4753-b4fb-3cbed76b1ff6",
       "comment": "",
       "command": "click",
-      "target": "linkText=jun_w@syntelinc.com",
+      "target": "css=.dropdown-toggle",
       "targets": [
-        ["linkText=jun_w@syntelinc.com", "linkText"],
-        ["css=tr:nth-child(3) a", "css:finder"],
-        ["xpath=//a[contains(text(),'jun_w@syntelinc.com')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'manage-user.htm?id=jun_w@syntelinc.com')]", "xpath:href"],
-        ["xpath=//tr[3]/td/a", "xpath:position"],
-        ["xpath=//a[contains(.,'jun_w@syntelinc.com')]", "xpath:innerText"]
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navbarNav']/ul[2]/div/button", "xpath:idRelative"],
+        ["xpath=//ul[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Jay_Patel@Syntelinc.com')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "7d69d52f-d96a-4e30-aafd-4bc9e1ff87a7",
+      "id": "1869eccc-d35e-4ea7-ae9e-eadf2f72b82f",
       "comment": "",
       "command": "click",
-      "target": "css=.btn-danger > span",
+      "target": "linkText=Logout",
       "targets": [
-        ["css=.btn-danger > span", "css:finder"],
-        ["xpath=//form/button/span", "xpath:position"]
+        ["linkText=Logout", "linkText"],
+        ["css=.dropdown-item:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='navbarNav']/ul[2]/div/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'login.htm')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
       ],
       "value": ""
     }]
@@ -1788,7 +1562,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "743f6d6c-5c0c-4eca-a83d-0799bc2921b3",
       "comment": "",
@@ -1814,7 +1588,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "98b2c25e-b749-4426-aee9-653e351ef453",
       "comment": "",
@@ -2046,7 +1820,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "adb21cd1-6529-49fc-9a48-cc333d06b69d",
       "comment": "",
@@ -2072,7 +1846,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "211dda95-1ae1-46fc-ada7-7a7f7e5b8d47",
       "comment": "",
@@ -2140,7 +1914,7 @@
         ["xpath=//form[@id='command']/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "Alice"
+      "value": "Jay"
     }, {
       "id": "bd4c9fc2-ae35-4818-ba9c-12fc4f9a5d9c",
       "comment": "",
@@ -2230,7 +2004,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "anthony_pennella@syntelinc.com"
+      "value": "Jay_Patel@Syntelinc.com"
     }, {
       "id": "1a8a387d-54f3-490c-ac78-70708391a7d7",
       "comment": "",
@@ -2256,7 +2030,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abc!@#ABC123"
+      "value": "abC1@3deF"
     }, {
       "id": "0d411580-36c0-400f-b4e7-9358caf6f409",
       "comment": "",
@@ -2324,7 +2098,7 @@
         ["xpath=//form[@id='command']/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "Alice"
+      "value": "Cook"
     }, {
       "id": "52bf162c-0345-41b3-abd6-38b58616a7e3",
       "comment": "",
@@ -2374,7 +2148,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "katherine_bollinger@syntelinc.com"
+      "value": "Nicholas_Cook@Syntelinc.com"
     }, {
       "id": "fde42583-af1b-494f-95d8-7ae35127d7da",
       "comment": "",
@@ -2400,7 +2174,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "ABC123abc!@#"
+      "value": "abC1@3deF"
     }, {
       "id": "c0a93ff5-3489-4f18-88b6-18a2e24a9d18",
       "comment": "",
@@ -2638,7 +2412,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "katherine_bollinger@syntelinc.com"
+      "value": "Nicholas_Cook@Syntelinc.com"
     }, {
       "id": "3ca37f0b-46da-40ff-9b81-50ac8ca1329e",
       "comment": "",
@@ -2664,7 +2438,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "ABC123abc!@#"
+      "value": "abC1@3deF"
     }, {
       "id": "8db40467-6fcb-4f61-9cb7-1bd6dbfe4597",
       "comment": "",
@@ -2717,7 +2491,7 @@
         ["xpath=//form[@id='command']/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "Alice"
+      "value": "J"
     }, {
       "id": "fc58ceb3-5cf0-4062-baf1-15a53cf07491",
       "comment": "",
@@ -2758,32 +2532,6 @@
         ["xpath=//select", "xpath:position"]
       ],
       "value": ""
-    }, {
-      "id": "37f101b3-3de2-4b49-afa6-1ed5e75b6e36",
-      "comment": "",
-      "command": "click",
-      "target": "name=search",
-      "targets": [
-        ["name=search", "name"],
-        ["css=.form-control", "css:finder"],
-        ["xpath=//input[@name='search']", "xpath:attributes"],
-        ["xpath=//form[@id='command']/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "99f7e11e-2787-4549-917e-de5e7674424a",
-      "comment": "",
-      "command": "type",
-      "target": "name=search",
-      "targets": [
-        ["name=search", "name"],
-        ["css=.form-control", "css:finder"],
-        ["xpath=//input[@name='search']", "xpath:attributes"],
-        ["xpath=//form[@id='command']/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": "test2"
     }, {
       "id": "889ac97d-2777-4101-80c2-3704a3caefc9",
       "comment": "",
@@ -2866,7 +2614,7 @@
         ["xpath=//form[@id='login-form']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "katherine_bollinger@syntelinc.com"
+      "value": "Nicholas_Cook@Syntelinc.com"
     }, {
       "id": "b0e98e81-09c9-4cc5-bde1-af684da7fcd1",
       "comment": "",
@@ -2892,7 +2640,7 @@
         ["xpath=//form[@id='login-form']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "ABC123abc!@#"
+      "value": "abC1@3deF"
     }, {
       "id": "e559786d-d087-4869-bab3-7bea6e10ce0b",
       "comment": "",
@@ -2945,7 +2693,7 @@
         ["xpath=//form[@id='command']/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "Kate"
+      "value": "Jason"
     }, {
       "id": "11d90ec0-48c4-4686-9555-5c2448c3ede8",
       "comment": "",

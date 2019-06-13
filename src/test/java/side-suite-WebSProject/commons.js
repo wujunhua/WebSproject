@@ -9,7 +9,7 @@ tests["Admin login success does have instructor tab"] = async (driver, vars, opt
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -19,7 +19,7 @@ tests["Admin login success does have instructor tab"] = async (driver, vars, opt
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.form-group:nth-child(4) > .btn`)), configuration.timeout);
@@ -66,7 +66,7 @@ tests["Admin switch view (from admin to instructor)"] = async (driver, vars, opt
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -76,7 +76,7 @@ tests["Admin switch view (from admin to instructor)"] = async (driver, vars, opt
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.form-group:nth-child(4) > .btn`)), configuration.timeout);
@@ -113,7 +113,7 @@ tests["Admin login; Insert, update and delete streams"] = async (driver, vars, o
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -123,7 +123,7 @@ tests["Admin login; Insert, update and delete streams"] = async (driver, vars, o
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -180,7 +180,7 @@ tests["Admin login; Insert, update and delete category"] = async (driver, vars, 
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -190,7 +190,7 @@ tests["Admin login; Insert, update and delete category"] = async (driver, vars, 
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -245,7 +245,7 @@ tests["Admin login; Insert, update and delete category"] = async (driver, vars, 
 tests["Admin Switch views (admin and instructor)"] = async (driver, vars, opts = {}) => {
   await driver.get("http://localhost:8084/WebSproject/login.htm");
   await driver.manage().window().setRect({
-    width: 1382,
+    width: 1378,
     height: 744
   });
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
@@ -254,51 +254,41 @@ tests["Admin Switch views (admin and instructor)"] = async (driver, vars, opts =
   });
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
+    return element.clear().then(() => {
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
+    });
+  });
+  await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
+  await driver.findElement(By.name(`password`)).then(element => {
+    return element.clear().then(() => {
+      return element.sendKeys(`abC1@3deF`);
+    });
+  });
+  await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
+  await driver.findElement(By.css(`.btn`)).then(element => {
+    return element.click();
+  });
+  await driver.wait(until.elementLocated(By.linkText(`Instructor`)), configuration.timeout);
+  await driver.findElement(By.linkText(`Instructor`)).then(element => {
+    return element.click();
+  });
+  await driver.wait(until.elementLocated(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)), configuration.timeout);
+  await driver.findElement(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)).then(element => {
+    return element.click();
+  });
+  await driver.wait(until.elementLocated(By.css(`.btn > small`)), configuration.timeout);
+  await driver.findElement(By.css(`.btn > small`)).then(element => {
+    return element.click();
+  });
+  await driver.wait(until.elementLocated(By.linkText(`Logout`)), configuration.timeout);
+  await driver.findElement(By.linkText(`Logout`)).then(element => {
     return element.click();
   });
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Pat`);
     });
-  });
-  await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
-  await driver.findElement(By.name(`password`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
-  await driver.findElement(By.name(`password`)).then(element => {
-    return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
-    });
-  });
-  await driver.wait(until.elementLocated(By.css(`.fa-sign-in-alt`)), configuration.timeout);
-  await driver.findElement(By.css(`.fa-sign-in-alt`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)), configuration.timeout);
-  await driver.findElement(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`Instructor`)), configuration.timeout);
-  await driver.findElement(By.linkText(`Instructor`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)), configuration.timeout);
-  await driver.findElement(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`Instructor`)), configuration.timeout);
-  await driver.findElement(By.linkText(`Instructor`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)), configuration.timeout);
-  await driver.findElement(By.css(`.navbar-nav > .nav-item:nth-child(1) > .nav-link`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`Instructor`)), configuration.timeout);
-  await driver.findElement(By.linkText(`Instructor`)).then(element => {
-    return element.click();
   });
 }
 tests["Admin login; Insert, update and delete modules"] = async (driver, vars, opts = {}) => {
@@ -310,7 +300,7 @@ tests["Admin login; Insert, update and delete modules"] = async (driver, vars, o
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -320,7 +310,7 @@ tests["Admin login; Insert, update and delete modules"] = async (driver, vars, o
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -389,7 +379,7 @@ tests["Admin login; Insert, update and delete courses"] = async (driver, vars, o
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -399,7 +389,7 @@ tests["Admin login; Insert, update and delete courses"] = async (driver, vars, o
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -419,14 +409,6 @@ tests["Admin login; Insert, update and delete courses"] = async (driver, vars, o
     return element.clear().then(() => {
       return element.sendKeys(`RWD`);
     });
-  });
-  await driver.wait(until.elementLocated(By.id(`streamname`)), configuration.timeout);
-  await driver.findElement(By.id(`streamname`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`streamname`)), configuration.timeout);
-  await driver.findElement(By.id(`streamname`)).then(element => {
-    return element.click();
   });
   await driver.wait(until.elementLocated(By.id(`modulename`)), configuration.timeout);
   await driver.findElement(By.id(`modulename`)).then(element => {
@@ -475,22 +457,14 @@ tests["Admin login; Insert, update and delete user (admin & instructor)"] = asyn
   });
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
-  await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
-  await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -508,93 +482,45 @@ tests["Admin login; Insert, update and delete user (admin & instructor)"] = asyn
   await driver.wait(until.elementLocated(By.id(`username`)), configuration.timeout);
   await driver.findElement(By.id(`username`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`jun_w@syntelinc.com`);
+      return element.sendKeys(`Test_Test1@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.mt-1`)), configuration.timeout);
   await driver.findElement(By.css(`.mt-1`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.linkText(`jun_w@syntelinc.com`)), configuration.timeout);
-  await driver.findElement(By.linkText(`jun_w@syntelinc.com`)).then(element => {
+  await driver.wait(until.elementLocated(By.linkText(`Test_Test1@Syntelinc.com`)), configuration.timeout);
+  await driver.findElement(By.linkText(`Test_Test1@Syntelinc.com`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.css(`.custom-control:nth-child(2) > .custom-control-label`)), configuration.timeout);
-  await driver.findElement(By.css(`.custom-control:nth-child(2) > .custom-control-label`)).then(element => {
+  await driver.wait(until.elementLocated(By.id(`inputEmail3`)), configuration.timeout);
+  await driver.findElement(By.id(`inputEmail3`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.css(`.btn-secondary > span`)), configuration.timeout);
-  await driver.findElement(By.css(`.btn-secondary > span`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`Users`)), configuration.timeout);
-  await driver.findElement(By.linkText(`Users`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`jun_w@syntelinc.com`)), configuration.timeout);
-  await driver.findElement(By.linkText(`jun_w@syntelinc.com`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.custom-control:nth-child(2) > .custom-control-label`)), configuration.timeout);
-  await driver.findElement(By.css(`.custom-control:nth-child(2) > .custom-control-label`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.btn-secondary > span`)), configuration.timeout);
-  await driver.findElement(By.css(`.btn-secondary > span`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`Users`)), configuration.timeout);
-  await driver.findElement(By.linkText(`Users`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`username`)), configuration.timeout);
-  await driver.findElement(By.id(`username`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.id(`username`)), configuration.timeout);
-  await driver.findElement(By.id(`username`)).then(element => {
+  await driver.wait(until.elementLocated(By.id(`inputEmail3`)), configuration.timeout);
+  await driver.findElement(By.id(`inputEmail3`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`test_test@syntelinc.com`);
+      return element.sendKeys(`Test_Test@Syntelinc.com`);
     });
-  });
-  await driver.wait(until.elementLocated(By.css(`.custom-control:nth-child(1) > .custom-control-label`)), configuration.timeout);
-  await driver.findElement(By.css(`.custom-control:nth-child(1) > .custom-control-label`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.mt-1`)), configuration.timeout);
-  await driver.findElement(By.css(`.mt-1`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`test_test@syntelinc.com`)), configuration.timeout);
-  await driver.findElement(By.linkText(`test_test@syntelinc.com`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.css(`.custom-control:nth-child(2) > .custom-control-label`)), configuration.timeout);
-  await driver.findElement(By.css(`.custom-control:nth-child(2) > .custom-control-label`)).then(element => {
-    return element.click();
   });
   await driver.wait(until.elementLocated(By.css(`.btn-secondary > span`)), configuration.timeout);
   await driver.findElement(By.css(`.btn-secondary > span`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.linkText(`Users`)), configuration.timeout);
-  await driver.findElement(By.linkText(`Users`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.linkText(`test_test@syntelinc.com`)), configuration.timeout);
-  await driver.findElement(By.linkText(`test_test@syntelinc.com`)).then(element => {
+  await driver.wait(until.elementLocated(By.linkText(`Test_Test@Syntelinc.com`)), configuration.timeout);
+  await driver.findElement(By.linkText(`Test_Test@Syntelinc.com`)).then(element => {
     return element.click();
   });
   await driver.wait(until.elementLocated(By.css(`.btn-danger > span`)), configuration.timeout);
   await driver.findElement(By.css(`.btn-danger > span`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.linkText(`jun_w@syntelinc.com`)), configuration.timeout);
-  await driver.findElement(By.linkText(`jun_w@syntelinc.com`)).then(element => {
+  await driver.wait(until.elementLocated(By.css(`.dropdown-toggle`)), configuration.timeout);
+  await driver.findElement(By.css(`.dropdown-toggle`)).then(element => {
     return element.click();
   });
-  await driver.wait(until.elementLocated(By.css(`.btn-danger > span`)), configuration.timeout);
-  await driver.findElement(By.css(`.btn-danger > span`)).then(element => {
+  await driver.wait(until.elementLocated(By.linkText(`Logout`)), configuration.timeout);
+  await driver.findElement(By.linkText(`Logout`)).then(element => {
     return element.click();
   });
 }
@@ -611,7 +537,7 @@ tests["Admin login; Switch view to instructor; Create class"] = async (driver, v
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -621,7 +547,7 @@ tests["Admin login; Switch view to instructor; Create class"] = async (driver, v
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -700,7 +626,7 @@ tests["Admin login; Switch view to instructor; Search and email"] = async (drive
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -710,7 +636,7 @@ tests["Admin login; Switch view to instructor; Search and email"] = async (drive
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -732,7 +658,7 @@ tests["Admin login; Switch view to instructor; Search and email"] = async (drive
   await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
   await driver.findElement(By.name(`search`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`Alice`);
+      return element.sendKeys(`Jay`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.mr-2`)), configuration.timeout);
@@ -767,7 +693,7 @@ tests["Admin login; Switch view to instructor; Search employee"] = async (driver
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`anthony_pennella@syntelinc.com`);
+      return element.sendKeys(`Jay_Patel@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -777,7 +703,7 @@ tests["Admin login; Switch view to instructor; Search employee"] = async (driver
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`abc!@#ABC123`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -799,7 +725,7 @@ tests["Admin login; Switch view to instructor; Search employee"] = async (driver
   await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
   await driver.findElement(By.name(`search`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`Alice`);
+      return element.sendKeys(`Cook`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.rounded-0`)), configuration.timeout);
@@ -816,7 +742,7 @@ tests["Instructor login; Create class"] = async (driver, vars, opts = {}) => {
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`katherine_bollinger@syntelinc.com`);
+      return element.sendKeys(`Nicholas_Cook@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -826,7 +752,7 @@ tests["Instructor login; Create class"] = async (driver, vars, opts = {}) => {
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`ABC123abc!@#`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -909,7 +835,7 @@ tests["Instructor login; Search and email"] = async (driver, vars, opts = {}) =>
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`katherine_bollinger@syntelinc.com`);
+      return element.sendKeys(`Nicholas_Cook@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -919,7 +845,7 @@ tests["Instructor login; Search and email"] = async (driver, vars, opts = {}) =>
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`ABC123abc!@#`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -937,7 +863,7 @@ tests["Instructor login; Search and email"] = async (driver, vars, opts = {}) =>
   await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
   await driver.findElement(By.name(`search`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`Alice`);
+      return element.sendKeys(`J`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
@@ -957,16 +883,6 @@ tests["Instructor login; Search and email"] = async (driver, vars, opts = {}) =>
   await driver.wait(until.elementLocated(By.name(`col`)), configuration.timeout);
   await driver.findElement(By.name(`col`)).then(element => {
     return element.click();
-  });
-  await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
-  await driver.findElement(By.name(`search`)).then(element => {
-    return element.click();
-  });
-  await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
-  await driver.findElement(By.name(`search`)).then(element => {
-    return element.clear().then(() => {
-      return element.sendKeys(`test2`);
-    });
   });
   await driver.wait(until.elementLocated(By.css(`.mr-2`)), configuration.timeout);
   await driver.findElement(By.css(`.mr-2`)).then(element => {
@@ -994,7 +910,7 @@ tests["Instructor login; Search employee"] = async (driver, vars, opts = {}) => 
   await driver.wait(until.elementLocated(By.name(`userName`)), configuration.timeout);
   await driver.findElement(By.name(`userName`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`katherine_bollinger@syntelinc.com`);
+      return element.sendKeys(`Nicholas_Cook@Syntelinc.com`);
     });
   });
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
@@ -1004,7 +920,7 @@ tests["Instructor login; Search employee"] = async (driver, vars, opts = {}) => 
   await driver.wait(until.elementLocated(By.name(`password`)), configuration.timeout);
   await driver.findElement(By.name(`password`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`ABC123abc!@#`);
+      return element.sendKeys(`abC1@3deF`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.btn`)), configuration.timeout);
@@ -1022,7 +938,7 @@ tests["Instructor login; Search employee"] = async (driver, vars, opts = {}) => 
   await driver.wait(until.elementLocated(By.name(`search`)), configuration.timeout);
   await driver.findElement(By.name(`search`)).then(element => {
     return element.clear().then(() => {
-      return element.sendKeys(`Kate`);
+      return element.sendKeys(`Jason`);
     });
   });
   await driver.wait(until.elementLocated(By.css(`.fa-search`)), configuration.timeout);

@@ -74,8 +74,7 @@ public class EmpController extends SimpleFormController {
         mav.setViewName(namedView);
         
         esd.updateEmployee(request.getParameter("editModalButton"), 
-                request.getParameter("editName").trim(), request.getParameter("editEmail").trim()
-                ,request.getParameter("editManagerID").trim());
+                request.getParameter("editName").trim(), request.getParameter("editEmail").trim());
         
         esd.updateEmployeeModule(request.getParameter("editModuleScore"), 
                request.getParameter("editModalButton"), request.getParameter("selectModule"),

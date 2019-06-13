@@ -1,68 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
-<%@page import="java.util.ArrayList"%>
-<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%
-  
-  //initialize driver class
-  try {    
-    Class.forName("oracle.jdbc.driver.OracleDriver");
-  } catch (Exception e) {
-    out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
-  }
-  
-  String dbUser = "Student_Performance";
-  String dbPasswd = "Student_Performance";
-  String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
-
-  //connect
-  Connection conn = null;
-  try {
-    conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-    //out.println(" Connection status: " + conn + "<P>");
-  } catch(Exception e) {
-    out.println("Connection failed: " + e.toString() + "<P>");      
-  }
-
-  String sql;
-  int numRowsAffected;
-  Statement stmt = conn.createStatement();
-  ResultSet rs;
-  
-  // select
-  sql = "select email, name, employee_id from employees";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList usersList = new ArrayList(); // emails
-  request.setAttribute("usersList", usersList);
-  
-  ArrayList nameList = new ArrayList();
-  request.setAttribute("nameList", nameList);
-  
-  ArrayList employeeIDs =  new ArrayList();
-  request.setAttribute("employeeIDs", employeeIDs);
-  
-  while (rs.next()) {
-        usersList.add(rs.getString("email"));
-        nameList.add(rs.getString("name"));
-        employeeIDs.add(rs.getString("employee_id"));
-  }
-  
-  rs.close();
-  stmt.close();
-
-  //commit
-  conn.commit();
-  
-  //disconnect
-  conn.close();
-  
-%>  
 
 <HTML>
     <head>
@@ -79,7 +18,9 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <!-- Google Fonts (Noto Sans) --> 
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
         <title>Atos Syntel &middot; Land</title>
         <style>
             p, h1, h2, h3, h4, h5, h6, li, ul, ol{
@@ -110,107 +51,138 @@
         </button>
     </div>
   
-    <div class="container-fluid">
-        <div class="container mt-2 pt-4 pb-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb" style="background: transparent;">
-                    <li class="breadcrumb-item"><a href="#">Instructor</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Email Hub</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <div id="root3"></div>
+    <script type ="text/babel">    
+    class HeadingLinks extends React.Component{
+        render(){
+            return(
+                <div className="container-fluid">
+                    <div className="container mt-2 pt-4 pb-3">
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb" style={{background: "transparent"}}>
+                                <li className="breadcrumb-item"><a href="#">Instructor</a></li>
+                                <li className="breadcrumb-item active" aria-current="page">Email Hub</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            );
+        }
+    };
     
+    ReactDOM.render(<HeadingLinks />, document.getElementById("root"));
     
-    <!-- Tabs -->
-    <div class="container-fluid">
-        <div class="container">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" href="createclass.htm">Create Class</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="email.htm">Email Hub</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="showEmployees.htm">Employees</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    class Tabs extends React.Component {
+        render(){
+            return (
+                <div className="container-fluid">
+                    <div className="container">
+                        <ul className="nav nav-tabs">
+                            <li className="nav-item">
+                                <a className="nav-link" href="createclass.htm">Create Class</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link active" href="email.htm">Email Hub</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="showEmployees.htm">Employees</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+    };
+    
+    ReactDOM.render(<Tabs />, document.getElementById("root2"));
  
-    <div class="container-fluid bg-white" style="height: 100vh;">
-        <div class="container pb-5 pt-3">
-            <form:form method="post" action="searchEmailEmployees.htm" class="form-inline pt-1 pb-2 w-100">                 
-                <button class="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i class="fas fa-search pr-1"></i>Search</button>
-                <select name="col" class="custom-select my-1 mr-sm-2">
-                    <option value="name">Name</option>
-                    <option value="email">Email</option>
-                </select>
-                <input type="text" placeholder="Search.." name="search" class="form-control my-1 mr-sm-2">
-            </form:form>
-            
-            <form:form id="emailForm" method="post" action="sendEmail.htm" class="mt-2"> 
-            <table class="table table-bordered table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 35%;">Name</th>
-                        <th scope="col" style="width: 35%;">Email</th>
-                        <th scope="col" style="width: 10%;" class="text-center">PDF</th>
-                        <th scope="col" style="width: 20%;" class="text-center">Send?</th> 
-                    </tr>
-                </thead>
-                <tbody>
-              <!--<div class="btn-group-toggle" data-toggle="buttons">-->
-                  <c:forEach items="${empList}" var="user" varStatus="loop">
-                      <tr>
-                        <td class="noto">${user.employeeName}</td>
-                        <td class="noto">${user.employeeEmail}</td>
-                        <td class="noto text-center"> <!-- link to PDF preview for this employee's report -->
-                            <a href="pdf-preview.htm?empID=${employeeIDs[loop.index]}">
-                                <i class="fas fa-file-pdf px-2"></i>
-                            </a>
-                        </td>
-                        <td class="text-center noto"><input class="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
-                      </tr>
-                  </c:forEach>
-              <!--</div>-->
-                </tbody>
-            </table>
-            <div class="row justify-content-center my-5">
-              <button type="submit" value="Login" class="btn btn-primary px-3 mx-1 rounded-0"><i class="fas fa-paper-plane pr-2"></i>Send</button>
-              <button type="button" value="selectAll" class="btn btn-secondary px-3 mx-1 rounded-0" onclick="selectAll()"><i class="fas fa fa-check pr-2"></i>Select All</button>
-            </div>
-            </form:form>
-        </div>
-    </div>
+ 
+ 
+    $.ajaxSetup({
+        async: false
+    });
 
-    <script type="text/javaScript">
+    function GetEmployees() {
+        var jsonData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllEmployees", function(data) {
+            jsonData = data;
+        });
+        var searchBy = 0;
+        var searchByString = '${param.searchName}';
+        if('${param.searchEmail}' !== ""){
+            searchBy = 2;
+            searchByString = '${param.searchEmail}';
+        }
         
-       function selectAll(){
-           var form = document.forms[1];
+        
+        var empName = [];
+        jsonData.forEach(function(emp){
+            empName.push(Object.values(emp)[searchBy]);
+        }); 
+        
+        var searchedJsonData = [];
+        var counter = 0;
+        jsonData.forEach(function(emp){
+            if(Object.values(emp)[searchBy].includes(searchByString)){
+                searchedJsonData[counter] = emp;
+                counter++;
+            }
+        });
+        searchedJsonData = JSON.parse(JSON.stringify(searchedJsonData));
+        const searchedName = empName.filter(e => e.includes(searchByString));
+        
+        var count = 1;
+        const tablebody = searchedJsonData.map((emp) =>
+            <tr key={emp.employeeId} value={count++}>
+                    <td className="noto">{emp.name}</td>
+                    <td className="noto">{emp.email}</td>
+                    <td className="noto"><a href={"pdf-preview.htm?empID=" + emp.employeeId}>
+                                            <i className="fas fa-file-pdf px-2"></i>
+                                         </a></td>
+                    <td className="text-center noto"><input className="cb" type="checkbox" name="emailChecked" value={emp.email} /></td>
+            </tr>
+        );
+        return(
+            <tbody>
+                {tablebody}
+            </tbody>
+        );
+    }
+ 
+    class Contents extends React.Component {
+        constructor(){
+            super();
+            this.selectAll = this.selectAll.bind(this);
+            this.search = this.search.bind(this);
+        }
+        
+        selectAll(event){
+            var form = document.forms[1];
            var checkboxTotal = 0;
            for(var i = 0; i<form.length; ++i){
                if(form[i].type == 'checkbox')
                    ++checkboxTotal;
            }
-               
            
-           var countChecked = 0; 
+           var countChecked = 0;
            for (var i = 0; i < checkboxTotal; ++i) {
                 if (form[i].type == 'checkbox') {
                     if(form[i].checked == true)
                         countChecked++;
                 }
            }
+           checkboxTotal -= 1;
+           
            if(countChecked == checkboxTotal){
-                for (var i = 0; i < checkboxTotal; ++i) {
+                for (var i = 1; i <= checkboxTotal; ++i) {
                     if (form[i].type == 'checkbox') {
                         form[i].checked = false;
                     }
                 }
            }else{
-                for (var i = 0; i < checkboxTotal; ++i) {
+                for (var i = 1; i <= checkboxTotal; ++i) {
                     if (form[i].type == 'checkbox') {
                         form[i].checked = true;
                     }
@@ -219,12 +191,53 @@
            }
         }
         
+        search(event){
+            var searcher = $("#sear").val();
+            var searchBy = $("#searchby :selected").text();
+            window.location.href = "email.htm?search"+searchBy+"="+searcher;
+        }
+        
+        render(){
+            return(
+                   <div className="container-fluid bg-whiteds" style={{height: "100vh"}}>
+                    <div className="container pb-5 pt-3">
+                        <form:form className="form-inline pt-1 pb-2 w-100">                 
+                            <button className="btn btn-primary rounded-0 px-3 mr-2 my-1" onClick={this.search} type="button"><i className="fas fa-search pr-1"></i>Search</button>
+                            <select id="searchby" name="col" className="custom-select my-1 mr-sm-2">
+                                <option value="name">Name</option>
+                                <option value="email">Email</option>
+                            </select>
+                            <input type="text" placeholder="Search.." id="sear" name="search" className="form-control my-1 mr-sm-2" />
+                        </form:form>
+
+                        <form:form id="emailForm" method="post" action="sendEmail.htm" className="mt-2"> 
+                        <table className="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style={{width: "35%"}}>Name</th>
+                                    <th scope="col" style={{width: "35%"}}>Email</th>
+                                    <th scope="col" style={{width: "10%"}} className="text-center">PDF</th>
+                                    <th scope="col" style={{width: "20%"}} className="text-center">Send    <input type="checkbox" onClick={this.selectAll}/></th> 
+                                </tr>
+                            </thead>
+                                <GetEmployees />
+                        </table>
+                        <div className="row justify-content-center my-5">
+                          <button type="submit" value="Login" className="btn btn-primary px-3 mx-1 rounded-0"><i className="fas fa-paper-plane pr-2"></i>Send</button>
+                        </div>
+                        </form:form>
+                    </div>
+                </div> 
+                    );
+        }
+    };
+        ReactDOM.render(<Contents />, document.getElementById("root3"));
     </script>
     <!-- Custom JavaScript -->
     <script src="<c:url value="/resources/js/confirmation.js" />"></script>
     
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" crossorigin="anonymous"></script>
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <!-- Bootstrap.js -->

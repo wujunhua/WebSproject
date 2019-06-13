@@ -11,6 +11,10 @@ import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.atossyntel.pojo.UserServiceDAO;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class PdfViewController implements Controller {
@@ -31,8 +35,7 @@ public class PdfViewController implements Controller {
             PDF pdfGenerator = new PDF(userDAO.getDataSource());
             pdfGenerator.generate(employeeID);
         } catch (Exception ex) {
-            logger.error("PdfViewController: There was an issue with generating the PDF");
-            logger.error(ex.getMessage());
+            logger.error(ex);
         }
                 
         RedirectView emailRedirect = new RedirectView("email.htm"); // go back to the same email page        

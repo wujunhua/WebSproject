@@ -26,7 +26,6 @@
   Statement stmt = conn.createStatement();
   ResultSet rs;
   int id = 1;
-  String stream = "";
   String name = request.getParameter("modName");
   String modCategory = request.getParameter("modCategory"); 
   String streamName= request.getParameter("streamName");
@@ -60,19 +59,13 @@
        {
            modCategoryId= rs.getString(1);
        }
-       sql = "Select Stream_Id from Stream where stream_name = '" + streamName + "'";
-       rs=stmt.executeQuery(sql);
-       if(rs.next())
-       {
-           stream= rs.getString(1);
-       }
        String maxIDSql = "SELECT MAX(module_id) FROM modules";
 			rs = stmt.executeQuery(maxIDSql);
 			if(rs.next()) // the max ID was retrieved
 			{
                 id = (rs.getInt(1) + 1); // increment the max ID to create a new one
 			}
-        sql = ("INSERT INTO modules VALUES("+id+",'"+name+"', '" +modCategoryId+"', '"+stream+"')");
+        sql = ("INSERT INTO modules VALUES("+id+",'"+name+"', '" +modCategoryId+"', '"+streamName+"')");
         numRowsAffected = stmt.executeUpdate(sql);
   
         } catch (SQLException e) {

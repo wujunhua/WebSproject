@@ -69,9 +69,9 @@ public class SendEmail {
             if(!cc.equals(""))
                 message.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
             
-            String[] startEndDates = getStartEnd(email);
+            //String[] startEndDates = getStartEnd(email);
          
-            message.setSubject("Performica Report["+ getStreamName(email) + "]["+ startEndDates[0] + "]-["+startEndDates[1]+"]");
+            message.setSubject("Performica Report");
             logger.info("here");
             // Create the message part
 
@@ -344,48 +344,14 @@ public class SendEmail {
             return false;
     }
     
-    static boolean validateClassId(String id)
-    {
-        int count = 0;
-    PropertiesAccessor prop = new PropertiesAccessor();
-	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select class_id from class where class_id = " + "'" + id + "'");)
-	{           						
-            while(rs.next())
-            {
-		++count;
-            }
-					
-            con.commit();
-    
-            if(count == 0 || count > 1)
-            {
-		logger.info("Not Valid Class ID");
-		return false;
-            }
-            else if(count ==1)
-            {
-                logger.info("Success: Valid Class ID");
-		return true;
-            }
-		                
-            }catch (Exception ex) 
-            {
-		logger.info(ex);
-            }
-				
-            return false;
-    }
-    
     static String[] getEmployee(String email) {//getEmployee returns an array of attributes
     	PropertiesAccessor prop = new PropertiesAccessor();
-    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select employee_id, name, class_id, manager_id from employees where email = '" + email + "'");)
+    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select employee_id, name from employees where email = '" + email + "'");)
 	{         
             String[] emp = new String[4];
             while(rs.next()){
                 emp[0] = rs.getString("employee_id");
                 emp[1] = rs.getString("name");
-                emp[2] = rs.getString("class_id");
-                emp[3] = rs.getString("manager_id");
                 
             }
 			
@@ -459,59 +425,12 @@ public class SendEmail {
     	
     	return "";
     }
-    
-    static String getStreamName(String email) {//getEmployee returns an array of attributes
-    	PropertiesAccessor prop = new PropertiesAccessor();
-    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select s.stream_name from employees e ,class c ,stream s where e.email = '" + email + "' AND e.class_id=c.class_id AND c.stream_id = s.stream_id");)
-	{
-            while(rs.next()){
-                if( rs.getString(1) == null)
-                    return "";
-                else
-                    return rs.getString(1);
-                
-            }
-			
-            con.commit();
-           
-                
-	}
-		
-	catch (Exception ex) 
-	{
-            logger.error(ex);
-	}
-    	
-    	return " ";
-    }
-        static String[] getStartEnd(String email) {//getEmployee returns an array of attributes
-    	PropertiesAccessor prop = new PropertiesAccessor();
-    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select c.start_date,c.end_date from employees e ,class c where e.email = '" + email + "' AND e.class_id=c.class_id");)
-	{
-            String[] duration = new String[2];
-            while(rs.next()){
-                duration[0] = rs.getString(1).substring(0,10);
-                duration[1] = rs.getString(2).substring(0,10);
-                
-            }
-			
-            con.commit();
-           
-            return duration;
-	}
-		
-	catch (Exception ex) 
-	{
-            logger.error(ex);
-	}
-    	return new String[0];
-    }
-    
+        
     static Map<String,String> getBatchEmails(String classid) {
     	
     	Map<String,String> batchEmails = new HashMap<>();
     	PropertiesAccessor prop = new PropertiesAccessor();
-    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select employee_id, email from employees where class_id = " + "'" + classid + "'");)
+    	try(Connection con = DriverManager.getConnection(prop.getURL(),prop.getUsername(),prop.getPassword()); Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select employee_id, email from employees where batch_id = " + "'" + classid + "'");)
 	{            
             while(rs.next())
             {

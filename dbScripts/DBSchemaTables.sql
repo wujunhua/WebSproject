@@ -34,29 +34,6 @@ CREATE TABLE Student_Performance.Category (
   category_name VARCHAR2(45) NULL,
   PRIMARY KEY (category_id)
 );
-
--- -----------------------------------------------------
--- Table Student_Performance.Class
--- -----------------------------------------------------
-CREATE TABLE Student_Performance.Class (
-  class_id VARCHAR2(30) NOT NULL,
-  stream_id VARCHAR2(40) NOT NULL,
-  user_id VARCHAR2(100) NULL,
-  start_date DATE NULL,
-  end_date DATE NULL,
-  PRIMARY KEY (class_id)
-,
-  CONSTRAINT fk_Class_Stream1
-    FOREIGN KEY (stream_id)
-    REFERENCES Student_Performance.Stream (stream_id)
-    ----ON DELETE NO ACTION
-,
-  CONSTRAINT fk_Class_Users1
-    FOREIGN KEY (user_id)
-    REFERENCES Student_Performance.Users (user_id)
-    ON DELETE SET NULL
-);
-
 -- -----------------------------------------------------
 -- Table Student_Performance.Employees
 -- -----------------------------------------------------
@@ -64,14 +41,7 @@ CREATE TABLE Student_Performance.Employees (
   employee_id VARCHAR2(10) NOT NULL,
   name VARCHAR2(100) NULL,
   email VARCHAR2(100) NULL,
-  class_id VARCHAR2(30) NOT NULL,
-  manager_id VARCHAR2(100) NULL,
   PRIMARY KEY (employee_id)
-,
-  CONSTRAINT fk_Students_Class1
-    FOREIGN KEY (class_id)
-    REFERENCES Student_Performance.Class (class_id)
-    ----ON DELETE NO ACTION
 );
 
 -- -----------------------------------------------------
@@ -116,6 +86,7 @@ CREATE TABLE Student_Performance.Courses (
 CREATE TABLE Student_Performance.Employees_take_Modules (
   module_id NUMBER(10) NULL,
   employee_id VARCHAR2(10) NULL,
+  batch_id VARCHAR2(10) NOT NULL,
   scores NUMBER(6,2) NULL
 ,
   CONSTRAINT fk_Modules_has_Modules
@@ -128,3 +99,34 @@ CREATE TABLE Student_Performance.Employees_take_Modules (
     REFERENCES Student_Performance.Employees (employee_id)
     ----ON DELETE NO ACTION
 );
+
+-- -----------------------------------------------------
+-- Table Student_Performance.Batches & join tables for Batches, Instructors, And Employees
+-- -----------------------------------------------------
+CREATE TABLE Student_Performance.Batches(
+  batch_id VARCHAR2(10) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  stream_id VARCHAR2(40) NULL,
+  country VARCHAR2(20) NOT NULL,
+  city VARCHAR2(20) NOT NULL,
+  PRIMARY KEY (batch_id)
+,
+  CONSTRAINT fk_Batches_has_Stream
+    FOREIGN KEY (stream_id)
+    REFERENCES Student_Performance.Stream (stream_id)
+    ON DELETE SET NULL
+);
+
+CREATE TABLE Student_Performance.Instructors_Teach_Batches(
+  batch_id VARCHAR2(10) NOT NULL,
+  user_id VARCHAR2(100) NOT NULL
+,
+  CONSTRAINT fk_Batches_has_Batches
+    FOREIGN KEY (batch_id)
+    REFERENCES Student_Performance.Batches (batch_id)
+,
+  CONSTRAINT fk_Batches_has_Instructors
+    FOREIGN KEY (user_id)
+    REFERENCES Student_Performance.Users (user_id)
+); 

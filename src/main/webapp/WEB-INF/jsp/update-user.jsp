@@ -37,7 +37,9 @@
   String user_name = request.getParameter("oldusername");
   String newUser_name = request.getParameter("newusername");
   String admin = request.getParameter("example");  
- 
+  System.out.println(user_name);
+  System.out.println(newUser_name);
+  System.out.println(admin);
     String sql2;
 
     sql2 = "select user_id from users where user_id='" + newUser_name + "' and user_id!='" + user_name + "'";

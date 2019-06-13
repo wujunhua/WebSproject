@@ -47,7 +47,14 @@
   
         
   String course_name = request.getParameter("coursename");
-  String course_id = module_id + course_name.toLowerCase().replaceAll("\\s+","");
+  String sqlcId = "select count(*) from courses";
+  ResultSet rse = stmt.executeQuery(sqlcId);
+  int Cid=0;
+    while (rse.next()) {
+        Cid = rse.getInt("COUNT(*)");
+        }
+  
+  String course_id = Integer.toString(Cid+1);
   
       String mName = request.getParameter("sname");
       String sql2, sqlid;
@@ -62,22 +69,7 @@
       {
         sqlid2 = Integer.parseInt(rs.getString("module_id"));
       }
-  
-  
-  String sql5;
-  ResultSet r3;
-  sql5 = "select course_name from courses where course_id='" + course_id + "'";
-  r3 = stmt.executeQuery(sql5);
-  int count = 0;
-  
-  while(r3.next())
-  {
-      count++;
-      course_id = module_id + course_name.toLowerCase().replaceAll("\\s+","") + "_" + count;
-      sql5 = "select course_name from courses where course_id='" + course_id + "'";
-      r3 = stmt.executeQuery(sql5);
-  }
-  
+
   out.println(course_name);
   out.println("=================");
  

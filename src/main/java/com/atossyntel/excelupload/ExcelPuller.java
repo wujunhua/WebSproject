@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 
 public class ExcelPuller {
 
-    static final Logger logger = Logger.getLogger(ClassCRUD.class);
+    static final Logger logger = Logger.getLogger(ExcelPuller.class);
 
     public List<Employee> generateEmployees(File filePath, String loc, String site, String stream) throws IOException {
 
@@ -79,7 +79,7 @@ public class ExcelPuller {
                         newEmp.setEmployeeEmail(currentCell.getStringCellValue());//Gets and sets Emp Email
                     } else if (counter == 3) {
                         currentCell = cellIterator.next();
-                        newEmp.setManagerID(currentCell.getStringCellValue()); //Adds scores to an employee
+                        
                         currentCell = cellIterator.next();
                     } else if (counter >= 4) {
                         if (currentCell.getColumnIndex() == counter) {
@@ -93,7 +93,6 @@ public class ExcelPuller {
                         logger.info("All data entered");
                     }
                 }
-                newEmp.setClassID(classID);
                 emps.add(newEmp);
             }
         } catch (IOException e) {

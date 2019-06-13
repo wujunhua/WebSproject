@@ -1,3 +1,8 @@
+    <%
+        // get session attribute, used to hide admin link
+        Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+
+    %>
 <div id="nav"></div>   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
@@ -7,12 +12,6 @@
     class Nav extends React.Component
     {	render() {
     return (
-    <%
-        // get session attribute, used to hide admin link
-        Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-
-    %>
-
     <nav className = "navbar navbar-expand-lg navbar-dark" style = {{background:" rgb(0,102,161)"}} >
         <div className ="container">
            <a className="navbar-brand" href="#">

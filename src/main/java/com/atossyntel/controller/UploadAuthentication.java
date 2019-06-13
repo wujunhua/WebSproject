@@ -58,9 +58,10 @@ public class UploadAuthentication extends SimpleFormController {
 
     private RedirectView getEmailClassSearchView(String classID) {
 
-        String searchEmailsUrl = "searchEmailEmployees.htm?col=classID&search=" + classID;
-
-        return new RedirectView(searchEmailsUrl);
+        //not working properly 
+        //String searchEmailsUrl = "searchEmailEmployees.htm?col=classID&search=" + classID;
+            
+        return new RedirectView("createclass.htm");
     }
 
 }

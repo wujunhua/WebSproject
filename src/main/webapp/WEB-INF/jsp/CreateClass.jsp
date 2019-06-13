@@ -1,64 +1,7 @@
-<%@page import="com.atossyntel.pojo.Stream"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.DriverManager"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<!--database access-->
-<%
-    session.setAttribute("username", request.getAttribute("username"));
-    //initialize driver class
-    try {
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-    } catch (Exception e) {
-        out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
-    }
-
-    String dbUser = "Student_Performance";
-    String dbPasswd = "Student_Performance";
-    String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
-
-    //connect
-    Connection conn = null;
-    try {
-        conn = DriverManager.getConnection(dbURL, dbUser, dbPasswd);
-        //out.println(" Connection status: " + conn + "<P>");
-    } catch (Exception e) {
-        out.println("Connection failed: " + e.toString() + "<P>");
-    }
-
-    String sql = "SELECT * FROM stream";
-    Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery(sql);
-
-    ArrayList<String> streamIDs = new ArrayList();
-    request.setAttribute("streamIDs", streamIDs);
-
-    ArrayList<String> streamNames = new ArrayList();
-    request.setAttribute("streamNames", streamNames);
-
-    ArrayList<Stream> allStreams = new ArrayList<Stream>();
-    while (rs.next()) {
-        allStreams.add(new Stream(rs));
-    }
-    request.setAttribute("allStreams", allStreams);
-
-    // fill in names and IDs, two separate arrays
-//    while(rs.next()) {
-//        streamIDs.add(rs.getString("stream_id"));
-//        streamNames.add(rs.getString("stream_name"));
-//    }
-    rs.close(); // close resources
-    stmt.close();
-    conn.commit();
-    conn.close();
-%>
-
 
 <!DOCTYPE html>
 
@@ -95,6 +38,7 @@
     <div id="root"></div>
     <div id="root2"></div>
     <div id="root3"></div>
+    <script src="<c:url value="/resources/js/classValidate.js" />"></script>
     <script type ="text/babel">
         class HeadingLinks extends React.Component  {
             render(){
@@ -140,7 +84,41 @@
         };
         ReactDOM.render(<Tabs />, document.getElementById("root2"));
         
-        class Contents extends React.Component{
+        $.ajaxSetup({
+            async: false
+        });
+        
+        function InsertOptionStreams() {
+            var jsonData;
+            $.getJSON("http://localhost:8084/WebAPI/getAllStreams", function(data) {
+                jsonData = data;
+            });
+            const options = jsonData.map((stream) =>
+                <option key={stream.streamId} value={stream.streamId}>{stream.streamName}</option>
+            );
+            return(
+                <select id="selectedStream" name="streamName" className="custom-select">
+                    {options}
+                </select>
+            );
+        }
+        
+        function InsertULStreams() {
+            var jsonData;
+            $.getJSON("http://localhost:8084/WebAPI/getAllStreams", function(data) {
+                jsonData = data;
+            });
+            const options = jsonData.map((stream) =>
+                <li key={stream.streamId} value={stream.streamId} className="list-group-item"><a href={"download.htm?streamID=" + stream.streamId}>{stream.streamName}</a></li>
+            );
+            return(
+                <ul className="list-group">
+                    {options}
+                </ul>
+            );
+        }
+        
+        class Contents extends React.Component{        
             render(){
                 return (
                 <div className="container-fluid bg-white" style={{height: "100vh"}}>
@@ -153,13 +131,7 @@
                                         <label className="my-1 mr-2" htmlFor="selectedStream">Stream</label>
                                     </div>
                                     <div className="col-sm-10">
-                                        <select id="selectedStream" name="streamName" className="custom-select">
-                                            <c:forEach items="${allStreams}" var="stream">
-                                                <option value="${stream.ID}"> 
-                                                    ${stream.name}
-                                                </option>
-                                            </c:forEach>
-                                        </select>     
+                                        <InsertOptionStreams />
                                     </div>
                                 </div>
                                     <div className="form-group row">
@@ -185,9 +157,9 @@
                                     <label className="my-1 mr-2" htmlFor="location">Instructor Email</label>
                                   </div>
                                   <div className="col-sm-10 my-1">
-                                    <input type="email" name="insEmail" id="insEmail" className="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
+                                    <input type="email" name="insEmail" id="insEmail" className="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
                                   </div>
-                                  <font color="red"><span id="emailValidation" /></font>
+                                  <font style={{color:"red"}}><span id="emailValidation" /></font>
                                 </div>
                                 <div className="form-group row">
                                   <div className="col-sm-2 my-1">
@@ -202,7 +174,7 @@
                                   <div className="col-sm-4 my-1">
                                     <input type="date" name="endDate" id="endDate" className="form-control" required />
                                   </div>
-                                  <font color="red"><span id="endDateValidation" /></font>
+                                  <font style={{color:"red"}}><span id="endDateValidation" /></font>
                                 </div>
                                 <div className="form-group row">
                                   <div className="col-sm-2 my-1 pt-2">
@@ -213,10 +185,7 @@
                                   </div>
                                 </div>
                                 <div className="row justify-content-center">
-                                  <button type="button" className="btn btn-primary rounded-0 px-3" onclick="validate()"><i className="far fa-file-alt pr-2" />Submit</button>
-                                </div>
-                                <div className="row justify-content-center">
-                                  <button type="submit" id="actualButton" className="btn btn-primary rounded-0 px-3" style={{display:"none"}}><i className="far fa-file-alt pr-2" />Submit</button>
+                                  <button type="submit"  id="actualButton" className="btn btn-primary rounded-0 px-3" onClick="validate()"><i className="far fa-file-alt pr-2" />Submit</button>
                                 </div>
                             </s:form>
                             </div>
@@ -225,11 +194,7 @@
                                 <div className="card-header bg-light">
                                   Template
                                 </div>
-                                <ul className="list-group">
-                                  <c:forEach items="${allStreams}" var="stream"> 
-                                      <li className='list-group-item'><a href="download.htm?streamID=${stream.ID}">${stream.name}</a></li>
-                                  </c:forEach>
-                                </ul>
+                                    <InsertULStreams />
                               </div>
                             </div>
                         </div>
@@ -239,21 +204,21 @@
             }
         };
         ReactDOM.render(<Contents />, document.getElementById("root3"));
-    </script>
-
+    </script>    
+    
     <!-- Optional JavaScript -->
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <!-- Bootstrap.js -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-    <script src="<c:url value="/resources/js/classValidate.js" />"></script>
+    
+    
 
 
 </body>
-
 

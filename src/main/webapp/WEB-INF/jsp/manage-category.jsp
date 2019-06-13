@@ -102,6 +102,16 @@ boolean categoryCanBeDeleted = rs.next();
         }
     };
     class ManageCategory3 extends React.Component {	
+            constructor(props){
+            super(props);
+            this.state = {value:'${param.id}'};
+            this.handleChange = this.handleChange.bind(this);
+        }
+
+        handleChange(event){
+            this.setState({value: event.target.value});
+        }
+        
             render() {
                 return (
 
@@ -132,7 +142,7 @@ boolean categoryCanBeDeleted = rs.next();
               <label for="new_stream_name" className="col-sm-3 col-form-label">Category</label>
               <div className="col-sm-9">
                   <input type ="hidden" name="category_name" id="category_name" value="${param.id}"/>
-                <input type="text" className="form-control" id="new_category_name" onchange="myFunction()" name="new_category_name" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 than 20 characters." required/>
+                <input type="text" className="form-control" id="new_category_name" onChange={this.handleChange} name="new_category_name" value={this.state.value} pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{2,20}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 3 than 20 characters." required/>
                 <div><small id="ajaxconf" className="text-danger"></small></div>
               </div>
             </div>

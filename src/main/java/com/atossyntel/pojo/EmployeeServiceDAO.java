@@ -27,11 +27,11 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     }
 
     @Override
-    public void insertEmployee(String employeeID, String name, String email, String classID, String managerID) {
-        String sql = "insert into employees values (?, ?, ?, ?, ?)";
+    public void insertEmployee(String employeeID, String name, String email) {
+        String sql = "insert into employees values (?, ?, ?)";
         try {
             logger.info("Insert into employees...");
-            int row = jdbcTemplateObject.update(sql, employeeID, name, email, classID, managerID);
+            int row = jdbcTemplateObject.update(sql, employeeID, name, email);
             logger.info("* " + row + " row inserted.\n");
         } catch(Exception e) {
             logger.error(e.getMessage());
@@ -56,7 +56,6 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     public List<Employee> readAllEmployee(){
         List<Employee> list = new ArrayList<>();
         String sql = "select * from employees";
-        
         try {
             logger.info("Read from employees...");
             list = jdbcTemplateObject.query(sql, new EmployeeRowMapper());
@@ -120,11 +119,11 @@ public class EmployeeServiceDAO implements EmployeeDAO{
     }
 
     @Override
-    public void updateEmployee(String employeeID, String name, String email, String managerID) {
-        String sql = "update employees set employee_id = ?, name = ?, email = ?, manager_id = ? where employee_id = ?";
+    public void updateEmployee(String employeeID, String name, String email) {
+        String sql = "update employees set employee_id = ?, name = ?, email = ? where employee_id = ?";
         try {
             logger.info("Update employee...");
-            int row = jdbcTemplateObject.update(sql, employeeID, name, email, managerID, employeeID);    
+            int row = jdbcTemplateObject.update(sql, employeeID, name, email, employeeID);    
             logger.info("* " + row + " row updated.\n");
         } catch(Exception e) {
             logger.error(e.getMessage());

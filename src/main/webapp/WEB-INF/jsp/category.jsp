@@ -1,70 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.util.ArrayList"%>
-<%@ page import="java.sql.*" %>
-
-<%
-    //initialize driver class
-    try {
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-    } catch (Exception e) {
-        out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
-    }
-
-    String dbUser = "Student_Performance";
-    String dbPasswd = "Student_Performance";
-    String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
-
-    //connect
-    Connection conn = null;
-    try {
-        conn = DriverManager.getConnection(dbURL, dbUser, dbPasswd);
-        //out.println(" Connection status: " + conn + "<P>");
-    } catch (Exception e) {
-        out.println("Connection failed: " + e.toString() + "<P>");
-    }
-
-    String sql;
-    int numRowsAffected;
-    Statement stmt = conn.createStatement();
-    ResultSet rs;
-
-    sql = "select category_name from category";
-    rs = stmt.executeQuery(sql);
-
-    ArrayList categoryList = new ArrayList();
-    request.setAttribute("categoryList", categoryList);
-
-    ArrayList cleanedCategoryList = new ArrayList();
-    request.setAttribute("cleanedCategoryList", cleanedCategoryList);
-
-    String cleanedString;
-
-    while (rs.next()) {
-        categoryList.add(rs.getString("category_name"));
-
-        cleanedString = rs.getString("category_name");
-        cleanedString = cleanedString.trim();
-        //replacing + with %2B
-        cleanedString = cleanedString.replaceAll("\\+", "%2B");
-        //replacing spaces with %20
-        cleanedString = cleanedString.replaceAll("\\s", "+");
-        //replacing # with %23
-        cleanedString = cleanedString.replaceAll("\\#", "%23");
-
-        cleanedCategoryList.add(cleanedString);
-    } // End while 
-
-    rs.close();
-    stmt.close();
-
-    //commit
-    conn.commit();
-
-    //disconnect
-    conn.close();
-
-%>  
-
 
 <!DOCTYPE html>
 <html>
@@ -77,7 +11,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
         <!-- Popper.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <!-- Bootstrap.js -->
@@ -129,9 +63,35 @@
     </div>
                     );
         }
-    }
+    };
 
-    class Category3 extends React.Component{	
+    $.ajaxSetup({
+        async: false
+    });
+    
+    function CateTable() {
+        var jsonData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllCategories", function(data) {
+            jsonData = data;
+        });
+
+        var count = 1;
+
+        const tablebody = jsonData.map((category) =>
+            <tr key={category.categoryId} value={category.categoryName}>
+                    <th scope="row">{count++}</th>
+                    <td><a href={"manage-category.htm?id=" + category.categoryName}>{category.categoryName}</a></td>
+            </tr>
+        );
+
+        return(
+            <tbody>
+                {tablebody}
+            </tbody>
+        );
+    } 
+    
+    class Category3 extends React.Component{
         render() {
                 return (
                         <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
@@ -159,18 +119,7 @@
                                             <th scope="col">Category</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <c:set var ="count" value="1"/>
-                                        <c:forEach items ="${categoryList}" var="cat">
-                                            <tr value ="${cat}">
-                                                <th scope = "row"> ${count}</th>
-                                                <td>
-                                                    <a href="manage-category.htm?id=${cleanedCategoryList.get(count-1)}">${cat}</a>
-                                                </td>
-                                            </tr>
-                                        <c:set var="count" value = "${count+1}"/>    
-                                        </c:forEach>
-                                    </tbody>
+                                    <CateTable />
                                 </table>
                             </div>
                         </div>

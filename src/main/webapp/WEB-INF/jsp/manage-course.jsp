@@ -238,9 +238,18 @@ function myFunction()
                     </div>
             );
         }
-    }
+    };
 
     class CoursesForm extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {value:'${param.id}'};
+            this.handleChange = this.handleChange.bind(this);
+        }
+
+        handleChange(event){
+            this.setState({value: event.target.value});
+        }
         render() {
             return (
                     <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
@@ -263,14 +272,14 @@ function myFunction()
                                                 <label for="new_course_name" className="col-sm-3 col-form-label">Course</label>
                                                 <div className="col-sm-9">
                                                     <input type="hidden" name="course_name" id="course_name" value='${param.id}' />
-                                                    <input type="text" className="form-control" id="new_course_name" onchange="myFunction()" name="new_course_name" value="${param.id}" required />
+                                                    <input type="text" className="form-control" id="new_course_name" value={this.state.value} onChange={this.handleChange} name="new_course_name" required />
                                                     <div><small id="ajaxconf" className="text-danger"></small></div>
                                                 </div>
                                             </div>
                                             <div className="form-group row mt-3">
                                                 <label for="new_id" className="col-sm-3 col-form-label">Stream</label>
                                                 <div className="form-group col-md-9">
-                                                    <select className="custom-select" name= "streamname" id="streamname" onchange="loadDoc()" placeholder="Select a Stream">
+                                                    <select className="custom-select" name= "streamname" id="streamname" placeholder="Select a Stream">
                                                     <option selected hidden value="${param.name}">${param.name}</option>
                                                         <c:forEach items="${fullstreamList}" var="streamer">
                                                             <option value="${streamer}">
@@ -285,7 +294,7 @@ function myFunction()
                                                 <div className="form-group col-md-9">
                                                     <div id="dropdown_stuff">
                                                         <select className="custom-select" name= "modulename" id="modulename">
-                                                            <option selected hidden value="${param.name2}">${param.name2}</option>
+                                                            <option value="${param.name2}">${param.name2}</option>
                                                         </select>
                                                     </div>
                                                 </div>

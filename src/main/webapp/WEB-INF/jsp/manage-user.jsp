@@ -127,20 +127,23 @@
     };
     
     class Manage extends React.Component {
-        constructor() {
-            super();
+        constructor(props) {
+            super(props);
             this.state = {
-                selectedOption: 'N'
+                selectedOption: 'N',
+                value: '${param.id}'
             };
             this.radioChange = this.radioChange.bind(this);
+            this.handleChange = this.handleChange.bind(this);
         }
         
         radioChange(event) {
-            this.setState({
-                selectedOption: event.target.value
-            });
+            this.setState({selectedOption: event.target.value});
         }
         
+        handleChange(event){
+            this.setState({value: event.target.value});
+        }
         render() {
             return (
                     <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
@@ -160,11 +163,11 @@
                                             </form>
                                         </span>
                                     </div>
-                                    <form>
+                                    <form action="update-user.htm">
                                         <div className="form-group row mt-3">
                                             <label for="inputEmail3" className="col-sm-3 col-form-label">Email</label>
                                             <div className="col-sm-9">
-                                                <input type="email" className="form-control" id="inputEmail3" onchange="myFunction()" name="newusername" value="${param.id}" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
+                                                <input type="email" className="form-control" value={this.state.value} onChange={this.handleChange} id="inputEmail3" name="newusername" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
                                                 <div><small id="jackson_1" className="text-danger"></small></div>
                                             </div>
                                             <div className="col-sm-9">
@@ -175,11 +178,11 @@
                                             <label for="inputEmail3" className="col-sm-4 col-form-label">User Level</label>
                                             <div className="col-sm-8 pt-2">
                                                 <div className="form-check form-check-inline">
-                                                    <input type="radio" id="customRadio1" name="radio1" value="N" checked={this.state.selectedOption === "N"} onChange={this.radioChange} />
+                                                    <input type="radio" id="customRadio1" name="example" value="N" checked={this.state.selectedOption === "N"} onChange={this.radioChange} />
                                                     <label  for="customRadio1"><small>Instructor</small></label>
                                                 </div>
                                                 <div className="form-check form-check-inline">
-                                                    <input type="radio"  id="customRadio2" name="radio2" value="Y" checked={this.state.selectedOption === "Y"} onChange={this.radioChange} />
+                                                    <input type="radio"  id="customRadio2" name="example" value="Y" checked={this.state.selectedOption === "Y"} onChange={this.radioChange} />
                                                     <label  for="customRadio2"><small>Admin</small></label>
                                                 </div>
                                             </div>

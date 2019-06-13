@@ -1,6 +1,7 @@
 package com.atossyntel.controller;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,11 +12,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryAxis3D;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
@@ -44,10 +51,9 @@ public class PDF {
     private NamedParameterJdbcTemplate njdbc;
 
     private DefaultCategoryDataset dataset;
-
     private static final BaseFont font = BaseFont.Helvetica; // change font to Verdana
     private PDPage page = new PDPage();
-    private PDFinfo pdfinfo;
+    private PDFinfo pdfinfo = null;
     static PropertiesAccessor prop = new PropertiesAccessor();
     private String filePath = prop.getFilePath(); //use getfilepath in the email logic?
     private static final String IMAGEPATH = prop.getImagePath(); //path to AS logo
@@ -107,6 +113,7 @@ public class PDF {
 
     public void generate(String empid) throws SQLException, IOException {
         //init config
+        
         dataset = new DefaultCategoryDataset();
         njdbc = new NamedParameterJdbcTemplate(dataSource);
         PDFinfo info = new PDFinfo(dataSource.getConnection());
@@ -119,7 +126,6 @@ public class PDF {
             logger.error("Employee ID not found. PDF has not been generated.");
             return;
         }
-
         //define output vars
         StringBuilder gradeNumbers = new StringBuilder("Overall Grade: " + numToLetter(info.getAverageScore(empid)) + "\n|  ");
 
@@ -127,16 +133,6 @@ public class PDF {
 
         List<String[]> cats = new ArrayList<>();
         cats.addAll(info.getCategoryNameID());
-
-        //define a <hr /> --------------------------------
-        char[] charArray = new char[1835];
-        Arrays.fill(charArray, ' ');
-        String hrHelp = new String(charArray);
-
-        Paragraph hRule = new Paragraph();
-        hRule.addMarkup("__" + hrHelp + " __", 1, font);
-        //------------------------------------------------
-
         //create PDF
         float linspace = 10;
         float sectionBreak = 15;
@@ -146,7 +142,14 @@ public class PDF {
         float topMargin = 20;
         float bottomMargin = 20;
         Document document = new Document(leftMargin, rightMargin, topMargin, bottomMargin);
+        //define a <hr /> --------------------------------
+        char[] charArray = new char[1835];
+        Arrays.fill(charArray, ' ');
+        String hrHelp = new String(charArray);
 
+        Paragraph hRule = new Paragraph();
+        hRule.addMarkup("__" + hrHelp + " __", 1, font);
+        //------------------------------------------------
         document.add(new ImageElement(IMAGEPATH), new VerticalLayoutHint(Alignment.Left, 0, 0,
                 0, 0, true));
         document.add(new VerticalSpacer(90));
@@ -166,7 +169,6 @@ public class PDF {
         document.add(hRule);
 
         document.add(new VerticalSpacer(sectionBreak));
-
         par = new Paragraph();
         par.addMarkup("{color:#0066a1}__*My Training*__:  ", textSize + 1, font);
         document.add(par);
@@ -176,15 +178,12 @@ public class PDF {
         par.addMarkup("{color:#000000}*Stream*: " + stream.get(1), textSize + 1, font);
         document.add(par);
         document.add(new VerticalSpacer(1.5f * linspace));
-
         document.add(new VerticalSpacer(linspace));
         for (String[] cat : cats) {
             List<String[]> scores = new ArrayList<>();
             scores.addAll(info.getModuleScoresByCategory(empid, cat[1]));
-
-            if (scores.isEmpty()) {
+            if (scores.size() > 0) {
                 gradeNumbers.append(cat[0] + " Grade: " + numToLetter(info.getAverageScoreByCategory(empid, cat[1])) + "  |  ");
-
                 par = new Paragraph();
                 par.addMarkup("{color:#0066a1}*" + cat[0] + "*{color:#000000}:  ", textSize, font);
 
@@ -193,7 +192,8 @@ public class PDF {
                     par.addMarkup("  " + score[0] + "  |", textSize, font);
                     String classScore = info.getClassModuleScores(empid, score[0]);
                     //set up for chart: add number, series label, bar label
-                    dataset.addValue(Float.parseFloat(score[1]), name, score[0]);
+                    String wow = String.format("%.0f", Float.parseFloat(score[1]));
+                    dataset.addValue(Float.parseFloat(wow), name, score[0]);
                     dataset.addValue(Float.parseFloat(classScore), "Class Average", score[0]);
                 }
 
@@ -201,7 +201,6 @@ public class PDF {
                 document.add(new VerticalSpacer(1.5f * linspace));
             }
         }
-
         par = new Paragraph();
         par.addMarkup("{color:#0066a1}__*My Performance*__:", textSize + 1, font);
         document.add(new VerticalSpacer(linspace));
@@ -212,7 +211,7 @@ public class PDF {
         document.add(new ImageElement(chartFileName), new VerticalLayoutHint(Alignment.Left, 0, 0,
                 0, 0, true));
 
-        document.add(new VerticalSpacer(285));
+        document.add(new VerticalSpacer(325));
 
         char[] array = new char[1050];
         Arrays.fill(array, ' ');
@@ -228,7 +227,6 @@ public class PDF {
         par.setAlignment(Alignment.Center);
         document.add(par);
         document.add(new VerticalSpacer(sectionBreak));
-
         par = new Paragraph();
         par.addMarkup(gradeNumbers.toString(), textSize, font);
         par.setAlignment(Alignment.Center);
@@ -254,32 +252,39 @@ public class PDF {
                 "",
                 "", "",
                 //"Module", "Assessment Score", 
-                dataset, PlotOrientation.VERTICAL,
+                dataset, PlotOrientation.HORIZONTAL,
                 true, true, false);
         CategoryPlot plot = barChart.getCategoryPlot();
         plot.setBackgroundPaint(null);
         plot.setDomainGridlinePaint(Color.black);
         plot.setRangeGridlinePaint(Color.black);
-
+        plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        
+        
         ValueAxis yAxis = plot.getRangeAxis();
         yAxis.setAutoRange(false);
-        yAxis.setRange(0.00, 100.00);
+        yAxis.setRange(0.00, 110.00);
+        
 
         CategoryAxis axis = plot.getDomainAxis();
         axis.setLowerMargin(.01);
         axis.setUpperMargin(.01);
-        axis.setMaximumCategoryLabelLines(3);
-
+        axis.setMaximumCategoryLabelLines(4);
+        //axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+        axis.setMaximumCategoryLabelWidthRatio(0.2f);
+        
+        
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
         renderer.setBarPainter(new StandardBarPainter());
         renderer.setSeriesPaint(0, new Color(0, 102, 161)); //from website
         renderer.setSeriesPaint(1, new Color(106, 206, 242));  //from banner
+        renderer.setMaximumBarWidth(.10);
         renderer.setShadowVisible(false);
         renderer.setDrawBarOutline(false);
         renderer.setItemMargin(0.0); //space between bars
         renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         renderer.setBaseItemLabelsVisible(true);
-        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE9, TextAnchor.BASELINE_LEFT));
+        renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT));
 
         int width = 525;
         /* Width of the image */

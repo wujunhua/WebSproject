@@ -1,68 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
-<%@page import="java.util.ArrayList"%>
-<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%
-  
-  //initialize driver class
-  try {    
-    Class.forName("oracle.jdbc.driver.OracleDriver");
-  } catch (Exception e) {
-    out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
-  }
-  
-  String dbUser = "Student_Performance";
-  String dbPasswd = "Student_Performance";
-  String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
-
-  //connect
-  Connection conn = null;
-  try {
-    conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-    //out.println(" Connection status: " + conn + "<P>");
-  } catch(Exception e) {
-    out.println("Connection failed: " + e.toString() + "<P>");      
-  }
-
-  String sql;
-  int numRowsAffected;
-  Statement stmt = conn.createStatement();
-  ResultSet rs;
-  
-  // select
-  sql = "select email, name, employee_id from employees";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList usersList = new ArrayList(); // emails
-  request.setAttribute("usersList", usersList);
-  
-  ArrayList nameList = new ArrayList();
-  request.setAttribute("nameList", nameList);
-  
-  ArrayList employeeIDs =  new ArrayList();
-  request.setAttribute("employeeIDs", employeeIDs);
-  
-  while (rs.next()) {
-        usersList.add(rs.getString("email"));
-        nameList.add(rs.getString("name"));
-        employeeIDs.add(rs.getString("employee_id"));
-  }
-  
-  rs.close();
-  stmt.close();
-
-  //commit
-  conn.commit();
-  
-  //disconnect
-  conn.close();
-  
-%>  
 
 <HTML>
     <head>
@@ -80,8 +19,8 @@
         <!-- Google Fonts (Noto Sans) --> 
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
         <title>Atos Syntel &middot; Land</title>
         <style>
             p, h1, h2, h3, h4, h5, h6, li, ul, ol{
@@ -159,10 +98,64 @@
     
     ReactDOM.render(<Tabs />, document.getElementById("root2"));
  
+ 
+ 
+    $.ajaxSetup({
+        async: false
+    });
+
+    function GetEmployees() {
+        var jsonData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllEmployees", function(data) {
+            jsonData = data;
+        });
+        var searchBy = 0;
+        var searchByString = '${param.searchName}';
+        if('${param.searchEmail}' !== ""){
+            searchBy = 2;
+            searchByString = '${param.searchEmail}';
+        }
+        
+        
+        var empName = [];
+        jsonData.forEach(function(emp){
+            empName.push(Object.values(emp)[searchBy]);
+        }); 
+        
+        var searchedJsonData = [];
+        var counter = 0;
+        jsonData.forEach(function(emp){
+            if(Object.values(emp)[searchBy].includes(searchByString)){
+                searchedJsonData[counter] = emp;
+                counter++;
+            }
+        });
+        searchedJsonData = JSON.parse(JSON.stringify(searchedJsonData));
+        const searchedName = empName.filter(e => e.includes(searchByString));
+        
+        var count = 1;
+        const tablebody = searchedJsonData.map((emp) =>
+            <tr key={emp.employeeId} value={count++}>
+                    <td className="noto">{emp.name}</td>
+                    <td className="noto">{emp.email}</td>
+                    <td className="noto"><a href={"pdf-preview.htm?empID=" + emp.employeeId}>
+                                            <i className="fas fa-file-pdf px-2"></i>
+                                         </a></td>
+                    <td className="text-center noto"><input className="cb" type="checkbox" name="emailChecked" value={emp.email} /></td>
+            </tr>
+        );
+        return(
+            <tbody>
+                {tablebody}
+            </tbody>
+        );
+    }
+ 
     class Contents extends React.Component {
         constructor(){
             super();
             this.selectAll = this.selectAll.bind(this);
+            this.search = this.search.bind(this);
         }
         
         selectAll(event){
@@ -181,8 +174,7 @@
                 }
            }
            checkboxTotal -= 1;
-           console.log(checkboxTotal);
-            console.log(countChecked);
+           
            if(countChecked == checkboxTotal){
                 for (var i = 1; i <= checkboxTotal; ++i) {
                     if (form[i].type == 'checkbox') {
@@ -198,18 +190,24 @@
                 
            }
         }
-            
+        
+        search(event){
+            var searcher = $("#sear").val();
+            var searchBy = $("#searchby :selected").text();
+            window.location.href = "email.htm?search"+searchBy+"="+searcher;
+        }
+        
         render(){
             return(
                    <div className="container-fluid bg-whiteds" style={{height: "100vh"}}>
                     <div className="container pb-5 pt-3">
-                        <form:form method="post" action="searchEmailEmployees.htm" className="form-inline pt-1 pb-2 w-100">                 
-                            <button className="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i className="fas fa-search pr-1"></i>Search</button>
-                            <select name="col" className="custom-select my-1 mr-sm-2">
+                        <form:form className="form-inline pt-1 pb-2 w-100">                 
+                            <button className="btn btn-primary rounded-0 px-3 mr-2 my-1" onClick={this.search} type="button"><i className="fas fa-search pr-1"></i>Search</button>
+                            <select id="searchby" name="col" className="custom-select my-1 mr-sm-2">
                                 <option value="name">Name</option>
                                 <option value="email">Email</option>
                             </select>
-                            <input type="text" placeholder="Search.." name="search" className="form-control my-1 mr-sm-2" />
+                            <input type="text" placeholder="Search.." id="sear" name="search" className="form-control my-1 mr-sm-2" />
                         </form:form>
 
                         <form:form id="emailForm" method="post" action="sendEmail.htm" className="mt-2"> 
@@ -222,20 +220,7 @@
                                     <th scope="col" style={{width: "20%"}} className="text-center">Send    <input type="checkbox" onClick={this.selectAll}/></th> 
                                 </tr>
                             </thead>
-                            <tbody>
-                              <c:forEach items="${empList}" var="user" varStatus="loop">
-                                  <tr>
-                                    <td className="noto">${user.employeeName}</td>
-                                    <td className="noto">${user.employeeEmail}</td>
-                                    <td className="noto text-center">
-                                        <a href="pdf-preview.htm?empID=${employeeIDs[loop.index]}">
-                                            <i className="fas fa-file-pdf px-2"></i>
-                                        </a>
-                                    </td>
-                                    <td className="text-center noto"><input className="cb" type="checkbox" name="emailChecked" value="${user.employeeEmail}" /></td>
-                                  </tr>
-                              </c:forEach>
-                            </tbody>
+                                <GetEmployees />
                         </table>
                         <div className="row justify-content-center my-5">
                           <button type="submit" value="Login" className="btn btn-primary px-3 mx-1 rounded-0"><i className="fas fa-paper-plane pr-2"></i>Send</button>
@@ -252,7 +237,7 @@
     <script src="<c:url value="/resources/js/confirmation.js" />"></script>
     
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" crossorigin="anonymous"></script>
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <!-- Bootstrap.js -->

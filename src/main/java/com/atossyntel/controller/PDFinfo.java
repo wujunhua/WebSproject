@@ -98,15 +98,15 @@ public class PDFinfo {
      */
     public List<String> getStreamIDName(String empID) throws SQLException {
         List<String> list = new ArrayList<>();
-        try (Statement s1 = c1.createStatement(); ResultSet r1 = s1.executeQuery("select s.stream_id, s.stream_name from Stream s, Class c, Employees e where s.stream_id=c.stream_id and c.class_id=e.class_id and e.employee_id='" + empID + "'");) {
-
+        String sql = "select s.stream_id, s.stream_name from Stream s, modules m, employees_take_modules etm, employees e where s.stream_id=m.stream_id and m.module_id=etm.module_id and etm.employee_id=e.employee_id and e.employee_id='" + empID + "'";
+        Statement s1 = c1.createStatement(); ResultSet r1 = s1.executeQuery(sql);                                    
             while (r1.next()) {
                 list.add(r1.getString(1));
                 list.add(r1.getString(2));
             }
 
             return list;
-        }
+        
     }
 
     /**
@@ -142,7 +142,7 @@ public class PDFinfo {
 
         String str = njdbc.queryForObject(sql, namedParams, String.class);
 
-        return String.format("%.2f", Float.parseFloat(str));
+        return String.format("%.0f", Float.parseFloat(str));
     }
 
     /**
@@ -180,15 +180,11 @@ public class PDFinfo {
     public String getClassModuleScores(String empID, String modName) {
         String sql = "SELECT AVG(s.scores) "
                 + "FROM modules m INNER JOIN employees_take_modules s ON m.module_id=s.module_id "
-                + "WHERE m.module_name = :m AND employee_id IN ( "
-                + "SELECT employee_id FROM employees WHERE class_id IN ( "
-                + "SELECT class_id FROM employees WHERE employee_id = :e "
-                + ") "
-                + ") "
+                + "WHERE m.module_name = '"+ modName + "' "
                 + "GROUP BY m.module_name ORDER BY m.module_name";
 
         SqlParameterSource namedParams = new MapSqlParameterSource("m", modName).addValue("e", empID);
         String str = njdbc.queryForObject(sql, namedParams, String.class);
-        return String.format("%.2f", Float.parseFloat(str));
+        return String.format("%.0f", Float.parseFloat(str));
     }
 }

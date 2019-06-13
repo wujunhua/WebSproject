@@ -1,135 +1,18 @@
-<jsp:include page="head-tag.jsp"/>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.util.ArrayList"%>
-<%@ page import="java.sql.*" %>
 
-<%
-  
-   try {    
-    Class.forName("oracle.jdbc.driver.OracleDriver");
-  } catch (Exception e) {
-    out.println("Fail to initialize Oracle JDBC driver: " + e.toString() + "<P>");
-  }
-  
-  String dbUser = "Student_Performance";
-  String dbPasswd = "Student_Performance";
-  String dbURL = "jdbc:oracle:thin:@localhost:1521:XE";
-  //connect
-  Connection conn = null;
-  try {
-    conn = DriverManager.getConnection(dbURL,dbUser,dbPasswd);
-   
-  } catch(Exception e) {
-    out.println("Connection failed: " + e.toString() + "<P>");      
-  }
-  String sql;
-  int numRowsAffected;
-  Statement stmt = conn.createStatement();
-  ResultSet rs;
-  
-  // insert
-  /*try {
-    
-    sql = "insert into users values ('chris@syntelinc.com', 'password', 'N')";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) inserted. <BR>");
-  
-  } catch (SQLException e) {
-    
-    out.println("Error encountered during row insertion for employee: " + e.toString() + "<BR>");
-  
-  }*/
-  
-  
-  // select
-  sql = "select c.course_name as course, s.stream_name as stream, m.module_name as module from courses c, modules m, stream s where c.module_id = m.module_id AND s.stream_id=m.stream_id";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList courseList = new ArrayList();
-  request.setAttribute("courseList", courseList);
-  
-  ArrayList modList = new ArrayList();
-  request.setAttribute("modList", modList);
-  
-  ArrayList streamList = new ArrayList();
-  request.setAttribute("streamList", streamList);
-  
- 
-  
-  while (rs.next()) {
-        courseList.add(rs.getString("course"));
-        streamList.add(rs.getString("stream"));
-        modList.add(rs.getString("module"));
-        
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
-        } // End while 
-  
-  sql = "select stream_name from stream";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList fullstreamList = new ArrayList();
-  request.setAttribute("fullstreamList", fullstreamList);
-  
- 
-  
-  while (rs.next()) {
-        fullstreamList.add(rs.getString("stream_name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
-        }
-  String var = (String)request.getAttribute("stream_name");
-  //out.println(var);
-  sql = "select m.module_name from modules m, stream s where m.stream_id=s.stream_id AND stream_name LIKE '"+var+"'";
-  rs = stmt.executeQuery(sql);
-  
-  ArrayList fullmodList = new ArrayList();
-  request.setAttribute("fullmodList", fullmodList);
-  
- 
-  
-  while (rs.next()) {
-        fullmodList.add(rs.getString("module_name"));
-        //out.println("User Id = " + rs.getString("user_id") + "<BR>"); 
-        }
-  
-// End while 
-   //out.println(courseList.get(0));
- 
-  // delete
-  /* try {
-    sql = "delete from users";
-    numRowsAffected = stmt.executeUpdate(sql);
-    out.println(numRowsAffected + " user(s) deleted. <BR>");
-  } catch (SQLException e) {
-    out.println("Error encountered during deletion of employee: " + e.toString() + "<BR>");
-  
-  }  
-  out.println("<P>"); */
-  
-  rs.close();
-  stmt.close();
-  //commit
-  conn.commit();
-  
-  //disconnect
-  conn.close();
-%>  
 <html>
-    <head>
+    <jsp:include page="head-tag.jsp"/>
+    <body class="bg-light">
+        <jsp:include page="nav.jsp"/>
+        <div id="root"></div>
+        <div id="root2"></div>
+        <div id="root3"></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
-    </head>
-<body class="bg-light" onload="loadDoc()">
-
-  <jsp:include page="nav.jsp"/>
-  
-  <div id="root"></div>
-  <div id="root2"></div>
-  <div id="root3"></div>
-  
-  <script type ="text/babel">
-      class HeadingLinks extends React.Component {
+        <script type ="text/babel">
+        
+        class HeadingLinks extends React.Component {
           render(){
               return(
                     <div className="container-fluid">
@@ -175,8 +58,99 @@
           }
       };
       
-      class Content extends React.Component {
-          render(){
+    $.ajaxSetup({
+        async: false
+    });    
+    function InsertOptionModules() {
+        var jsonData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllModules", function(data) {
+            jsonData = data;
+        });
+        const options = jsonData.map((module) =>
+            <option key={module.moduleId} value={module.moduleName}>{module.moduleName}</option>
+        );
+        return(
+                <div>
+                    <select className="custom-select" name="modulename" id="modulename" onchange="myFunction()">
+                        {options}
+                    </select>
+                </div>
+        );
+    }
+    
+   
+    
+    function CoursesTable() {
+        var courseData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllCourses", function(data) {
+            courseData = data;
+        });
+        var streamData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllStreams", function(data) {
+            streamData = data;
+        });
+        var moduleData;
+        $.getJSON("http://localhost:8084/WebAPI/getAllModules", function(data) {
+            moduleData = data;
+        });
+        
+        
+        var modIds = [];
+        courseData.forEach(function(mod) {
+            modIds.push(Object.values(mod)[1]);
+        });
+        
+        var streamIds = [];
+        modIds.forEach(function(mod) {
+            for (var i = 0; i < moduleData.length; i++) {
+                if (moduleData[i].moduleId == mod) {
+                    streamIds.push(moduleData[i].streamId);
+                }
+            }
+        });
+        
+        var streamNames = [];
+        streamIds.forEach(function(stream) {
+            for (var i = 0; i < streamData.length; i++) {
+                if (streamData[i].streamId == stream) {
+                    streamNames.push(streamData[i].streamName);
+                }
+            }
+        });
+        
+        var moduleNames = [];
+        modIds.forEach(function(mod) {
+            for (var i = 0; i < moduleData.length; i++) {
+                if (moduleData[i].moduleId == mod) {
+                    moduleNames.push(moduleData[i].moduleName);
+                }
+            }
+        });
+        
+        var count = 1;
+
+        const tablebody = courseData.map((course) =>
+            <tr key={course.courseId} value={course.courseName}>
+                    <th scope="row">{count++}</th>
+                    <td><a href={"manage-course.htm?id="+course.courseName + 
+                            "&name=" + streamNames[count-2] + 
+                            "&name2="+moduleNames[count-2]}>
+                        {course.courseName}</a></td>
+                    <td>{streamNames[count-2]}</td>
+                    <td>{moduleNames[count-2]}</td>
+            </tr>
+        );
+        return(
+            <tbody>
+                {tablebody}
+            </tbody>
+        );
+    } 
+    
+   
+    
+    class Content extends React.Component {
+        render(){
               return(
                     <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
                       <div className="container pb-5">
@@ -192,25 +166,8 @@
                                     <input type="text" name="coursename" id="coursename" className="form-control" onchange="myFunction()" placeholder="Course Name" pattern="[a-zA-Z][a-zA-Z0-9-_.+#* ]{0,45}" title="Name must start with a letter and can only contain letters, numbers, hyphens, underscores, periods, hashtag, plus, star and be between 1 and 45 characters." required />
                                   <div><small id="ajaxconf" className="text-danger"></small></div>
                                   </div>
-                                    <div className="form-group col-md-3">
-                                        <select className="custom-select" name="streamname" id="streamname" onchange="loadDoc()" >
-                                            <c:forEach items="${fullstreamList}" var="streamer">
-                                                <option value="${streamer}">
-                                                    ${streamer}
-                                                </option>
-                                            </c:forEach>
-                                      </select>
-                                  </div>
                                   <div className="form-group col-md-3">
-                                    <div id="dropdown_stuff">
-                                          <select className="custom-select" name= "modulename" id="modulename" onChange="myFunction()">
-                                      <c:forEach items="${fullmodList}" var="modder">
-                                          <option value="${modder}">
-                                              ${modder}
-                                          </option>
-                                      </c:forEach>
-                                      </select>
-                                      </div>
+                                    <InsertOptionModules />
                                   </div>
                                 </div>
                               </div>
@@ -226,24 +183,7 @@
                               <th scope="col">Module Name</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <c:set var="count" value="1"/>
-                           <c:forEach items="${courseList}" var="course">
-                             <tr value="${course}">
-                                 <th scope="row">${count}</th>
-                                 <td>
-                                     <a href="manage-course.htm?id=${course}&name=${streamList.get(count-1)}&name2=${modList.get(count-1)}">${course}</a>
-                                 </td>
-                                 <td>
-                                  ${streamList.get(count-1)}
-                                 </td>
-                                 <td>
-                                 ${modList.get(count-1)}
-                                 </td>
-                             </tr>
-                             <c:set var="count" value="${count + 1}"/>
-                         </c:forEach>
-                          </tbody>
+                          <CoursesTable />
                         </table>
                       </div>
                     </div>           
@@ -254,37 +194,37 @@
       ReactDOM.render(<HeadingLinks />, document.getElementById("root"));
       ReactDOM.render(<Tabs />, document.getElementById("root2"));
       ReactDOM.render(<Content />, document.getElementById("root3"));
-  </script>
-  <!-- /Tabs -->
+    </script>
+    <!-- /Tabs -->
 
-  <!-- Optional JavaScript -->
-  <script>
-    function loadDoc() {
-      //myFunction();
-      var xhttp = new XMLHttpRequest();
-      
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-         document.getElementById("dropdown_stuff").innerHTML = this.responseText;
-        }
-      };
-      
-      var okay = document.getElementById("streamname").value;
-      //alert("Value= "+okay);
-      xhttp.open("GET", "ajax.htm?id="+okay, true);
-      xhttp.send();
-      
-    }
-</script>
+    <!-- Optional JavaScript -->
+    <script>
+      function loadDoc() {
+        //myFunction();
+        var xhttp = new XMLHttpRequest();
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!-- Popper.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <!-- Bootstrap.js -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+           document.getElementById("dropdown_stuff").innerHTML = this.responseText;
+          }
+        };
 
-</body>
+        var okay = document.getElementById("streamname").value;
+        //alert("Value= "+okay);
+        xhttp.open("GET", "ajax.htm?id="+okay, true);
+        xhttp.send();
+
+      }
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <!-- Bootstrap.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    </body>
 </html>
 
 <script>

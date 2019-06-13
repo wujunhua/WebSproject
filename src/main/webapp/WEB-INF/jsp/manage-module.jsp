@@ -121,7 +121,16 @@ boolean moduleCanBeDeleted = rs.next();
           }
       };
         class Cat3 extends React.Component {
-          render(){
+                constructor(props){
+                    super(props);
+                    this.state = {value:'${param.okay}'};
+                    this.handleChange = this.handleChange.bind(this);
+                }
+
+                handleChange(event){
+                    this.setState({value: event.target.value});
+                }
+            render(){
               return(
                       <div className="container-fluid bg-white" style={{minHeight: "100vh"}}>
                         <div className="container pb-5">
@@ -148,7 +157,7 @@ boolean moduleCanBeDeleted = rs.next();
                                 <div className="form-group row mt-3">
                                   <label for="new_module" className="col-sm-3 col-form-label">Module</label>
                                   <div className="col-sm-9">
-                                    <input type="text" className="form-control" id="modName" onchange="myFunction()" name ="modName" placeholder="" value="${param.okay}" required />
+                                    <input type="text" className="form-control" id="modName" value={this.state.value} onChange={this.handleChange} name ="modName" placeholder="" required />
                                     <div><small id="ajaxconf" className="text-danger"></small></div>
                                   </div>
                                 </div>

@@ -140,12 +140,36 @@
             modData = data;
         });
         
-        var modName = [];
+        var searchBy = 0;
+        var searchByString = '${param.searchName}';
+        if('${param.searchEmail}' !== ""){
+            searchBy = 2;
+            searchByString = '${param.searchEmail}';
+        }
+        
+        
+        var empName = [];
+        empData.forEach(function(emp){
+            empName.push(Object.values(emp)[searchBy]);
+        }); 
+        
+        var searchedJsonData = [];
+        var counter = 0;
+        empData.forEach(function(emp){
+            if(Object.values(emp)[searchBy].includes(searchByString)){
+                searchedJsonData[counter] = emp;
+                counter++;
+            }
+        });
+        searchedJsonData = JSON.parse(JSON.stringify(searchedJsonData));
+        const searchedName = empName.filter(e => e.includes(searchByString));
 
+        var modName = [];
         modData.forEach(function(mod){
                 modName.push(Object.values(mod)[1]);
         });
         
+        console.log(searchedJsonData);
         function getModName(modId){
             return modName[modId-1];
         }
@@ -165,8 +189,8 @@
             
             return bigString;
         }
-        var count = 1;
-        const tablebody = empData.map((emp) =>
+        
+        const tablebody = searchedJsonData.map((emp) =>
             <tr key={emp.employeeId}>
                 <td>
                     <a href="#" id="editButton" data-toggle="modal" data-target="#editModal" 
@@ -190,17 +214,28 @@
     }
     
     class Email extends React.Component {
+        constructor(){
+            super();
+            this.search = this.search.bind(this);
+        }
+        
+        search(event){
+            var searcher = $("#sear").val();
+            var searchBy = $("#searchby :selected").text();
+            window.location.href = "showEmployees.htm?search"+searchBy+"="+searcher;
+        }
+        
         render() {
             return(
                     <div className="container-fluid bg-white" style={{height: "100vh"}}>
                         <div className="container pb-5 pt-3">
-                            <form:form method="post" action="searchEmployees.htm" className="form-inline pt-1 pb-2 w-100"> 
-                                <button className="btn btn-primary rounded-0 px-3 mr-2 my-1" type="submit"><i className="fas fa-search pr-1"></i>Search</button>
-                                <select name="col" className="custom-select my-1 mr-sm-2">
+                            <form:form className="form-inline pt-1 pb-2 w-100"> 
+                                <button className="btn btn-primary rounded-0 px-3 mr-2 my-1" onClick={this.search} type="button"><i className="fas fa-search pr-1"></i>Search</button>
+                                <select id="searchby" name="col" className="custom-select my-1 mr-sm-2">
                                     <option value="name">Name</option>
                                     <option value="email">Email</option>
                                 </select>
-                                <input type="text" placeholder="Search.." name="search" className="form-control my-1 mr-sm-2" />
+                                <input id="sear" type="text" placeholder="Search.." name="search" className="form-control my-1 mr-sm-2" />
                             </form:form>
                             <table className="table table-striped table-sm table-bordered">
                                 <thead>

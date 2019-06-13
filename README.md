@@ -1,3 +1,16 @@
+# Migrated to Maven
+
+Clone repo
+
+Import project to Netbeans
+
+Clean and Build project
+
+Setup server with tomcat/glassfish
+
+Run the project
+
+
 # sProject
 **Purpose**: To create performence reports for employees undergoing S training sessions. Data is input via excel, output via PDF.
 
@@ -23,4 +36,6 @@ Backlog (VSTS / Azure DevOps): https://dev.azure.com/kabollinger/WebSProject
 
 **Student** - Exact same thing as employee, but old term. Some people still use interchangably.
 
-Migrated to Maven
+
+
+

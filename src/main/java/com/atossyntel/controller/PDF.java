@@ -208,7 +208,7 @@ public class PDF {
 
         String chartFileName = "graph.png";
         makeChart(dataset, chartFileName);
-        document.add(new ImageElement(chartFileName), new VerticalLayoutHint(Alignment.Center, 0, 0,
+        document.add(new ImageElement(chartFileName), new VerticalLayoutHint(Alignment.Left, 0, 0,
                 0, 0, true));
 
         document.add(new VerticalSpacer(325));
@@ -269,8 +269,9 @@ public class PDF {
         CategoryAxis axis = plot.getDomainAxis();
         axis.setLowerMargin(.01);
         axis.setUpperMargin(.01);
-        axis.setMaximumCategoryLabelLines(3);
+        axis.setMaximumCategoryLabelLines(4);
         //axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+        axis.setMaximumCategoryLabelWidthRatio(0.2f);
         
         
         BarRenderer renderer = (BarRenderer) plot.getRenderer();

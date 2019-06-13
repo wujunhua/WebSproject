@@ -137,8 +137,8 @@ public class PDF {
         float linspace = 10;
         float sectionBreak = 15;
         float textSize = 10;
-        float leftMargin = 20;
-        float rightMargin = 20;
+        float leftMargin = 40;
+        float rightMargin = 40;
         float topMargin = 20;
         float bottomMargin = 20;
         Document document = new Document(leftMargin, rightMargin, topMargin, bottomMargin);
@@ -286,9 +286,9 @@ public class PDF {
         renderer.setBaseItemLabelsVisible(true);
         renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE3, TextAnchor.CENTER_LEFT));
 
-        int width = 565;
+        int width = 525;
         /* Width of the image */
-        int height = 315;
+        int height = 275;
         /* Height of the image */
         File secondBarChart = new File(filename);
         try {

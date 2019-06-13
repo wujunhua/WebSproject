@@ -38,6 +38,7 @@
     <div id="root"></div>
     <div id="root2"></div>
     <div id="root3"></div>
+    <script src="<c:url value="/resources/js/classValidate.js" />"></script>
     <script type ="text/babel">
         class HeadingLinks extends React.Component  {
             render(){
@@ -158,7 +159,7 @@
                                   <div className="col-sm-10 my-1">
                                     <input type="email" name="insEmail" id="insEmail" className="form-control" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}$" title="Must be a valid atos or syntel email" required />
                                   </div>
-                                  <font color="red"><span id="emailValidation" /></font>
+                                  <font style={{color:"red"}}><span id="emailValidation" /></font>
                                 </div>
                                 <div className="form-group row">
                                   <div className="col-sm-2 my-1">
@@ -173,7 +174,7 @@
                                   <div className="col-sm-4 my-1">
                                     <input type="date" name="endDate" id="endDate" className="form-control" required />
                                   </div>
-                                  <font color="red"><span id="endDateValidation" /></font>
+                                  <font style={{color:"red"}}><span id="endDateValidation" /></font>
                                 </div>
                                 <div className="form-group row">
                                   <div className="col-sm-2 my-1 pt-2">
@@ -184,10 +185,7 @@
                                   </div>
                                 </div>
                                 <div className="row justify-content-center">
-                                  <button type="button" className="btn btn-primary rounded-0 px-3" onclick="validate()"><i className="far fa-file-alt pr-2" />Submit</button>
-                                </div>
-                                <div className="row justify-content-center">
-                                  <button type="submit" id="actualButton" className="btn btn-primary rounded-0 px-3" style={{display:"none"}}><i className="far fa-file-alt pr-2" />Submit</button>
+                                  <button type="submit"  id="actualButton" className="btn btn-primary rounded-0 px-3" onClick="validate()"><i className="far fa-file-alt pr-2" />Submit</button>
                                 </div>
                             </s:form>
                             </div>
@@ -218,7 +216,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-    <script src="<c:url value="/resources/js/classValidate.js" />"></script>
+    
+    
 
 
 </body>
+
